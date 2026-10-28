@@ -1,0 +1,72 @@
+[
+  {
+    "id": "sample_04-L01",
+    "clause_article": "第三条",
+    "category": "payment",
+    "severity": "high",
+    "rule_id": "PAY-001",
+    "keywords": [
+      "30%"
+    ]
+  },
+  {
+    "id": "sample_04-L02",
+    "clause_article": "第三条",
+    "category": "payment",
+    "severity": "medium",
+    "rule_id": "PAY-003",
+    "keywords": [
+      "90 日"
+    ]
+  },
+  {
+    "id": "sample_04-L03",
+    "clause_article": "第七条",
+    "category": "ip",
+    "severity": "medium",
+    "rule_id": "IP-001",
+    "keywords": [
+      "知识产权"
+    ]
+  },
+  {
+    "id": "sample_04-L04",
+    "clause_article": "第八条",
+    "category": "compliance",
+    "severity": "medium",
+    "rule_id": "COM-001",
+    "keywords": [
+      "保密"
+    ]
+  },
+  {
+    "id": "sample_04-L05",
+    "clause_article": "第九条",
+    "category": "liability",
+    "severity": "high",
+    "rule_id": "LIA-002",
+    "keywords": [
+      "2%"
+    ]
+  },
+  {
+    "id": "sample_04-L06",
+    "clause_article": "第四条",
+    "category": "delivery",
+    "severity": "medium",
+    "rule_id": "DEL-002",
+    "keywords": [
+      "交付"
+    ]
+  },
+  {
+    "id": "sample_04-L07",
+    "clause_article": "第五条",
+    "category": "acceptance",
+    "severity": "medium",
+    "rule_id": null,
+    "keywords": [
+      "双方确认"
+    ]
+  }
+]

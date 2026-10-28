@@ -1,0 +1,3675 @@
+{
+  "generated_at": "2026-10-28T12:15:34+08:00",
+  "query_count": 25,
+  "configs": [
+    {
+      "name": "bm25",
+      "retrieval_mode": "bm25_only",
+      "rerank_mode": "off",
+      "last_warning": null,
+      "overall": {
+        "hit@5": 0.72,
+        "recall@5": 0.42,
+        "mrr@5": 0.4947,
+        "ndcg@5": 0.3849,
+        "hit@10": 0.8,
+        "recall@10": 0.5,
+        "mrr@10": 0.5054,
+        "ndcg@10": 0.419
+      },
+      "by_source": {
+        "playbook_rule": {
+          "queries": 3,
+          "hit@10": 1.0,
+          "recall@10": 0.5,
+          "mrr@10": 0.281,
+          "ndcg@10": 0.2973
+        },
+        "synthetic_clause": {
+          "queries": 22,
+          "hit@10": 0.7727,
+          "recall@10": 0.5,
+          "mrr@10": 0.536,
+          "ndcg@10": 0.4356
+        }
+      },
+      "queries": [
+        {
+          "id": "q01",
+          "query": "合同生效后5个工作日内支付合同总价50%的预付款",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-509",
+            "CC-577",
+            "CC-626"
+          ],
+          "ranked": [
+            "CC-634",
+            "CC-626",
+            "CC-628",
+            "CC-585",
+            "CC-595",
+            "CC-510",
+            "CC-591",
+            "CC-584",
+            "CC-590",
+            "CC-533"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 0.5,
+            "ndcg": 0.2961
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 0.5,
+            "ndcg": 0.2961
+          }
+        },
+        {
+          "id": "q02",
+          "query": "甲方应在验收或收货前一次性支付全部合同价款",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-620",
+            "CC-621",
+            "CC-626"
+          ],
+          "ranked": [
+            "CC-634",
+            "CC-626",
+            "CC-628",
+            "CC-595",
+            "CC-590",
+            "CC-585",
+            "CC-563",
+            "CC-596",
+            "CC-621",
+            "CC-510"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 0.5,
+            "ndcg": 0.2961
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 0.5,
+            "ndcg": 0.4373
+          }
+        },
+        {
+          "id": "q03",
+          "query": "合同未约定付款期限，或付款期限为验收后90日",
+          "source": "playbook_rule",
+          "category": "payment",
+          "relevant": [
+            "CC-510",
+            "CC-511",
+            "CC-628"
+          ],
+          "ranked": [
+            "CC-622",
+            "CC-563",
+            "CC-470",
+            "CC-596",
+            "CC-511",
+            "CC-510",
+            "CC-585",
+            "CC-634",
+            "CC-621",
+            "CC-584"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 0.2,
+            "ndcg": 0.1815
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 0.2,
+            "ndcg": 0.3487
+          }
+        },
+        {
+          "id": "q04",
+          "query": "质保金为合同总价的10%，质保期满五年后无息返还",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-509",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-510",
+            "CC-591",
+            "CC-584",
+            "CC-634",
+            "CC-590",
+            "CC-533",
+            "CC-585",
+            "CC-563"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        },
+        {
+          "id": "q05",
+          "query": "乙方应在合同生效后尽快交付货物",
+          "source": "synthetic_clause",
+          "category": "delivery",
+          "relevant": [
+            "CC-510",
+            "CC-511",
+            "CC-603"
+          ],
+          "ranked": [
+            "CC-604",
+            "CC-615",
+            "CC-603",
+            "CC-510",
+            "CC-591",
+            "CC-584",
+            "CC-634",
+            "CC-590",
+            "CC-533",
+            "CC-585"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 0.3333,
+            "ndcg": 0.4367
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 0.3333,
+            "ndcg": 0.4367
+          }
+        },
+        {
+          "id": "q06",
+          "query": "交付地点由双方另行协商，运输方式由乙方决定",
+          "source": "synthetic_clause",
+          "category": "delivery",
+          "relevant": [
+            "CC-603",
+            "CC-604",
+            "CC-511"
+          ],
+          "ranked": [
+            "CC-603",
+            "CC-470",
+            "CC-604",
+            "CC-511",
+            "CC-592",
+            "CC-533",
+            "CC-496",
+            "CC-610",
+            "CC-591",
+            "CC-596"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.906
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.906
+          }
+        },
+        {
+          "id": "q07",
+          "query": "合同约定了付款和交付，但没有验收条款",
+          "source": "playbook_rule",
+          "category": "acceptance",
+          "relevant": [
+            "CC-620",
+            "CC-621",
+            "CC-622"
+          ],
+          "ranked": [
+            "CC-603",
+            "CC-510",
+            "CPL-35",
+            "CC-604",
+            "CC-615",
+            "CC-511",
+            "CC-620",
+            "CC-626",
+            "CC-628",
+            "CC-496"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 0.1429,
+            "ndcg": 0.1564
+          }
+        },
+        {
+          "id": "q08",
+          "query": "甲方应在收货后3日内完成验收，逾期未提出异议视为验收合格",
+          "source": "synthetic_clause",
+          "category": "acceptance",
+          "relevant": [
+            "CC-621",
+            "CC-622",
+            "CC-623"
+          ],
+          "ranked": [
+            "CC-622",
+            "CC-621",
+            "CC-634",
+            "CC-563",
+            "CC-510",
+            "CC-591",
+            "CC-584",
+            "CC-590",
+            "CC-533",
+            "CC-585"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7654
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7654
+          }
+        },
+        {
+          "id": "q09",
+          "query": "货物验收标准为符合国家相关标准",
+          "source": "synthetic_clause",
+          "category": "acceptance",
+          "relevant": [
+            "CC-615",
+            "CC-511"
+          ],
+          "ranked": [
+            "CC-596",
+            "CC-623",
+            "CC-510",
+            "CC-511"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.25,
+            "ndcg": 0.2641
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.25,
+            "ndcg": 0.2641
+          }
+        },
+        {
+          "id": "q10",
+          "query": "质保期为货物验收合格后6个月",
+          "source": "synthetic_clause",
+          "category": "warranty",
+          "relevant": [
+            "CC-615",
+            "CC-621"
+          ],
+          "ranked": [
+            "CC-510",
+            "CC-591",
+            "CC-584",
+            "CC-634",
+            "CC-590",
+            "CC-533",
+            "CC-585",
+            "CC-563"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        },
+        {
+          "id": "q11",
+          "query": "乙方逾期交付的，按逾期天数每日支付合同总价0.01%的违约金",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-577",
+            "CC-584",
+            "CC-585"
+          ],
+          "ranked": [
+            "CC-585",
+            "CC-626",
+            "CC-628",
+            "CC-634",
+            "CC-595"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          }
+        },
+        {
+          "id": "q12",
+          "query": "违约金总额不超过合同总价的3%",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-584",
+            "CC-585",
+            "CC-506"
+          ],
+          "ranked": [
+            "CC-585",
+            "CC-584",
+            "CC-511",
+            "CC-577",
+            "CC-507",
+            "CC-621",
+            "CC-603",
+            "CC-533",
+            "CC-626",
+            "CC-510"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7654
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7654
+          }
+        },
+        {
+          "id": "q13",
+          "query": "乙方不承担任何间接损失、利润损失和商誉损失",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-506",
+            "CC-584"
+          ],
+          "ranked": [
+            "CC-584",
+            "CC-592",
+            "CC-591",
+            "CC-585",
+            "CC-590",
+            "CC-577",
+            "CC-610",
+            "CC-604",
+            "CC-593",
+            "CC-511"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          }
+        },
+        {
+          "id": "q14",
+          "query": "货物质量不合格时，乙方只负责维修，不承担退货或换货责任",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-610",
+            "CC-615",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-610",
+            "CC-621",
+            "CC-511",
+            "CC-577",
+            "CC-603",
+            "CC-584",
+            "CC-592",
+            "CC-590",
+            "CC-533",
+            "CC-510"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.6714
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.6714
+          }
+        },
+        {
+          "id": "q15",
+          "query": "只有在乙方连续三次违约时，甲方才有权解除合同",
+          "source": "synthetic_clause",
+          "category": "termination",
+          "relevant": [
+            "CC-563",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-533",
+            "CC-563",
+            "CC-584",
+            "CC-585",
+            "CC-610",
+            "CC-634",
+            "CC-592",
+            "CC-593",
+            "CC-591",
+            "CC-620"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "ndcg": 0.3869
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "ndcg": 0.3869
+          }
+        },
+        {
+          "id": "q16",
+          "query": "合同期满后自动续约一年，任何一方无需提前通知",
+          "source": "synthetic_clause",
+          "category": "termination",
+          "relevant": [
+            "CC-509",
+            "CC-470"
+          ],
+          "ranked": [
+            "CC-621",
+            "CC-590",
+            "CC-563",
+            "CC-509",
+            "CC-510",
+            "CC-591",
+            "CC-584",
+            "CC-634",
+            "CC-533",
+            "CC-585"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.25,
+            "ndcg": 0.2641
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.25,
+            "ndcg": 0.2641
+          }
+        },
+        {
+          "id": "q17",
+          "query": "因本合同发生的争议由乙方所在地人民法院管辖",
+          "source": "synthetic_clause",
+          "category": "dispute",
+          "relevant": [
+            "CPL-35"
+          ],
+          "ranked": [
+            "CPL-35",
+            "CC-533",
+            "CC-511",
+            "CC-590",
+            "CC-585",
+            "CC-470",
+            "CC-610",
+            "CC-591",
+            "CC-592",
+            "CC-604"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q18",
+          "query": "争议可以提交仲裁，也可以向合同签订地法院起诉",
+          "source": "synthetic_clause",
+          "category": "dispute",
+          "relevant": [
+            "CPL-35",
+            "CC-507"
+          ],
+          "ranked": [
+            "CPL-35",
+            "CC-585",
+            "CC-533",
+            "CC-593",
+            "CC-634",
+            "CC-497",
+            "CC-603",
+            "CC-507",
+            "CC-511",
+            "CC-470"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.8066
+          }
+        },
+        {
+          "id": "q19",
+          "query": "因不可抗力造成的损失乙方不承担任何责任，且无需通知甲方",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-590"
+          ],
+          "ranked": [
+            "CC-590",
+            "CC-584",
+            "CC-592",
+            "CC-585",
+            "CC-563",
+            "CC-593",
+            "CC-591",
+            "CC-621",
+            "CC-506",
+            "CC-610"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q20",
+          "query": "乙方应对本合同项下的技术资料和商业信息承担保密义务，甲方不受限制",
+          "source": "synthetic_clause",
+          "category": "compliance",
+          "relevant": [
+            "CC-509"
+          ],
+          "ranked": [
+            "CC-577",
+            "CC-610",
+            "CC-604",
+            "CC-592",
+            "CC-593",
+            "CC-511",
+            "CC-507",
+            "CC-621",
+            "CC-603",
+            "CC-584"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        },
+        {
+          "id": "q21",
+          "query": "本合同项下产生的知识产权归属由双方另行协商",
+          "source": "synthetic_clause",
+          "category": "ip",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-592",
+            "CC-533",
+            "CC-585",
+            "CC-604",
+            "CC-496",
+            "CC-610",
+            "CC-591",
+            "CC-470",
+            "CC-511"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.125,
+            "ndcg": 0.1934
+          }
+        },
+        {
+          "id": "q22",
+          "query": "合同价款由设备款、安装调试费和培训费组成，具体金额以实际发生为准",
+          "source": "synthetic_clause",
+          "category": "price",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-533",
+            "CPL-35",
+            "CC-470",
+            "CC-622",
+            "CC-626",
+            "CC-634",
+            "CC-592",
+            "CC-628",
+            "CC-590",
+            "CC-511"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.3333,
+            "ndcg": 0.3066
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.3333,
+            "ndcg": 0.3066
+          }
+        },
+        {
+          "id": "q23",
+          "query": "合同总价为100万元，是否含税及发票类型未约定",
+          "source": "synthetic_clause",
+          "category": "price",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-621",
+            "CC-510",
+            "CC-585",
+            "CC-626",
+            "CC-620",
+            "CC-628",
+            "CC-634",
+            "CC-603",
+            "CC-622",
+            "CC-577"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        },
+        {
+          "id": "q24",
+          "query": "合同没有约定争议解决方式",
+          "source": "playbook_rule",
+          "category": "dispute",
+          "relevant": [
+            "CC-507",
+            "CPL-35"
+          ],
+          "ranked": [
+            "CC-626",
+            "CC-507",
+            "CC-511",
+            "CC-596",
+            "CC-620",
+            "CC-510",
+            "CC-628",
+            "CC-470",
+            "CC-621",
+            "CC-496"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "ndcg": 0.3869
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "ndcg": 0.3869
+          }
+        },
+        {
+          "id": "q25",
+          "query": "合同自双方签字或盖章之日起生效，但签署主体和授权文件未明确",
+          "source": "synthetic_clause",
+          "category": "general",
+          "relevant": [
+            "CC-470",
+            "CC-509"
+          ],
+          "ranked": [
+            "CC-621",
+            "CC-592",
+            "CPL-35",
+            "CC-634",
+            "CC-563",
+            "CC-510",
+            "CC-626",
+            "CC-496",
+            "CC-628",
+            "CC-507"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        }
+      ],
+      "overall_ci": {
+        "hit": {
+          "point": 0.8,
+          "low": 0.64,
+          "high": 0.96,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "recall": {
+          "point": 0.5,
+          "low": 0.3733,
+          "high": 0.62,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "mrr": {
+          "point": 0.5054,
+          "low": 0.3508,
+          "high": 0.6587,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "ndcg": {
+          "point": 0.419,
+          "low": 0.3013,
+          "high": 0.537,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        }
+      }
+    },
+    {
+      "name": "hybrid",
+      "retrieval_mode": "hybrid",
+      "rerank_mode": "off",
+      "last_warning": null,
+      "overall": {
+        "hit@5": 0.8,
+        "recall@5": 0.5267,
+        "mrr@5": 0.6327,
+        "ndcg@5": 0.4962,
+        "hit@10": 0.88,
+        "recall@10": 0.66,
+        "mrr@10": 0.645,
+        "ndcg@10": 0.5556
+      },
+      "by_source": {
+        "playbook_rule": {
+          "queries": 3,
+          "hit@10": 1.0,
+          "recall@10": 0.7222,
+          "mrr@10": 0.75,
+          "ndcg@10": 0.6028
+        },
+        "synthetic_clause": {
+          "queries": 22,
+          "hit@10": 0.8636,
+          "recall@10": 0.6515,
+          "mrr@10": 0.6307,
+          "ndcg@10": 0.5491
+        }
+      },
+      "queries": [
+        {
+          "id": "q01",
+          "query": "合同生效后5个工作日内支付合同总价50%的预付款",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-509",
+            "CC-577",
+            "CC-626"
+          ],
+          "ranked": [
+            "CC-634",
+            "CC-628",
+            "CC-626",
+            "CC-585",
+            "CC-510",
+            "CC-590",
+            "CC-595",
+            "CC-533",
+            "CC-591",
+            "CC-584"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 0.3333,
+            "ndcg": 0.2346
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 0.3333,
+            "ndcg": 0.2346
+          }
+        },
+        {
+          "id": "q02",
+          "query": "甲方应在验收或收货前一次性支付全部合同价款",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-620",
+            "CC-621",
+            "CC-626"
+          ],
+          "ranked": [
+            "CC-634",
+            "CC-628",
+            "CC-626",
+            "CC-511",
+            "CC-621",
+            "CC-585",
+            "CC-470",
+            "CC-590",
+            "CC-596",
+            "CC-563"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 0.3333,
+            "ndcg": 0.4162
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 0.3333,
+            "ndcg": 0.4162
+          }
+        },
+        {
+          "id": "q03",
+          "query": "合同未约定付款期限，或付款期限为验收后90日",
+          "source": "playbook_rule",
+          "category": "payment",
+          "relevant": [
+            "CC-510",
+            "CC-511",
+            "CC-628"
+          ],
+          "ranked": [
+            "CC-511",
+            "CC-622",
+            "CC-510",
+            "CC-634",
+            "CC-563",
+            "CC-470",
+            "CC-621",
+            "CC-628",
+            "CC-585",
+            "CC-620"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7039
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.852
+          }
+        },
+        {
+          "id": "q04",
+          "query": "质保金为合同总价的10%，质保期满五年后无息返还",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-509",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-591",
+            "CC-634",
+            "CC-584",
+            "CC-585",
+            "CC-510",
+            "CC-533",
+            "CC-563",
+            "CC-610",
+            "CC-590",
+            "CC-604"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        },
+        {
+          "id": "q05",
+          "query": "乙方应在合同生效后尽快交付货物",
+          "source": "synthetic_clause",
+          "category": "delivery",
+          "relevant": [
+            "CC-510",
+            "CC-511",
+            "CC-603"
+          ],
+          "ranked": [
+            "CC-603",
+            "CC-615",
+            "CC-604",
+            "CC-634",
+            "CC-510",
+            "CC-511",
+            "CC-590",
+            "CC-563",
+            "CC-533",
+            "CC-620"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.6508
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.818
+          }
+        },
+        {
+          "id": "q06",
+          "query": "交付地点由双方另行协商，运输方式由乙方决定",
+          "source": "synthetic_clause",
+          "category": "delivery",
+          "relevant": [
+            "CC-603",
+            "CC-604",
+            "CC-511"
+          ],
+          "ranked": [
+            "CC-603",
+            "CC-511",
+            "CC-604",
+            "CC-610",
+            "CC-470",
+            "CC-626",
+            "CC-533",
+            "CC-496",
+            "CPL-35",
+            "CC-628"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q07",
+          "query": "合同约定了付款和交付，但没有验收条款",
+          "source": "playbook_rule",
+          "category": "acceptance",
+          "relevant": [
+            "CC-620",
+            "CC-621",
+            "CC-622"
+          ],
+          "ranked": [
+            "CC-510",
+            "CC-603",
+            "CC-511",
+            "CC-621",
+            "CC-615",
+            "CC-604",
+            "CC-470",
+            "CC-628",
+            "CC-620",
+            "CC-626"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 0.25,
+            "ndcg": 0.2021
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 0.25,
+            "ndcg": 0.3434
+          }
+        },
+        {
+          "id": "q08",
+          "query": "甲方应在收货后3日内完成验收，逾期未提出异议视为验收合格",
+          "source": "synthetic_clause",
+          "category": "acceptance",
+          "relevant": [
+            "CC-621",
+            "CC-622",
+            "CC-623"
+          ],
+          "ranked": [
+            "CC-621",
+            "CC-622",
+            "CC-634",
+            "CC-510",
+            "CC-563",
+            "CC-623",
+            "CC-620",
+            "CC-615",
+            "CC-591",
+            "CC-610"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7654
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.9325
+          }
+        },
+        {
+          "id": "q09",
+          "query": "货物验收标准为符合国家相关标准",
+          "source": "synthetic_clause",
+          "category": "acceptance",
+          "relevant": [
+            "CC-615",
+            "CC-511"
+          ],
+          "ranked": [
+            "CC-623",
+            "CC-511",
+            "CC-596",
+            "CC-510",
+            "CC-615",
+            "CC-621",
+            "CC-620",
+            "CC-610",
+            "CC-622",
+            "CC-603"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.5,
+            "ndcg": 0.6241
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.5,
+            "ndcg": 0.6241
+          }
+        },
+        {
+          "id": "q10",
+          "query": "质保期为货物验收合格后6个月",
+          "source": "synthetic_clause",
+          "category": "warranty",
+          "relevant": [
+            "CC-615",
+            "CC-621"
+          ],
+          "ranked": [
+            "CC-634",
+            "CC-584",
+            "CC-563",
+            "CC-510",
+            "CC-621",
+            "CC-591",
+            "CC-620",
+            "CC-622",
+            "CC-623",
+            "CC-590"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.2,
+            "ndcg": 0.2372
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.2,
+            "ndcg": 0.2372
+          }
+        },
+        {
+          "id": "q11",
+          "query": "乙方逾期交付的，按逾期天数每日支付合同总价0.01%的违约金",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-577",
+            "CC-584",
+            "CC-585"
+          ],
+          "ranked": [
+            "CC-585",
+            "CC-634",
+            "CC-628",
+            "CC-626",
+            "CC-577",
+            "CC-593",
+            "CC-595",
+            "CC-592",
+            "CC-511",
+            "CC-610"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.6508
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.6508
+          }
+        },
+        {
+          "id": "q12",
+          "query": "违约金总额不超过合同总价的3%",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-584",
+            "CC-585",
+            "CC-506"
+          ],
+          "ranked": [
+            "CC-585",
+            "CC-584",
+            "CC-577",
+            "CC-621",
+            "CC-511",
+            "CC-533",
+            "CC-590",
+            "CC-610",
+            "CC-563",
+            "CC-510"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7654
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7654
+          }
+        },
+        {
+          "id": "q13",
+          "query": "乙方不承担任何间接损失、利润损失和商誉损失",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-506",
+            "CC-584"
+          ],
+          "ranked": [
+            "CC-584",
+            "CC-591",
+            "CC-592",
+            "CC-604",
+            "CC-590",
+            "CC-577",
+            "CC-507",
+            "CC-610",
+            "CC-593",
+            "CC-585"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          }
+        },
+        {
+          "id": "q14",
+          "query": "货物质量不合格时，乙方只负责维修，不承担退货或换货责任",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-610",
+            "CC-615",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-610",
+            "CC-621",
+            "CC-511",
+            "CC-577",
+            "CC-615",
+            "CC-584",
+            "CC-603",
+            "CC-592",
+            "CC-507",
+            "CC-604"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.8529
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.8529
+          }
+        },
+        {
+          "id": "q15",
+          "query": "只有在乙方连续三次违约时，甲方才有权解除合同",
+          "source": "synthetic_clause",
+          "category": "termination",
+          "relevant": [
+            "CC-563",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-563",
+            "CC-533",
+            "CC-634",
+            "CC-585",
+            "CC-610",
+            "CC-593",
+            "CC-592",
+            "CC-584",
+            "CC-591",
+            "CC-511"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          }
+        },
+        {
+          "id": "q16",
+          "query": "合同期满后自动续约一年，任何一方无需提前通知",
+          "source": "synthetic_clause",
+          "category": "termination",
+          "relevant": [
+            "CC-509",
+            "CC-470"
+          ],
+          "ranked": [
+            "CC-563",
+            "CC-621",
+            "CC-590",
+            "CC-510",
+            "CC-533",
+            "CC-634",
+            "CC-509",
+            "CC-591",
+            "CC-585",
+            "CC-507"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.1429,
+            "ndcg": 0.2044
+          }
+        },
+        {
+          "id": "q17",
+          "query": "因本合同发生的争议由乙方所在地人民法院管辖",
+          "source": "synthetic_clause",
+          "category": "dispute",
+          "relevant": [
+            "CPL-35"
+          ],
+          "ranked": [
+            "CPL-35",
+            "CC-533",
+            "CC-470",
+            "CC-507",
+            "CC-590",
+            "CC-610",
+            "CC-592",
+            "CC-511",
+            "CC-593",
+            "CC-584"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q18",
+          "query": "争议可以提交仲裁，也可以向合同签订地法院起诉",
+          "source": "synthetic_clause",
+          "category": "dispute",
+          "relevant": [
+            "CPL-35",
+            "CC-507"
+          ],
+          "ranked": [
+            "CPL-35",
+            "CC-533",
+            "CC-585",
+            "CC-634",
+            "CC-470",
+            "CC-507",
+            "CC-593",
+            "CC-511",
+            "CC-563",
+            "CC-497"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.8316
+          }
+        },
+        {
+          "id": "q19",
+          "query": "因不可抗力造成的损失乙方不承担任何责任，且无需通知甲方",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-590"
+          ],
+          "ranked": [
+            "CC-590",
+            "CC-584",
+            "CC-591",
+            "CC-592",
+            "CC-506",
+            "CC-563",
+            "CC-593",
+            "CC-585",
+            "CC-604",
+            "CC-511"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q20",
+          "query": "乙方应对本合同项下的技术资料和商业信息承担保密义务，甲方不受限制",
+          "source": "synthetic_clause",
+          "category": "compliance",
+          "relevant": [
+            "CC-509"
+          ],
+          "ranked": [
+            "CC-511",
+            "CC-577",
+            "CC-604",
+            "CC-610",
+            "CC-621",
+            "CC-510",
+            "CC-507",
+            "CC-592",
+            "CC-496",
+            "CC-590"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        },
+        {
+          "id": "q21",
+          "query": "本合同项下产生的知识产权归属由双方另行协商",
+          "source": "synthetic_clause",
+          "category": "ip",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-533",
+            "CC-592",
+            "CC-496",
+            "CC-511",
+            "CC-470",
+            "CC-604",
+            "CC-610",
+            "CC-646",
+            "CPL-35",
+            "CC-585"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.2,
+            "ndcg": 0.2372
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.2,
+            "ndcg": 0.2372
+          }
+        },
+        {
+          "id": "q22",
+          "query": "合同价款由设备款、安装调试费和培训费组成，具体金额以实际发生为准",
+          "source": "synthetic_clause",
+          "category": "price",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-470",
+            "CC-626",
+            "CC-628",
+            "CC-634",
+            "CPL-35",
+            "CC-596",
+            "CC-511",
+            "CC-533",
+            "CC-510",
+            "CC-604"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.8316
+          }
+        },
+        {
+          "id": "q23",
+          "query": "合同总价为100万元，是否含税及发票类型未约定",
+          "source": "synthetic_clause",
+          "category": "price",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-510",
+            "CC-626",
+            "CC-511",
+            "CC-621",
+            "CC-634",
+            "CC-470",
+            "CC-628",
+            "CC-603",
+            "CC-623",
+            "CC-604"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.1667,
+            "ndcg": 0.2184
+          }
+        },
+        {
+          "id": "q24",
+          "query": "合同没有约定争议解决方式",
+          "source": "playbook_rule",
+          "category": "dispute",
+          "relevant": [
+            "CC-507",
+            "CPL-35"
+          ],
+          "ranked": [
+            "CC-507",
+            "CC-511",
+            "CC-510",
+            "CC-470",
+            "CC-496",
+            "CC-621",
+            "CC-646",
+            "CC-603",
+            "CC-591",
+            "CC-577"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          }
+        },
+        {
+          "id": "q25",
+          "query": "合同自双方签字或盖章之日起生效，但签署主体和授权文件未明确",
+          "source": "synthetic_clause",
+          "category": "general",
+          "relevant": [
+            "CC-470",
+            "CC-509"
+          ],
+          "ranked": [
+            "CC-510",
+            "CC-511",
+            "CPL-35",
+            "CC-496",
+            "CC-621",
+            "CC-563",
+            "CC-646",
+            "CC-507",
+            "CC-595",
+            "CC-603"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        }
+      ],
+      "overall_ci": {
+        "hit": {
+          "point": 0.88,
+          "low": 0.759,
+          "high": 1.0,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "recall": {
+          "point": 0.66,
+          "low": 0.5333,
+          "high": 0.7867,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "mrr": {
+          "point": 0.645,
+          "low": 0.4865,
+          "high": 0.8051,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "ndcg": {
+          "point": 0.5556,
+          "low": 0.4323,
+          "high": 0.6796,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        }
+      }
+    },
+    {
+      "name": "bm25_rerank",
+      "retrieval_mode": "bm25_only",
+      "rerank_mode": "dashscope",
+      "last_warning": null,
+      "overall": {
+        "hit@5": 0.8,
+        "recall@5": 0.54,
+        "mrr@5": 0.66,
+        "ndcg@5": 0.5149,
+        "hit@10": 0.84,
+        "recall@10": 0.58,
+        "mrr@10": 0.6644,
+        "ndcg@10": 0.5318
+      },
+      "by_source": {
+        "playbook_rule": {
+          "queries": 3,
+          "hit@10": 1.0,
+          "recall@10": 0.6111,
+          "mrr@10": 0.4815,
+          "ndcg@10": 0.4718
+        },
+        "synthetic_clause": {
+          "queries": 22,
+          "hit@10": 0.8182,
+          "recall@10": 0.5758,
+          "mrr@10": 0.6894,
+          "ndcg@10": 0.54
+        }
+      },
+      "queries": [
+        {
+          "id": "q01",
+          "query": "合同生效后5个工作日内支付合同总价50%的预付款",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-509",
+            "CC-577",
+            "CC-626"
+          ],
+          "ranked": [
+            "CC-626",
+            "CC-628",
+            "CC-595",
+            "CC-634",
+            "CC-510",
+            "CC-507",
+            "CPL-35",
+            "CC-646",
+            "CC-577",
+            "CC-533"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.6105
+          }
+        },
+        {
+          "id": "q02",
+          "query": "甲方应在验收或收货前一次性支付全部合同价款",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-620",
+            "CC-621",
+            "CC-626"
+          ],
+          "ranked": [
+            "CC-626",
+            "CC-628",
+            "CC-595",
+            "CC-596",
+            "CC-634",
+            "CC-510",
+            "CC-511",
+            "CC-470",
+            "CC-585",
+            "CC-590"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          }
+        },
+        {
+          "id": "q03",
+          "query": "合同未约定付款期限，或付款期限为验收后90日",
+          "source": "playbook_rule",
+          "category": "payment",
+          "relevant": [
+            "CC-510",
+            "CC-511",
+            "CC-628"
+          ],
+          "ranked": [
+            "CC-510",
+            "CC-511",
+            "CC-577",
+            "CC-628",
+            "CC-626",
+            "CC-584",
+            "CC-596",
+            "CC-533",
+            "CC-470",
+            "CC-634"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.9675
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.9675
+          }
+        },
+        {
+          "id": "q04",
+          "query": "质保金为合同总价的10%，质保期满五年后无息返还",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-509",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-584",
+            "CC-591",
+            "CC-510",
+            "CC-585",
+            "CC-533",
+            "CC-590",
+            "CC-563",
+            "CC-634"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        },
+        {
+          "id": "q05",
+          "query": "乙方应在合同生效后尽快交付货物",
+          "source": "synthetic_clause",
+          "category": "delivery",
+          "relevant": [
+            "CC-510",
+            "CC-511",
+            "CC-603"
+          ],
+          "ranked": [
+            "CC-595",
+            "CC-510",
+            "CC-603",
+            "CC-511",
+            "CC-646",
+            "CPL-35",
+            "CC-577",
+            "CC-604",
+            "CC-615",
+            "CC-507"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.5,
+            "ndcg": 0.7328
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.5,
+            "ndcg": 0.7328
+          }
+        },
+        {
+          "id": "q06",
+          "query": "交付地点由双方另行协商，运输方式由乙方决定",
+          "source": "synthetic_clause",
+          "category": "delivery",
+          "relevant": [
+            "CC-603",
+            "CC-604",
+            "CC-511"
+          ],
+          "ranked": [
+            "CC-603",
+            "CC-596",
+            "CC-470",
+            "CC-604",
+            "CC-511",
+            "CC-533",
+            "CC-592",
+            "CC-496",
+            "CC-626",
+            "CC-610"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.8529
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.8529
+          }
+        },
+        {
+          "id": "q07",
+          "query": "合同约定了付款和交付，但没有验收条款",
+          "source": "playbook_rule",
+          "category": "acceptance",
+          "relevant": [
+            "CC-620",
+            "CC-621",
+            "CC-622"
+          ],
+          "ranked": [
+            "CC-577",
+            "CC-511",
+            "CC-510",
+            "CC-646",
+            "CC-507",
+            "CPL-35",
+            "CC-470",
+            "CC-626",
+            "CC-620",
+            "CC-604"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 0.1111,
+            "ndcg": 0.1413
+          }
+        },
+        {
+          "id": "q08",
+          "query": "甲方应在收货后3日内完成验收，逾期未提出异议视为验收合格",
+          "source": "synthetic_clause",
+          "category": "acceptance",
+          "relevant": [
+            "CC-621",
+            "CC-622",
+            "CC-623"
+          ],
+          "ranked": [
+            "CC-622",
+            "CC-621",
+            "CC-590",
+            "CC-510",
+            "CC-496",
+            "CC-533",
+            "CC-585",
+            "CC-563",
+            "CC-584",
+            "CC-591"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7654
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7654
+          }
+        },
+        {
+          "id": "q09",
+          "query": "货物验收标准为符合国家相关标准",
+          "source": "synthetic_clause",
+          "category": "acceptance",
+          "relevant": [
+            "CC-615",
+            "CC-511"
+          ],
+          "ranked": [
+            "CC-596",
+            "CC-623",
+            "CC-511",
+            "CC-510"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.3333,
+            "ndcg": 0.3066
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.3333,
+            "ndcg": 0.3066
+          }
+        },
+        {
+          "id": "q10",
+          "query": "质保期为货物验收合格后6个月",
+          "source": "synthetic_clause",
+          "category": "warranty",
+          "relevant": [
+            "CC-615",
+            "CC-621"
+          ],
+          "ranked": [
+            "CC-510",
+            "CC-634",
+            "CC-563",
+            "CC-591",
+            "CC-584",
+            "CC-590",
+            "CC-585",
+            "CC-533"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        },
+        {
+          "id": "q11",
+          "query": "乙方逾期交付的，按逾期天数每日支付合同总价0.01%的违约金",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-577",
+            "CC-584",
+            "CC-585"
+          ],
+          "ranked": [
+            "CC-585",
+            "CC-595",
+            "CC-634",
+            "CC-626",
+            "CC-628"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          }
+        },
+        {
+          "id": "q12",
+          "query": "违约金总额不超过合同总价的3%",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-584",
+            "CC-585",
+            "CC-506"
+          ],
+          "ranked": [
+            "CC-585",
+            "CC-577",
+            "CC-584",
+            "CC-507",
+            "CC-590",
+            "CC-533",
+            "CC-511",
+            "CC-563",
+            "CC-510",
+            "CC-610"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7039
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.7039
+          }
+        },
+        {
+          "id": "q13",
+          "query": "乙方不承担任何间接损失、利润损失和商誉损失",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-506",
+            "CC-584"
+          ],
+          "ranked": [
+            "CC-584",
+            "CC-604",
+            "CC-592",
+            "CC-591",
+            "CC-507",
+            "CC-533",
+            "CC-577",
+            "CC-511",
+            "CC-510",
+            "CC-585"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          }
+        },
+        {
+          "id": "q14",
+          "query": "货物质量不合格时，乙方只负责维修，不承担退货或换货责任",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-610",
+            "CC-615",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-610",
+            "CC-596",
+            "CC-621",
+            "CC-615",
+            "CC-604",
+            "CC-470",
+            "CC-620",
+            "CC-510",
+            "CC-577",
+            "CC-507"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.6714
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.8127
+          }
+        },
+        {
+          "id": "q15",
+          "query": "只有在乙方连续三次违约时，甲方才有权解除合同",
+          "source": "synthetic_clause",
+          "category": "termination",
+          "relevant": [
+            "CC-563",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-563",
+            "CC-593",
+            "CC-592",
+            "CC-533",
+            "CC-585",
+            "CC-591",
+            "CC-584",
+            "CC-634",
+            "CC-511",
+            "CC-610"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          }
+        },
+        {
+          "id": "q16",
+          "query": "合同期满后自动续约一年，任何一方无需提前通知",
+          "source": "synthetic_clause",
+          "category": "termination",
+          "relevant": [
+            "CC-509",
+            "CC-470"
+          ],
+          "ranked": [
+            "CC-509",
+            "CC-533",
+            "CC-563",
+            "CC-590",
+            "CC-510",
+            "CC-584",
+            "CC-634",
+            "CC-585",
+            "CC-621",
+            "CC-591"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          }
+        },
+        {
+          "id": "q17",
+          "query": "因本合同发生的争议由乙方所在地人民法院管辖",
+          "source": "synthetic_clause",
+          "category": "dispute",
+          "relevant": [
+            "CPL-35"
+          ],
+          "ranked": [
+            "CPL-35",
+            "CC-470",
+            "CC-507",
+            "CC-592",
+            "CC-533",
+            "CC-511",
+            "CC-584",
+            "CC-585",
+            "CC-506",
+            "CC-604"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q18",
+          "query": "争议可以提交仲裁，也可以向合同签订地法院起诉",
+          "source": "synthetic_clause",
+          "category": "dispute",
+          "relevant": [
+            "CPL-35",
+            "CC-507"
+          ],
+          "ranked": [
+            "CPL-35",
+            "CC-507",
+            "CC-470",
+            "CC-533",
+            "CC-511",
+            "CC-585",
+            "CC-593",
+            "CC-634",
+            "CC-497",
+            "CC-603"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q19",
+          "query": "因不可抗力造成的损失乙方不承担任何责任，且无需通知甲方",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-590"
+          ],
+          "ranked": [
+            "CC-590",
+            "CC-506",
+            "CC-584",
+            "CC-591",
+            "CC-592",
+            "CC-604",
+            "CC-585",
+            "CC-577",
+            "CC-507",
+            "CC-563"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q20",
+          "query": "乙方应对本合同项下的技术资料和商业信息承担保密义务，甲方不受限制",
+          "source": "synthetic_clause",
+          "category": "compliance",
+          "relevant": [
+            "CC-509"
+          ],
+          "ranked": [
+            "CC-507",
+            "CC-577",
+            "CC-592",
+            "CC-533",
+            "CC-584",
+            "CC-511",
+            "CC-604",
+            "CC-510",
+            "CC-496",
+            "CC-590"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        },
+        {
+          "id": "q21",
+          "query": "本合同项下产生的知识产权归属由双方另行协商",
+          "source": "synthetic_clause",
+          "category": "ip",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-533",
+            "CC-470",
+            "CC-604",
+            "CC-511",
+            "CC-592",
+            "CC-496",
+            "CC-591",
+            "CC-585",
+            "CC-610"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "ndcg": 0.3869
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "ndcg": 0.3869
+          }
+        },
+        {
+          "id": "q22",
+          "query": "合同价款由设备款、安装调试费和培训费组成，具体金额以实际发生为准",
+          "source": "synthetic_clause",
+          "category": "price",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-626",
+            "CC-595",
+            "CC-596",
+            "CC-510",
+            "CC-470",
+            "CPL-35",
+            "CC-511",
+            "CC-628",
+            "CC-533",
+            "CC-592"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.3333,
+            "ndcg": 0.5438
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.3333,
+            "ndcg": 0.5438
+          }
+        },
+        {
+          "id": "q23",
+          "query": "合同总价为100万元，是否含税及发票类型未约定",
+          "source": "synthetic_clause",
+          "category": "price",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-511",
+            "CC-470",
+            "CC-626",
+            "CC-510",
+            "CC-584",
+            "CC-509",
+            "CC-577",
+            "CC-628",
+            "CC-563",
+            "CC-604"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "ndcg": 0.3869
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "ndcg": 0.3869
+          }
+        },
+        {
+          "id": "q24",
+          "query": "合同没有约定争议解决方式",
+          "source": "playbook_rule",
+          "category": "dispute",
+          "relevant": [
+            "CC-507",
+            "CPL-35"
+          ],
+          "ranked": [
+            "CC-510",
+            "CC-511",
+            "CC-507",
+            "CC-470",
+            "CC-577",
+            "CC-596",
+            "CC-496",
+            "CC-646",
+            "CC-626",
+            "CC-585"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.3333,
+            "ndcg": 0.3066
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.3333,
+            "ndcg": 0.3066
+          }
+        },
+        {
+          "id": "q25",
+          "query": "合同自双方签字或盖章之日起生效，但签署主体和授权文件未明确",
+          "source": "synthetic_clause",
+          "category": "general",
+          "relevant": [
+            "CC-470",
+            "CC-509"
+          ],
+          "ranked": [
+            "CC-595",
+            "CPL-35",
+            "CC-510",
+            "CC-646",
+            "CC-507",
+            "CC-511",
+            "CC-577",
+            "CC-592",
+            "CC-496",
+            "CC-506"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        }
+      ],
+      "overall_ci": {
+        "hit": {
+          "point": 0.84,
+          "low": 0.68,
+          "high": 0.96,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "recall": {
+          "point": 0.58,
+          "low": 0.4533,
+          "high": 0.7133,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "mrr": {
+          "point": 0.6644,
+          "low": 0.5066,
+          "high": 0.8133,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "ndcg": {
+          "point": 0.5318,
+          "low": 0.4108,
+          "high": 0.6524,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        }
+      }
+    },
+    {
+      "name": "hybrid_rerank",
+      "retrieval_mode": "hybrid",
+      "rerank_mode": "dashscope",
+      "last_warning": null,
+      "overall": {
+        "hit@5": 0.88,
+        "recall@5": 0.6867,
+        "mrr@5": 0.6867,
+        "ndcg@5": 0.6001,
+        "hit@10": 0.96,
+        "recall@10": 0.8333,
+        "mrr@10": 0.6983,
+        "ndcg@10": 0.6631
+      },
+      "by_source": {
+        "playbook_rule": {
+          "queries": 3,
+          "hit@10": 0.6667,
+          "recall@10": 0.6667,
+          "mrr@10": 0.4444,
+          "ndcg@10": 0.5038
+        },
+        "synthetic_clause": {
+          "queries": 22,
+          "hit@10": 1.0,
+          "recall@10": 0.8561,
+          "mrr@10": 0.7329,
+          "ndcg@10": 0.6849
+        }
+      },
+      "queries": [
+        {
+          "id": "q01",
+          "query": "合同生效后5个工作日内支付合同总价50%的预付款",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-509",
+            "CC-577",
+            "CC-626"
+          ],
+          "ranked": [
+            "CC-626",
+            "CC-628",
+            "CC-595",
+            "CC-634",
+            "CC-510",
+            "CC-596",
+            "CC-507",
+            "CPL-35",
+            "CC-470",
+            "CC-646"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          }
+        },
+        {
+          "id": "q02",
+          "query": "甲方应在验收或收货前一次性支付全部合同价款",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-620",
+            "CC-621",
+            "CC-626"
+          ],
+          "ranked": [
+            "CC-626",
+            "CC-628",
+            "CC-595",
+            "CC-596",
+            "CC-634",
+            "CC-510",
+            "CC-511",
+            "CC-470",
+            "CC-646",
+            "CC-509"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          }
+        },
+        {
+          "id": "q03",
+          "query": "合同未约定付款期限，或付款期限为验收后90日",
+          "source": "playbook_rule",
+          "category": "payment",
+          "relevant": [
+            "CC-510",
+            "CC-511",
+            "CC-628"
+          ],
+          "ranked": [
+            "CC-510",
+            "CC-511",
+            "CC-577",
+            "CC-628",
+            "CC-646",
+            "CC-626",
+            "CC-584",
+            "CC-596",
+            "CC-533",
+            "CC-470"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.9675
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.9675
+          }
+        },
+        {
+          "id": "q04",
+          "query": "质保金为合同总价的10%，质保期满五年后无息返还",
+          "source": "synthetic_clause",
+          "category": "payment",
+          "relevant": [
+            "CC-509",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-596",
+            "CC-584",
+            "CC-470",
+            "CC-591",
+            "CC-510",
+            "CC-592",
+            "CC-585",
+            "CC-577",
+            "CC-511",
+            "CC-533"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.125,
+            "ndcg": 0.1934
+          }
+        },
+        {
+          "id": "q05",
+          "query": "乙方应在合同生效后尽快交付货物",
+          "source": "synthetic_clause",
+          "category": "delivery",
+          "relevant": [
+            "CC-510",
+            "CC-511",
+            "CC-603"
+          ],
+          "ranked": [
+            "CC-596",
+            "CC-595",
+            "CC-510",
+            "CC-470",
+            "CC-603",
+            "CC-511",
+            "CC-646",
+            "CPL-35",
+            "CC-577",
+            "CC-604"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 0.3333,
+            "ndcg": 0.4162
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.3333,
+            "ndcg": 0.5833
+          }
+        },
+        {
+          "id": "q06",
+          "query": "交付地点由双方另行协商，运输方式由乙方决定",
+          "source": "synthetic_clause",
+          "category": "delivery",
+          "relevant": [
+            "CC-603",
+            "CC-604",
+            "CC-511"
+          ],
+          "ranked": [
+            "CC-603",
+            "CC-596",
+            "CC-510",
+            "CC-470",
+            "CPL-35",
+            "CC-646",
+            "CC-604",
+            "CC-511",
+            "CC-507",
+            "CC-615"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.3333,
+            "mrr": 1.0,
+            "ndcg": 0.4693
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.7737
+          }
+        },
+        {
+          "id": "q07",
+          "query": "合同约定了付款和交付，但没有验收条款",
+          "source": "playbook_rule",
+          "category": "acceptance",
+          "relevant": [
+            "CC-620",
+            "CC-621",
+            "CC-622"
+          ],
+          "ranked": [
+            "CC-595",
+            "CC-577",
+            "CC-511",
+            "CC-510",
+            "CC-596",
+            "CC-646",
+            "CC-507",
+            "CPL-35",
+            "CC-509",
+            "CC-470"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          }
+        },
+        {
+          "id": "q08",
+          "query": "甲方应在收货后3日内完成验收，逾期未提出异议视为验收合格",
+          "source": "synthetic_clause",
+          "category": "acceptance",
+          "relevant": [
+            "CC-621",
+            "CC-622",
+            "CC-623"
+          ],
+          "ranked": [
+            "CC-620",
+            "CC-622",
+            "CC-623",
+            "CC-596",
+            "CC-604",
+            "CC-621",
+            "CC-615",
+            "CC-470",
+            "CC-509",
+            "CC-577"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 0.5,
+            "ndcg": 0.5307
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.5,
+            "ndcg": 0.6979
+          }
+        },
+        {
+          "id": "q09",
+          "query": "货物验收标准为符合国家相关标准",
+          "source": "synthetic_clause",
+          "category": "acceptance",
+          "relevant": [
+            "CC-615",
+            "CC-511"
+          ],
+          "ranked": [
+            "CC-596",
+            "CC-615",
+            "CC-623",
+            "CC-620",
+            "CC-511",
+            "CC-622",
+            "CC-634",
+            "CC-628",
+            "CC-626",
+            "CC-507"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.5,
+            "ndcg": 0.6241
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.5,
+            "ndcg": 0.6241
+          }
+        },
+        {
+          "id": "q10",
+          "query": "质保期为货物验收合格后6个月",
+          "source": "synthetic_clause",
+          "category": "warranty",
+          "relevant": [
+            "CC-615",
+            "CC-621"
+          ],
+          "ranked": [
+            "CC-620",
+            "CC-622",
+            "CC-615",
+            "CC-596",
+            "CC-604",
+            "CC-623",
+            "CC-621",
+            "CC-510",
+            "CC-610",
+            "CC-470"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.3333,
+            "ndcg": 0.3066
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.3333,
+            "ndcg": 0.511
+          }
+        },
+        {
+          "id": "q11",
+          "query": "乙方逾期交付的，按逾期天数每日支付合同总价0.01%的违约金",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-577",
+            "CC-584",
+            "CC-585"
+          ],
+          "ranked": [
+            "CC-585",
+            "CC-577",
+            "CC-584",
+            "CC-592",
+            "CC-593",
+            "CC-590",
+            "CC-595",
+            "CC-591",
+            "CC-563",
+            "CC-604"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q12",
+          "query": "违约金总额不超过合同总价的3%",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-584",
+            "CC-585",
+            "CC-506"
+          ],
+          "ranked": [
+            "CC-585",
+            "CC-592",
+            "CC-577",
+            "CC-584",
+            "CC-591",
+            "CC-593",
+            "CC-507",
+            "CC-470",
+            "CPL-35",
+            "CC-590"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.6714
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.6714
+          }
+        },
+        {
+          "id": "q13",
+          "query": "乙方不承担任何间接损失、利润损失和商誉损失",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-506",
+            "CC-584"
+          ],
+          "ranked": [
+            "CC-584",
+            "CC-604",
+            "CC-592",
+            "CC-591",
+            "CC-507",
+            "CC-509",
+            "CC-533",
+            "CPL-35",
+            "CC-506",
+            "CC-577"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0,
+            "ndcg": 0.6131
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.7977
+          }
+        },
+        {
+          "id": "q14",
+          "query": "货物质量不合格时，乙方只负责维修，不承担退货或换货责任",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-610",
+            "CC-615",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-610",
+            "CC-596",
+            "CC-621",
+            "CC-506",
+            "CC-615",
+            "CC-604",
+            "CC-470",
+            "CC-620",
+            "CC-510",
+            "CC-577"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.6667,
+            "mrr": 1.0,
+            "ndcg": 0.6508
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.7865
+          }
+        },
+        {
+          "id": "q15",
+          "query": "只有在乙方连续三次违约时，甲方才有权解除合同",
+          "source": "synthetic_clause",
+          "category": "termination",
+          "relevant": [
+            "CC-563",
+            "CC-577"
+          ],
+          "ranked": [
+            "CC-563",
+            "CC-593",
+            "CC-592",
+            "CC-577",
+            "CC-533",
+            "CC-585",
+            "CC-507",
+            "CC-591",
+            "CC-584",
+            "CPL-35"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.8772
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.8772
+          }
+        },
+        {
+          "id": "q16",
+          "query": "合同期满后自动续约一年，任何一方无需提前通知",
+          "source": "synthetic_clause",
+          "category": "termination",
+          "relevant": [
+            "CC-509",
+            "CC-470"
+          ],
+          "ranked": [
+            "CC-470",
+            "CC-646",
+            "CC-509",
+            "CC-533",
+            "CC-563",
+            "CC-590",
+            "CC-496",
+            "CC-577",
+            "CC-507",
+            "CC-511"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.9197
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 0.9197
+          }
+        },
+        {
+          "id": "q17",
+          "query": "因本合同发生的争议由乙方所在地人民法院管辖",
+          "source": "synthetic_clause",
+          "category": "dispute",
+          "relevant": [
+            "CPL-35"
+          ],
+          "ranked": [
+            "CPL-35",
+            "CC-470",
+            "CC-507",
+            "CC-592",
+            "CC-533",
+            "CC-646",
+            "CC-596",
+            "CC-511",
+            "CC-584",
+            "CC-585"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q18",
+          "query": "争议可以提交仲裁，也可以向合同签订地法院起诉",
+          "source": "synthetic_clause",
+          "category": "dispute",
+          "relevant": [
+            "CPL-35",
+            "CC-507"
+          ],
+          "ranked": [
+            "CPL-35",
+            "CC-507",
+            "CC-470",
+            "CC-533",
+            "CC-592",
+            "CC-577",
+            "CC-584",
+            "CC-596",
+            "CC-590",
+            "CC-511"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q19",
+          "query": "因不可抗力造成的损失乙方不承担任何责任，且无需通知甲方",
+          "source": "synthetic_clause",
+          "category": "liability",
+          "relevant": [
+            "CC-590"
+          ],
+          "ranked": [
+            "CC-590",
+            "CC-506",
+            "CC-584",
+            "CC-591",
+            "CC-592",
+            "CC-604",
+            "CC-585",
+            "CC-577",
+            "CC-646",
+            "CC-507"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q20",
+          "query": "乙方应对本合同项下的技术资料和商业信息承担保密义务，甲方不受限制",
+          "source": "synthetic_clause",
+          "category": "compliance",
+          "relevant": [
+            "CC-509"
+          ],
+          "ranked": [
+            "CC-509",
+            "CC-596",
+            "CC-507",
+            "CC-470",
+            "CPL-35",
+            "CC-577",
+            "CC-592",
+            "CC-533",
+            "CC-584",
+            "CC-511"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0,
+            "ndcg": 1.0
+          }
+        },
+        {
+          "id": "q21",
+          "query": "本合同项下产生的知识产权归属由双方另行协商",
+          "source": "synthetic_clause",
+          "category": "ip",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CPL-35",
+            "CC-595",
+            "CC-507",
+            "CC-533",
+            "CC-646",
+            "CC-470",
+            "CC-604",
+            "CC-511",
+            "CC-592",
+            "CC-496"
+          ],
+          "metrics@5": {
+            "hit": 0.0,
+            "recall": 0.0,
+            "mrr": 0.0,
+            "ndcg": 0.0
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.1667,
+            "ndcg": 0.2184
+          }
+        },
+        {
+          "id": "q22",
+          "query": "合同价款由设备款、安装调试费和培训费组成，具体金额以实际发生为准",
+          "source": "synthetic_clause",
+          "category": "price",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-626",
+            "CC-595",
+            "CC-596",
+            "CC-510",
+            "CC-470",
+            "CPL-35",
+            "CC-511",
+            "CC-646",
+            "CC-628",
+            "CC-584"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.3333,
+            "ndcg": 0.5438
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.3333,
+            "ndcg": 0.5438
+          }
+        },
+        {
+          "id": "q23",
+          "query": "合同总价为100万元，是否含税及发票类型未约定",
+          "source": "synthetic_clause",
+          "category": "price",
+          "relevant": [
+            "CC-470",
+            "CC-596"
+          ],
+          "ranked": [
+            "CC-595",
+            "CC-596",
+            "CC-646",
+            "CC-511",
+            "CC-470",
+            "CPL-35",
+            "CC-507",
+            "CC-626",
+            "CC-510",
+            "CC-584"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.5,
+            "ndcg": 0.6241
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.5,
+            "ndcg": 0.6241
+          }
+        },
+        {
+          "id": "q24",
+          "query": "合同没有约定争议解决方式",
+          "source": "playbook_rule",
+          "category": "dispute",
+          "relevant": [
+            "CC-507",
+            "CPL-35"
+          ],
+          "ranked": [
+            "CC-510",
+            "CC-511",
+            "CC-507",
+            "CC-470",
+            "CPL-35",
+            "CC-533",
+            "CC-577",
+            "CC-596",
+            "CC-496",
+            "CC-646"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.3333,
+            "ndcg": 0.5438
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 1.0,
+            "mrr": 0.3333,
+            "ndcg": 0.5438
+          }
+        },
+        {
+          "id": "q25",
+          "query": "合同自双方签字或盖章之日起生效，但签署主体和授权文件未明确",
+          "source": "synthetic_clause",
+          "category": "general",
+          "relevant": [
+            "CC-470",
+            "CC-509"
+          ],
+          "ranked": [
+            "CC-595",
+            "CPL-35",
+            "CC-470",
+            "CC-596",
+            "CC-510",
+            "CC-646",
+            "CC-533",
+            "CC-507",
+            "CC-511",
+            "CC-577"
+          ],
+          "metrics@5": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.3333,
+            "ndcg": 0.3066
+          },
+          "metrics@10": {
+            "hit": 1.0,
+            "recall": 0.5,
+            "mrr": 0.3333,
+            "ndcg": 0.3066
+          }
+        }
+      ],
+      "overall_ci": {
+        "hit": {
+          "point": 0.96,
+          "low": 0.88,
+          "high": 1.0,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "recall": {
+          "point": 0.8333,
+          "low": 0.72,
+          "high": 0.9335,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "mrr": {
+          "point": 0.6983,
+          "low": 0.555,
+          "high": 0.8333,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        },
+        "ndcg": {
+          "point": 0.6631,
+          "low": 0.5563,
+          "high": 0.7675,
+          "iterations": 2000,
+          "seed": 42,
+          "confidence": 0.95
+        }
+      }
+    }
+  ],
+  "stats_recomputed_at": "2026-10-28T16:31:06+08:00"
+}

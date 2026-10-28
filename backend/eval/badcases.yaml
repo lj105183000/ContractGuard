@@ -1,0 +1,30 @@
+# Known evaluation badcases used by tests/test_badcases.py.
+#
+# Rules mode is fully offline and is the CI regression target. Full live
+# results are a saved snapshot: if a known false positive is fixed, update this
+# file and regenerate eval/results_full.json instead of deleting the assertion.
+rules:
+  expected:
+    tp: 48
+    fp: 0
+    fn: 3
+  known_false_negatives:
+    - sample_id: sample_04
+      label_id: sample_04-L07
+      reason: "验收标准是否需双方确认的语义点，规则未覆盖"
+    - sample_id: sample_06
+      label_id: sample_06-L05
+      reason: "运费/风险转移措辞的语义点，规则未覆盖"
+    - sample_id: sample_08
+      label_id: sample_08-L01
+      reason: "全部价款/质保金支付结构的语义点，规则未覆盖"
+  require_rule_findings_confirmed: true
+
+full:
+  note: "Live qwen-plus 结果；保存的快照用于披露回归，不代表每次重跑都会得到相同标题。"
+  known_false_positive_titles:
+    - "保密义务缺失"
+    - "买方解除权缺失"
+    - "质保期起算点不明确"
+    - "合同生效条件表述不严谨"
+    - "逾期违约金过低"

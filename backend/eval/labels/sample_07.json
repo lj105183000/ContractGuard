@@ -1,0 +1,72 @@
+[
+  {
+    "id": "sample_07-L01",
+    "clause_article": "第三条",
+    "category": "payment",
+    "severity": "medium",
+    "rule_id": "PAY-003",
+    "keywords": [
+      "90 日"
+    ]
+  },
+  {
+    "id": "sample_07-L02",
+    "clause_article": "第七条",
+    "category": "liability",
+    "severity": "medium",
+    "rule_id": "LIA-001",
+    "keywords": [
+      "万分之二"
+    ]
+  },
+  {
+    "id": "sample_07-L03",
+    "clause_article": "第八条",
+    "category": "liability",
+    "severity": "medium",
+    "rule_id": "FOR-001",
+    "keywords": [
+      "不可抗力"
+    ]
+  },
+  {
+    "id": "sample_07-L04",
+    "clause_article": "第九条",
+    "category": "termination",
+    "severity": "medium",
+    "rule_id": "TER-002",
+    "keywords": [
+      "自动续期"
+    ]
+  },
+  {
+    "id": "sample_07-L05",
+    "clause_article": "第十一条",
+    "category": "dispute",
+    "severity": "high",
+    "rule_id": "DIS-001",
+    "keywords": [
+      "乙方所在地"
+    ]
+  },
+  {
+    "id": "sample_07-L06",
+    "clause_article": "第五条",
+    "category": "acceptance",
+    "severity": "medium",
+    "rule_id": "ACC-003",
+    "keywords": [
+      "国家相关标准"
+    ]
+  },
+  {
+    "id": "sample_07-L07",
+    "clause_article": "第十条",
+    "category": "compliance",
+    "severity": "medium",
+    "rule_id": "COM-001",
+    "keywords": [
+      "保密"
+    ]
+  }
+]

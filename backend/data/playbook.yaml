@@ -1,0 +1,393 @@
+# 企业采购合同审查 Playbook（25 条）
+#
+# condition DSL（只支持这些安全操作符，不使用 eval）：
+#   clause_type_absent: {value: acceptance}
+#   fact: {field: payment.prepayment_ratio, op: ">=", value: 0.3}
+#        op 支持 > >= < <= == != is_null not_null contains not_contains
+#   regex: {pattern: '...', target: full_text | clause_text}
+#   all / any: {conditions: [...]}
+#   not: {condition: {...}}
+#
+# 字段缺失时条件返回 None（未知），规则会被跳过，避免把“没抽取到”误报成风险。
+# legal_basis 必须是 data/legal/*.yaml 中存在的 id。
+
+- id: PAY-001
+  title: 预付款比例过高
+  description: 预付款超过合同总价 30%，买方资金占用和供应商违约风险显著上升。
+  category: payment
+  severity: high
+  applies_to: [payment]
+  condition:
+    type: fact
+    field: payment.prepayment_ratio
+    op: ">="
+    value: 0.30
+  recommendation: 将预付款比例降至 30% 以内；如供应商坚持，要求提供等额预付款保函或履约保函。
+  fallback: 预付款不超过 30%，其余款项按交付/验收进度支付。
+  legal_basis: [CC-509, CC-577, CC-626]
+
+- id: PAY-002
+  title: 付款早于验收或交付即全款
+  description: 合同约定交付即支付全款、未给买方留出验收和索赔窗口，质量风险全部由买方承担。
+  category: payment
+  severity: high
+  applies_to: [payment, acceptance]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: payment.full_payment_on_delivery, op: "==", value: true}
+      - {type: fact, field: payment.payment_after_acceptance, op: "==", value: false}
+  recommendation: 改为“验收合格后支付尾款”，并保留不低于 5%–10% 的质保金，质保期满后无息返还。
+  fallback: 至少保留 10% 尾款待验收合格且无质量异议后支付。
+  legal_basis: [CC-620, CC-621, CC-626]
+
+- id: PAY-003
+  title: 付款期限缺失或过长
+  description: 未约定付款期限，或约定超过 60 天的账期且无逾期付款责任，买方现金流和催款成本上升。
+  category: payment
+  severity: medium
+  applies_to: [payment]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: payment.payment_days, op: is_null}
+      - {type: fact, field: payment.payment_days, op: ">", value: 60}
+  recommendation: 明确付款触发条件、付款期限和逾期付款违约金；建议账期不超过 60 天。
+  fallback: 账期不超过 60 天，逾期按日万分之五支付违约金。
+  legal_basis: [CC-510, CC-511, CC-628]
+
+- id: PAY-004
+  title: 质保金比例过高或无返还时间
+  description: 质保金比例超过 10%，或未约定质保金返还时间，买方长期占用资金且缺乏退出机制。
+  category: payment
+  severity: medium
+  applies_to: [payment, warranty]
+  condition:
+    type: all
+    conditions:
+      - {type: fact, field: payment.retention_ratio, op: ">", value: 0}
+      - type: any
+        conditions:
+          - {type: fact, field: payment.retention_ratio, op: ">", value: 0.10}
+          - {type: fact, field: payment.retention_release_days, op: is_null}
+  recommendation: 质保金不超过合同总价的 10%，并明确质保期届满后 30 日内无息返还。
+  fallback: 质保金 5%–10%，质保期满且无质量问题后 30 日内返还。
+  legal_basis: [CC-509, CC-577]
+
+- id: DEL-001
+  title: 交付时间不明确
+  description: 使用“尽快”“另行通知”等模糊表述，供应商逾期时买方难以主张违约责任。
+  category: delivery
+  severity: high
+  applies_to: [delivery]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: delivery.vague, op: "==", value: true}
+      - {type: regex, pattern: '尽快|另行通知|视情况|适时', target: full_text}
+  recommendation: 写明确切交付日期或可计算的交付期限（如“合同生效后 30 日内”），并约定逾期交付违约金。
+  fallback: 合同生效后 30 日内交付；逾期按日万分之五计违约金。
+  legal_basis: [CC-510, CC-511, CC-603]
+
+- id: DEL-002
+  title: 交付地点或方式不明确
+  description: 未约定交付地点/运输方式，风险转移和运费承担容易产生争议。
+  category: delivery
+  severity: medium
+  applies_to: [delivery]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: delivery.place, op: is_null}
+      - {type: regex, pattern: '交货地点[^。；]{0,20}(待定|另行)|交付地点[^。；]{0,20}(待定|另行)', target: full_text}
+  recommendation: 明确交付地点、运输方式、运费与卸货责任，并约定风险转移节点。
+  fallback: 交付至买方指定仓库，运费及运输风险由供应商承担至验收合格。
+  legal_basis: [CC-603, CC-604, CC-511]
+
+- id: ACC-001
+  title: 缺少验收条款
+  description: 合同没有验收标准、验收期限和验收不合格的处理方式，买方事后维权困难。
+  category: acceptance
+  severity: high
+  applies_to: [acceptance]
+  condition:
+    type: any
+    conditions:
+      - {type: clause_type_absent, value: acceptance}
+      - {type: fact, field: acceptance.present, op: "==", value: false}
+  recommendation: 增加验收条款：验收标准、验收期限、验收方式、不合格退换/整改及费用承担。
+  fallback: 买方在收货后 15 日内验收；不合格的，供应商应在 10 日内退换并承担费用。
+  legal_basis: [CC-620, CC-621, CC-622]
+
+- id: ACC-002
+  title: 验收期限过短或视为自动验收
+  description: 验收期少于 3 日或“未提出异议视为验收合格”，买方难以完成全面检验。
+  category: acceptance
+  severity: high
+  applies_to: [acceptance]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: acceptance.period_days, op: "<=", value: 3}
+      - {type: fact, field: acceptance.deemed_acceptance, op: "==", value: true}
+  recommendation: 验收期不少于 15 日；删除“视为验收合格”或改为“经买方书面确认后视为验收合格”。
+  fallback: 验收期 15 日，验收合格以买方书面确认为准。
+  legal_basis: [CC-621, CC-622, CC-623]
+
+- id: ACC-003
+  title: 验收标准模糊
+  description: 只约定“符合国家相关标准”，未明确具体标准号、技术参数或封样，验收争议空间大。
+  category: acceptance
+  severity: medium
+  applies_to: [acceptance, delivery]
+  condition:
+    type: all
+    conditions:
+      - {type: regex, pattern: '符合国家(相关)?标准|符合国家标准', target: full_text}
+      - {type: not, condition: {type: regex, pattern: 'GB/?T?\s*\d+|GB\s*\d+', target: full_text}}
+  recommendation: 明确标准号、技术规格书、封样或双方确认的验收清单，作为合同附件。
+  fallback: 以附件《技术规格书》及双方封样为验收标准。
+  legal_basis: [CC-615, CC-511]
+
+- id: WAR-001
+  title: 质保期过短
+  description: 货物类采购质保期少于 12 个月，质量缺陷可能在质保期后集中暴露。
+  category: warranty
+  severity: medium
+  applies_to: [warranty]
+  condition:
+    type: fact
+    field: warranty.months
+    op: "<"
+    value: 12
+  recommendation: 货物类质保期不少于 12 个月；设备类建议 24 个月，并明确起算点和维修响应时限。
+  fallback: 质保期 12 个月，自验收合格之日起算。
+  legal_basis: [CC-615, CC-621]
+
+- id: LIA-001
+  title: 逾期违约金过低
+  description: 逾期违约金低于日万分之三，违约成本不足以约束供应商按期交付。
+  category: liability
+  severity: medium
+  applies_to: [liability]
+  condition:
+    type: fact
+    field: liability.penalty_daily_rate
+    op: "<"
+    value: 0.0003
+  recommendation: 逾期违约金建议为日万分之五；同时约定逾期超过一定天数时买方可解除合同。
+  fallback: 逾期按日万分之五计违约金；逾期超过 30 日买方可解除合同。
+  legal_basis: [CC-577, CC-584, CC-585]
+
+- id: LIA-002
+  title: 违约金上限过低
+  description: 违约金上限低于合同总价的 5%，难以覆盖质量事故、停工或替代采购损失。
+  category: liability
+  severity: high
+  applies_to: [liability]
+  condition:
+    type: fact
+    field: liability.penalty_cap_ratio
+    op: "<"
+    value: 0.05
+  recommendation: 违约金上限不低于合同总价的 10%–20%；故意或重大过失造成的损失不受上限限制。
+  fallback: 违约金上限为合同总价的 10%，重大过失不受上限限制。
+  legal_basis: [CC-584, CC-585, CC-506]
+
+- id: LIA-003
+  title: 无限责任或间接损失条款
+  description: 合同约定供应商承担无限责任或包含间接损失、可得利益损失，可能导致责任范围失控。
+  category: liability
+  severity: high
+  applies_to: [liability, general]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: liability.unlimited_liability, op: "==", value: true}
+      - {type: fact, field: liability.indirect_damages, op: "==", value: true}
+  recommendation: 设置责任上限（如合同总价的 100%），明确排除间接损失；故意/重大过失除外。
+  fallback: 除故意或重大过失外，供应商累计责任不超过合同总价。
+  legal_basis: [CC-506, CC-584]
+
+- id: LIA-004
+  title: 质量问题无退换或索赔机制
+  description: 合同未约定质量不合格时的退货、换货、修理、降价或索赔权利。
+  category: liability
+  severity: high
+  applies_to: [warranty, liability, acceptance]
+  condition:
+    type: fact
+    field: liability.quality_remedy
+    op: "=="
+    value: false
+  recommendation: 增加质量违约救济：退货、换货、修理、降价、赔偿损失，并明确费用由供应商承担。
+  fallback: 质量不合格的，买方有权要求退换、修理或降价，费用由供应商承担。
+  legal_basis: [CC-610, CC-615, CC-577]
+
+- id: TER-001
+  title: 买方解除权缺失或条件不对等
+  description: 只赋予供应商解除权，或买方解除条件过于苛刻，出现重大违约时难以退出合同。
+  category: termination
+  severity: high
+  applies_to: [termination]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: termination.buyer_right, op: "==", value: false}
+      - {type: fact, field: termination.one_sided, op: "==", value: true}
+  recommendation: 明确买方在供应商逾期、质量不合格、根本违约等情形下的解除权及退款/赔偿机制。
+  fallback: 供应商逾期超过 30 日或质量不合格拒不整改的，买方有权解除合同并要求赔偿。
+  legal_basis: [CC-563, CC-577]
+
+- id: TER-002
+  title: 自动续约且无提前通知
+  description: 合同自动续约但未约定提前通知期，买方可能被动续约并承担下一周期义务。
+  category: termination
+  severity: medium
+  applies_to: [termination, general]
+  condition:
+    type: all
+    conditions:
+      - {type: regex, pattern: '自动续约|自动续期|自动顺延', target: full_text}
+      - {type: not, condition: {type: regex, pattern: '提前[^。；]{0,20}(通知|书面)', target: full_text}}
+  recommendation: 改为“任何一方可在期满前 30 日书面通知不续约”，避免自动续约。
+  fallback: 任一方提前 30 日书面通知即可不续约。
+  legal_basis: [CC-509, CC-470]
+
+- id: DIS-001
+  title: 管辖法院对买方不利
+  description: 约定由供应商所在地法院管辖，买方异地诉讼成本高，维权意愿下降。
+  category: dispute
+  severity: high
+  applies_to: [dispute]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: dispute.unfavorable_venue, op: "==", value: true}
+      - {type: regex, pattern: '供方所在地[^。；]{0,20}法院|出卖人所在地[^。；]{0,20}法院|乙方所在地[^。；]{0,20}法院', target: full_text}
+  recommendation: 改为买方所在地法院管辖，或约定合同履行地（买方所在地）法院管辖。
+  fallback: 由买方所在地有管辖权的人民法院管辖。
+  legal_basis: [CPL-35]
+
+- id: DIS-002
+  title: 诉讼与仲裁并存或约定不明
+  description: 同时约定仲裁和诉讼，或仲裁机构名称不明确，争议解决条款可能无效或产生管辖争议。
+  category: dispute
+  severity: high
+  applies_to: [dispute]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: dispute.both_litigation_and_arbitration, op: "==", value: true}
+      - type: all
+        conditions:
+          - {type: regex, pattern: '提交[^。；]{0,30}仲裁委员会|仲裁解决', target: full_text}
+          - {type: regex, pattern: '人民法院|法院起诉', target: full_text}
+  recommendation: 二选一：明确仲裁机构名称与仲裁规则，或明确有管辖权的法院；不要同时约定。
+  fallback: 由买方所在地人民法院管辖。
+  legal_basis: [CPL-35, CC-507]
+
+- id: FOR-001
+  title: 不可抗力条款过宽或无通知程序
+  description: 不可抗力范围过宽，或未约定通知、证明和减损义务，供应商可能借此免责。
+  category: liability
+  severity: medium
+  applies_to: [force_majeure, general]
+  condition:
+    type: all
+    conditions:
+      - {type: regex, pattern: '不可抗力', target: full_text}
+      - {type: not, condition: {type: regex, pattern: '及时通知|通知对方|通知义务|提供证明', target: full_text}}
+  recommendation: 限定不可抗力范围，约定 5 日内书面通知、提供证明及减损义务；迟延履行后不免责。
+  fallback: 不可抗力方应在 5 日内书面通知并提供证明，否则不得免责。
+  legal_basis: [CC-590]
+
+- id: COM-001
+  title: 保密义务单向或缺失
+  description: 只要求买方保密，或完全没有保密条款，买方的技术资料和商业信息缺乏保护。
+  category: compliance
+  severity: medium
+  applies_to: [confidentiality]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: compliance.confidentiality_present, op: "==", value: false}
+      - {type: fact, field: compliance.confidentiality_mutual, op: "==", value: false}
+  recommendation: 增加双向保密义务，明确保密信息范围、期限、例外和违约责任。
+  fallback: 双方对因履行本合同获知的对方商业信息承担保密义务，期限为合同终止后 3 年。
+  legal_basis: [CC-509]
+
+- id: IP-001
+  title: 知识产权归属不明
+  description: 涉及软件、定制开发或专利产品时，未约定知识产权归属和侵权责任，买方可能无法使用或遭第三方索赔。
+  category: ip
+  severity: medium
+  applies_to: [ip]
+  condition:
+    type: all
+    conditions:
+      - {type: regex, pattern: '知识产权|著作权|软件著作权|专利|商标|源代码', target: full_text}
+      - {type: fact, field: compliance.ip_ownership, op: is_null}
+  recommendation: 明确交付成果的知识产权归属/许可范围，并要求供应商保证不侵犯第三方权利、承担侵权赔偿。
+  fallback: 买方获得交付成果的永久、不可撤销使用许可；供应商保证无第三方权利瑕疵。
+  legal_basis: [CC-470, CC-596]
+
+- id: PRI-001
+  title: 合同金额或币种不明
+  description: 未约定合同总价、币种或计价方式，履行和索赔时缺乏计算基础。
+  category: price
+  severity: high
+  applies_to: [price]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: contract_value, op: is_null}
+      - {type: fact, field: currency, op: is_null}
+  recommendation: 明确合同总价、币种、计价单位、数量与单价，并约定价格是否含税、含运费。
+  fallback: 合同总价为人民币含税价，包含运费、包装及卸货费用。
+  legal_basis: [CC-470, CC-596]
+
+- id: PRI-002
+  title: 含税口径不明
+  description: 未明确合同价款是否含税、税率及发票类型，可能导致额外税负或付款争议。
+  category: price
+  severity: medium
+  applies_to: [price]
+  condition:
+    type: all
+    conditions:
+      - {type: fact, field: tax_included, op: is_null}
+      - {type: not, condition: {type: regex, pattern: '含税|不含税|税率|增值税', target: full_text}}
+  recommendation: 明确“含税/不含税”、税率、发票类型（增值税专用发票/普通发票）及开票时间。
+  fallback: 合同总价为含 13% 增值税价，供应商应在收款前开具增值税专用发票。
+  legal_basis: [CC-470, CC-596]
+
+- id: DIS-003
+  title: 争议解决条款缺失
+  description: 合同没有约定争议解决方式，发生纠纷时只能按法定管辖处理，增加不确定性。
+  category: dispute
+  severity: high
+  applies_to: [dispute]
+  condition:
+    type: any
+    conditions:
+      - {type: clause_type_absent, value: dispute}
+      - {type: fact, field: dispute.clause_present, op: "==", value: false}
+  recommendation: 增加争议解决条款，明确协商期限、管辖法院或仲裁机构。
+  fallback: 争议由买方所在地有管辖权的人民法院管辖。
+  legal_basis: [CC-507, CPL-35]
+
+- id: GEN-001
+  title: 合同生效条件或签署主体不明
+  description: 未明确合同生效条件、签署主体或授权代表，可能出现效力争议或无权代理。
+  category: general
+  severity: medium
+  applies_to: [general, preamble]
+  condition:
+    type: any
+    conditions:
+      - {type: fact, field: compliance.signatory_clear, op: "==", value: false}
+      - {type: not, condition: {type: regex, pattern: '签字|盖章|签章', target: full_text}}
+  recommendation: 明确合同自双方授权代表签字并加盖公章之日起生效，并核验对方主体资格与授权文件。
+  fallback: 本合同自双方授权代表签字并加盖公章之日起生效。
+  legal_basis: [CC-470, CC-509]

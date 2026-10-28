@@ -1,0 +1,20 @@
+# 真实合同外部效度检查的数据清单（匿名）。
+# 原始 PDF 和完整标签不随公共仓库分发；filename/路径放在 private manifest。
+- id: real_01
+  title: R1
+  scope: in_scope
+  pages: 7
+  text_layer: true
+  notes: 政府采购框架协议货物采购；唯一 in-scope 样本。
+- id: real_02
+  title: R2
+  scope: out_of_scope
+  pages: 36
+  text_layer: false
+  notes: 建设工程施工合同，超出货物采购 Playbook；仅定性。
+- id: real_03
+  title: R3
+  scope: adjacent
+  pages: 8
+  text_layer: false
+  notes: IT/智治系统采购，与货物采购相邻；扫描件，仅定性。

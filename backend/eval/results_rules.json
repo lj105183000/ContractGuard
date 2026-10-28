@@ -1,0 +1,1160 @@
+{
+  "mode": "rules",
+  "mock": false,
+  "model": "unknown",
+  "llm_route": null,
+  "llm_route_label": null,
+  "generated_at": "2026-10-28T16:30:18+08:00",
+  "dataset": {
+    "samples": 8,
+    "labels": 51,
+    "rule_labels": 48,
+    "semantic_labels": 3,
+    "note": "8 synthetic procurement contracts; 48 rule-detectable labels + 3 semantic labels"
+  },
+  "overall": {
+    "tp": 48,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.9412,
+    "f1": 0.9697,
+    "findings": 48,
+    "labels": 51,
+    "evidence_checked": 43,
+    "citation_checked": 111,
+    "by_source": {
+      "rule": {
+        "tp": 48,
+        "fp": 0,
+        "precision": 1.0
+      }
+    },
+    "by_confidence": {
+      "confirmed": {
+        "tp": 48,
+        "fp": 0,
+        "precision": 1.0
+      }
+    },
+    "fp_attribution": {
+      "total": 0,
+      "by_source": {},
+      "by_severity": {},
+      "by_category": {},
+      "by_agent": {},
+      "with_rule_hint": 0,
+      "without_rule_hint": 0,
+      "evidence_located": 0,
+      "evidence_missing": 0,
+      "with_legal_basis": 0,
+      "without_legal_basis": 0
+    },
+    "evidence_valid_rate": 1.0,
+    "citation_valid_rate": 1.0
+  },
+  "overall_ci": {
+    "precision": {
+      "point": 1.0,
+      "low": 1.0,
+      "high": 1.0,
+      "iterations": 2000,
+      "seed": 42,
+      "confidence": 0.95
+    },
+    "recall": {
+      "point": 0.9412,
+      "low": 0.8605,
+      "high": 0.9841,
+      "iterations": 2000,
+      "seed": 42,
+      "confidence": 0.95
+    },
+    "f1": {
+      "point": 0.9697,
+      "low": 0.925,
+      "high": 0.992,
+      "iterations": 2000,
+      "seed": 42,
+      "confidence": 0.95
+    }
+  },
+  "overall_by_severity": {
+    "high": {
+      "tp": 21,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "medium": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.9643,
+      "f1": 0.9818
+    },
+    "low": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  "average_duration_s": 0.03,
+  "samples": [
+    {
+      "sample_id": "sample_01",
+      "title": "数控设备采购合同",
+      "label_count": 7,
+      "finding_count": 7,
+      "score": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "by_severity": {
+          "high": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 6,
+        "evidence_valid": 6,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 16,
+        "citation_valid": 16,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_01-L01",
+            "finding_id": "rule-PAY-001-cl_003",
+            "rule_id": "PAY-001",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L02",
+            "finding_id": "rule-ACC-002-cl_005",
+            "rule_id": "ACC-002",
+            "clause": "第五条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L03",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_01-L04",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_01-L05",
+            "finding_id": "rule-LIA-002-cl_007",
+            "rule_id": "LIA-002",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L06",
+            "finding_id": "rule-DIS-001-cl_008",
+            "rule_id": "DIS-001",
+            "clause": "第八条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": []
+      },
+      "duration_s": 0.13,
+      "usage": null,
+      "citation_count": 16,
+      "valid_citation_count": 16,
+      "evidence_checked": 6,
+      "evidence_valid": 6
+    },
+    {
+      "sample_id": "sample_02",
+      "title": "办公家具采购合同",
+      "label_count": 7,
+      "finding_count": 7,
+      "score": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 6,
+        "evidence_valid": 6,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 16,
+        "citation_valid": 16,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_02-L01",
+            "finding_id": "rule-PAY-003-cl_003",
+            "rule_id": "PAY-003",
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L02",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L03",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "clause": "第六条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_02-L04",
+            "finding_id": "rule-WAR-001-cl_006",
+            "rule_id": "WAR-001",
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L05",
+            "finding_id": "rule-TER-002-cl_008",
+            "rule_id": "TER-002",
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L06",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": []
+      },
+      "duration_s": 0.01,
+      "usage": null,
+      "citation_count": 16,
+      "valid_citation_count": 16,
+      "evidence_checked": 6,
+      "evidence_valid": 6
+    },
+    {
+      "sample_id": "sample_03",
+      "title": "钢材年度采购合同",
+      "label_count": 7,
+      "finding_count": 7,
+      "score": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "by_severity": {
+          "high": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 6,
+        "evidence_valid": 6,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 16,
+        "citation_valid": 16,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_03-L01",
+            "finding_id": "rule-PAY-002-cl_003",
+            "rule_id": "PAY-002",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L02",
+            "finding_id": "rule-LIA-002-cl_007",
+            "rule_id": "LIA-002",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L03",
+            "finding_id": "rule-LIA-003-cl_007",
+            "rule_id": "LIA-003",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L04",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "clause": "第六条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L05",
+            "finding_id": "rule-TER-001-cl_008",
+            "rule_id": "TER-001",
+            "clause": "第八条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L06",
+            "finding_id": "rule-DIS-002-cl_009",
+            "rule_id": "DIS-002",
+            "clause": "第九条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": []
+      },
+      "duration_s": 0.01,
+      "usage": null,
+      "citation_count": 16,
+      "valid_citation_count": 16,
+      "evidence_checked": 6,
+      "evidence_valid": 6
+    },
+    {
+      "sample_id": "sample_04",
+      "title": "仓储软件及设备采购合同",
+      "label_count": 7,
+      "finding_count": 6,
+      "score": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.8571,
+        "f1": 0.9231,
+        "by_severity": {
+          "high": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1": 0.8889
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 6,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 6,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 6,
+        "evidence_valid": 6,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 15,
+        "citation_valid": 15,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_04-L01",
+            "finding_id": "rule-PAY-001-cl_003",
+            "rule_id": "PAY-001",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_04-L02",
+            "finding_id": "rule-PAY-003-cl_003",
+            "rule_id": "PAY-003",
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L03",
+            "finding_id": "rule-IP-001-cl_007",
+            "rule_id": "IP-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L04",
+            "finding_id": "rule-COM-001-cl_008",
+            "rule_id": "COM-001",
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L05",
+            "finding_id": "rule-LIA-002-cl_009",
+            "rule_id": "LIA-002",
+            "clause": "第九条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_04-L06",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "clause": "第四条",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": [
+          {
+            "id": "sample_04-L07",
+            "clause_article": "第五条",
+            "category": "acceptance",
+            "rule_id": null,
+            "severity": "medium",
+            "keywords": [
+              "双方确认"
+            ],
+            "clause_id": null,
+            "quote": null,
+            "page": null,
+            "scope": null,
+            "label_layer": null,
+            "annotator": "author",
+            "annotation_pass": 1,
+            "confidence": null,
+            "notes": ""
+          }
+        ]
+      },
+      "duration_s": 0.02,
+      "usage": null,
+      "citation_count": 15,
+      "valid_citation_count": 15,
+      "evidence_checked": 6,
+      "evidence_valid": 6
+    },
+    {
+      "sample_id": "sample_05",
+      "title": "食品包装材料采购合同",
+      "label_count": 9,
+      "finding_count": 9,
+      "score": {
+        "tp": 9,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "by_severity": {
+          "high": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 9,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 9,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 8,
+        "evidence_valid": 8,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 24,
+        "citation_valid": 24,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_05-L01",
+            "finding_id": "rule-PAY-001-cl_003",
+            "rule_id": "PAY-001",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L02",
+            "finding_id": "rule-PAY-002-cl_003",
+            "rule_id": "PAY-002",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L03",
+            "finding_id": "rule-DEL-001-cl_004",
+            "rule_id": "DEL-001",
+            "clause": "第四条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L04",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "clause": "第四条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L05",
+            "finding_id": "rule-ACC-002-cl_005",
+            "rule_id": "ACC-002",
+            "clause": "第五条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L06",
+            "finding_id": "rule-WAR-001-cl_006",
+            "rule_id": "WAR-001",
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L07",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L08",
+            "finding_id": "rule-LIA-003-cl_007",
+            "rule_id": "LIA-003",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L09",
+            "finding_id": "rule-DIS-003-contract",
+            "rule_id": "DIS-003",
+            "clause": "合同级",
+            "severity": "high"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": []
+      },
+      "duration_s": 0.03,
+      "usage": null,
+      "citation_count": 24,
+      "valid_citation_count": 24,
+      "evidence_checked": 8,
+      "evidence_valid": 8
+    },
+    {
+      "sample_id": "sample_06",
+      "title": "实验室仪器采购合同",
+      "label_count": 6,
+      "finding_count": 5,
+      "score": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.8333,
+        "f1": 0.9091,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 4,
+        "evidence_valid": 4,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 11,
+        "citation_valid": 11,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_06-L01",
+            "finding_id": "rule-WAR-001-cl_006",
+            "rule_id": "WAR-001",
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L02",
+            "finding_id": "rule-PRI-002-cl_002",
+            "rule_id": "PRI-002",
+            "clause": "第二条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L03",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L04",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "clause": "第四条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L06",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "clause": "第六条",
+            "severity": "high"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": [
+          {
+            "id": "sample_06-L05",
+            "clause_article": "第四条",
+            "category": "delivery",
+            "rule_id": null,
+            "severity": "low",
+            "keywords": [
+              "运费",
+              "风险"
+            ],
+            "clause_id": null,
+            "quote": null,
+            "page": null,
+            "scope": null,
+            "label_layer": null,
+            "annotator": "author",
+            "annotation_pass": 1,
+            "confidence": null,
+            "notes": ""
+          }
+        ]
+      },
+      "duration_s": 0.01,
+      "usage": null,
+      "citation_count": 11,
+      "valid_citation_count": 11,
+      "evidence_checked": 4,
+      "evidence_valid": 4
+    },
+    {
+      "sample_id": "sample_07",
+      "title": "冷链保温箱采购合同",
+      "label_count": 7,
+      "finding_count": 7,
+      "score": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 7,
+        "evidence_valid": 7,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 13,
+        "citation_valid": 13,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_07-L01",
+            "finding_id": "rule-PAY-003-cl_003",
+            "rule_id": "PAY-003",
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L02",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L03",
+            "finding_id": "rule-FOR-001-cl_008",
+            "rule_id": "FOR-001",
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L04",
+            "finding_id": "rule-TER-002-cl_009",
+            "rule_id": "TER-002",
+            "clause": "第九条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L05",
+            "finding_id": "rule-DIS-001-cl_011",
+            "rule_id": "DIS-001",
+            "clause": "第十一条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_07-L06",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L07",
+            "finding_id": "rule-COM-001-cl_010",
+            "rule_id": "COM-001",
+            "clause": "第十条",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": []
+      },
+      "duration_s": 0.01,
+      "usage": null,
+      "citation_count": 13,
+      "valid_citation_count": 13,
+      "evidence_checked": 7,
+      "evidence_valid": 7
+    },
+    {
+      "sample_id": "sample_08",
+      "title": "电子元器件采购合同",
+      "label_count": 1,
+      "finding_count": 0,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "by_severity": {
+          "high": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "medium": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {},
+        "by_confidence": {},
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 0,
+        "evidence_valid": 0,
+        "evidence_valid_rate": null,
+        "citation_checked": 0,
+        "citation_valid": 0,
+        "citation_valid_rate": null,
+        "matches": [],
+        "unmatched_findings": [],
+        "unmatched_labels": [
+          {
+            "id": "sample_08-L01",
+            "clause_article": "第三条",
+            "category": "payment",
+            "rule_id": null,
+            "severity": "low",
+            "keywords": [
+              "全部价款",
+              "质保金"
+            ],
+            "clause_id": null,
+            "quote": null,
+            "page": null,
+            "scope": null,
+            "label_layer": null,
+            "annotator": "author",
+            "annotation_pass": 1,
+            "confidence": null,
+            "notes": ""
+          }
+        ]
+      },
+      "duration_s": 0.01,
+      "usage": null,
+      "citation_count": 0,
+      "valid_citation_count": 0,
+      "evidence_checked": 0,
+      "evidence_valid": 0
+    }
+  ]
+}

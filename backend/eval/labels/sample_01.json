@@ -1,0 +1,71 @@
+[
+  {
+    "id": "sample_01-L01",
+    "clause_article": "第三条",
+    "category": "payment",
+    "severity": "high",
+    "rule_id": "PAY-001",
+    "keywords": [
+      "50%"
+    ]
+  },
+  {
+    "id": "sample_01-L02",
+    "clause_article": "第五条",
+    "category": "acceptance",
+    "severity": "high",
+    "rule_id": "ACC-002",
+    "keywords": [
+      "3 日",
+      "视为验收合格"
+    ]
+  },
+  {
+    "id": "sample_01-L03",
+    "clause_article": "第五条",
+    "category": "acceptance",
+    "severity": "medium",
+    "rule_id": "ACC-003",
+    "keywords": [
+      "国家相关标准"
+    ]
+  },
+  {
+    "id": "sample_01-L04",
+    "clause_article": "第七条",
+    "category": "liability",
+    "severity": "medium",
+    "rule_id": "LIA-001",
+    "keywords": [
+      "0.01%"
+    ]
+  },
+  {
+    "id": "sample_01-L05",
+    "clause_article": "第七条",
+    "category": "liability",
+    "severity": "high",
+    "rule_id": "LIA-002",
+    "keywords": [
+      "3%"
+    ]
+  },
+  {
+    "id": "sample_01-L06",
+    "clause_article": "第八条",
+    "category": "dispute",
+    "severity": "high",
+    "rule_id": "DIS-001",
+    "keywords": [
+      "乙方所在地"
+    ]
+  },
+  {
+    "id": "sample_01-L07",
+    "clause_article": "合同级",
+    "category": "compliance",
+    "severity": "medium",
+    "rule_id": "COM-001",
+    "keywords": []
+  }
+]

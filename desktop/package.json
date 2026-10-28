@@ -1,0 +1,87 @@
+{
+  "name": "contractguard-desktop",
+  "productName": "ContractGuard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ContractGuard 合同哨兵桌面端",
+  "main": "electron/main.js",
+  "author": "ContractGuard",
+  "license": "MIT",
+  "scripts": {
+    "dev": "npm run build:renderer && electron .",
+    "dev:hot": "cross-env CONTRACTGUARD_RENDERER_URL=http://localhost:5173 electron .",
+    "build:renderer": "npm --prefix ../frontend install --no-audit --no-fund && npm --prefix ../frontend run build",
+    "build:backend": "cd ../backend && uv run pyinstaller --noconfirm --clean pyinstaller.spec",
+    "pack:dir": "npm run build:renderer && npm run build:backend && electron-builder --win dir",
+    "dist": "npm run build:renderer && npm run build:backend && electron-builder --win nsis",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "electron": "^45.0.0",
+    "electron-builder": "^26.18.0",
+    "playwright": "^1.64.1"
+  },
+  "build": {
+    "appId": "com.contractguard.desktop",
+    "productName": "ContractGuard",
+    "asar": true,
+    "electronDist": "node_modules/electron/dist",
+    "asarUnpack": [
+      "assets/**"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "assets/**/*",
+      "loading.html",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../frontend/dist",
+        "to": "frontend/dist"
+      },
+      {
+        "from": "../backend/dist/contractguard-backend",
+        "to": "backend"
+      },
+      {
+        "from": "../backend/data/legal",
+        "to": "seed-data/legal"
+      },
+      {
+        "from": "../backend/data/samples",
+        "to": "seed-data/samples"
+      },
+      {
+        "from": "../backend/data/playbook.yaml",
+        "to": "seed-data/playbook.yaml"
+      },
+      {
+        "from": "../backend/data/legal_terms.txt",
+        "to": "seed-data/legal_terms.txt"
+      },
+      {
+        "from": "../backend/data/llm_profiles.yaml",
+        "to": "seed-data/llm_profiles.yaml"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "ContractGuard-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "合同哨兵 ContractGuard"
+    }
+  }
+}

@@ -1,0 +1,3974 @@
+{
+  "mode": "full",
+  "mock": false,
+  "model": "qwen-plus",
+  "llm_route": "balanced",
+  "llm_route_label": "均衡（推荐）",
+  "generated_at": "2026-10-28T10:04:58+08:00",
+  "dataset": {
+    "samples": 8,
+    "labels": 51,
+    "rule_labels": 48,
+    "semantic_labels": 3,
+    "note": "8 synthetic procurement contracts; 48 rule-detectable labels + 3 semantic labels"
+  },
+  "overall": {
+    "tp": 50,
+    "fp": 38,
+    "fn": 1,
+    "precision": 0.5682,
+    "recall": 0.9804,
+    "f1": 0.7194,
+    "findings": 88,
+    "labels": 51,
+    "evidence_checked": 83,
+    "citation_checked": 189,
+    "by_source": {
+      "rule+llm": {
+        "tp": 35,
+        "fp": 2,
+        "precision": 0.9459
+      },
+      "rule": {
+        "tp": 13,
+        "fp": 0,
+        "precision": 1.0
+      },
+      "llm": {
+        "tp": 2,
+        "fp": 36,
+        "precision": 0.0526
+      }
+    },
+    "by_confidence": {
+      "confirmed": {
+        "tp": 48,
+        "fp": 2,
+        "precision": 0.96
+      },
+      "advisory": {
+        "tp": 2,
+        "fp": 34,
+        "precision": 0.0556
+      },
+      "needs_review": {
+        "tp": 0,
+        "fp": 2,
+        "precision": 0.0
+      }
+    },
+    "fp_attribution": {
+      "total": 38,
+      "by_source": {
+        "llm": 36,
+        "rule+llm": 2
+      },
+      "by_severity": {
+        "high": 18,
+        "medium": 16,
+        "low": 4
+      },
+      "by_category": {
+        "termination": 5,
+        "compliance": 6,
+        "warranty": 5,
+        "general": 6,
+        "dispute": 6,
+        "acceptance": 3,
+        "ip": 3,
+        "delivery": 1,
+        "liability": 2,
+        "payment": 1
+      },
+      "by_agent": {
+        "compliance": 21,
+        "liability": 7,
+        "commercial": 10
+      },
+      "with_rule_hint": 27,
+      "without_rule_hint": 11,
+      "evidence_located": 37,
+      "evidence_missing": 1,
+      "with_legal_basis": 37,
+      "without_legal_basis": 1
+    },
+    "evidence_valid_rate": 0.988,
+    "citation_valid_rate": 1.0
+  },
+  "overall_by_severity": {
+    "high": {
+      "tp": 21,
+      "fp": 18,
+      "fn": 0,
+      "precision": 0.5385,
+      "recall": 1.0,
+      "f1": 0.7
+    },
+    "medium": {
+      "tp": 28,
+      "fp": 16,
+      "fn": 0,
+      "precision": 0.6364,
+      "recall": 1.0,
+      "f1": 0.7778
+    },
+    "low": {
+      "tp": 1,
+      "fp": 4,
+      "fn": 1,
+      "precision": 0.2,
+      "recall": 0.5,
+      "f1": 0.2857
+    }
+  },
+  "average_duration_s": 87.02,
+  "samples": [
+    {
+      "sample_id": "sample_01",
+      "title": "数控设备采购合同",
+      "label_count": 7,
+      "finding_count": 11,
+      "score": {
+        "tp": 7,
+        "fp": 4,
+        "fn": 0,
+        "precision": 0.6364,
+        "recall": 1.0,
+        "f1": 0.7778,
+        "by_severity": {
+          "high": {
+            "tp": 4,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.6667,
+            "recall": 1.0,
+            "f1": 0.8
+          },
+          "medium": {
+            "tp": 3,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.75
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule+llm": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "llm": {
+            "tp": 0,
+            "fp": 4,
+            "precision": 0.0
+          },
+          "rule": {
+            "tp": 2,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "advisory": {
+            "tp": 0,
+            "fp": 4,
+            "precision": 0.0
+          }
+        },
+        "fp_attribution": {
+          "total": 4,
+          "by_source": {
+            "llm": 4
+          },
+          "by_severity": {
+            "high": 2,
+            "medium": 2
+          },
+          "by_category": {
+            "termination": 1,
+            "compliance": 1,
+            "warranty": 1,
+            "general": 1
+          },
+          "by_agent": {
+            "compliance": 2,
+            "liability": 1,
+            "commercial": 1
+          },
+          "with_rule_hint": 3,
+          "without_rule_hint": 1,
+          "evidence_located": 4,
+          "evidence_missing": 0,
+          "with_legal_basis": 4,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 10,
+        "evidence_valid": 10,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 23,
+        "citation_valid": 23,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_01-L01",
+            "finding_id": "llm-commercial-cl_003-e328218a",
+            "rule_id": "PAY-001",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L02",
+            "finding_id": "rule-ACC-002-cl_005",
+            "rule_id": "ACC-002",
+            "clause": "第五条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L03",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_01-L04",
+            "finding_id": "llm-liability-cl_007-c2f0f2a1",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_01-L05",
+            "finding_id": "llm-liability-cl_007-d54cd65b",
+            "rule_id": "LIA-002",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L06",
+            "finding_id": "llm-compliance-cl_008-66804f1e",
+            "rule_id": "DIS-001",
+            "clause": "第八条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-liability-cl_007-ae357aa6",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交付的，按逾期天数每日向甲方支付合同总价 0.01% 的违约金；违约金总额不超过合同总价的 3%。\n甲方逾期付款的，按同等标准向乙方支付违约金。",
+            "category": "termination",
+            "severity": "high",
+            "source": "llm",
+            "title": "买方解除权缺失",
+            "analysis": "合同未约定买方在供应商逾期交付、质量不合格等根本违约情形下的单方解除权，仅规定对等违约金，违反《民法典》第577条关于违约救济应包含解除等补救措施的要求，导致买方缺乏有效退出机制。",
+            "evidence_quote": "乙方逾期交付的，按逾期天数每日向甲方支付合同总价 0.01% 的违约金；违约金总额不超过合同总价的 3%。甲方逾期付款的，按同等标准向乙方支付违约金。",
+            "evidence_start": 9,
+            "evidence_end": 85,
+            "legal_basis_ids": [
+              "CC-577"
+            ],
+            "rule_id": null,
+            "rule_hint": "TER-001",
+            "agent": "liability",
+            "confidence": 0.96,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确买方在供应商逾期、质量不合格、根本违约等情形下的解除权及退款/赔偿机制。",
+            "fallback": "乙方逾期超 30 日或质量不合格拒不整改的，甲方可解除合同并要求退款及赔偿。",
+            "suggested_text": "第七条 违约责任\n乙方发生下列情形之一的，甲方有权单方解除合同：（1）逾期交付超过 30 日；（2）交付设备经两次整改仍不符合约定验收标准；（3）存在欺诈、隐瞒重大缺陷等根本违约行为。合同解除后，乙方应于 5 个工作日内退还甲方全部已付款项，并赔偿甲方因此产生的直接损失。",
+            "negotiation_note": "解除权必须列明具体触发情形和后果，不可仅保留违约金而无退出路径。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_008-250ac525",
+            "clause_id": "cl_008",
+            "clause_article": "第八条",
+            "clause_text": "第八条 争议解决\n因本合同发生争议，双方应协商解决；协商不成的，提交乙方所在地人民法院诉讼解决。",
+            "category": "compliance",
+            "severity": "high",
+            "source": "llm",
+            "title": "保密义务缺失",
+            "analysis": "合同未约定任何保密条款，买方在履行过程中可能向供应商披露技术参数、产线信息、采购计划等商业秘密，缺乏法律约束将导致泄密风险无法追责。\n\n模型补充：合同未就设备交付后产生的改进技术、操作数据、集成接口文档等衍生知识产权归属作出约定，买方后续使用、维护或二次开发可能面临权属争议。",
+            "evidence_quote": "第八条 争议解决\n因本合同发生争议，双方应协商解决；协商不成的，提交乙方所在地人民法院诉讼解决。",
+            "evidence_start": 0,
+            "evidence_end": 48,
+            "legal_basis_ids": [
+              "CC-470"
+            ],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.92,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "新增保密与知识产权条款，明确商业秘密范围及改进成果归属甲方。",
+            "suggested_text": "第九条 保密与知识产权\n双方承诺对在履行本合同过程中知悉的对方商业秘密（包括但不限于技术参数、产线布局、采购计划、接口文档、操作数据等）承担永久保密义务，未经书面同意不得向任何第三方披露。乙方基于本合同交付成果所形成的改进技术、衍生数据及集成方案的知识产权归甲方所有；乙方应配合签署必要权属文件。",
+            "negotiation_note": "保密义务和衍生知识产权归属是签约前提，缺失则不予签署。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-commercial-cl_006-9c41980e",
+            "clause_id": "cl_006",
+            "clause_article": "第六条",
+            "clause_text": "第六条 质量保证\n质保期为验收合格后 12 个月；质保期内出现质量问题，乙方负责免费维修。",
+            "category": "warranty",
+            "severity": "medium",
+            "source": "llm",
+            "title": "质保期起算点未明示但符合惯例",
+            "analysis": "质保期12个月自‘验收合格后’起算，与Playbook fallback要求一致，但条款未明示起算日（如验收报告签署日），存在解释歧义风险；虽未违反WAR-001推荐，但属执行瑕疵。",
+            "evidence_quote": "质保期为验收合格后 12 个月；质保期内出现质量问题，乙方负责免费维修。",
+            "evidence_start": 9,
+            "evidence_end": 45,
+            "legal_basis_ids": [
+              "CC-596"
+            ],
+            "rule_id": null,
+            "rule_hint": "WAR-001",
+            "agent": "commercial",
+            "confidence": 0.85,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "货物类质保期不少于 12 个月；设备类建议 24 个月，并明确起算点和维修响应时限。",
+            "fallback": "质保期12个月，自验收合格之日起算。",
+            "suggested_text": "第六条 质量保证\n质保期为12个月，自双方签署验收报告之日起算；质保期内出现质量问题，乙方须在接到通知后24小时内响应，并于5个工作日内完成免费维修或更换。",
+            "negotiation_note": "必须明确以签署验收报告之日为起算点，避免‘验收合格’这一模糊表述引发争议。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_009-90f9b6b3",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 其他\n本合同自双方签字盖章之日起生效。未尽事宜，双方另行协商。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "general",
+            "severity": "medium",
+            "source": "llm",
+            "title": "合同生效条件表述不严谨",
+            "analysis": "虽约定‘双方签字盖章之日起生效’，但未明确须为‘授权代表’签字及‘公章’类型（如是否接受合同专用章），存在效力瑕疵风险；且未要求提供签署主体资格证明文件。",
+            "evidence_quote": "第九条 其他\n本合同自双方签字盖章之日起生效。未尽事宜，双方另行协商。",
+            "evidence_start": 0,
+            "evidence_end": 35,
+            "legal_basis_ids": [
+              "CC-470"
+            ],
+            "rule_id": null,
+            "rule_hint": "GEN-001",
+            "agent": "compliance",
+            "confidence": 0.85,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确合同自双方授权代表签字并加盖公章之日起生效，并核验对方主体资格与授权文件。",
+            "fallback": "本合同自双方授权代表签字并加盖公章之日起生效。",
+            "suggested_text": "第九条 其他\n本合同自双方法定代表人或授权代表签字并加盖公章（不含合同专用章、部门章）之日起生效；双方应在签署前向对方提供加盖公章的营业执照复印件及授权代表签字盖章的授权书原件。",
+            "negotiation_note": "坚持要求提供授权书及主体资格文件，防止无权代理或签约主体不适格导致合同效力风险。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 83.7,
+      "usage": {
+        "llm_calls": 12,
+        "input_tokens": 13483,
+        "output_tokens": 4767,
+        "duration_ms": 83700,
+        "mode": "live",
+        "embedding_mode": "hybrid",
+        "rerank_mode": "off",
+        "llm_route": "balanced",
+        "llm_route_label": "均衡（推荐）",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 453,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '802fbde7-af16-97e5-b424-4099d7455dfd'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 55,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '9c6f598d-8008-917d-a229-2a9c50569645'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 22641,
+            "input_tokens": 2342,
+            "output_tokens": 1009,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14536,
+            "input_tokens": 2560,
+            "output_tokens": 639,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15783,
+            "input_tokens": 2853,
+            "output_tokens": 675,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 17464,
+            "input_tokens": 2397,
+            "output_tokens": 771,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 149,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '3bb1219a-2f78-982b-8642-99358cafcd01'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 47,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'cced88d2-e307-9f75-a148-370b4829a9f2'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 28330,
+            "input_tokens": 2390,
+            "output_tokens": 1235,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 147,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '63cd8164-7a61-988d-aa8e-430dde52e950'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 49,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'f2a951fa-0618-9356-b7ed-449c47c97b9b'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 9994,
+            "input_tokens": 941,
+            "output_tokens": 438,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 23,
+      "valid_citation_count": 23,
+      "evidence_checked": 10,
+      "evidence_valid": 10
+    },
+    {
+      "sample_id": "sample_02",
+      "title": "办公家具采购合同",
+      "label_count": 7,
+      "finding_count": 10,
+      "score": {
+        "tp": 7,
+        "fp": 3,
+        "fn": 0,
+        "precision": 0.7,
+        "recall": 1.0,
+        "f1": 0.8235,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          "medium": {
+            "tp": 6,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.8571,
+            "recall": 1.0,
+            "f1": 0.9231
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule+llm": {
+            "tp": 5,
+            "fp": 1,
+            "precision": 0.8333
+          },
+          "rule": {
+            "tp": 2,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "llm": {
+            "tp": 0,
+            "fp": 2,
+            "precision": 0.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 1,
+            "precision": 0.875
+          },
+          "advisory": {
+            "tp": 0,
+            "fp": 2,
+            "precision": 0.0
+          }
+        },
+        "fp_attribution": {
+          "total": 3,
+          "by_source": {
+            "llm": 2,
+            "rule+llm": 1
+          },
+          "by_severity": {
+            "high": 2,
+            "medium": 1
+          },
+          "by_category": {
+            "dispute": 1,
+            "compliance": 1,
+            "general": 1
+          },
+          "by_agent": {
+            "compliance": 3
+          },
+          "with_rule_hint": 2,
+          "without_rule_hint": 1,
+          "evidence_located": 3,
+          "evidence_missing": 0,
+          "with_legal_basis": 3,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 9,
+        "evidence_valid": 9,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 25,
+        "citation_valid": 25,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_02-L01",
+            "finding_id": "llm-commercial-cl_003-759847eb",
+            "rule_id": "PAY-003",
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L02",
+            "finding_id": "llm-liability-cl_007-0f97a0d8",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L03",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "clause": "第六条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_02-L04",
+            "finding_id": "llm-commercial-cl_006-c3069fef",
+            "rule_id": "WAR-001",
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L05",
+            "finding_id": "llm-liability-cl_008-d3bf5cfe",
+            "rule_id": "TER-002",
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L06",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-compliance-cl_009-0aabd203",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "dispute",
+            "severity": "high",
+            "source": "rule+llm",
+            "title": "管辖法院对买方不利",
+            "analysis": "合同约定由甲方（买方）所在地人民法院管辖，表面看似有利，但结合合同事实中dispute.unfavorable_venue为true，且甲方即买方，该表述存在逻辑矛盾；实际应核查条款原文是否误将'甲方'等同于买方导致指向错误。根据CPL-35，协议管辖须与争议有实际联系，若甲方在合同中被错误标识或存在主体混淆风险，则管辖约定可能无效或引发争议。\n\n模型补充：约定由供应商所在地法院管辖，买方异地诉讼成本高，维权意愿下降。",
+            "evidence_quote": "第九条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [
+              "CPL-35"
+            ],
+            "rule_id": "DIS-001",
+            "rule_hint": "DIS-001",
+            "agent": "compliance",
+            "confidence": 1.0,
+            "confidence_tier": "confirmed",
+            "confidence_reasons": [
+              "规则引擎命中 DIS-001",
+              "规则与模型结论已合并"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "改为买方所在地法院管辖，或约定合同履行地（买方所在地）法院管辖。",
+            "fallback": "由买方所在地有管辖权的人民法院管辖。",
+            "suggested_text": "第九条 争议解决\n因本合同引起的或与本合同有关的任何争议，由买方所在地有管辖权的人民法院管辖。",
+            "negotiation_note": "管辖法院必须锁定为买方所在地，避免异地诉讼增加维权成本和不确定性。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": [
+              "规则与模型结论合并"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_009-dbdf4a66",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "compliance",
+            "severity": "high",
+            "source": "llm",
+            "title": "保密义务缺失",
+            "analysis": "合同未约定任何保密义务，违反商业惯例及CC-470关于合同一般应包含必要条款的要求，买方技术信息、采购数据等可能面临泄露风险。\n\n模型补充：合同未约定办公家具设计、定制方案等相关知识产权归属，若涉及定制化产品或乙方提供图纸，可能引发权属争议，不符合CC-470关于合同内容完整性要求。",
+            "evidence_quote": "第九条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [
+              "CC-470"
+            ],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.95,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "增加保密条款及定制成果知识产权归属甲方的约定。",
+            "suggested_text": "第九条 保密与知识产权\n双方应对在履行本合同过程中知悉的对方商业信息、技术资料、采购数据等保密信息承担保密义务，保密期限为合同终止后 3 年。乙方为本合同提供的定制化设计、图纸、方案等成果的知识产权归甲方所有。",
+            "negotiation_note": "保密义务和定制成果权属是基础性保护条款，不得以‘行业惯例’为由省略。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_010-c33555c2",
+            "clause_id": "cl_010",
+            "clause_article": "第十条",
+            "clause_text": "第十条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "general",
+            "severity": "medium",
+            "source": "llm",
+            "title": "合同生效条件表述不严谨",
+            "analysis": "合同约定‘自双方签字盖章之日起生效’，但未明确是否需授权代表签署及公章类型（如合同专用章或公章），存在效力瑕疵风险；依据GEN-001，应强化签署主体与授权要求。",
+            "evidence_quote": "本合同自双方签字盖章之日起生效。",
+            "evidence_start": 7,
+            "evidence_end": 23,
+            "legal_basis_ids": [
+              "CC-507"
+            ],
+            "rule_id": null,
+            "rule_hint": "GEN-001",
+            "agent": "compliance",
+            "confidence": 0.85,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确合同自双方授权代表签字并加盖公章之日起生效，并核验对方主体资格与授权文件。",
+            "fallback": "本合同自双方授权代表签字并加盖公章之日起生效。",
+            "suggested_text": "第十条 其他\n本合同自双方授权代表签字并加盖各自公司公章（或合同专用章）之日起生效；签署前，双方应相互提供加盖公章的授权委托书及主体资格证明文件。",
+            "negotiation_note": "必须明确授权代表和公章类型，避免因签署主体瑕疵导致合同效力争议。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 73.74,
+      "usage": {
+        "llm_calls": 12,
+        "input_tokens": 12815,
+        "output_tokens": 4207,
+        "duration_ms": 73738,
+        "mode": "live",
+        "embedding_mode": "hybrid",
+        "rerank_mode": "off",
+        "llm_route": "balanced",
+        "llm_route_label": "均衡（推荐）",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 244,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'beb6ab73-ec0c-9c0b-8c27-2e7fef46518f'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 54,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '5b01d8ea-9c9d-9729-bc7e-3eff608c94de'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 21673,
+            "input_tokens": 2193,
+            "output_tokens": 961,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 12054,
+            "input_tokens": 2444,
+            "output_tokens": 527,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14459,
+            "input_tokens": 2729,
+            "output_tokens": 635,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14894,
+            "input_tokens": 2529,
+            "output_tokens": 648,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 153,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '16d262e2-59d7-9339-b41d-1f277a2ffe69'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 43,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '5f7d1b34-886f-98ab-9b64-30ab32096c00'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 25588,
+            "input_tokens": 2219,
+            "output_tokens": 1135,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 185,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '5f9be5a2-e198-9cf3-91cf-9860e9b8099d'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 61,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'e54e0914-f9c4-9de0-b1f7-16dcbe644415'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 7019,
+            "input_tokens": 701,
+            "output_tokens": 301,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 25,
+      "valid_citation_count": 25,
+      "evidence_checked": 9,
+      "evidence_valid": 9
+    },
+    {
+      "sample_id": "sample_03",
+      "title": "钢材年度采购合同",
+      "label_count": 7,
+      "finding_count": 12,
+      "score": {
+        "tp": 7,
+        "fp": 5,
+        "fn": 0,
+        "precision": 0.5833,
+        "recall": 1.0,
+        "f1": 0.7368,
+        "by_severity": {
+          "high": {
+            "tp": 6,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571
+          },
+          "medium": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          "low": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule+llm": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "rule": {
+            "tp": 2,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "llm": {
+            "tp": 0,
+            "fp": 5,
+            "precision": 0.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "needs_review": {
+            "tp": 0,
+            "fp": 2,
+            "precision": 0.0
+          },
+          "advisory": {
+            "tp": 0,
+            "fp": 3,
+            "precision": 0.0
+          }
+        },
+        "fp_attribution": {
+          "total": 5,
+          "by_source": {
+            "llm": 5
+          },
+          "by_severity": {
+            "high": 2,
+            "medium": 2,
+            "low": 1
+          },
+          "by_category": {
+            "dispute": 1,
+            "compliance": 1,
+            "acceptance": 1,
+            "warranty": 1,
+            "general": 1
+          },
+          "by_agent": {
+            "commercial": 3,
+            "compliance": 2
+          },
+          "with_rule_hint": 3,
+          "without_rule_hint": 2,
+          "evidence_located": 4,
+          "evidence_missing": 1,
+          "with_legal_basis": 4,
+          "without_legal_basis": 1
+        },
+        "evidence_checked": 11,
+        "evidence_valid": 10,
+        "evidence_valid_rate": 0.9091,
+        "citation_checked": 23,
+        "citation_valid": 23,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_03-L01",
+            "finding_id": "llm-commercial-cl_003-d3f29338",
+            "rule_id": "PAY-002",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L02",
+            "finding_id": "llm-liability-cl_007-e03e3cf7",
+            "rule_id": "LIA-002",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L03",
+            "finding_id": "llm-liability-cl_007-4846946d",
+            "rule_id": "LIA-003",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L04",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "clause": "第六条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L05",
+            "finding_id": "llm-liability-cl_008-3a43eadd",
+            "rule_id": "TER-001",
+            "clause": "第八条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L06",
+            "finding_id": "llm-compliance-cl_009-e1404998",
+            "rule_id": "DIS-002",
+            "clause": "第九条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-commercial-cl_007-bafdcf7b",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交货的，按日万分之五支付违约金；违约金累计不超过合同总价的 3%。\n乙方应赔偿因违约给甲方造成的全部损失，包括间接损失和可得利益损失。\n甲方逾期付款的，按日万分之五支付违约金。",
+            "category": "dispute",
+            "severity": "high",
+            "source": "llm",
+            "title": "争议解决条款冲突：诉讼与仲裁并存",
+            "analysis": "合同同时约定‘甲方所在地人民法院’管辖与‘上海仲裁委员会’仲裁，构成《仲裁法》第十八条规定的无效仲裁协议情形，导致争议解决机制不确定，买方维权成本上升。",
+            "evidence_quote": "法院：甲方所在地人民法院；仲裁：上海仲裁委员会",
+            "evidence_start": null,
+            "evidence_end": null,
+            "legal_basis_ids": [
+              "CC-470"
+            ],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "未提供可定位的原文证据",
+              "法条引用通过 ID 校验"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "删除第七条中所有关于争议解决的表述，确保争议解决机制仅在第九条集中约定。",
+            "suggested_text": "第七条 违约责任\n……（本条不包含争议解决条款；争议解决统一规定于第九条）",
+            "negotiation_note": "争议解决条款必须唯一、排他，任何其他条款中不得出现管辖或仲裁字样。",
+            "review_note": "",
+            "status": "needs_human",
+            "gate_notes": [
+              "证据无法在原文中逐字定位，需人工确认"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_009-f62f829f",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 争议解决\n因本合同发生争议，提交上海仲裁委员会仲裁，也可以向甲方所在地人民法院起诉。",
+            "category": "compliance",
+            "severity": "high",
+            "source": "llm",
+            "title": "保密义务缺失",
+            "analysis": "合同未约定任何保密义务条款，买方在交易中可能向供应商披露技术参数、采购计划等商业信息，缺乏法律约束将导致信息泄露风险失控。\n\n模型补充：合同未就履约过程中产生的技术资料、检测报告、改进方案等衍生知识产权归属作出约定，买方可能丧失对定制化技术成果的控制权。",
+            "evidence_quote": "第九条 争议解决\n因本合同发生争议，提交上海仲裁委员会仲裁，也可以向甲方所在地人民法院起诉。",
+            "evidence_start": 0,
+            "evidence_end": 46,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "双方应对履行本合同过程中知悉的对方商业秘密承担保密义务，保密期限为合同终止后3年；泄密方应赔偿守密方因此遭受的实际损失。",
+            "suggested_text": "第十条 保密义务\n双方承诺对在履行本合同过程中知悉的对方技术资料、商业信息、价格条款、采购计划等保密信息承担保密义务，保密期限为合同终止后5年；未经书面同意，不得向任何第三方披露或用于本合同以外目的；泄密方应赔偿守密方因此遭受的全部实际损失。",
+            "negotiation_note": "保密义务必须独立成条、明确范围、期限和违约后果，否则商业信息完全裸奔。",
+            "review_note": "",
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_005-ba8274ca",
+            "clause_id": "cl_005",
+            "clause_article": "第五条",
+            "clause_text": "第五条 验收\n甲方应在收货后 15 日内完成验收，验收标准见附件技术协议。",
+            "category": "acceptance",
+            "severity": "medium",
+            "source": "llm",
+            "title": "验收条款缺失不合格处理机制",
+            "analysis": "虽约定15日内验收及标准见附件，但未规定验收不合格时的整改、退换、费用承担及重新验收机制，买方质量救济路径不明确，违反买卖合同必备要素要求。",
+            "evidence_quote": "甲方应在收货后 15 日内完成验收，验收标准见附件技术协议。",
+            "evidence_start": 7,
+            "evidence_end": 37,
+            "legal_basis_ids": [
+              "CC-596",
+              "CC-470"
+            ],
+            "rule_id": null,
+            "rule_hint": "ACC-001",
+            "agent": "commercial",
+            "confidence": 0.92,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "增加验收条款：验收标准、验收期限、验收方式、不合格退换/整改及费用承担。",
+            "fallback": "买方在收货后15日内验收；不合格的，供应商应在10日内退换并承担费用。",
+            "suggested_text": "第五条 验收\n甲方应在收货后15日内完成验收，验收标准见附件技术协议。验收应以双方签署的《验收报告》为准；如验收不合格，乙方应在收到甲方书面通知后10日内完成整改或更换，并承担由此产生的全部费用（包括运输、人工及检测费用）；重新交付后，甲方有权再次验收，验收期限自重新交付之日起重新起算。",
+            "negotiation_note": "必须明确不合格处理时限、费用承担主体及重新验收机制，避免质量争议无解。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-commercial-cl_006-65e1c326",
+            "clause_id": "cl_006",
+            "clause_article": "第六条",
+            "clause_text": "第六条 质量保证\n质保期为验收合格后 12 个月。",
+            "category": "warranty",
+            "severity": "medium",
+            "source": "llm",
+            "title": "质保期起算点不明确",
+            "analysis": "约定‘质保期为验收合格后12个月’，但合同未定义‘验收合格’的认定标准与确认形式（如书面签认），易引发起算时点争议；且未明确质保期内维修响应时限与责任范围。",
+            "evidence_quote": "质保期为验收合格后 12 个月。",
+            "evidence_start": 9,
+            "evidence_end": 25,
+            "legal_basis_ids": [
+              "CC-596"
+            ],
+            "rule_id": null,
+            "rule_hint": "WAR-001",
+            "agent": "commercial",
+            "confidence": 0.88,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "货物类质保期不少于 12 个月；设备类建议 24 个月，并明确起算点和维修响应时限。",
+            "fallback": "质保期12个月，自验收合格之日起算。",
+            "suggested_text": "第六条 质量保证\n质保期为12个月，自双方签署《验收报告》之日起算。质保期内，乙方应在接到甲方故障通知后24小时内响应，48小时内提出解决方案；属质量问题的，乙方须免费维修或更换，并承担因此产生的全部费用。",
+            "negotiation_note": "质保期起算点必须绑定书面确认文件，且须约定响应与修复时限，否则质保形同虚设。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_010-6eba43e4",
+            "clause_id": "cl_010",
+            "clause_article": "第十条",
+            "clause_text": "第十条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "general",
+            "severity": "low",
+            "source": "llm",
+            "title": "合同生效条件表述简略，未明确签署主体资质要求",
+            "analysis": "第十条仅约定‘双方签字盖章之日起生效’，未明确须由授权代表签署及核验主体资格，存在无权代理或签约主体不适格导致效力瑕疵的风险。",
+            "evidence_quote": "第十条 其他\n本合同自双方签字盖章之日起生效。",
+            "evidence_start": 0,
+            "evidence_end": 23,
+            "legal_basis_ids": [
+              "CC-507"
+            ],
+            "rule_id": null,
+            "rule_hint": "GEN-001",
+            "agent": "compliance",
+            "confidence": 0.75,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确合同自双方授权代表签字并加盖公章之日起生效，并核验对方主体资格与授权文件。",
+            "fallback": "本合同自双方授权代表签字并加盖公章之日起生效。",
+            "suggested_text": "第十条 其他\n本合同自双方法定代表人或授权代表签字并加盖公司公章之日起生效；签约前，双方应相互提供营业执照复印件、法定代表人身份证明及授权委托书（如适用），并确保签署主体具备完全民事行为能力及履约资质。",
+            "negotiation_note": "签约主体资质核验是合同效力前提，必须嵌入生效条款，不可仅作形式约定。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 86.69,
+      "usage": {
+        "llm_calls": 12,
+        "input_tokens": 13474,
+        "output_tokens": 4928,
+        "duration_ms": 86685,
+        "mode": "live",
+        "embedding_mode": "hybrid",
+        "rerank_mode": "off",
+        "llm_route": "balanced",
+        "llm_route_label": "均衡（推荐）",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 140,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '9c981c64-ae31-9bb5-821e-7abb4de6c9b1'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 52,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '7c2f753d-750a-9d45-a4ff-7af796393a5c'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 22704,
+            "input_tokens": 2311,
+            "output_tokens": 1010,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 13863,
+            "input_tokens": 2548,
+            "output_tokens": 609,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14781,
+            "input_tokens": 2734,
+            "output_tokens": 649,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15511,
+            "input_tokens": 2491,
+            "output_tokens": 683,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 167,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'd546d5e1-bb16-93d7-8b29-e188375d5d4f'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 61,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'f96d5d62-67c9-9f81-a924-e36399ea75a3'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 29800,
+            "input_tokens": 2267,
+            "output_tokens": 1332,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 158,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '556f4ab2-d67e-98e6-be89-b000d4e81e87'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 50,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'c72e133f-c12a-9a90-a381-03997b1d7955'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14547,
+            "input_tokens": 1123,
+            "output_tokens": 645,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 23,
+      "valid_citation_count": 23,
+      "evidence_checked": 11,
+      "evidence_valid": 10
+    },
+    {
+      "sample_id": "sample_04",
+      "title": "仓储软件及设备采购合同",
+      "label_count": 7,
+      "finding_count": 11,
+      "score": {
+        "tp": 7,
+        "fp": 4,
+        "fn": 0,
+        "precision": 0.6364,
+        "recall": 1.0,
+        "f1": 0.7778,
+        "by_severity": {
+          "high": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.6667,
+            "recall": 1.0,
+            "f1": 0.8
+          },
+          "medium": {
+            "tp": 5,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.7143,
+            "recall": 1.0,
+            "f1": 0.8333
+          },
+          "low": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule+llm": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "llm": {
+            "tp": 1,
+            "fp": 4,
+            "precision": 0.2
+          },
+          "rule": {
+            "tp": 1,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 6,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "advisory": {
+            "tp": 1,
+            "fp": 4,
+            "precision": 0.2
+          }
+        },
+        "fp_attribution": {
+          "total": 4,
+          "by_source": {
+            "llm": 4
+          },
+          "by_severity": {
+            "medium": 2,
+            "high": 1,
+            "low": 1
+          },
+          "by_category": {
+            "termination": 1,
+            "warranty": 1,
+            "dispute": 1,
+            "general": 1
+          },
+          "by_agent": {
+            "compliance": 2,
+            "liability": 1,
+            "commercial": 1
+          },
+          "with_rule_hint": 3,
+          "without_rule_hint": 1,
+          "evidence_located": 4,
+          "evidence_missing": 0,
+          "with_legal_basis": 4,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 11,
+        "evidence_valid": 11,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 25,
+        "citation_valid": 25,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_04-L01",
+            "finding_id": "rule-PAY-001-cl_003",
+            "rule_id": "PAY-001",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_04-L02",
+            "finding_id": "rule-PAY-003-cl_003",
+            "rule_id": "PAY-003",
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L03",
+            "finding_id": "rule-IP-001-cl_007",
+            "rule_id": "IP-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L04",
+            "finding_id": "rule-COM-001-cl_008",
+            "rule_id": "COM-001",
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L05",
+            "finding_id": "llm-liability-cl_009-305d14a4",
+            "rule_id": "LIA-002",
+            "clause": "第九条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_04-L06",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "clause": "第四条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L07",
+            "finding_id": "llm-commercial-cl_005-116a0ef2",
+            "rule_id": "ACC-001",
+            "clause": "第五条",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-liability-cl_009-b9ad128c",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 违约责任\n乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 2%。",
+            "category": "termination",
+            "severity": "high",
+            "source": "llm",
+            "title": "买方解除权缺失",
+            "analysis": "合同未约定买方单方解除权，尤其未规定逾期交付、质量不合格等根本违约情形下的解除条件，与民法典第五百六十三条法定解除权不匹配，导致买方救济路径受限。",
+            "evidence_quote": "乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 2%。",
+            "evidence_start": 9,
+            "evidence_end": 44,
+            "legal_basis_ids": [
+              "CC-563"
+            ],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "liability",
+            "confidence": 0.97,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "明确约定逾期超15日、验收不合格超两次、重大质量缺陷等情形下甲方可单方解除合同，并退还已收款。",
+            "suggested_text": "第九条 违约责任\n……（接前款）乙方发生下列情形之一的，甲方有权单方解除合同：（1）逾期交付超过15日；（2）交付成果经两次整改仍不符合约定功能清单或验收标准；（3）存在重大质量缺陷或安全隐患，影响系统正常运行；（4）侵犯第三方知识产权，导致甲方无法合法使用。合同解除后，乙方应退还已收款项，并按合同总价10%支付解约赔偿金。",
+            "negotiation_note": "解除权是买方最后救济手段，必须列明具体、可验证的触发条件，不可依赖法定解释。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-commercial-cl_006-c3031ac8",
+            "clause_id": "cl_006",
+            "clause_article": "第六条",
+            "clause_text": "第六条 质量保证\n软件免费维护期为验收合格后 12 个月；维护期内出现缺陷，乙方负责修理或更换。",
+            "category": "warranty",
+            "severity": "medium",
+            "source": "llm",
+            "title": "质保期起算点不明确",
+            "analysis": "质保期虽为12个月，但条款仅写‘验收合格后12个月’，而合同中‘验收合格’未定义达成条件（如签署验收报告？单方通知？），亦未明确质保期是否自书面验收确认日起算，易引发争议。",
+            "evidence_quote": "软件免费维护期为验收合格后 12 个月；维护期内出现缺陷，乙方负责修理或更换。",
+            "evidence_start": 9,
+            "evidence_end": 48,
+            "legal_basis_ids": [
+              "CC-511",
+              "CC-596"
+            ],
+            "rule_id": null,
+            "rule_hint": "WAR-001",
+            "agent": "commercial",
+            "confidence": 0.88,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "货物类质保期不少于 12 个月；设备类建议 24 个月，并明确起算点和维修响应时限。",
+            "fallback": "第六条 质量保证\n软件免费维护期为12个月，自双方签署书面验收报告之日起算。",
+            "suggested_text": "第六条 质量保证\n软件免费维护期为12个月，自双方签署书面验收报告之日起算；验收报告应载明系统运行稳定、功能符合附件一《技术规格书》约定且无重大缺陷。维护期内出现缺陷的，乙方应在接到通知后2小时内响应、24小时内提供远程支持、5个工作日内完成修复或更换。",
+            "negotiation_note": "必须明确以双方签署的书面验收报告为唯一起算依据，排除单方通知或默认验收等模糊方式。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_010-bbac09be",
+            "clause_id": "cl_010",
+            "clause_article": "第十条",
+            "clause_text": "第十条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "dispute",
+            "severity": "medium",
+            "source": "llm",
+            "title": "管辖法院对买方不利",
+            "analysis": "约定由甲方（买方）所在地人民法院管辖，表面有利，但合同首部明确甲方为蓝湾供应链有限公司，其所在地即买方所在地，该约定符合CPL-35关于协议管辖的规定，不构成不利；但需注意‘甲方所在地’未明示具体地址，存在解释争议风险，且买方作为甲方虽形式上受益，实践中若甲方所在地无实际联系（如仅为注册地非经营地），可能被质疑管辖连接点真实性。",
+            "evidence_quote": "第十条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [
+              "CPL-35"
+            ],
+            "rule_id": null,
+            "rule_hint": "DIS-001",
+            "agent": "compliance",
+            "confidence": 0.72,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "改为买方所在地法院管辖，或约定合同履行地（买方所在地）法院管辖。",
+            "fallback": "第十条 争议解决\n因本合同引起的或与本合同有关的任何争议，由买方所在地有管辖权的人民法院管辖。",
+            "suggested_text": "第十条 争议解决\n因本合同引起的或与本合同有关的任何争议，由买方（甲方）主要办事机构所在地有管辖权的人民法院管辖；买方主要办事机构地址为：【填写具体地址】。",
+            "negotiation_note": "必须明确‘买方所在地’指向其实际经营地/主要办事机构，并在合同中填写具体地址，避免注册地空泛约定导致管辖无效风险。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_011-6bcb8fe9",
+            "clause_id": "cl_011",
+            "clause_article": "第十一条",
+            "clause_text": "第十一条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "general",
+            "severity": "low",
+            "source": "llm",
+            "title": "合同生效条件表述简略",
+            "analysis": "约定‘自双方签字盖章之日起生效’，虽满足基本生效要件，但未明确是否需法定代表人或授权代表签署、是否需加盖公章（而非合同专用章）等细节，存在效力瑕疵风险；根据企业Playbook要求，应强化签署主体与授权验证要求。",
+            "evidence_quote": "本合同自双方签字盖章之日起生效。",
+            "evidence_start": 8,
+            "evidence_end": 24,
+            "legal_basis_ids": [
+              "CC-507"
+            ],
+            "rule_id": null,
+            "rule_hint": "GEN-001",
+            "agent": "compliance",
+            "confidence": 0.65,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确合同自双方授权代表签字并加盖公章之日起生效，并核验对方主体资格与授权文件。",
+            "fallback": "第十一条 其他\n本合同自双方授权代表签字并加盖公章之日起生效。",
+            "suggested_text": "第十一条 其他\n本合同自双方法定代表人或授权代表签字并加盖公司公章之日起生效；签署前，双方应相互提供加盖公章的营业执照复印件、法定代表人身份证明书及授权委托书（如适用），作为本合同附件。",
+            "negotiation_note": "必须将签字主体限定为法定代表人或经公证/公司正式授权的代表，并要求加盖公章而非合同章，确保签署效力可验证。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 100.1,
+      "usage": {
+        "llm_calls": 13,
+        "input_tokens": 16648,
+        "output_tokens": 5682,
+        "duration_ms": 100104,
+        "mode": "live",
+        "embedding_mode": "hybrid",
+        "rerank_mode": "off",
+        "llm_route": "balanced",
+        "llm_route_label": "均衡（推荐）",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 191,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'afb1ebf7-289f-959f-b99c-4dcbf724fdee'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 53,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '6d56d0a0-d43d-9c45-a86b-6af699aa3d19'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 22904,
+            "input_tokens": 2297,
+            "output_tokens": 1021,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 13688,
+            "input_tokens": 2473,
+            "output_tokens": 593,
+            "mock": false,
+            "success": false,
+            "error": "2 validation errors for AgentOutput\nfindings.2.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type\nfindings.3.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 16085,
+            "input_tokens": 2609,
+            "output_tokens": 704,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 16547,
+            "input_tokens": 2744,
+            "output_tokens": 729,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14901,
+            "input_tokens": 3222,
+            "output_tokens": 653,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 143,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '1a1045ba-304f-9a2b-a9c0-f06e21419a1d'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 59,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'ccd2913a-5c44-9681-b57b-5dcc0c092caf'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 33016,
+            "input_tokens": 2265,
+            "output_tokens": 1478,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 128,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'de8a20db-9f4e-9859-9f1a-61c24defe511'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 93,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'ccea9783-2a2b-90a8-9764-b2c8d9cde6b2'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 11432,
+            "input_tokens": 1038,
+            "output_tokens": 504,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 25,
+      "valid_citation_count": 25,
+      "evidence_checked": 11,
+      "evidence_valid": 11
+    },
+    {
+      "sample_id": "sample_05",
+      "title": "食品包装材料采购合同",
+      "label_count": 9,
+      "finding_count": 14,
+      "score": {
+        "tp": 9,
+        "fp": 5,
+        "fn": 0,
+        "precision": 0.6429,
+        "recall": 1.0,
+        "f1": 0.7826,
+        "by_severity": {
+          "high": {
+            "tp": 6,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.6667,
+            "recall": 1.0,
+            "f1": 0.8
+          },
+          "medium": {
+            "tp": 3,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.75
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "llm": {
+            "tp": 0,
+            "fp": 5,
+            "precision": 0.0
+          },
+          "rule+llm": {
+            "tp": 6,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "rule": {
+            "tp": 3,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "advisory": {
+            "tp": 0,
+            "fp": 5,
+            "precision": 0.0
+          },
+          "confirmed": {
+            "tp": 9,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 5,
+          "by_source": {
+            "llm": 5
+          },
+          "by_severity": {
+            "high": 3,
+            "medium": 2
+          },
+          "by_category": {
+            "ip": 1,
+            "termination": 1,
+            "dispute": 1,
+            "delivery": 1,
+            "compliance": 1
+          },
+          "by_agent": {
+            "compliance": 4,
+            "liability": 1
+          },
+          "with_rule_hint": 3,
+          "without_rule_hint": 2,
+          "evidence_located": 5,
+          "evidence_missing": 0,
+          "with_legal_basis": 5,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 13,
+        "evidence_valid": 13,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 34,
+        "citation_valid": 34,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_05-L01",
+            "finding_id": "llm-commercial-cl_003-0a8d8d8c",
+            "rule_id": "PAY-001",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L02",
+            "finding_id": "llm-commercial-cl_003-b508ec38",
+            "rule_id": "PAY-002",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L03",
+            "finding_id": "rule-DEL-001-cl_004",
+            "rule_id": "DEL-001",
+            "clause": "第四条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L04",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "clause": "第四条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L05",
+            "finding_id": "rule-ACC-002-cl_005",
+            "rule_id": "ACC-002",
+            "clause": "第五条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L06",
+            "finding_id": "llm-commercial-cl_006-c3069fef",
+            "rule_id": "WAR-001",
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L07",
+            "finding_id": "llm-liability-cl_007-5a44e3a9",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L08",
+            "finding_id": "rule-LIA-003-cl_007",
+            "rule_id": "LIA-003",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L09",
+            "finding_id": "rule-DIS-003-contract",
+            "rule_id": "DIS-003",
+            "clause": "合同级",
+            "severity": "high"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-compliance-cl_000-3a3cd759",
+            "clause_id": "cl_000",
+            "clause_article": "首部",
+            "clause_text": "食品包装材料采购合同\n甲方：绿源食品有限公司\n乙方：安泰包装材料有限公司",
+            "category": "ip",
+            "severity": "high",
+            "source": "llm",
+            "title": "知识产权归属不明",
+            "analysis": "合同未就履约过程中可能产生的技术改进、定制化设计、图纸、模具等知识产权归属作出约定，买方支付对价后可能无法获得相关成果权利，存在权属风险。",
+            "evidence_quote": "食品包装材料采购合同\n甲方：绿源食品有限公司\n乙方：安泰包装材料有限公司",
+            "evidence_start": 0,
+            "evidence_end": 36,
+            "legal_basis_ids": [
+              "CC-596"
+            ],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.9,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "所有因履行本合同而产生的知识产权成果归甲方所有，乙方不得主张任何权利。",
+            "suggested_text": "履约过程中产生的所有技术改进、定制化设计、图纸、模具、样品及与本合同履行相关的知识产权成果，自产生之日起归甲方所有；乙方应无条件配合甲方办理权属登记或移交手续，并签署必要文件。",
+            "negotiation_note": "知识产权归属是买方核心资产权益，必须明确约定为甲方所有，不得接受‘共有’或‘乙方保留’等模糊表述。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-liability-cl_007-8a922cbd",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交货的，按日万分之二支付违约金。\n乙方对甲方因此遭受的损失承担一切责任。",
+            "category": "termination",
+            "severity": "high",
+            "source": "llm",
+            "title": "买方解除权缺失",
+            "analysis": "合同未约定买方在供应商逾期交货、质量不合格等根本违约情形下的单方解除权，导致买方缺乏有效退出机制；仅规定违约金及无限责任，未配套解除权，违反《民法典》第五百七十七条关于‘采取补救措施’及合同救济完整性要求。",
+            "evidence_quote": "乙方逾期交货的，按日万分之二支付违约金。\n乙方对甲方因此遭受的损失承担一切责任。",
+            "evidence_start": 9,
+            "evidence_end": 49,
+            "legal_basis_ids": [
+              "CC-577",
+              "CC-585"
+            ],
+            "rule_id": null,
+            "rule_hint": "TER-001",
+            "agent": "liability",
+            "confidence": 0.9,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确买方在供应商逾期、质量不合格、根本违约等情形下的解除权及退款/赔偿机制。",
+            "fallback": "供应商逾期超过30日或质量不合格拒不整改的，买方有权解除合同并要求赔偿。",
+            "suggested_text": "第七条 违约责任\n乙方逾期交货超过30日，或交付货物经两次验收仍不符合本合同约定的质量标准且拒不整改的，甲方有权单方解除本合同，并要求乙方退还已收取的全部款项，赔偿甲方因此遭受的实际损失。",
+            "negotiation_note": "解除权必须与根本违约情形挂钩，不可仅以违约金替代退出机制。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_009-fb0dbb7e",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "dispute",
+            "severity": "high",
+            "source": "llm",
+            "title": "争议解决条款缺失",
+            "analysis": "合同未约定任何争议解决方式（诉讼或仲裁），亦无管辖法院或仲裁机构指向，发生纠纷时将适用法定管辖，增加买方维权不确定性与成本。",
+            "evidence_quote": "本合同自双方签字盖章之日起生效。",
+            "evidence_start": 7,
+            "evidence_end": 23,
+            "legal_basis_ids": [
+              "CC-596"
+            ],
+            "rule_id": null,
+            "rule_hint": "DIS-003",
+            "agent": "compliance",
+            "confidence": 0.95,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "增加争议解决条款，明确协商期限、管辖法院或仲裁机构。",
+            "fallback": "争议由买方所在地有管辖权的人民法院管辖。",
+            "suggested_text": "第九条 争议解决\n因本合同引起的或与本合同有关的任何争议，双方应首先通过友好协商解决；协商不成的，任何一方均有权向甲方所在地有管辖权的人民法院提起诉讼。",
+            "negotiation_note": "必须明确约定诉讼管辖地，优先锁定买方所在地法院，避免异地诉讼成本。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_000-8f02acec",
+            "clause_id": "cl_000",
+            "clause_article": "首部",
+            "clause_text": "食品包装材料采购合同\n甲方：绿源食品有限公司\n乙方：安泰包装材料有限公司",
+            "category": "delivery",
+            "severity": "medium",
+            "source": "llm",
+            "title": "交付期限约定模糊",
+            "analysis": "交付条款仅表述为'收到订单后尽快交货，具体时间另行通知'，未明确履行期限，构成履行期限不明确，依据民法典第511条第（四）项，买方虽可随时请求履行，但须给予必要准备时间，影响供应链稳定性与违约认定。",
+            "evidence_quote": "食品包装材料采购合同\n甲方：绿源食品有限公司\n乙方：安泰包装材料有限公司",
+            "evidence_start": 0,
+            "evidence_end": 36,
+            "legal_basis_ids": [
+              "CC-511"
+            ],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.88,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "交付期限须明确为‘收到订单后X个自然日/工作日内’，不得使用‘尽快’‘另行通知’等模糊表述。",
+            "suggested_text": "第三条 交付期限\n乙方应在收到甲方书面订单后5个工作日内确认交货期，并于确认后10个自然日内完成全部货物交付；如遇不可抗力，乙方须在发生后24小时内书面通知甲方并提供证明，经甲方书面同意后可相应顺延。",
+            "negotiation_note": "交付期限必须量化、可验证，否则无法认定逾期及启动违约救济。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_008-4ba86778",
+            "clause_id": "cl_008",
+            "clause_article": "第八条",
+            "clause_text": "第八条 保密\n双方应对本合同内容及履行过程中获知的对方商业信息承担保密义务。",
+            "category": "compliance",
+            "severity": "medium",
+            "source": "llm",
+            "title": "保密义务未明确范围、期限及例外",
+            "analysis": "保密条款仅原则性约定'对本合同内容及履行过程中获知的对方商业信息承担保密义务'，未界定保密信息范围、保密期限、除外情形及违约责任，难以执行，不符合双向保密的实质要求。",
+            "evidence_quote": "第八条 保密\n双方应对本合同内容及履行过程中获知的对方商业信息承担保密义务。",
+            "evidence_start": 0,
+            "evidence_end": 38,
+            "legal_basis_ids": [
+              "CC-509"
+            ],
+            "rule_id": null,
+            "rule_hint": "COM-001",
+            "agent": "compliance",
+            "confidence": 0.92,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "增加双向保密义务，明确保密信息范围、期限、例外和违约责任。",
+            "fallback": "双方对因履行本合同获知的对方商业信息承担保密义务，期限为合同终止后3年。",
+            "suggested_text": "第八条 保密\n双方应对因履行本合同而知悉的对方技术资料、经营数据、客户信息、价格条款及其他标注为‘保密’或依性质应合理认定为保密的信息承担保密义务；保密义务持续至本合同终止后3年；下列情形不视为泄密：（1）已进入公知领域且非因接收方过错所致；（2）接收方在披露前已合法持有；（3）依法应披露且已提前5个工作日书面通知披露方。违反保密义务的，违约方应赔偿守约方全部实际损失。",
+            "negotiation_note": "保密范围、期限、例外及违约后果必须闭环，否则条款无执行基础。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 90.0,
+      "usage": {
+        "llm_calls": 12,
+        "input_tokens": 13369,
+        "output_tokens": 5051,
+        "duration_ms": 90004,
+        "mode": "live",
+        "embedding_mode": "hybrid",
+        "rerank_mode": "off",
+        "llm_route": "balanced",
+        "llm_route_label": "均衡（推荐）",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 149,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '76136b3d-de4e-96b8-adc6-a41552ed907a'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 54,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '1348526f-bca8-9e5c-8a92-b4bf24c4955f'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 21028,
+            "input_tokens": 2159,
+            "output_tokens": 937,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14036,
+            "input_tokens": 2674,
+            "output_tokens": 617,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14232,
+            "input_tokens": 2547,
+            "output_tokens": 624,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 16144,
+            "input_tokens": 2355,
+            "output_tokens": 703,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 144,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'ccdd76fd-1a9f-9f2c-bbfc-f0478fe75c58'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 59,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '91847466-1697-9f94-8afa-1e00b461ad86'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 28139,
+            "input_tokens": 2197,
+            "output_tokens": 1259,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 147,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'adebd977-fc77-97fb-aa4a-a98243a976f3'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 63,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'fd9e3ee9-6702-9f92-bb27-5862bcce0b8d'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 20556,
+            "input_tokens": 1437,
+            "output_tokens": 911,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 34,
+      "valid_citation_count": 34,
+      "evidence_checked": 13,
+      "evidence_valid": 13
+    },
+    {
+      "sample_id": "sample_06",
+      "title": "实验室仪器采购合同",
+      "label_count": 6,
+      "finding_count": 11,
+      "score": {
+        "tp": 5,
+        "fp": 6,
+        "fn": 1,
+        "precision": 0.4545,
+        "recall": 0.8333,
+        "f1": 0.5882,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.2,
+            "recall": 1.0,
+            "f1": 0.3333
+          },
+          "medium": {
+            "tp": 4,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.6667,
+            "recall": 1.0,
+            "f1": 0.8
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "llm": {
+            "tp": 0,
+            "fp": 6,
+            "precision": 0.0
+          },
+          "rule+llm": {
+            "tp": 2,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "rule": {
+            "tp": 3,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "advisory": {
+            "tp": 0,
+            "fp": 6,
+            "precision": 0.0
+          },
+          "confirmed": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 6,
+          "by_source": {
+            "llm": 6
+          },
+          "by_severity": {
+            "high": 4,
+            "medium": 2
+          },
+          "by_category": {
+            "acceptance": 1,
+            "liability": 1,
+            "termination": 1,
+            "compliance": 1,
+            "payment": 1,
+            "dispute": 1
+          },
+          "by_agent": {
+            "commercial": 2,
+            "liability": 2,
+            "compliance": 2
+          },
+          "with_rule_hint": 6,
+          "without_rule_hint": 0,
+          "evidence_located": 6,
+          "evidence_missing": 0,
+          "with_legal_basis": 6,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 10,
+        "evidence_valid": 10,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 22,
+        "citation_valid": 22,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_06-L01",
+            "finding_id": "llm-commercial-cl_006-aa02d840",
+            "rule_id": "WAR-001",
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L02",
+            "finding_id": "rule-PRI-002-cl_002",
+            "rule_id": "PRI-002",
+            "clause": "第二条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L03",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L04",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "clause": "第四条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L06",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "clause": "第六条",
+            "severity": "high"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-commercial-cl_005-99b207a6",
+            "clause_id": "cl_005",
+            "clause_article": "第五条",
+            "clause_text": "第五条 验收\n甲方应在收货后 15 日内完成验收，验收标准见附件技术参数。",
+            "category": "acceptance",
+            "severity": "high",
+            "source": "llm",
+            "title": "验收条款缺失不合格处理机制",
+            "analysis": "仅约定甲方应在收货后15日内完成验收及标准见附件，但未约定验收不合格时的整改、退换、费用承担及重新验收机制，买方质量救济权严重受限，符合ACC-001风险描述。",
+            "evidence_quote": "甲方应在收货后 15 日内完成验收，验收标准见附件技术参数。",
+            "evidence_start": 7,
+            "evidence_end": 37,
+            "legal_basis_ids": [
+              "CC-596",
+              "CC-615"
+            ],
+            "rule_id": null,
+            "rule_hint": "ACC-001",
+            "agent": "commercial",
+            "confidence": 0.98,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "增加验收条款：验收标准、验收期限、验收方式、不合格退换/整改及费用承担。",
+            "fallback": "买方在收货后15日内验收；不合格的，供应商应在10日内退换并承担费用。",
+            "suggested_text": "第五条 验收\n甲方应在收货后15日内完成验收，验收标准见附件技术参数。验收方式为现场开箱检验及功能测试。验收不合格的，乙方应在收到甲方书面通知后10日内完成整改、更换或退货，并承担由此产生的运输、人工、检测等全部费用；重新交付后，甲方有权重新启动15日验收期。",
+            "negotiation_note": "必须明确不合格情形下的响应时限、费用承担及重新验收机制，否则质量控制无实质保障。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-liability-cl_007-f8a0d237",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "category": "liability",
+            "severity": "high",
+            "source": "llm",
+            "title": "逾期违约金过低",
+            "analysis": "约定日万分之五（0.0005）符合Playbook推荐值，但未配套设置买方解除权，无法形成有效履约约束；结合合同标的为高值精密仪器（45万元），交付延迟可能导致实验中断、项目延期等实际损失，仅依赖违约金难以弥补。\n\n模型补充：违约金上限为合同总价10%（4.5万元），显著低于Playbook建议的10%–20%区间下限，且未排除故意或重大过失情形；对于价值45万元的液相色谱仪，质量或交付严重违约可能引发远超该金额的替代采购、停产损失。\n\n模型补充：合同虽约定6个月质保期，但‘quality_remedy’字段为false，且条款中未见任何关于质量不合格时退货、换货、修理、降价或赔偿损失的约定，违反《民法典》第577条规定的补救措施义务。",
+            "evidence_quote": "乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "evidence_start": 9,
+            "evidence_end": 45,
+            "legal_basis_ids": [
+              "CC-585",
+              "CC-577",
+              "CC-621"
+            ],
+            "rule_id": null,
+            "rule_hint": "LIA-001",
+            "agent": "liability",
+            "confidence": 0.98,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "逾期违约金建议为日万分之五；同时约定逾期超过一定天数时买方可解除合同。",
+            "fallback": "逾期按日万分之五计违约金；逾期超过30日买方可解除合同。",
+            "suggested_text": "第七条 违约责任\n乙方逾期交付的，每逾期一日，按合同总价万分之五向甲方支付违约金；逾期超过30日的，甲方有权解除合同，并要求乙方退还已收款、赔偿实际损失。",
+            "negotiation_note": "违约金比例可接受，但必须绑定解除权条款，否则无法应对高价值设备严重迟延风险。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": [
+              "与同类模型建议合并（证据高度重叠）"
+            ]
+          },
+          {
+            "id": "llm-liability-cl_007-a102b66a",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "category": "termination",
+            "severity": "high",
+            "source": "llm",
+            "title": "买方解除权缺失",
+            "analysis": "合同未约定买方在供应商逾期交付、质量不合格等根本违约情形下的单方解除权，与《民法典》第563条法定解除权不匹配，亦未体现买卖双方权利对等原则，导致买方救济路径受限。",
+            "evidence_quote": "乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "evidence_start": 9,
+            "evidence_end": 45,
+            "legal_basis_ids": [
+              "CC-563"
+            ],
+            "rule_id": null,
+            "rule_hint": "TER-001",
+            "agent": "liability",
+            "confidence": 0.97,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确买方在供应商逾期、质量不合格、根本违约等情形下的解除权及退款/赔偿机制。",
+            "fallback": "供应商逾期超过30日或质量不合格拒不整改的，买方有权解除合同并要求赔偿。",
+            "suggested_text": "第七条 违约责任\n乙方发生以下情形之一的，甲方有权单方解除合同：（1）逾期交付超过30日；（2）经两次整改仍未能通过验收；（3）提供的设备存在重大质量缺陷且拒不更换或修复。合同解除后，乙方应在5个工作日内退还全部已收款，并赔偿甲方因此遭受的实际损失。",
+            "negotiation_note": "解除权必须列明具体触发情形和后果，避免模糊表述导致执行困难。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_008-8472b10c",
+            "clause_id": "cl_008",
+            "clause_article": "第八条",
+            "clause_text": "第八条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "compliance",
+            "severity": "high",
+            "source": "llm",
+            "title": "争议解决条款虽存在但未约定协商前置程序",
+            "analysis": "合同约定了诉讼管辖，但未设置争议发生后的友好协商期，不符合商业惯例及风险防控要求，易导致纠纷直接进入司法程序，增加买方成本与不确定性。\n\n模型补充：合同未约定任何保密条款，买方在履行过程中可能向供应商披露技术参数、采购计划等商业信息，缺乏法律保护依据，存在信息泄露风险。\n\n模型补充：合同未就仪器使用中产生的数据、方法、衍生技术成果等知识产权归属作出约定，买方后续使用、改进或商业化可能面临权属争议。",
+            "evidence_quote": "第八条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [
+              "CC-507"
+            ],
+            "rule_id": null,
+            "rule_hint": "DIS-003",
+            "agent": "compliance",
+            "confidence": 0.98,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "增加争议解决条款，明确协商期限、管辖法院或仲裁机构。",
+            "fallback": "争议由买方所在地有管辖权的人民法院管辖。",
+            "suggested_text": "第八条 争议解决\n因本合同引起的或与本合同有关的任何争议，双方应首先通过友好协商解决，协商期为争议发生之日起15个工作日；协商不成的，任何一方均有权向甲方所在地有管辖权的人民法院提起诉讼。",
+            "negotiation_note": "协商前置是降低纠纷成本的关键，15个工作日为合理缓冲期，不可删除。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）",
+              "与同类模型建议合并（证据高度重叠）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_003-8f51f90c",
+            "clause_id": "cl_003",
+            "clause_article": "第三条",
+            "clause_text": "第三条 付款方式\n验收合格后 30 日内，甲方向乙方支付全部价款。",
+            "category": "payment",
+            "severity": "medium",
+            "source": "llm",
+            "title": "付款期限过长且无逾期违约责任",
+            "analysis": "约定验收合格后30日内支付全部价款，虽未超60天，但未约定逾期付款违约责任，买方缺乏约束卖方及时履约的抓手；结合Playbook PAY-003，建议补充违约金条款。",
+            "evidence_quote": "验收合格后 30 日内，甲方向乙方支付全部价款。",
+            "evidence_start": 9,
+            "evidence_end": 33,
+            "legal_basis_ids": [
+              "CC-628",
+              "CC-511"
+            ],
+            "rule_id": null,
+            "rule_hint": "PAY-003",
+            "agent": "commercial",
+            "confidence": 0.92,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确付款触发条件、付款期限和逾期付款违约金；建议账期不超过 60 天。",
+            "fallback": "账期不超过60天，逾期按日万分之五支付违约金。",
+            "suggested_text": "第三条 付款方式\n甲方于验收合格后30日内支付全部合同价款；若甲方逾期付款，每逾期一日，按应付未付金额万分之五向乙方支付违约金，违约金总额不超过应付未付金额的5%。",
+            "negotiation_note": "买方虽掌握付款主动权，但需以对等违约责任换取卖方履约配合，违约金比例和上限须双向明确。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_008-9a86d0d0",
+            "clause_id": "cl_008",
+            "clause_article": "第八条",
+            "clause_text": "第八条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "dispute",
+            "severity": "medium",
+            "source": "llm",
+            "title": "管辖法院约定对买方不利",
+            "analysis": "合同约定由甲方（买方）所在地人民法院管辖，虽表面有利，但甲方为买方，该约定实际符合买方利益；然而根据合同事实中dispute.unfavorable_venue=false及条款文本，此处无不利情形。但结合审查重点‘管辖法院是否对买方不利’的字面逻辑与事实反向验证：条款写明‘甲方所在地人民法院’，而甲方即买方康泽生物科技有限公司，故该约定对买方有利而非不利；因此本项不构成风险。经复核，无不利管辖风险。",
+            "evidence_quote": "第八条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [
+              "CPL-35"
+            ],
+            "rule_id": null,
+            "rule_hint": "DIS-001",
+            "agent": "compliance",
+            "confidence": 0.95,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "改为买方所在地法院管辖，或约定合同履行地（买方所在地）法院管辖。",
+            "fallback": "由买方所在地有管辖权的人民法院管辖。",
+            "suggested_text": "第八条 争议解决\n因本合同引起的或与本合同有关的任何争议，双方应友好协商解决；协商不成的，任何一方均有权向买方（甲方）所在地有管辖权的人民法院提起诉讼。",
+            "negotiation_note": "管辖条款必须明示‘买方所在地’且限定为‘有管辖权的人民法院’，避免因表述模糊导致移送管辖风险。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          }
+        ],
+        "unmatched_labels": [
+          {
+            "id": "sample_06-L05",
+            "clause_article": "第四条",
+            "category": "delivery",
+            "rule_id": null,
+            "severity": "low",
+            "keywords": [
+              "运费",
+              "风险"
+            ]
+          }
+        ]
+      },
+      "duration_s": 96.61,
+      "usage": {
+        "llm_calls": 13,
+        "input_tokens": 16145,
+        "output_tokens": 5310,
+        "duration_ms": 96611,
+        "mode": "live",
+        "embedding_mode": "hybrid",
+        "rerank_mode": "off",
+        "llm_route": "balanced",
+        "llm_route_label": "均衡（推荐）",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 146,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '3d768e41-bb55-9c48-a1e2-7e40f8b3f696'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 51,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '62e17502-efaf-927b-aa97-35cd38bbb879'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 21446,
+            "input_tokens": 2060,
+            "output_tokens": 922,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14715,
+            "input_tokens": 2641,
+            "output_tokens": 646,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14791,
+            "input_tokens": 2484,
+            "output_tokens": 648,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15470,
+            "input_tokens": 2472,
+            "output_tokens": 681,
+            "mock": false,
+            "success": false,
+            "error": "2 validation errors for AgentOutput\nfindings.2.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type\nfindings.3.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 17636,
+            "input_tokens": 3309,
+            "output_tokens": 743,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 241,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '5d8cabe4-a5d3-9f4f-b13a-0734fc617051'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 62,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '47a15e80-be5b-9eb5-a7d6-f305dd9403bb'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 27222,
+            "input_tokens": 2273,
+            "output_tokens": 1209,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 189,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '5eaa4030-6835-9820-92e2-7d3a2cebadfc'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 47,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'ef4161dd-6bfa-9839-990a-5b447341f36b'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 10524,
+            "input_tokens": 906,
+            "output_tokens": 461,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 22,
+      "valid_citation_count": 22,
+      "evidence_checked": 10,
+      "evidence_valid": 10
+    },
+    {
+      "sample_id": "sample_07",
+      "title": "冷链保温箱采购合同",
+      "label_count": 7,
+      "finding_count": 10,
+      "score": {
+        "tp": 7,
+        "fp": 3,
+        "fn": 0,
+        "precision": 0.7,
+        "recall": 1.0,
+        "f1": 0.8235,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6667
+          },
+          "medium": {
+            "tp": 6,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule+llm": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "llm": {
+            "tp": 0,
+            "fp": 3,
+            "precision": 0.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "advisory": {
+            "tp": 0,
+            "fp": 3,
+            "precision": 0.0
+          }
+        },
+        "fp_attribution": {
+          "total": 3,
+          "by_source": {
+            "llm": 3
+          },
+          "by_severity": {
+            "medium": 2,
+            "high": 1
+          },
+          "by_category": {
+            "ip": 1,
+            "warranty": 1,
+            "general": 1
+          },
+          "by_agent": {
+            "compliance": 2,
+            "commercial": 1
+          },
+          "with_rule_hint": 1,
+          "without_rule_hint": 2,
+          "evidence_located": 3,
+          "evidence_missing": 0,
+          "with_legal_basis": 3,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 10,
+        "evidence_valid": 10,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 19,
+        "citation_valid": 19,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_07-L01",
+            "finding_id": "llm-commercial-cl_003-e5776940",
+            "rule_id": "PAY-003",
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L02",
+            "finding_id": "llm-liability-cl_007-1f6b3ede",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L03",
+            "finding_id": "llm-liability-cl_008-aa4cdda3",
+            "rule_id": "FOR-001",
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L04",
+            "finding_id": "rule-TER-002-cl_009",
+            "rule_id": "TER-002",
+            "clause": "第九条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L05",
+            "finding_id": "llm-compliance-cl_011-0ec9e707",
+            "rule_id": "DIS-001",
+            "clause": "第十一条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_07-L06",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L07",
+            "finding_id": "llm-compliance-cl_010-f015ee2d",
+            "rule_id": "COM-001",
+            "clause": "第十条",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-compliance-cl_012-4ca17014",
+            "clause_id": "cl_012",
+            "clause_article": "第十二条",
+            "clause_text": "第十二条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "ip",
+            "severity": "high",
+            "source": "llm",
+            "title": "知识产权归属不明",
+            "analysis": "合同未约定履约过程中产生的技术成果、改进方案、设计图纸等知识产权归属，依据《民法典》第五百一十一条，该事项属约定不明，易引发权属争议；尤其冷链设备定制可能涉及适配性改进，权属不清将影响买方后续使用与维权。",
+            "evidence_quote": "第十二条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "evidence_start": 0,
+            "evidence_end": 52,
+            "legal_basis_ids": [
+              "CC-511"
+            ],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.88,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "履约中产生的定制化技术成果归甲方所有。",
+            "suggested_text": "第十二条 知识产权\n乙方根据本合同为甲方定制开发或改进所产生的全部技术成果、设计图纸、软件源代码、技术文档及衍生知识产权，归甲方单独所有；乙方应配合甲方办理权属登记手续，并签署必要法律文件。",
+            "negotiation_note": "定制类设备的技术成果必须明确归属买方，禁止模糊表述或默认归属乙方，否则影响后续使用与维权。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-commercial-cl_006-b8138038",
+            "clause_id": "cl_006",
+            "clause_article": "第六条",
+            "clause_text": "第六条 质量保证\n质保期为验收合格后 12 个月。\n质量不合格的，甲方有权要求退货、换货或修理，费用由乙方承担。",
+            "category": "warranty",
+            "severity": "medium",
+            "source": "llm",
+            "title": "质保期起算点与验收条款脱节",
+            "analysis": "质保期虽约定为‘验收合格后12个月’，但合同未定义‘验收合格’的确认形式（如书面签收、验收报告），亦未规定验收不合格时质保期是否顺延，存在起算争议风险。",
+            "evidence_quote": "质保期为验收合格后 12 个月。",
+            "evidence_start": 9,
+            "evidence_end": 25,
+            "legal_basis_ids": [
+              "CC-615"
+            ],
+            "rule_id": null,
+            "rule_hint": "WAR-001",
+            "agent": "commercial",
+            "confidence": 0.88,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "货物类质保期不少于 12 个月；设备类建议 24 个月，并明确起算点和维修响应时限。",
+            "fallback": "质保期12个月，自验收合格之日起算。",
+            "suggested_text": "第六条 质量保证\n质保期为12个月，自甲方签署《验收合格报告》之日起算；如验收不合格，乙方完成整改并经甲方签署《验收合格报告》后，质保期重新起算。",
+            "negotiation_note": "质保期起算必须以书面验收合格文件为唯一依据，并约定不合格时重新起算，避免起算点争议。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_012-a387ac65",
+            "clause_id": "cl_012",
+            "clause_article": "第十二条",
+            "clause_text": "第十二条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "general",
+            "severity": "medium",
+            "source": "llm",
+            "title": "合同生效条件虽明确但缺乏签署主体确认细节",
+            "analysis": "虽约定‘双方签字盖章之日起生效’，但未明确是否需法定代表人签字或授权代表签字并附授权书，亦未约定盖章类型（公章/合同专用章），存在效力瑕疵风险；结合格式条款提示义务要求，该通用生效条款若属供方单方拟定，未作特别提示，买方可能主张其非合意内容。",
+            "evidence_quote": "第十二条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "evidence_start": 0,
+            "evidence_end": 52,
+            "legal_basis_ids": [
+              "CC-496"
+            ],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.85,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "本合同自双方法定代表人或授权代表签字并加盖公司公章之日起生效；授权代表签署的，应同时提交加盖公章的授权文件。",
+            "suggested_text": "第十二条 合同生效与签署要求\n本合同自双方法定代表人或持有有效授权书的授权代表签字并加盖公司公章或合同专用章之日起生效。授权代表签署的，须在签署前向对方提供加盖公章的授权书原件。本合同为双方平等协商达成，已就全部条款向对方作出合理提示与说明。",
+            "negotiation_note": "必须明确签字主体资格与盖章类型，并体现协商过程与提示义务，避免被认定为无效格式条款。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 79.37,
+      "usage": {
+        "llm_calls": 12,
+        "input_tokens": 13273,
+        "output_tokens": 4681,
+        "duration_ms": 79368,
+        "mode": "live",
+        "embedding_mode": "hybrid",
+        "rerank_mode": "off",
+        "llm_route": "balanced",
+        "llm_route_label": "均衡（推荐）",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 148,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '3a8408f3-72bb-9194-8073-6e219bbba837'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 56,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '77f1d35d-2f4d-9194-a94a-841df95904f0'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 23436,
+            "input_tokens": 2356,
+            "output_tokens": 1045,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15155,
+            "input_tokens": 2721,
+            "output_tokens": 666,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15573,
+            "input_tokens": 2610,
+            "output_tokens": 687,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 16543,
+            "input_tokens": 2517,
+            "output_tokens": 726,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 153,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '541d5af7-7075-944b-a775-af75ef6f69e7'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 60,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '87508851-e5bd-9d7e-8cf7-687e6b006aa1'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 26116,
+            "input_tokens": 2298,
+            "output_tokens": 1164,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 159,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '93fb140a-b69d-9355-b636-87324afea568'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 46,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '6ee32634-24a3-97e5-a165-3ef7591c3d1a'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 9004,
+            "input_tokens": 771,
+            "output_tokens": 393,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 19,
+      "valid_citation_count": 19,
+      "evidence_checked": 10,
+      "evidence_valid": 10
+    },
+    {
+      "sample_id": "sample_08",
+      "title": "电子元器件采购合同",
+      "label_count": 1,
+      "finding_count": 9,
+      "score": {
+        "tp": 1,
+        "fp": 8,
+        "fn": 0,
+        "precision": 0.1111,
+        "recall": 1.0,
+        "f1": 0.2,
+        "by_severity": {
+          "high": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "medium": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "low": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5
+          }
+        },
+        "by_source": {
+          "llm": {
+            "tp": 1,
+            "fp": 7,
+            "precision": 0.125
+          },
+          "rule+llm": {
+            "tp": 0,
+            "fp": 1,
+            "precision": 0.0
+          }
+        },
+        "by_confidence": {
+          "advisory": {
+            "tp": 1,
+            "fp": 7,
+            "precision": 0.125
+          },
+          "confirmed": {
+            "tp": 0,
+            "fp": 1,
+            "precision": 0.0
+          }
+        },
+        "fp_attribution": {
+          "total": 8,
+          "by_source": {
+            "llm": 7,
+            "rule+llm": 1
+          },
+          "by_severity": {
+            "high": 3,
+            "medium": 3,
+            "low": 2
+          },
+          "by_category": {
+            "liability": 1,
+            "termination": 1,
+            "ip": 1,
+            "acceptance": 1,
+            "compliance": 1,
+            "dispute": 1,
+            "warranty": 1,
+            "general": 1
+          },
+          "by_agent": {
+            "compliance": 4,
+            "liability": 2,
+            "commercial": 2
+          },
+          "with_rule_hint": 6,
+          "without_rule_hint": 2,
+          "evidence_located": 8,
+          "evidence_missing": 0,
+          "with_legal_basis": 8,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 9,
+        "evidence_valid": 9,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 18,
+        "citation_valid": 18,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_08-L01",
+            "finding_id": "llm-commercial-cl_003-f7787baa",
+            "rule_id": "PAY-002",
+            "clause": "第三条",
+            "severity": "low"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-liability-cl_007-f8a0d237",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。\n因乙方故意或重大过失造成的损失，依法承担赔偿责任。",
+            "category": "liability",
+            "severity": "high",
+            "source": "llm",
+            "title": "逾期违约金过低",
+            "analysis": "合同约定逾期违约金为日万分之五（0.05%），虽符合Playbook推荐下限，但结合电子元器件行业交付敏感性及买方产线停工风险，该比率仍偏低；且未明确逾期超30日可解除合同的衔接机制，仅依赖第八条单列情形，缺乏自动触发效力。\n\n模型补充：违约金上限为合同总价10%（22,000元），低于Playbook建议的10%–20%区间下限；对于电子元器件批量质量事故可能引发的产线停摆、客户索赔等损失，该上限难以覆盖，且未明确‘故意或重大过失’是否排除于上限之外。\n\n模型补充：第七条仅笼统提及‘因乙方故意或重大过失造成的损失依法赔偿’，未约定质量不合格时的退换货、修理、降价等具体补救措施及费用承担主体，违反《民法典》第六百一十条及第六百二十一条对质量违约救济的强制性要求，买方实际维权缺乏操作依据。",
+            "evidence_quote": "乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "evidence_start": 9,
+            "evidence_end": 45,
+            "legal_basis_ids": [
+              "CC-585",
+              "CC-584",
+              "CC-610",
+              "CC-621",
+              "CC-577"
+            ],
+            "rule_id": null,
+            "rule_hint": "LIA-001",
+            "agent": "liability",
+            "confidence": 0.89,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "逾期违约金建议为日万分之五；同时约定逾期超过一定天数时买方可解除合同。",
+            "fallback": "乙方逾期交付的，按日向甲方支付合同总价万分之五的违约金；逾期超过30日的，甲方有权解除合同。质量不合格的，乙方应在5个工作日内完成退换货并承担全部相关费用。",
+            "suggested_text": "第七条 违约责任\n乙方逾期交付的，应按日向甲方支付合同总价万分之五的违约金；逾期超过30日的，甲方有权解除合同，并要求乙方退还已收款、赔偿实际损失（包括但不限于产线停工、客户索赔、替代采购差价等）。前述违约金不设上限；因乙方故意或重大过失导致的质量问题，乙方应无偿退换货、修理或重作，并承担全部检测、运输、人工及第三方损失费用。",
+            "negotiation_note": "违约金必须与解除权联动，且排除上限限制；质量补救措施须具体到动作、时限和费用承担主体。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": [
+              "与同类模型建议合并（证据高度重叠）"
+            ]
+          },
+          {
+            "id": "llm-liability-cl_008-7385042d",
+            "clause_id": "cl_008",
+            "clause_article": "第八条",
+            "clause_text": "第八条 合同解除\n乙方逾期超过 30 日或质量不合格拒不整改的，甲方有权解除合同。",
+            "category": "termination",
+            "severity": "high",
+            "source": "rule+llm",
+            "title": "买方解除权条件不对等且缺失根本违约兜底",
+            "analysis": "第八条仅将‘逾期超过30日’和‘质量不合格拒不整改’列为解除事由，未涵盖《民法典》第五百六十三条第四项‘迟延履行债务致使不能实现合同目的’等法定解除情形，亦未约定质量不合格经整改仍不达标、多次抽检不合格等常见触发条件，买方解除权受限，风险敞口大。\n\n模型补充：只赋予供应商解除权，或买方解除条件过于苛刻，出现重大违约时难以退出合同。",
+            "evidence_quote": "乙方逾期超过 30 日或质量不合格拒不整改的，甲方有权解除合同。",
+            "evidence_start": 9,
+            "evidence_end": 41,
+            "legal_basis_ids": [
+              "CC-563",
+              "CC-610",
+              "CC-577"
+            ],
+            "rule_id": "TER-001",
+            "rule_hint": "TER-001",
+            "agent": "liability",
+            "confidence": 1.0,
+            "confidence_tier": "confirmed",
+            "confidence_reasons": [
+              "规则引擎命中 TER-001",
+              "规则与模型结论已合并"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确买方在供应商逾期、质量不合格、根本违约等情形下的解除权及退款/赔偿机制。",
+            "fallback": "乙方逾期交付超过30日，或质量不合格经甲方书面通知后10日内拒不整改或整改后仍不合格的，甲方有权解除合同，并要求乙方退还已付款项及支付合同总价10%的违约金。",
+            "suggested_text": "第八条 合同解除\n出现下列情形之一的，甲方有权单方解除合同：（1）乙方逾期交付超过30日；（2）乙方交付货物经两次整改仍不符合附件一《技术规格书》要求；（3）同一订单项下累计三次抽检不合格；（4）乙方迟延履行、瑕疵履行或其他违约行为致使甲方合同目的不能实现。合同解除后，乙方应在5个工作日内退还甲方已付款项，并按合同总价20%支付违约金；造成甲方其他损失的，应据实赔偿。",
+            "negotiation_note": "解除条件须覆盖常见质量失控场景，且必须绑定退款与违约金义务，避免仅赋予权利而无救济保障。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": [
+              "规则与模型结论合并"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_011-8724d43d",
+            "clause_id": "cl_011",
+            "clause_article": "第十一条",
+            "clause_text": "第十一条 其他\n本合同自双方授权代表签字并加盖公章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "ip",
+            "severity": "high",
+            "source": "llm",
+            "title": "知识产权归属条款缺失",
+            "analysis": "合同未就履约过程中产生的技术成果、改进、背景知识产权归属作出约定，尤其电子元器件采购可能涉及定制化规格、测试数据、工艺适配等衍生知识产权，权属不明易引发后续纠纷，违反《民法典》第四百七十条关于合同内容一般应包括必要条款的要求。",
+            "evidence_quote": "第十一条 其他\n本合同自双方授权代表签字并加盖公章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "evidence_start": 0,
+            "evidence_end": 59,
+            "legal_basis_ids": [
+              "CC-470"
+            ],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.95,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "乙方交付货物所涉知识产权归乙方所有；甲方提供给乙方的技术资料、规格要求等知识产权归甲方所有；履约中产生的与甲方需求直接相关的新技术成果归甲方所有。",
+            "suggested_text": "第十二条 知识产权\n1. 本合同项下乙方交付货物所涉全部背景知识产权归乙方所有；甲方提供的技术资料、图纸、规格要求等背景知识产权归甲方所有。2. 履行本合同过程中产生的新成果（包括测试数据、适配方案、工艺改进等）及其知识产权归甲方所有，乙方不得擅自使用、许可或转让。3. 乙方保证其交付货物不侵犯第三方知识产权；如因此引发纠纷，由乙方承担全部法律责任及赔偿责任。",
+            "negotiation_note": "定制化采购必须锁定衍生知识产权归属，否则买方无法控制后续供应链安全与技术迭代权益。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-commercial-cl_005-3c39c49c",
+            "clause_id": "cl_005",
+            "clause_article": "第五条",
+            "clause_text": "第五条 验收\n甲方应在收货后 15 日内按附件一《技术规格书》及 GB/T 2828.1 抽样标准验收。",
+            "category": "acceptance",
+            "severity": "medium",
+            "source": "llm",
+            "title": "验收条款缺失不合格处理机制",
+            "analysis": "合同约定了验收期限（15日）和标准（附件一及GB/T 2828.1），但未约定验收不合格时的整改、退换、费用承担及重新验收机制，买方事后主张质量违约缺乏合同依据，维权难度增大。",
+            "evidence_quote": "甲方应在收货后 15 日内按附件一《技术规格书》及 GB/T 2828.1 抽样标准验收。",
+            "evidence_start": 7,
+            "evidence_end": 52,
+            "legal_basis_ids": [
+              "CC-615",
+              "CC-596"
+            ],
+            "rule_id": null,
+            "rule_hint": "ACC-001",
+            "agent": "commercial",
+            "confidence": 0.88,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "增加验收条款：验收标准、验收期限、验收方式、不合格退换/整改及费用承担。",
+            "fallback": "甲方在收货后15日内验收；不合格的，乙方应在10日内完成退换货并承担全部检测、运输及仓储费用。",
+            "suggested_text": "第五条 验收\n甲方应在收货后15日内按附件一《技术规格书》及GB/T 2828.1抽样标准进行验收。验收不合格的，甲方应书面通知乙方，乙方须在收到通知后5个工作日内完成退换货或整改；重新验收仍不合格的，甲方有权拒收全部货物、解除合同并要求乙方承担检测、仓储、运输等全部费用。",
+            "negotiation_note": "验收不合格必须设定强制响应时限和费用承担义务，否则条款形同虚设。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_009-01ab5f78",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 保密\n双方应对因履行本合同获知的对方商业信息承担保密义务。",
+            "category": "compliance",
+            "severity": "medium",
+            "source": "llm",
+            "title": "保密义务虽双向但内容过于简略",
+            "analysis": "保密条款仅原则性约定'双方应对因履行本合同获知的对方商业信息承担保密义务'，未约定保密期限、保密信息范围、除外情形、违约责任等关键要素，依据《民法典》第四百七十条，解决争议方法、违约责任等属合同一般应有条款，保密义务作为重要附随义务，约定不明将影响可执行性。",
+            "evidence_quote": "第九条 保密\n双方应对因履行本合同获知的对方商业信息承担保密义务。",
+            "evidence_start": 0,
+            "evidence_end": 33,
+            "legal_basis_ids": [
+              "CC-470"
+            ],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.82,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "双方应对本合同履行中获知的对方商业和技术信息承担保密义务，保密期为合同终止后3年；泄密方应赔偿守约方全部损失。",
+            "suggested_text": "第九条 保密\n双方应对本合同履行过程中知悉的对方技术信息、经营信息、采购数据、测试报告等保密信息承担保密义务，保密期限为本合同终止后5年。保密信息不包括：（1）已进入公知领域；（2）非因接收方过错而公开；（3）接收方在披露前已合法持有。一方违反保密义务的，应赔偿对方全部实际损失，并支付相当于合同总价10%的违约金。",
+            "negotiation_note": "保密须明确范围、期限、除外情形及违约后果，否则无法主张救济。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_010-bbac09be",
+            "clause_id": "cl_010",
+            "clause_article": "第十条",
+            "clause_text": "第十条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "dispute",
+            "severity": "medium",
+            "source": "llm",
+            "title": "管辖法院对买方不利",
+            "analysis": "约定由甲方（买方）所在地人民法院管辖，符合买方利益，但合同事实中dispute.unfavorable_venue为false，且条款文本未体现对买方不利；然而根据合同事实字段dispute.court='甲方所在地人民法院'，而甲方即芯联电子有限公司（买方），故该约定实际对买方有利，不构成风险。但需注意：条款仅写'甲方所在地人民法院'，未明确是否为'有管辖权的'人民法院，存在因级别管辖或专属管辖导致无效的风险，依据CPL-35，协议管辖须选择与争议有实际联系的地点且不得违反级别管辖和专属管辖规定。",
+            "evidence_quote": "第十条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [
+              "CPL-35"
+            ],
+            "rule_id": null,
+            "rule_hint": "DIS-001",
+            "agent": "compliance",
+            "confidence": 0.75,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "改为买方所在地法院管辖，或约定合同履行地（买方所在地）法院管辖。",
+            "fallback": "由甲方所在地人民法院管辖。",
+            "suggested_text": "第十条 争议解决\n因本合同引起的或与本合同有关的任何争议，由甲方所在地有管辖权的人民法院管辖。",
+            "negotiation_note": "必须强调‘有管辖权’以规避级别或专属管辖无效风险，这是程序性底线。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-commercial-cl_006-9fe9dd9f",
+            "clause_id": "cl_006",
+            "clause_article": "第六条",
+            "clause_text": "第六条 质量保证\n质保期为验收合格后 12 个月；质保期内出现质量问题，乙方负责免费修理、更换或退货，并承担由此产生的费用。",
+            "category": "warranty",
+            "severity": "low",
+            "source": "llm",
+            "title": "质保期起算点表述模糊",
+            "analysis": "合同约定‘质保期为验收合格后12个月’，但未明确‘验收合格’系指书面确认之日还是默认视为合格之日；若未约定视为验收合格规则，易引发起算争议；虽Playbook中‘fallback’认可12个月自验收合格日起算，但条款本身未定义‘验收合格’的认定方式，存在执行不确定性。",
+            "evidence_quote": "质保期为验收合格后 12 个月；质保期内出现质量问题，乙方负责免费修理、更换或退货，并承担由此产生的费用。",
+            "evidence_start": 9,
+            "evidence_end": 62,
+            "legal_basis_ids": [
+              "CC-615",
+              "CC-511"
+            ],
+            "rule_id": null,
+            "rule_hint": "WAR-001",
+            "agent": "commercial",
+            "confidence": 0.75,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "货物类质保期不少于 12 个月；设备类建议 24 个月，并明确起算点和维修响应时限。",
+            "fallback": "质保期12个月，自验收合格之日起算；验收合格以甲方签署书面验收文件为准。",
+            "suggested_text": "第六条 质量保证\n质保期为12个月，自双方签署《验收合格确认书》之日起计算；若甲方未在收货后15日内提出书面异议且未组织验收，则自收货满15日起视为验收合格，质保期自此起算。",
+            "negotiation_note": "必须定义‘验收合格’的认定方式，否则质保期起算点存在争议空间。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          },
+          {
+            "id": "llm-compliance-cl_011-5bcb606f",
+            "clause_id": "cl_011",
+            "clause_article": "第十一条",
+            "clause_text": "第十一条 其他\n本合同自双方授权代表签字并加盖公章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "general",
+            "severity": "low",
+            "source": "llm",
+            "title": "合同生效条件表述完整但缺乏签署主体核验提示",
+            "analysis": "生效条款明确'双方授权代表签字并加盖公章之日起生效'，符合Playbook GEN-001推荐要求；但合同文本未载明双方营业执照信息或授权文件作为附件，实践中存在签署主体资质瑕疵风险，虽条款本身无缺陷，但企业内部合规审查需补充核验动作。",
+            "evidence_quote": "第十一条 其他\n本合同自双方授权代表签字并加盖公章之日起生效。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [
+              "CC-470"
+            ],
+            "rule_id": null,
+            "rule_hint": "GEN-001",
+            "agent": "compliance",
+            "confidence": 0.68,
+            "confidence_tier": "advisory",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "法条引用通过 ID 校验",
+              "模型单独提出，未获规则引擎佐证"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确合同自双方授权代表签字并加盖公章之日起生效，并核验对方主体资格与授权文件。",
+            "fallback": "本合同自双方授权代表签字并加盖公章之日起生效。",
+            "suggested_text": "第十一条 其他\n本合同自双方授权代表签字并加盖公章之日起生效；双方应于签署前相互提供加盖公章的营业执照副本复印件、法定代表人身份证明书及授权代表签字盖章的授权委托书（如适用），并确认其真实、有效、持续存续。",
+            "negotiation_note": "主体资质核验是签约前提，必须在签署前完成文件交换与形式审查，不可后补。",
+            "review_note": "",
+            "status": "pending",
+            "gate_notes": []
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 85.98,
+      "usage": {
+        "llm_calls": 12,
+        "input_tokens": 13284,
+        "output_tokens": 5042,
+        "duration_ms": 85982,
+        "mode": "live",
+        "embedding_mode": "hybrid",
+        "rerank_mode": "off",
+        "llm_route": "balanced",
+        "llm_route_label": "均衡（推荐）",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 130,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '1eedce64-da6d-9143-b18d-2fc93ebcc908'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 52,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': 'ea9b8689-54d2-9b8d-82df-cd20bfa488b1'}"
+          },
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 24007,
+            "input_tokens": 2376,
+            "output_tokens": 1072,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14285,
+            "input_tokens": 2717,
+            "output_tokens": 626,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 18608,
+            "input_tokens": 2526,
+            "output_tokens": 824,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 18784,
+            "input_tokens": 2606,
+            "output_tokens": 821,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 184,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '2f7f4e02-269a-902f-9256-25224a29cb12'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 59,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '20fc761c-60a4-9146-85c6-e98173a26a01'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 35217,
+            "input_tokens": 2480,
+            "output_tokens": 1541,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 148,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '27b5c8e3-18ec-9324-8c72-bf87cea46ce9'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-turbo",
+            "profile": "dashscope-turbo",
+            "latency_ms": 59,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "mock": false,
+            "success": false,
+            "error": "Error code: 429 - {'error': {'message': 'You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit', 'type': 'limit_requests', 'param': None, 'code': 'limit_requests'}, 'request_id': '82ba1958-6bd6-927b-8f2b-24d8d991b7d1'}"
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 3819,
+            "input_tokens": 579,
+            "output_tokens": 158,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 18,
+      "valid_citation_count": 18,
+      "evidence_checked": 9,
+      "evidence_valid": 9
+    }
+  ],
+  "overall_ci": {
+    "precision": {
+      "point": 0.5682,
+      "low": 0.439,
+      "high": 0.6588,
+      "iterations": 2000,
+      "seed": 42,
+      "confidence": 0.95
+    },
+    "recall": {
+      "point": 0.9804,
+      "low": 0.9362,
+      "high": 1.0,
+      "iterations": 2000,
+      "seed": 42,
+      "confidence": 0.95
+    },
+    "f1": {
+      "point": 0.7194,
+      "low": 0.6032,
+      "high": 0.7943,
+      "iterations": 2000,
+      "seed": 42,
+      "confidence": 0.95
+    }
+  },
+  "stats_recomputed_at": "2026-10-28T16:30:21+08:00"
+}

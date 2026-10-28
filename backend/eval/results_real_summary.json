@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-10-28T16:32:48+08:00",
+  "mode": "rules",
+  "annotation_protocol": "author_single_pass",
+  "independent_annotator": false,
+  "blind": false,
+  "system_output_seen_during_annotation": false,
+  "inter_annotator_agreement": null,
+  "iaa_note": "No second independent annotator is available; use eval/run_iaa.py when labels exist.",
+  "bootstrap_ci": {
+    "real_01": {
+      "precision": {
+        "point": 0.4,
+        "low": 0.4,
+        "high": 0.4,
+        "iterations": 2000,
+        "seed": 42,
+        "confidence": 0.95
+      },
+      "recall": {
+        "point": 0.5,
+        "low": 0.5,
+        "high": 0.5,
+        "iterations": 2000,
+        "seed": 42,
+        "confidence": 0.95
+      },
+      "f1": {
+        "point": 0.4444,
+        "low": 0.4444,
+        "high": 0.4444,
+        "iterations": 2000,
+        "seed": 42,
+        "confidence": 0.95
+      }
+    }
+  },
+  "contracts": [
+    {
+      "id": "real_01",
+      "title": "R1",
+      "scope": "in_scope",
+      "pages": 7,
+      "used_ocr": false,
+      "ocr_pages": 0,
+      "ocr_failed_pages": 0,
+      "ocr_confidence": null,
+      "clauses": 59,
+      "findings": 5,
+      "labels": 4,
+      "score": {
+        "tp": 2,
+        "fp": 3,
+        "fn": 2,
+        "precision": 0.4,
+        "recall": 0.5,
+        "f1": 0.4444,
+        "evidence_valid_rate": 1.0,
+        "citation_valid_rate": 1.0,
+        "evidence_checked": 3,
+        "citation_checked": 11
+      },
+      "notes": "政府采购框架协议货物采购；唯一 in-scope 样本"
+    },
+    {
+      "id": "real_02",
+      "title": "R2",
+      "scope": "out_of_scope",
+      "pages": 36,
+      "used_ocr": true,
+      "ocr_pages": 36,
+      "ocr_failed_pages": 0,
+      "ocr_confidence": 0.9869609141760396,
+      "clauses": 253,
+      "findings": 4,
+      "labels": 0,
+      "score": null,
+      "notes": "建设工程施工合同，超出货物采购 Playbook；仅定性"
+    },
+    {
+      "id": "real_03",
+      "title": "R3",
+      "scope": "adjacent",
+      "pages": 8,
+      "used_ocr": true,
+      "ocr_pages": 8,
+      "ocr_failed_pages": 0,
+      "ocr_confidence": 0.9877077152697669,
+      "clauses": 70,
+      "findings": 3,
+      "labels": 0,
+      "score": null,
+      "notes": "IT/智治系统采购，扫描件；仅定性"
+    }
+  ]
+}

@@ -1,0 +1,4933 @@
+{
+  "baseline": {
+    "tp": 48,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.9412,
+    "f1": 0.9697
+  },
+  "perturbations": {
+    "party_names": {
+      "tp": 48,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.9412,
+      "f1": 0.9697
+    },
+    "amount_formats": {
+      "tp": 48,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.9412,
+      "f1": 0.9697
+    },
+    "ocr_noise": {
+      "tp": 45,
+      "fp": 1,
+      "fn": 6,
+      "precision": 0.9783,
+      "recall": 0.8824,
+      "f1": 0.9278
+    },
+    "reordered_clauses": {
+      "tp": 48,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.9412,
+      "f1": 0.9697
+    }
+  },
+  "samples": [
+    {
+      "sample_id": "sample_01",
+      "baseline": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "by_severity": {
+          "high": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 6,
+        "evidence_valid": 6,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 16,
+        "citation_valid": 16,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_01-L01",
+            "finding_id": "rule-PAY-001-cl_003",
+            "rule_id": "PAY-001",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L02",
+            "finding_id": "rule-ACC-002-cl_005",
+            "rule_id": "ACC-002",
+            "clause": "第五条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L03",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_01-L04",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_01-L05",
+            "finding_id": "rule-LIA-002-cl_007",
+            "rule_id": "LIA-002",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L06",
+            "finding_id": "rule-DIS-001-cl_008",
+            "rule_id": "DIS-001",
+            "clause": "第八条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": []
+      },
+      "perturbations": {
+        "party_names": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_01-L01",
+              "finding_id": "rule-PAY-001-cl_003",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L02",
+              "finding_id": "rule-ACC-002-cl_005",
+              "rule_id": "ACC-002",
+              "clause": "第五条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L03",
+              "finding_id": "rule-ACC-003-cl_005",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_01-L04",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_01-L05",
+              "finding_id": "rule-LIA-002-cl_007",
+              "rule_id": "LIA-002",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L06",
+              "finding_id": "rule-DIS-001-cl_008",
+              "rule_id": "DIS-001",
+              "clause": "第八条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "amount_formats": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_01-L01",
+              "finding_id": "rule-PAY-001-cl_003",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L02",
+              "finding_id": "rule-ACC-002-cl_005",
+              "rule_id": "ACC-002",
+              "clause": "第五条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L03",
+              "finding_id": "rule-ACC-003-cl_005",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_01-L04",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_01-L05",
+              "finding_id": "rule-LIA-002-cl_007",
+              "rule_id": "LIA-002",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L06",
+              "finding_id": "rule-DIS-001-cl_008",
+              "rule_id": "DIS-001",
+              "clause": "第八条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "ocr_noise": {
+          "tp": 7,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.875,
+          "recall": 1.0,
+          "f1": 0.9333,
+          "by_severity": {
+            "high": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8889
+            },
+            "medium": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 1,
+              "precision": 0.875
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 1,
+              "precision": 0.875
+            }
+          },
+          "fp_attribution": {
+            "total": 1,
+            "by_source": {
+              "rule": 1
+            },
+            "by_severity": {
+              "high": 1
+            },
+            "by_category": {
+              "liability": 1
+            },
+            "by_agent": {
+              "unknown": 1
+            },
+            "with_rule_hint": 0,
+            "without_rule_hint": 1,
+            "evidence_located": 1,
+            "evidence_missing": 0,
+            "with_legal_basis": 1,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 7,
+          "evidence_valid": 7,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 19,
+          "citation_valid": 19,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_01-L01",
+              "finding_id": "rule-PAY-001-cl_003",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L02",
+              "finding_id": "rule-ACC-002-cl_005",
+              "rule_id": "ACC-002",
+              "clause": "第五条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L03",
+              "finding_id": "rule-ACC-003-cl_005",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_01-L04",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_01-L05",
+              "finding_id": "rule-LIA-002-cl_007",
+              "rule_id": "LIA-002",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L06",
+              "finding_id": "rule-DIS-001-cl_008",
+              "rule_id": "DIS-001",
+              "clause": "第八条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [
+            {
+              "id": "rule-LIA-004-cl_006",
+              "clause_id": "cl_006",
+              "clause_article": "第六条",
+              "clause_text": "第六条 质量保证\n质保期为二收合格后 12 个月；质保期内出现质量问题，乙方负责免费维八。",
+              "category": "liability",
+              "severity": "high",
+              "source": "rule",
+              "title": "质量问题无退换或索赔机制",
+              "analysis": "合同未约定质量不合格时的退货、换货、修理、降价或索赔权利。",
+              "evidence_quote": "第六条 质量保证\n质保期为二收合格后 12 个月；质保期内出现质量问题，乙方负责免费维八。",
+              "evidence_start": 0,
+              "evidence_end": 45,
+              "legal_basis_ids": [
+                "CC-610",
+                "CC-615",
+                "CC-577"
+              ],
+              "rule_id": "LIA-004",
+              "rule_hint": null,
+              "agent": null,
+              "confidence": 1.0,
+              "confidence_tier": "confirmed",
+              "confidence_reasons": [
+                "规则引擎命中 LIA-004"
+              ],
+              "rejected_legal_basis_ids": [],
+              "recommendation": "增加质量违约救济：退货、换货、修理、降价、赔偿损失，并明确费用由供应商承担。",
+              "fallback": "质量不合格的，买方有权要求退换、修理或降价，费用由供应商承担。",
+              "suggested_text": "",
+              "suggested_text_source": "template",
+              "negotiation_note": "",
+              "review_note": "",
+              "status": "pending",
+              "gate_notes": []
+            }
+          ],
+          "unmatched_labels": []
+        },
+        "reordered_clauses": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_01-L01",
+              "finding_id": "rule-PAY-001-cl_007",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L02",
+              "finding_id": "rule-ACC-002-cl_005",
+              "rule_id": "ACC-002",
+              "clause": "第五条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L03",
+              "finding_id": "rule-ACC-003-cl_005",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_01-L04",
+              "finding_id": "rule-LIA-001-cl_003",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_01-L05",
+              "finding_id": "rule-LIA-002-cl_003",
+              "rule_id": "LIA-002",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L06",
+              "finding_id": "rule-DIS-001-cl_002",
+              "rule_id": "DIS-001",
+              "clause": "第八条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_01-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        }
+      }
+    },
+    {
+      "sample_id": "sample_02",
+      "baseline": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 6,
+        "evidence_valid": 6,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 16,
+        "citation_valid": 16,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_02-L01",
+            "finding_id": "rule-PAY-003-cl_003",
+            "rule_id": "PAY-003",
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L02",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L03",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "clause": "第六条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_02-L04",
+            "finding_id": "rule-WAR-001-cl_006",
+            "rule_id": "WAR-001",
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L05",
+            "finding_id": "rule-TER-002-cl_008",
+            "rule_id": "TER-002",
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L06",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": []
+      },
+      "perturbations": {
+        "party_names": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_02-L01",
+              "finding_id": "rule-PAY-003-cl_003",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L02",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L03",
+              "finding_id": "rule-LIA-004-cl_006",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_02-L04",
+              "finding_id": "rule-WAR-001-cl_006",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L05",
+              "finding_id": "rule-TER-002-cl_008",
+              "rule_id": "TER-002",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L06",
+              "finding_id": "rule-ACC-003-cl_005",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "amount_formats": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_02-L01",
+              "finding_id": "rule-PAY-003-cl_003",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L02",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L03",
+              "finding_id": "rule-LIA-004-cl_006",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_02-L04",
+              "finding_id": "rule-WAR-001-cl_006",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L05",
+              "finding_id": "rule-TER-002-cl_008",
+              "rule_id": "TER-002",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L06",
+              "finding_id": "rule-ACC-003-cl_005",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "ocr_noise": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_02-L01",
+              "finding_id": "rule-PAY-003-cl_003",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L02",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L03",
+              "finding_id": "rule-LIA-004-cl_006",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_02-L04",
+              "finding_id": "rule-WAR-001-cl_006",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L05",
+              "finding_id": "rule-TER-002-cl_008",
+              "rule_id": "TER-002",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L06",
+              "finding_id": "rule-ACC-003-cl_005",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "reordered_clauses": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_02-L01",
+              "finding_id": "rule-PAY-003-cl_008",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L02",
+              "finding_id": "rule-LIA-001-cl_004",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L03",
+              "finding_id": "rule-LIA-004-cl_005",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_02-L04",
+              "finding_id": "rule-WAR-001-cl_005",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L05",
+              "finding_id": "rule-TER-002-cl_003",
+              "rule_id": "TER-002",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L06",
+              "finding_id": "rule-ACC-003-cl_006",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_02-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        }
+      }
+    },
+    {
+      "sample_id": "sample_03",
+      "baseline": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "by_severity": {
+          "high": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 6,
+        "evidence_valid": 6,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 16,
+        "citation_valid": 16,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_03-L01",
+            "finding_id": "rule-PAY-002-cl_003",
+            "rule_id": "PAY-002",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L02",
+            "finding_id": "rule-LIA-002-cl_007",
+            "rule_id": "LIA-002",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L03",
+            "finding_id": "rule-LIA-003-cl_007",
+            "rule_id": "LIA-003",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L04",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "clause": "第六条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L05",
+            "finding_id": "rule-TER-001-cl_008",
+            "rule_id": "TER-001",
+            "clause": "第八条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L06",
+            "finding_id": "rule-DIS-002-cl_009",
+            "rule_id": "DIS-002",
+            "clause": "第九条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": []
+      },
+      "perturbations": {
+        "party_names": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_03-L01",
+              "finding_id": "rule-PAY-002-cl_003",
+              "rule_id": "PAY-002",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L02",
+              "finding_id": "rule-LIA-002-cl_007",
+              "rule_id": "LIA-002",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L03",
+              "finding_id": "rule-LIA-003-cl_007",
+              "rule_id": "LIA-003",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L04",
+              "finding_id": "rule-LIA-004-cl_006",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L05",
+              "finding_id": "rule-TER-001-cl_008",
+              "rule_id": "TER-001",
+              "clause": "第八条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L06",
+              "finding_id": "rule-DIS-002-cl_009",
+              "rule_id": "DIS-002",
+              "clause": "第九条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "amount_formats": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_03-L01",
+              "finding_id": "rule-PAY-002-cl_003",
+              "rule_id": "PAY-002",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L02",
+              "finding_id": "rule-LIA-002-cl_007",
+              "rule_id": "LIA-002",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L03",
+              "finding_id": "rule-LIA-003-cl_007",
+              "rule_id": "LIA-003",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L04",
+              "finding_id": "rule-LIA-004-cl_006",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L05",
+              "finding_id": "rule-TER-001-cl_008",
+              "rule_id": "TER-001",
+              "clause": "第八条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L06",
+              "finding_id": "rule-DIS-002-cl_009",
+              "rule_id": "DIS-002",
+              "clause": "第九条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "ocr_noise": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_03-L01",
+              "finding_id": "rule-PAY-002-cl_003",
+              "rule_id": "PAY-002",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L02",
+              "finding_id": "rule-LIA-002-cl_007",
+              "rule_id": "LIA-002",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L03",
+              "finding_id": "rule-LIA-003-cl_007",
+              "rule_id": "LIA-003",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L04",
+              "finding_id": "rule-LIA-004-cl_006",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L05",
+              "finding_id": "rule-TER-001-cl_008",
+              "rule_id": "TER-001",
+              "clause": "第八条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L06",
+              "finding_id": "rule-DIS-002-cl_009",
+              "rule_id": "DIS-002",
+              "clause": "第九条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "reordered_clauses": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 16,
+          "citation_valid": 16,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_03-L01",
+              "finding_id": "rule-PAY-002-cl_008",
+              "rule_id": "PAY-002",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L02",
+              "finding_id": "rule-LIA-002-cl_004",
+              "rule_id": "LIA-002",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L03",
+              "finding_id": "rule-LIA-003-cl_004",
+              "rule_id": "LIA-003",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L04",
+              "finding_id": "rule-LIA-004-cl_005",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L05",
+              "finding_id": "rule-TER-001-cl_003",
+              "rule_id": "TER-001",
+              "clause": "第八条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L06",
+              "finding_id": "rule-DIS-002-cl_002",
+              "rule_id": "DIS-002",
+              "clause": "第九条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_03-L07",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        }
+      }
+    },
+    {
+      "sample_id": "sample_04",
+      "baseline": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.8571,
+        "f1": 0.9231,
+        "by_severity": {
+          "high": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1": 0.8889
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 6,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 6,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 6,
+        "evidence_valid": 6,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 15,
+        "citation_valid": 15,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_04-L01",
+            "finding_id": "rule-PAY-001-cl_003",
+            "rule_id": "PAY-001",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_04-L02",
+            "finding_id": "rule-PAY-003-cl_003",
+            "rule_id": "PAY-003",
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L03",
+            "finding_id": "rule-IP-001-cl_007",
+            "rule_id": "IP-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L04",
+            "finding_id": "rule-COM-001-cl_008",
+            "rule_id": "COM-001",
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L05",
+            "finding_id": "rule-LIA-002-cl_009",
+            "rule_id": "LIA-002",
+            "clause": "第九条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_04-L06",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "clause": "第四条",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": [
+          {
+            "id": "sample_04-L07",
+            "clause_article": "第五条",
+            "category": "acceptance",
+            "rule_id": null,
+            "severity": "medium",
+            "keywords": [
+              "双方确认"
+            ],
+            "clause_id": null,
+            "quote": null,
+            "page": null,
+            "scope": null,
+            "label_layer": null,
+            "annotator": "author",
+            "annotation_pass": 1,
+            "confidence": null,
+            "notes": ""
+          }
+        ]
+      },
+      "perturbations": {
+        "party_names": {
+          "tp": 6,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.8571,
+          "f1": 0.9231,
+          "by_severity": {
+            "high": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.8889
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 6,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 6,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 15,
+          "citation_valid": 15,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_04-L01",
+              "finding_id": "rule-PAY-001-cl_003",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_04-L02",
+              "finding_id": "rule-PAY-003-cl_003",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L03",
+              "finding_id": "rule-IP-001-cl_007",
+              "rule_id": "IP-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L04",
+              "finding_id": "rule-COM-001-cl_008",
+              "rule_id": "COM-001",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L05",
+              "finding_id": "rule-LIA-002-cl_009",
+              "rule_id": "LIA-002",
+              "clause": "第九条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_04-L06",
+              "finding_id": "rule-DEL-002-cl_004",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_04-L07",
+              "clause_article": "第五条",
+              "category": "acceptance",
+              "rule_id": null,
+              "severity": "medium",
+              "keywords": [
+                "双方确认"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        },
+        "amount_formats": {
+          "tp": 6,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.8571,
+          "f1": 0.9231,
+          "by_severity": {
+            "high": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.8889
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 6,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 6,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 15,
+          "citation_valid": 15,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_04-L01",
+              "finding_id": "rule-PAY-001-cl_003",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_04-L02",
+              "finding_id": "rule-PAY-003-cl_003",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L03",
+              "finding_id": "rule-IP-001-cl_007",
+              "rule_id": "IP-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L04",
+              "finding_id": "rule-COM-001-cl_008",
+              "rule_id": "COM-001",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L05",
+              "finding_id": "rule-LIA-002-cl_009",
+              "rule_id": "LIA-002",
+              "clause": "第九条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_04-L06",
+              "finding_id": "rule-DEL-002-cl_004",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_04-L07",
+              "clause_article": "第五条",
+              "category": "acceptance",
+              "rule_id": null,
+              "severity": "medium",
+              "keywords": [
+                "双方确认"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        },
+        "ocr_noise": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 3,
+          "precision": 1.0,
+          "recall": 0.5714,
+          "f1": 0.7273,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "medium": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.6,
+              "f1": 0.75
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 4,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 4,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 4,
+          "evidence_valid": 4,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 9,
+          "citation_valid": 9,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_04-L01",
+              "finding_id": "rule-PAY-001-cl_003",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_04-L03",
+              "finding_id": "rule-IP-001-cl_007",
+              "rule_id": "IP-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L04",
+              "finding_id": "rule-COM-001-cl_008",
+              "rule_id": "COM-001",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L06",
+              "finding_id": "rule-DEL-002-cl_004",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_04-L02",
+              "clause_article": "第三条",
+              "category": "payment",
+              "rule_id": "PAY-003",
+              "severity": "medium",
+              "keywords": [
+                "90 日"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            },
+            {
+              "id": "sample_04-L05",
+              "clause_article": "第九条",
+              "category": "liability",
+              "rule_id": "LIA-002",
+              "severity": "high",
+              "keywords": [
+                "2%"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            },
+            {
+              "id": "sample_04-L07",
+              "clause_article": "第五条",
+              "category": "acceptance",
+              "rule_id": null,
+              "severity": "medium",
+              "keywords": [
+                "双方确认"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        },
+        "reordered_clauses": {
+          "tp": 6,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.8571,
+          "f1": 0.9231,
+          "by_severity": {
+            "high": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.8889
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 6,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 6,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 15,
+          "citation_valid": 15,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_04-L01",
+              "finding_id": "rule-PAY-001-cl_009",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_04-L02",
+              "finding_id": "rule-PAY-003-cl_009",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L03",
+              "finding_id": "rule-IP-001-cl_005",
+              "rule_id": "IP-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L04",
+              "finding_id": "rule-COM-001-cl_004",
+              "rule_id": "COM-001",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_04-L05",
+              "finding_id": "rule-LIA-002-cl_003",
+              "rule_id": "LIA-002",
+              "clause": "第九条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_04-L06",
+              "finding_id": "rule-DEL-002-cl_008",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_04-L07",
+              "clause_article": "第五条",
+              "category": "acceptance",
+              "rule_id": null,
+              "severity": "medium",
+              "keywords": [
+                "双方确认"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sample_id": "sample_05",
+      "baseline": {
+        "tp": 9,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "by_severity": {
+          "high": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 9,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 9,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 8,
+        "evidence_valid": 8,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 24,
+        "citation_valid": 24,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_05-L01",
+            "finding_id": "rule-PAY-001-cl_003",
+            "rule_id": "PAY-001",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L02",
+            "finding_id": "rule-PAY-002-cl_003",
+            "rule_id": "PAY-002",
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L03",
+            "finding_id": "rule-DEL-001-cl_004",
+            "rule_id": "DEL-001",
+            "clause": "第四条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L04",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "clause": "第四条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L05",
+            "finding_id": "rule-ACC-002-cl_005",
+            "rule_id": "ACC-002",
+            "clause": "第五条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L06",
+            "finding_id": "rule-WAR-001-cl_006",
+            "rule_id": "WAR-001",
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L07",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L08",
+            "finding_id": "rule-LIA-003-cl_007",
+            "rule_id": "LIA-003",
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L09",
+            "finding_id": "rule-DIS-003-contract",
+            "rule_id": "DIS-003",
+            "clause": "合同级",
+            "severity": "high"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": []
+      },
+      "perturbations": {
+        "party_names": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 9,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 9,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 8,
+          "evidence_valid": 8,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 24,
+          "citation_valid": 24,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_05-L01",
+              "finding_id": "rule-PAY-001-cl_003",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L02",
+              "finding_id": "rule-PAY-002-cl_003",
+              "rule_id": "PAY-002",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L03",
+              "finding_id": "rule-DEL-001-cl_004",
+              "rule_id": "DEL-001",
+              "clause": "第四条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L04",
+              "finding_id": "rule-DEL-002-cl_004",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L05",
+              "finding_id": "rule-ACC-002-cl_005",
+              "rule_id": "ACC-002",
+              "clause": "第五条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L06",
+              "finding_id": "rule-WAR-001-cl_006",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L07",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L08",
+              "finding_id": "rule-LIA-003-cl_007",
+              "rule_id": "LIA-003",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L09",
+              "finding_id": "rule-DIS-003-contract",
+              "rule_id": "DIS-003",
+              "clause": "合同级",
+              "severity": "high"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "amount_formats": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 9,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 9,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 8,
+          "evidence_valid": 8,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 24,
+          "citation_valid": 24,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_05-L01",
+              "finding_id": "rule-PAY-001-cl_003",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L02",
+              "finding_id": "rule-PAY-002-cl_003",
+              "rule_id": "PAY-002",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L03",
+              "finding_id": "rule-DEL-001-cl_004",
+              "rule_id": "DEL-001",
+              "clause": "第四条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L04",
+              "finding_id": "rule-DEL-002-cl_004",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L05",
+              "finding_id": "rule-ACC-002-cl_005",
+              "rule_id": "ACC-002",
+              "clause": "第五条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L06",
+              "finding_id": "rule-WAR-001-cl_006",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L07",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L08",
+              "finding_id": "rule-LIA-003-cl_007",
+              "rule_id": "LIA-003",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L09",
+              "finding_id": "rule-DIS-003-contract",
+              "rule_id": "DIS-003",
+              "clause": "合同级",
+              "severity": "high"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "ocr_noise": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 9,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 9,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 8,
+          "evidence_valid": 8,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 24,
+          "citation_valid": 24,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_05-L01",
+              "finding_id": "rule-PAY-001-cl_003",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L02",
+              "finding_id": "rule-PAY-002-cl_003",
+              "rule_id": "PAY-002",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L03",
+              "finding_id": "rule-DEL-001-cl_004",
+              "rule_id": "DEL-001",
+              "clause": "第四条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L04",
+              "finding_id": "rule-DEL-002-cl_004",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L05",
+              "finding_id": "rule-ACC-002-cl_005",
+              "rule_id": "ACC-002",
+              "clause": "第五条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L06",
+              "finding_id": "rule-WAR-001-cl_006",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L07",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L08",
+              "finding_id": "rule-LIA-003-cl_007",
+              "rule_id": "LIA-003",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L09",
+              "finding_id": "rule-DIS-003-contract",
+              "rule_id": "DIS-003",
+              "clause": "合同级",
+              "severity": "high"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "reordered_clauses": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 9,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 9,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 8,
+          "evidence_valid": 8,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 24,
+          "citation_valid": 24,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_05-L01",
+              "finding_id": "rule-PAY-001-cl_007",
+              "rule_id": "PAY-001",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L02",
+              "finding_id": "rule-PAY-002-cl_007",
+              "rule_id": "PAY-002",
+              "clause": "第三条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L03",
+              "finding_id": "rule-DEL-001-cl_006",
+              "rule_id": "DEL-001",
+              "clause": "第四条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L04",
+              "finding_id": "rule-DEL-002-cl_006",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L05",
+              "finding_id": "rule-ACC-002-cl_005",
+              "rule_id": "ACC-002",
+              "clause": "第五条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L06",
+              "finding_id": "rule-WAR-001-cl_004",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L07",
+              "finding_id": "rule-LIA-001-cl_003",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_05-L08",
+              "finding_id": "rule-LIA-003-cl_003",
+              "rule_id": "LIA-003",
+              "clause": "第七条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_05-L09",
+              "finding_id": "rule-DIS-003-contract",
+              "rule_id": "DIS-003",
+              "clause": "合同级",
+              "severity": "high"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        }
+      }
+    },
+    {
+      "sample_id": "sample_06",
+      "baseline": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.8333,
+        "f1": 0.9091,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 4,
+        "evidence_valid": 4,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 11,
+        "citation_valid": 11,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_06-L01",
+            "finding_id": "rule-WAR-001-cl_006",
+            "rule_id": "WAR-001",
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L02",
+            "finding_id": "rule-PRI-002-cl_002",
+            "rule_id": "PRI-002",
+            "clause": "第二条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L03",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "clause": "合同级",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L04",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "clause": "第四条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L06",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "clause": "第六条",
+            "severity": "high"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": [
+          {
+            "id": "sample_06-L05",
+            "clause_article": "第四条",
+            "category": "delivery",
+            "rule_id": null,
+            "severity": "low",
+            "keywords": [
+              "运费",
+              "风险"
+            ],
+            "clause_id": null,
+            "quote": null,
+            "page": null,
+            "scope": null,
+            "label_layer": null,
+            "annotator": "author",
+            "annotation_pass": 1,
+            "confidence": null,
+            "notes": ""
+          }
+        ]
+      },
+      "perturbations": {
+        "party_names": {
+          "tp": 5,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "f1": 0.9091,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 5,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 5,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 4,
+          "evidence_valid": 4,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 11,
+          "citation_valid": 11,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_06-L01",
+              "finding_id": "rule-WAR-001-cl_006",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L02",
+              "finding_id": "rule-PRI-002-cl_002",
+              "rule_id": "PRI-002",
+              "clause": "第二条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L03",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L04",
+              "finding_id": "rule-DEL-002-cl_004",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L06",
+              "finding_id": "rule-LIA-004-cl_006",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_06-L05",
+              "clause_article": "第四条",
+              "category": "delivery",
+              "rule_id": null,
+              "severity": "low",
+              "keywords": [
+                "运费",
+                "风险"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        },
+        "amount_formats": {
+          "tp": 5,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "f1": 0.9091,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 5,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 5,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 4,
+          "evidence_valid": 4,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 11,
+          "citation_valid": 11,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_06-L01",
+              "finding_id": "rule-WAR-001-cl_006",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L02",
+              "finding_id": "rule-PRI-002-cl_002",
+              "rule_id": "PRI-002",
+              "clause": "第二条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L03",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L04",
+              "finding_id": "rule-DEL-002-cl_004",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L06",
+              "finding_id": "rule-LIA-004-cl_006",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_06-L05",
+              "clause_article": "第四条",
+              "category": "delivery",
+              "rule_id": null,
+              "severity": "low",
+              "keywords": [
+                "运费",
+                "风险"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        },
+        "ocr_noise": {
+          "tp": 5,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "f1": 0.9091,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 5,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 5,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 4,
+          "evidence_valid": 4,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 11,
+          "citation_valid": 11,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_06-L01",
+              "finding_id": "rule-WAR-001-cl_006",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L02",
+              "finding_id": "rule-PRI-002-cl_002",
+              "rule_id": "PRI-002",
+              "clause": "第二条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L03",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L04",
+              "finding_id": "rule-DEL-002-cl_004",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L06",
+              "finding_id": "rule-LIA-004-cl_006",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_06-L05",
+              "clause_article": "第四条",
+              "category": "delivery",
+              "rule_id": null,
+              "severity": "low",
+              "keywords": [
+                "运费",
+                "风险"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        },
+        "reordered_clauses": {
+          "tp": 5,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "f1": 0.9091,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 5,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 5,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 4,
+          "evidence_valid": 4,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 11,
+          "citation_valid": 11,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_06-L01",
+              "finding_id": "rule-WAR-001-cl_004",
+              "rule_id": "WAR-001",
+              "clause": "第六条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L02",
+              "finding_id": "rule-PRI-002-cl_008",
+              "rule_id": "PRI-002",
+              "clause": "第二条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L03",
+              "finding_id": "rule-COM-001-contract",
+              "rule_id": "COM-001",
+              "clause": "合同级",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L04",
+              "finding_id": "rule-DEL-002-cl_006",
+              "rule_id": "DEL-002",
+              "clause": "第四条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_06-L06",
+              "finding_id": "rule-LIA-004-cl_004",
+              "rule_id": "LIA-004",
+              "clause": "第六条",
+              "severity": "high"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_06-L05",
+              "clause_article": "第四条",
+              "category": "delivery",
+              "rule_id": null,
+              "severity": "low",
+              "keywords": [
+                "运费",
+                "风险"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sample_id": "sample_07",
+      "baseline": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 7,
+        "evidence_valid": 7,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 13,
+        "citation_valid": 13,
+        "citation_valid_rate": 1.0,
+        "matches": [
+          {
+            "label_id": "sample_07-L01",
+            "finding_id": "rule-PAY-003-cl_003",
+            "rule_id": "PAY-003",
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L02",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L03",
+            "finding_id": "rule-FOR-001-cl_008",
+            "rule_id": "FOR-001",
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L04",
+            "finding_id": "rule-TER-002-cl_009",
+            "rule_id": "TER-002",
+            "clause": "第九条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L05",
+            "finding_id": "rule-DIS-001-cl_011",
+            "rule_id": "DIS-001",
+            "clause": "第十一条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_07-L06",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L07",
+            "finding_id": "rule-COM-001-cl_010",
+            "rule_id": "COM-001",
+            "clause": "第十条",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [],
+        "unmatched_labels": []
+      },
+      "perturbations": {
+        "party_names": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 7,
+          "evidence_valid": 7,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 13,
+          "citation_valid": 13,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_07-L01",
+              "finding_id": "rule-PAY-003-cl_003",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L02",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L03",
+              "finding_id": "rule-FOR-001-cl_008",
+              "rule_id": "FOR-001",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L04",
+              "finding_id": "rule-TER-002-cl_009",
+              "rule_id": "TER-002",
+              "clause": "第九条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L05",
+              "finding_id": "rule-DIS-001-cl_011",
+              "rule_id": "DIS-001",
+              "clause": "第十一条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_07-L06",
+              "finding_id": "rule-ACC-003-cl_005",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L07",
+              "finding_id": "rule-COM-001-cl_010",
+              "rule_id": "COM-001",
+              "clause": "第十条",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "amount_formats": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 7,
+          "evidence_valid": 7,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 13,
+          "citation_valid": 13,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_07-L01",
+              "finding_id": "rule-PAY-003-cl_003",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L02",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L03",
+              "finding_id": "rule-FOR-001-cl_008",
+              "rule_id": "FOR-001",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L04",
+              "finding_id": "rule-TER-002-cl_009",
+              "rule_id": "TER-002",
+              "clause": "第九条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L05",
+              "finding_id": "rule-DIS-001-cl_011",
+              "rule_id": "DIS-001",
+              "clause": "第十一条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_07-L06",
+              "finding_id": "rule-ACC-003-cl_005",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L07",
+              "finding_id": "rule-COM-001-cl_010",
+              "rule_id": "COM-001",
+              "clause": "第十条",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        },
+        "ocr_noise": {
+          "tp": 6,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.8571,
+          "f1": 0.9231,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8333,
+              "f1": 0.9091
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 6,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 6,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 6,
+          "evidence_valid": 6,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 11,
+          "citation_valid": 11,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_07-L01",
+              "finding_id": "rule-PAY-003-cl_003",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L02",
+              "finding_id": "rule-LIA-001-cl_007",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L03",
+              "finding_id": "rule-FOR-001-cl_008",
+              "rule_id": "FOR-001",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L05",
+              "finding_id": "rule-DIS-001-cl_011",
+              "rule_id": "DIS-001",
+              "clause": "第十一条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_07-L06",
+              "finding_id": "rule-ACC-003-cl_005",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L07",
+              "finding_id": "rule-COM-001-cl_010",
+              "rule_id": "COM-001",
+              "clause": "第十条",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_07-L04",
+              "clause_article": "第九条",
+              "category": "termination",
+              "rule_id": "TER-002",
+              "severity": "medium",
+              "keywords": [
+                "自动续期"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        },
+        "reordered_clauses": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "by_severity": {
+            "high": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "medium": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {
+            "rule": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "by_confidence": {
+            "confirmed": {
+              "tp": 7,
+              "fp": 0,
+              "precision": 1.0
+            }
+          },
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 7,
+          "evidence_valid": 7,
+          "evidence_valid_rate": 1.0,
+          "citation_checked": 13,
+          "citation_valid": 13,
+          "citation_valid_rate": 1.0,
+          "matches": [
+            {
+              "label_id": "sample_07-L01",
+              "finding_id": "rule-PAY-003-cl_010",
+              "rule_id": "PAY-003",
+              "clause": "第三条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L02",
+              "finding_id": "rule-LIA-001-cl_006",
+              "rule_id": "LIA-001",
+              "clause": "第七条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L03",
+              "finding_id": "rule-FOR-001-cl_005",
+              "rule_id": "FOR-001",
+              "clause": "第八条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L04",
+              "finding_id": "rule-TER-002-cl_004",
+              "rule_id": "TER-002",
+              "clause": "第九条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L05",
+              "finding_id": "rule-DIS-001-cl_002",
+              "rule_id": "DIS-001",
+              "clause": "第十一条",
+              "severity": "high"
+            },
+            {
+              "label_id": "sample_07-L06",
+              "finding_id": "rule-ACC-003-cl_008",
+              "rule_id": "ACC-003",
+              "clause": "第五条",
+              "severity": "medium"
+            },
+            {
+              "label_id": "sample_07-L07",
+              "finding_id": "rule-COM-001-cl_003",
+              "rule_id": "COM-001",
+              "clause": "第十条",
+              "severity": "medium"
+            }
+          ],
+          "unmatched_findings": [],
+          "unmatched_labels": []
+        }
+      }
+    },
+    {
+      "sample_id": "sample_08",
+      "baseline": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "by_severity": {
+          "high": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "medium": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {},
+        "by_confidence": {},
+        "fp_attribution": {
+          "total": 0,
+          "by_source": {},
+          "by_severity": {},
+          "by_category": {},
+          "by_agent": {},
+          "with_rule_hint": 0,
+          "without_rule_hint": 0,
+          "evidence_located": 0,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 0
+        },
+        "evidence_checked": 0,
+        "evidence_valid": 0,
+        "evidence_valid_rate": null,
+        "citation_checked": 0,
+        "citation_valid": 0,
+        "citation_valid_rate": null,
+        "matches": [],
+        "unmatched_findings": [],
+        "unmatched_labels": [
+          {
+            "id": "sample_08-L01",
+            "clause_article": "第三条",
+            "category": "payment",
+            "rule_id": null,
+            "severity": "low",
+            "keywords": [
+              "全部价款",
+              "质保金"
+            ],
+            "clause_id": null,
+            "quote": null,
+            "page": null,
+            "scope": null,
+            "label_layer": null,
+            "annotator": "author",
+            "annotation_pass": 1,
+            "confidence": null,
+            "notes": ""
+          }
+        ]
+      },
+      "perturbations": {
+        "party_names": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "by_severity": {
+            "high": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "medium": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {},
+          "by_confidence": {},
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 0,
+          "evidence_valid": 0,
+          "evidence_valid_rate": null,
+          "citation_checked": 0,
+          "citation_valid": 0,
+          "citation_valid_rate": null,
+          "matches": [],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_08-L01",
+              "clause_article": "第三条",
+              "category": "payment",
+              "rule_id": null,
+              "severity": "low",
+              "keywords": [
+                "全部价款",
+                "质保金"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        },
+        "amount_formats": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "by_severity": {
+            "high": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "medium": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {},
+          "by_confidence": {},
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 0,
+          "evidence_valid": 0,
+          "evidence_valid_rate": null,
+          "citation_checked": 0,
+          "citation_valid": 0,
+          "citation_valid_rate": null,
+          "matches": [],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_08-L01",
+              "clause_article": "第三条",
+              "category": "payment",
+              "rule_id": null,
+              "severity": "low",
+              "keywords": [
+                "全部价款",
+                "质保金"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        },
+        "ocr_noise": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "by_severity": {
+            "high": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "medium": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {},
+          "by_confidence": {},
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 0,
+          "evidence_valid": 0,
+          "evidence_valid_rate": null,
+          "citation_checked": 0,
+          "citation_valid": 0,
+          "citation_valid_rate": null,
+          "matches": [],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_08-L01",
+              "clause_article": "第三条",
+              "category": "payment",
+              "rule_id": null,
+              "severity": "low",
+              "keywords": [
+                "全部价款",
+                "质保金"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        },
+        "reordered_clauses": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "by_severity": {
+            "high": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "medium": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "low": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "by_source": {},
+          "by_confidence": {},
+          "fp_attribution": {
+            "total": 0,
+            "by_source": {},
+            "by_severity": {},
+            "by_category": {},
+            "by_agent": {},
+            "with_rule_hint": 0,
+            "without_rule_hint": 0,
+            "evidence_located": 0,
+            "evidence_missing": 0,
+            "with_legal_basis": 0,
+            "without_legal_basis": 0
+          },
+          "evidence_checked": 0,
+          "evidence_valid": 0,
+          "evidence_valid_rate": null,
+          "citation_checked": 0,
+          "citation_valid": 0,
+          "citation_valid_rate": null,
+          "matches": [],
+          "unmatched_findings": [],
+          "unmatched_labels": [
+            {
+              "id": "sample_08-L01",
+              "clause_article": "第三条",
+              "category": "payment",
+              "rule_id": null,
+              "severity": "low",
+              "keywords": [
+                "全部价款",
+                "质保金"
+              ],
+              "clause_id": null,
+              "quote": null,
+              "page": null,
+              "scope": null,
+              "label_layer": null,
+              "annotator": "author",
+              "annotation_pass": 1,
+              "confidence": null,
+              "notes": ""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

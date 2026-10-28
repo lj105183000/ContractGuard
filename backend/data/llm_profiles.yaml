@@ -1,0 +1,110 @@
+# ContractGuard LLM 供应商与路由配置
+#
+# - providers 里只放环境变量名，不放 API Key 值。
+# - 每个 provider 对应一个具体模型；需要多个模型就写多条。
+# - route 的 default 是全局回退链；tasks 是各任务的优先前缀，
+#   实际链 = tasks[task] + default（去重后取已配置的 provider）。
+# - 修改后需要重启后端（桌面版需重启应用）。
+
+version: 1
+default_route: balanced
+
+providers:
+  dashscope:
+    label: 通义千问 qwen-plus（DashScope）
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    base_url_env: DASHSCOPE_BASE_URL
+    model: qwen-plus
+    model_env: LLM_MODEL
+    api_key_env: DASHSCOPE_API_KEY
+    supports_json_mode: true
+
+  dashscope-turbo:
+    label: 通义千问 qwen-turbo（DashScope）
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    base_url_env: DASHSCOPE_BASE_URL
+    model: qwen-turbo
+    api_key_env: DASHSCOPE_API_KEY
+    supports_json_mode: true
+
+  dashscope-max:
+    label: 通义千问 qwen-max（DashScope）
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    base_url_env: DASHSCOPE_BASE_URL
+    model: qwen-max
+    api_key_env: DASHSCOPE_API_KEY
+    supports_json_mode: true
+
+  deepseek:
+    label: DeepSeek Chat
+    base_url: https://api.deepseek.com/v1
+    model: deepseek-chat
+    api_key_env: DEEPSEEK_API_KEY
+    supports_json_mode: true
+
+  moonshot:
+    label: Moonshot Kimi
+    base_url: https://api.moonshot.cn/v1
+    model: moonshot-v1-32k
+    api_key_env: MOONSHOT_API_KEY
+    supports_json_mode: true
+
+  openai:
+    label: OpenAI gpt-4o-mini
+    base_url: https://api.openai.com/v1
+    model: gpt-4o-mini
+    api_key_env: OPENAI_API_KEY
+    supports_json_mode: true
+
+  # 本地模型默认关闭，避免在没有服务时把应用误判为 live。
+  # 启动 Ollama 后把 enabled 改为 true，并确认模型已 pull。
+  ollama:
+    label: Ollama qwen2.5:14b（本地）
+    base_url: http://127.0.0.1:11434/v1
+    model: qwen2.5:14b-instruct
+    api_key_env: OLLAMA_API_KEY
+    requires_key: false
+    supports_json_mode: false
+    enabled: false
+
+  vllm:
+    label: vLLM Qwen2.5-14B（本地）
+    base_url: http://127.0.0.1:8001/v1
+    model: Qwen/Qwen2.5-14B-Instruct
+    api_key_env: VLLM_API_KEY
+    requires_key: false
+    supports_json_mode: false
+    enabled: false
+
+routes:
+  balanced:
+    label: 均衡（推荐）
+    description: 默认 DashScope，各任务优先使用不同供应商；失败按默认链回退
+    default: [dashscope, deepseek, moonshot, openai, ollama]
+    tasks:
+      extract: [dashscope-turbo]
+      agent_commercial: [dashscope]
+      agent_liability: [deepseek]
+      agent_compliance: [dashscope]
+      redline: [dashscope-turbo]
+
+  quality:
+    label: 质量优先
+    description: 使用能力更强、成本更高的模型，适合重要合同
+    default: [dashscope-max, deepseek, moonshot, openai, dashscope]
+    tasks:
+      extract: [dashscope-max]
+      agent_commercial: [deepseek]
+      agent_liability: [openai, moonshot]
+      agent_compliance: [moonshot, openai]
+      redline: [dashscope-max]
+
+  deepseek-first:
+    label: DeepSeek 优先
+    description: 有 DeepSeek Key 时优先使用；未配置时自动回退 DashScope
+    default: [deepseek, dashscope]
+
+  local:
+    label: 仅本地模型（需启用）
+    description: 将 llm_profiles.yaml 中 ollama/vllm 的 enabled 改为 true 并先启动服务
+    default: [ollama, vllm]

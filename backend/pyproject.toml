@@ -1,0 +1,47 @@
+[project]
+name = "contractguard-backend"
+version = "0.1.0"
+description = "ContractGuard - Chinese procurement contract review with multi-agent RAG"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi==0.162.0",
+    "langgraph>=1.2,<2",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.8",
+    "openai==3.37.0",
+    "python-multipart>=0.0.9",
+    "python-dotenv>=1.0",
+    "pypdf>=5.0",
+    "pdfplumber>=0.11",
+    "python-docx>=1.1",
+    "reportlab>=4.2",
+    "jieba>=0.42",
+    "rank-bm25>=0.2.2",
+    "numpy>=2.0",
+    "pyyaml>=6.0",
+    "httpx>=0.27",
+    "rapidocr>=3.10,<4",
+    "onnxruntime>=1.20,<2",
+    "pypdfium2>=4",
+    "langgraph-checkpoint-sqlite>=3.1.2",
+    "cryptography>=43",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "pyinstaller>=6.16",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+asyncio_mode = "auto"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+[[tool.uv.index]]
+url = "https://mirrors.aliyun.com/pypi/simple"
+default = true

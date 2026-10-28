@@ -1,0 +1,91 @@
+[
+  {
+    "id": "sample_05-L01",
+    "clause_article": "第三条",
+    "category": "payment",
+    "severity": "high",
+    "rule_id": "PAY-001",
+    "keywords": [
+      "40%"
+    ]
+  },
+  {
+    "id": "sample_05-L02",
+    "clause_article": "第三条",
+    "category": "payment",
+    "severity": "high",
+    "rule_id": "PAY-002",
+    "keywords": [
+      "货到后"
+    ]
+  },
+  {
+    "id": "sample_05-L03",
+    "clause_article": "第四条",
+    "category": "delivery",
+    "severity": "high",
+    "rule_id": "DEL-001",
+    "keywords": [
+      "尽快"
+    ]
+  },
+  {
+    "id": "sample_05-L04",
+    "clause_article": "第四条",
+    "category": "delivery",
+    "severity": "medium",
+    "rule_id": "DEL-002",
+    "keywords": [
+      "交货"
+    ]
+  },
+  {
+    "id": "sample_05-L05",
+    "clause_article": "第五条",
+    "category": "acceptance",
+    "severity": "high",
+    "rule_id": "ACC-002",
+    "keywords": [
+      "2 日",
+      "视为验收合格"
+    ]
+  },
+  {
+    "id": "sample_05-L06",
+    "clause_article": "第六条",
+    "category": "warranty",
+    "severity": "medium",
+    "rule_id": "WAR-001",
+    "keywords": [
+      "6 个月"
+    ]
+  },
+  {
+    "id": "sample_05-L07",
+    "clause_article": "第七条",
+    "category": "liability",
+    "severity": "medium",
+    "rule_id": "LIA-001",
+    "keywords": [
+      "万分之二"
+    ]
+  },
+  {
+    "id": "sample_05-L08",
+    "clause_article": "第七条",
+    "category": "liability",
+    "severity": "high",
+    "rule_id": "LIA-003",
+    "keywords": [
+      "一切责任"
+    ]
+  },
+  {
+    "id": "sample_05-L09",
+    "clause_article": "合同级",
+    "category": "dispute",
+    "severity": "high",
+    "rule_id": "DIS-003",
+    "keywords": []
+  }
+]

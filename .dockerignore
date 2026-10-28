@@ -1,0 +1,43 @@
+.git
+.github
+.eval-backup
+.vscode
+.idea
+
+# Secrets and local runtime data
+backend/.env
+backend/.env.*
+backend/data/jobs.sqlite3*
+backend/data/checkpoints.sqlite3*
+backend/data/uploads
+backend/data/feedback
+backend/data/runs
+backend/data/index_cache
+backend/data/legal/_raw
+backend/data/legal/_parsed
+backend/logs
+
+# Python build/cache
+backend/.venv
+backend/build
+backend/dist
+backend/**/__pycache__
+backend/.pytest_cache
+backend/eval
+backend/tests
+backend/scripts
+
+# Frontend build/cache
+frontend/node_modules
+frontend/dist
+frontend/.vite
+
+# Desktop and docs are not needed in the server image
+desktop
+docs
+scripts
+
+# Real contracts are outside the repository; keep synthetic samples.
+docs/*.pdf
+*.pdf
+!backend/data/samples/*.pdf

@@ -1,0 +1,70 @@
+[
+  {
+    "id": "sample_02-L01",
+    "clause_article": "第三条",
+    "category": "payment",
+    "severity": "medium",
+    "rule_id": "PAY-003",
+    "keywords": [
+      "90 日"
+    ]
+  },
+  {
+    "id": "sample_02-L02",
+    "clause_article": "第七条",
+    "category": "liability",
+    "severity": "medium",
+    "rule_id": "LIA-001",
+    "keywords": [
+      "0.02%"
+    ]
+  },
+  {
+    "id": "sample_02-L03",
+    "clause_article": "第六条",
+    "category": "warranty",
+    "severity": "high",
+    "rule_id": "LIA-004",
+    "keywords": [
+      "质量"
+    ]
+  },
+  {
+    "id": "sample_02-L04",
+    "clause_article": "第六条",
+    "category": "warranty",
+    "severity": "medium",
+    "rule_id": "WAR-001",
+    "keywords": [
+      "6 个月"
+    ]
+  },
+  {
+    "id": "sample_02-L05",
+    "clause_article": "第八条",
+    "category": "termination",
+    "severity": "medium",
+    "rule_id": "TER-002",
+    "keywords": [
+      "自动续约"
+    ]
+  },
+  {
+    "id": "sample_02-L06",
+    "clause_article": "第五条",
+    "category": "acceptance",
+    "severity": "medium",
+    "rule_id": "ACC-003",
+    "keywords": [
+      "国家相关标准"
+    ]
+  },
+  {
+    "id": "sample_02-L07",
+    "clause_article": "合同级",
+    "category": "compliance",
+    "severity": "medium",
+    "rule_id": "COM-001",
+    "keywords": []
+  }
+]

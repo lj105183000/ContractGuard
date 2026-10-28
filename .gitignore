@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Runtime data
+backend/data/index_cache/
+backend/data/feedback/
+backend/data/uploads/
+backend/data/runs/
+backend/backups/
+backend/data/jobs.sqlite3*
+backend/data/checkpoints.sqlite3*
+backend/data/legal/_raw/
+backend/eval/real/.work/
+backend/eval/real/labels/
+backend/eval/real/raw/
+backend/eval/results_real_raw*
+backend/eval/report_real_raw*
+backend/eval/report_iaa.md
+backend/data/legal/_parsed/
+backend/logs/
+backend/eval/*_full_mock.*
+
+# Local-only real contracts and eval backups (not distributed)
+docs/*.pdf
+docs/**/*.pdf
+.eval-backup/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Desktop
+desktop/node_modules/
+desktop/release*/
+desktop/.smoke/
+backend/build/
+backend/dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

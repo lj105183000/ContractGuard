@@ -1,0 +1,49 @@
+services:
+  contractguard:
+    build:
+      context: .
+    image: contractguard:local
+    ports:
+      # Keep the demo bound to localhost. Do not expose it publicly without auth.
+      # Override with CONTRACTGUARD_PORT=8001 if 8000 is already in use.
+      - "127.0.0.1:${CONTRACTGUARD_PORT:-8000}:8000"
+    environment:
+      LLM_MODE: ${LLM_MODE:-mock}
+      HITL_ENABLED: ${HITL_ENABLED:-1}
+      HITL_RESUME_ON_STARTUP: ${HITL_RESUME_ON_STARTUP:-1}
+      WORKER_ENABLED: ${WORKER_ENABLED:-1}
+      WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-2}
+      CONTRACTGUARD_DB_PATH: /app/data/jobs.sqlite3
+      CONTRACTGUARD_CHECKPOINT_DB_PATH: /app/data/checkpoints.sqlite3
+      CONTRACTGUARD_UPLOAD_DIR: /app/data/uploads
+      # Optional single-tenant token (empty disables auth):
+      CONTRACTGUARD_API_TOKEN: ${CONTRACTGUARD_API_TOKEN:-}
+      MAX_ACTIVE_JOBS: ${MAX_ACTIVE_JOBS:-20}
+      RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-0}
+      # Optional live mode:
+      # DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      # RERANK_ENABLED: ${RERANK_ENABLED:-0}
+      # Optional at-rest encryption (state_json + checkpoints):
+      # ENCRYPTION_ENABLED: "1"
+      # CONTRACTGUARD_MASTER_KEY: ${CONTRACTGUARD_MASTER_KEY:-}
+    volumes:
+      # Keep the task SQLite outside the container so `docker-compose down/up`
+      # does not lose completed reviews. `down -v` still deletes it.
+      - contractguard-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health')",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+
+volumes:
+  contractguard-data:
+

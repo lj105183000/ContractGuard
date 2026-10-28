@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' http://127.0.0.1:* http://localhost:* ws://127.0.0.1:* ws://localhost:*;"
+    />
+    <title>合同哨兵 ContractGuard</title>
+    <style>
+      :root {
+        --ink: #1b2a3a;
+        --paper: #f4efe4;
+        --surface: #fffdf8;
+        --line: #e2d8c6;
+        --gold: #b7791f;
+        --gold-bright: #d4a24c;
+        --muted: #7b7468;
+        --serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
+        --sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: var(--sans);
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 12% 0%, rgba(212, 162, 76, 0.2), transparent 34%),
+          radial-gradient(circle at 100% 12%, rgba(34, 54, 74, 0.12), transparent 30%),
+          var(--paper);
+      }
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding: 40px;
+        text-align: center;
+      }
+      .mark {
+        display: grid;
+        place-items: center;
+        width: 76px;
+        height: 76px;
+        border-radius: 20px;
+        color: var(--gold-bright);
+        background: #1b2e40;
+        border: 1px solid rgba(212, 162, 76, 0.45);
+        box-shadow: 0 22px 44px -26px rgba(27, 42, 58, 0.7);
+      }
+      h1 {
+        margin: 8px 0 0;
+        font-family: var(--serif);
+        font-size: 26px;
+        letter-spacing: 0.06em;
+      }
+      .sub {
+        margin: 0;
+        font-size: 10px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .bar {
+        width: 190px;
+        height: 3px;
+        margin-top: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(183, 121, 31, 0.16);
+      }
+      .bar span {
+        display: block;
+        width: 42%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--gold);
+        animation: slide 1.15s ease-in-out infinite;
+      }
+      small {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      @keyframes slide {
+        0% {
+          transform: translateX(-110%);
+        }
+        100% {
+          transform: translateX(350%);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .bar span {
+          animation: none;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="mark">
+        <svg
+          viewBox="0 0 24 24"
+          width="38"
+          height="38"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 3l7 2.7v5.1c0 4.8-3 8-7 10-4-2-7-5.2-7-10V5.7L12 3z" />
+          <path d="M8.8 12.2l2.2 2.2 4.2-4.5" />
+        </svg>
+      </div>
+      <h1>合同哨兵</h1>
+      <p class="sub">ContractGuard</p>
+      <p>正在启动本地审查服务…</p>
+      <div class="bar"><span></span></div>
+      <small>首次启动或 live 模式初始化可能需要几十秒</small>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,152 @@
+# 作者构造的检索评测集：query -> 相关法条 ID。
+# 来源混合 Playbook 场景与合同条款改写；不是独立法务标注，不能代表大样本泛化。
+- id: q01
+  query: 合同生效后5个工作日内支付合同总价50%的预付款
+  relevant: [CC-509, CC-577, CC-626]
+  category: payment
+  source: synthetic_clause
+  notes: 预付款比例过高；对应 PAY-001
+- id: q02
+  query: 甲方应在验收或收货前一次性支付全部合同价款
+  relevant: [CC-620, CC-621, CC-626]
+  category: payment
+  source: synthetic_clause
+  notes: 验收/交付前支付全款；对应 PAY-002
+- id: q03
+  query: 合同未约定付款期限，或付款期限为验收后90日
+  relevant: [CC-510, CC-511, CC-628]
+  category: payment
+  source: playbook_rule
+  notes: 付款期限缺失或过长；对应 PAY-003
+- id: q04
+  query: 质保金为合同总价的10%，质保期满五年后无息返还
+  relevant: [CC-509, CC-577]
+  category: payment
+  source: synthetic_clause
+  notes: 质保金比例过高或返还条件不明；对应 PAY-004
+- id: q05
+  query: 乙方应在合同生效后尽快交付货物
+  relevant: [CC-510, CC-511, CC-603]
+  category: delivery
+  source: synthetic_clause
+  notes: 交付时间不明确；对应 DEL-001
+- id: q06
+  query: 交付地点由双方另行协商，运输方式由乙方决定
+  relevant: [CC-603, CC-604, CC-511]
+  category: delivery
+  source: synthetic_clause
+  notes: 交付地点/方式不明确；对应 DEL-002
+- id: q07
+  query: 合同约定了付款和交付，但没有验收条款
+  relevant: [CC-620, CC-621, CC-622]
+  category: acceptance
+  source: playbook_rule
+  notes: 缺少验收条款；对应 ACC-001
+- id: q08
+  query: 甲方应在收货后3日内完成验收，逾期未提出异议视为验收合格
+  relevant: [CC-621, CC-622, CC-623]
+  category: acceptance
+  source: synthetic_clause
+  notes: 验收期限过短或视为自动验收；对应 ACC-002
+- id: q09
+  query: 货物验收标准为符合国家相关标准
+  relevant: [CC-615, CC-511]
+  category: acceptance
+  source: synthetic_clause
+  notes: 验收标准模糊；对应 ACC-003
+- id: q10
+  query: 质保期为货物验收合格后6个月
+  relevant: [CC-615, CC-621]
+  category: warranty
+  source: synthetic_clause
+  notes: 质保期过短；对应 WAR-001
+- id: q11
+  query: 乙方逾期交付的，按逾期天数每日支付合同总价0.01%的违约金
+  relevant: [CC-577, CC-584, CC-585]
+  category: liability
+  source: synthetic_clause
+  notes: 逾期违约金过低；对应 LIA-001
+- id: q12
+  query: 违约金总额不超过合同总价的3%
+  relevant: [CC-584, CC-585, CC-506]
+  category: liability
+  source: synthetic_clause
+  notes: 违约金上限过低；对应 LIA-002
+- id: q13
+  query: 乙方不承担任何间接损失、利润损失和商誉损失
+  relevant: [CC-506, CC-584]
+  category: liability
+  source: synthetic_clause
+  notes: 赔偿责任免除或损失限制；对应 LIA-003
+- id: q14
+  query: 货物质量不合格时，乙方只负责维修，不承担退货或换货责任
+  relevant: [CC-610, CC-615, CC-577]
+  category: liability
+  source: synthetic_clause
+  notes: 质量不合格退换货责任缺失；对应 LIA-004
+- id: q15
+  query: 只有在乙方连续三次违约时，甲方才有权解除合同
+  relevant: [CC-563, CC-577]
+  category: termination
+  source: synthetic_clause
+  notes: 买方解除权条件苛刻；对应 TER-001
+- id: q16
+  query: 合同期满后自动续约一年，任何一方无需提前通知
+  relevant: [CC-509, CC-470]
+  category: termination
+  source: synthetic_clause
+  notes: 自动续约无提前通知；对应 TER-002
+- id: q17
+  query: 因本合同发生的争议由乙方所在地人民法院管辖
+  relevant: [CPL-35]
+  category: dispute
+  source: synthetic_clause
+  notes: 管辖法院对买方不利；对应 DIS-001
+- id: q18
+  query: 争议可以提交仲裁，也可以向合同签订地法院起诉
+  relevant: [CPL-35, CC-507]
+  category: dispute
+  source: synthetic_clause
+  notes: 诉讼与仲裁并存；对应 DIS-002
+- id: q19
+  query: 因不可抗力造成的损失乙方不承担任何责任，且无需通知甲方
+  relevant: [CC-590]
+  category: liability
+  source: synthetic_clause
+  notes: 不可抗力免责过宽；对应 FOR-001
+- id: q20
+  query: 乙方应对本合同项下的技术资料和商业信息承担保密义务，甲方不受限制
+  relevant: [CC-509]
+  category: compliance
+  source: synthetic_clause
+  notes: 保密义务单向；对应 COM-001
+- id: q21
+  query: 本合同项下产生的知识产权归属由双方另行协商
+  relevant: [CC-470, CC-596]
+  category: ip
+  source: synthetic_clause
+  notes: 知识产权归属不明；对应 IP-001
+- id: q22
+  query: 合同价款由设备款、安装调试费和培训费组成，具体金额以实际发生为准
+  relevant: [CC-470, CC-596]
+  category: price
+  source: synthetic_clause
+  notes: 价款构成不明；对应 PRI-001
+- id: q23
+  query: 合同总价为100万元，是否含税及发票类型未约定
+  relevant: [CC-470, CC-596]
+  category: price
+  source: synthetic_clause
+  notes: 含税口径不明；对应 PRI-002
+- id: q24
+  query: 合同没有约定争议解决方式
+  relevant: [CC-507, CPL-35]
+  category: dispute
+  source: playbook_rule
+  notes: 争议解决条款缺失；对应 DIS-003
+- id: q25
+  query: 合同自双方签字或盖章之日起生效，但签署主体和授权文件未明确
+  relevant: [CC-470, CC-509]
+  category: general
+  source: synthetic_clause
+  notes: 合同生效条件或签署主体不明；对应 GEN-001

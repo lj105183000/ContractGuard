@@ -1,0 +1,72 @@
+[
+  {
+    "id": "sample_03-L01",
+    "clause_article": "第三条",
+    "category": "payment",
+    "severity": "high",
+    "rule_id": "PAY-002",
+    "keywords": [
+      "收到货物后"
+    ]
+  },
+  {
+    "id": "sample_03-L02",
+    "clause_article": "第七条",
+    "category": "liability",
+    "severity": "high",
+    "rule_id": "LIA-002",
+    "keywords": [
+      "3%"
+    ]
+  },
+  {
+    "id": "sample_03-L03",
+    "clause_article": "第七条",
+    "category": "liability",
+    "severity": "high",
+    "rule_id": "LIA-003",
+    "keywords": [
+      "间接损失",
+      "可得利益"
+    ]
+  },
+  {
+    "id": "sample_03-L04",
+    "clause_article": "第六条",
+    "category": "warranty",
+    "severity": "high",
+    "rule_id": "LIA-004",
+    "keywords": [
+      "质量"
+    ]
+  },
+  {
+    "id": "sample_03-L05",
+    "clause_article": "第八条",
+    "category": "termination",
+    "severity": "high",
+    "rule_id": "TER-001",
+    "keywords": [
+      "甲方无权解除"
+    ]
+  },
+  {
+    "id": "sample_03-L06",
+    "clause_article": "第九条",
+    "category": "dispute",
+    "severity": "high",
+    "rule_id": "DIS-002",
+    "keywords": [
+      "仲裁",
+      "人民法院"
+    ]
+  },
+  {
+    "id": "sample_03-L07",
+    "clause_article": "合同级",
+    "category": "compliance",
+    "severity": "medium",
+    "rule_id": "COM-001",
+    "keywords": []
+  }
+]

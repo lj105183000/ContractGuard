@@ -1,0 +1,13 @@
+[
+  {
+    "id": "sample_08-L01",
+    "clause_article": "第三条",
+    "category": "payment",
+    "severity": "low",
+    "rule_id": null,
+    "keywords": [
+      "全部价款",
+      "质保金"
+    ]
+  }
+]

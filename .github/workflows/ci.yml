@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    name: Backend tests and rules eval
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: uv sync --frozen
+      - name: Run tests
+        run: uv run pytest -q
+      - name: Live-mode offline fallback smoke
+        run: uv run python scripts/test_live_offline.py
+      - name: Validate knowledge base
+        run: uv run python scripts/validate_kb.py
+      - name: Rules baseline evaluation
+        run: uv run python eval/run_eval.py --mode rules
+      - name: Retrieval evaluation (BM25/hybrid)
+        run: uv run python eval/run_retrieval_eval.py --no-rerank
+      - name: Perturbation stability check
+        run: uv run python eval/run_perturbation_eval.py
+      - name: Cost report from saved full results
+        run: uv run python eval/run_cost_report.py
+      - name: Upload evaluation reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-reports
+          path: |
+            backend/eval/report_rules.md
+            backend/eval/results_rules.json
+            backend/eval/report_retrieval.md
+            backend/eval/report_perturbation.md
+            backend/eval/report_cost.md
+
+  frontend:
+    name: Frontend build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Diff utility checks
+        run: npm run test:diff
+      - name: Error guidance checks
+        run: node scripts/check_error_guidance.mjs

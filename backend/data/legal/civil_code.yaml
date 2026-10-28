@@ -1,0 +1,425 @@
+- id: CC-470
+  law: 中华人民共和国民法典
+  article: 第四百七十条
+  title: 合同内容
+  text: |-
+    合同的内容由当事人约定，一般包括下列条款：
+
+    （一）当事人的姓名或者名称和住所；
+
+    （二）标的；
+
+    （三）数量；
+
+    （四）质量；
+
+    （五）价款或者报酬；
+
+    （六）履行期限、地点和方式；
+
+    （七）违约责任；
+
+    （八）解决争议的方法。
+
+    当事人可以参照各类合同的示范文本订立合同。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - general
+  - contract_content
+- id: CC-496
+  law: 中华人民共和国民法典
+  article: 第四百九十六条
+  title: 格式条款的提示说明义务
+  text: |-
+    格式条款是当事人为了重复使用而预先拟定，并在订立合同时未与对方协商的条款。
+
+    采用格式条款订立合同的，提供格式条款的一方应当遵循公平原则确定当事人之间的权利和义务，并采取合理的方式提示对方注意免除或者减轻其责任等与对方有重大利害关系的条款，按照对方的要求，对该条款予以说明。提供格式条款的一方未履行提示或者说明义务，致使对方没有注意或者理解与其有重大利害关系的条款的，对方可以主张该条款不成为合同的内容。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - compliance
+  - standard_terms
+- id: CC-497
+  law: 中华人民共和国民法典
+  article: 第四百九十七条
+  title: 格式条款无效
+  text: |-
+    有下列情形之一的，该格式条款无效：
+
+    （一）具有本法第一编第六章第三节和本法第五百零六条规定的无效情形；
+
+    （二）提供格式条款一方不合理地免除或者减轻其责任、加重对方责任、限制对方主要权利；
+
+    （三）提供格式条款一方排除对方主要权利。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - compliance
+  - standard_terms
+- id: CC-506
+  law: 中华人民共和国民法典
+  article: 第五百零六条
+  title: 免责条款无效
+  text: |-
+    合同中的下列免责条款无效：
+
+    （一）造成对方人身损害的；
+
+    （二）因故意或者重大过失造成对方财产损失的。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - liability
+  - exemption
+- id: CC-507
+  law: 中华人民共和国民法典
+  article: 第五百零七条
+  title: 争议解决条款的独立性
+  text: |-
+    合同不生效、无效、被撤销或者终止的，不影响合同中有关解决争议方法的条款的效力。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - dispute
+  - validity
+- id: CC-509
+  law: 中华人民共和国民法典
+  article: 第五百零九条
+  title: 全面履行与诚信履行
+  text: |-
+    当事人应当按照约定全面履行自己的义务。
+
+    当事人应当遵循诚信原则，根据合同的性质、目的和交易习惯履行通知、协助、保密等义务。
+
+    当事人在履行合同过程中，应当避免浪费资源、污染环境和破坏生态。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - general
+  - performance
+- id: CC-510
+  law: 中华人民共和国民法典
+  article: 第五百一十条
+  title: 约定不明的补充
+  text: |-
+    合同生效后，当事人就质量、价款或者报酬、履行地点等内容没有约定或者约定不明确的，可以协议补充；不能达成补充协议的，按照合同相关条款或者交易习惯确定。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - general
+  - gap_filling
+- id: CC-511
+  law: 中华人民共和国民法典
+  article: 第五百一十一条
+  title: 约定不明的法定补充
+  text: |-
+    当事人就有关合同内容约定不明确，依据前条规定仍不能确定的，适用下列规定：
+
+    （一）质量要求不明确的，按照强制性国家标准履行；没有强制性国家标准的，按照推荐性国家标准履行；没有推荐性国家标准的，按照行业标准履行；没有国家标准、行业标准的，按照通常标准或者符合合同目的的特定标准履行。
+
+    （二）价款或者报酬不明确的，按照订立合同时履行地的市场价格履行；依法应当执行政府定价或者政府指导价的，依照规定履行。
+
+    （三）履行地点不明确，给付货币的，在接受货币一方所在地履行；交付不动产的，在不动产所在地履行；其他标的，在履行义务一方所在地履行。
+
+    （四）履行期限不明确的，债务人可以随时履行，债权人也可以随时请求履行，但是应当给对方必要的准备时间。
+
+    （五）履行方式不明确的，按照有利于实现合同目的的方式履行。
+
+    （六）履行费用的负担不明确的，由履行义务一方负担；因债权人原因增加的履行费用，由债权人负担。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - general
+  - gap_filling
+  - quality
+  - payment
+- id: CC-533
+  law: 中华人民共和国民法典
+  article: 第五百三十三条
+  title: 情势变更
+  text: |-
+    合同成立后，合同的基础条件发生了当事人在订立合同时无法预见的、不属于商业风险的重大变化，继续履行合同对于当事人一方明显不公平的，受不利影响的当事人可以与对方重新协商；在合理期限内协商不成的，当事人可以请求人民法院或者仲裁机构变更或者解除合同。
+
+    人民法院或者仲裁机构应当结合案件的实际情况，根据公平原则变更或者解除合同。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - general
+  - change_of_circumstances
+- id: CC-563
+  law: 中华人民共和国民法典
+  article: 第五百六十三条
+  title: 法定解除
+  text: |-
+    有下列情形之一的，当事人可以解除合同：
+
+    （一）因不可抗力致使不能实现合同目的；
+
+    （二）在履行期限届满前，当事人一方明确表示或者以自己的行为表明不履行主要债务；
+
+    （三）当事人一方迟延履行主要债务，经催告后在合理期限内仍未履行；
+
+    （四）当事人一方迟延履行债务或者有其他违约行为致使不能实现合同目的；
+
+    （五）法律规定的其他情形。
+
+    以持续履行的债务为内容的不定期合同，当事人可以随时解除合同，但是应当在合理期限之前通知对方。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - termination
+  - breach
+- id: CC-577
+  law: 中华人民共和国民法典
+  article: 第五百七十七条
+  title: 违约责任
+  text: |-
+    当事人一方不履行合同义务或者履行合同义务不符合约定的，应当承担继续履行、采取补救措施或者赔偿损失等违约责任。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - liability
+  - breach
+- id: CC-584
+  law: 中华人民共和国民法典
+  article: 第五百八十四条
+  title: 损失赔偿范围
+  text: |-
+    当事人一方不履行合同义务或者履行合同义务不符合约定，造成对方损失的，损失赔偿额应当相当于因违约所造成的损失，包括合同履行后可以获得的利益；但是，不得超过违约一方订立合同时预见到或者应当预见到的因违约可能造成的损失。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - liability
+  - damages
+- id: CC-585
+  law: 中华人民共和国民法典
+  article: 第五百八十五条
+  title: 违约金
+  text: |-
+    当事人可以约定一方违约时应当根据违约情况向对方支付一定数额的违约金，也可以约定因违约产生的损失赔偿额的计算方法。
+
+    约定的违约金低于造成的损失的，人民法院或者仲裁机构可以根据当事人的请求予以增加；约定的违约金过分高于造成的损失的，人民法院或者仲裁机构可以根据当事人的请求予以适当减少。
+
+    当事人就迟延履行约定违约金的，违约方支付违约金后，还应当履行债务。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - liability
+  - liquidated_damages
+- id: CC-590
+  law: 中华人民共和国民法典
+  article: 第五百九十条
+  title: 不可抗力
+  text: |-
+    当事人一方因不可抗力不能履行合同的，根据不可抗力的影响，部分或者全部免除责任，但是法律另有规定的除外。因不可抗力不能履行合同的，应当及时通知对方，以减轻可能给对方造成的损失，并应当在合理期限内提供证明。
+
+    当事人迟延履行后发生不可抗力的，不免除其违约责任。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - liability
+  - force_majeure
+- id: CC-591
+  law: 中华人民共和国民法典
+  article: 第五百九十一条
+  title: 减损规则
+  text: |-
+    当事人一方违约后，对方应当采取适当措施防止损失的扩大；没有采取适当措施致使损失扩大的，不得就扩大的损失请求赔偿。
+
+    当事人因防止损失扩大而支出的合理费用，由违约方负担。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - liability
+  - mitigation
+- id: CC-592
+  law: 中华人民共和国民法典
+  article: 第五百九十二条
+  title: 双方违约与过错相抵
+  text: |-
+    当事人都违反合同的，应当各自承担相应的责任。
+
+    当事人一方违约造成对方损失，对方对损失的发生有过错的，可以减少相应的损失赔偿额。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - liability
+  - contributory_fault
+- id: CC-593
+  law: 中华人民共和国民法典
+  article: 第五百九十三条
+  title: 第三人原因违约
+  text: |-
+    当事人一方因第三人的原因造成违约的，应当依法向对方承担违约责任。当事人一方和第三人之间的纠纷，依照法律规定或者按照约定处理。
+  effective_date: '2021-01-01'
+  source_url: https://xfj.tongliao.gov.cn/zwgk/zfxxgk/fdzdgknr/flfg/202211/t20221125_1008083.html
+  tags:
+  - liability
+  - third_party
+- id: CC-595
+  law: 中华人民共和国民法典
+  article: 第五百九十五条
+  title: 买卖合同定义
+  text: |-
+    买卖合同是出卖人转移标的物的所有权于买受人，买受人支付价款的合同。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - sales
+  - definition
+- id: CC-596
+  law: 中华人民共和国民法典
+  article: 第五百九十六条
+  title: 买卖合同内容
+  text: |-
+    买卖合同的内容一般包括标的物的名称、数量、质量、价款、履行期限、履行地点和方式、包装方式、检验标准和方法、结算方式、合同使用的文字及其效力等条款。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - sales
+  - contract_content
+  - quality
+  - payment
+  - delivery
+- id: CC-603
+  law: 中华人民共和国民法典
+  article: 第六百零三条
+  title: 交付地点
+  text: |-
+    出卖人应当按照约定的地点交付标的物。
+    当事人没有约定交付地点或者约定不明确，依据本法第五百一十条的规定仍不能确定的，适用下列规定：
+    （一）标的物需要运输的，出卖人应当将标的物交付给第一承运人以运交给买受人；
+    （二）标的物不需要运输，出卖人和买受人订立合同时知道标的物在某一地点的，出卖人应当在该地点交付标的物；不知道标的物在某一地点的，应当在出卖人订立合同时的营业地交付标的物。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - delivery
+  - place
+- id: CC-604
+  law: 中华人民共和国民法典
+  article: 第六百零四条
+  title: 风险负担
+  text: |-
+    标的物毁损、灭失的风险，在标的物交付之前由出卖人承担，交付之后由买受人承担，但是法律另有规定或者当事人另有约定的除外。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - delivery
+  - risk
+- id: CC-610
+  law: 中华人民共和国民法典
+  article: 第六百一十条
+  title: 质量不符的拒收与解除
+  text: |-
+    因标的物不符合质量要求，致使不能实现合同目的的，买受人可以拒绝接受标的物或者解除合同。买受人拒绝接受标的物或者解除合同的，标的物毁损、灭失的风险由出卖人承担。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - quality
+  - rejection
+  - termination
+- id: CC-615
+  law: 中华人民共和国民法典
+  article: 第六百一十五条
+  title: 质量要求
+  text: |-
+    出卖人应当按照约定的质量要求交付标的物。出卖人提供有关标的物质量说明的，交付的标的物应当符合该说明的质量要求。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - quality
+  - delivery
+- id: CC-620
+  law: 中华人民共和国民法典
+  article: 第六百二十条
+  title: 检验期限
+  text: |-
+    买受人收到标的物时应当在约定的检验期限内检验。没有约定检验期限的，应当及时检验。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - acceptance
+  - inspection
+- id: CC-621
+  law: 中华人民共和国民法典
+  article: 第六百二十一条
+  title: 质量异议通知
+  text: |-
+    当事人约定检验期限的，买受人应当在检验期限内将标的物的数量或者质量不符合约定的情形通知出卖人。买受人怠于通知的，视为标的物的数量或者质量符合约定。
+    当事人没有约定检验期限的，买受人应当在发现或者应当发现标的物的数量或者质量不符合约定的合理期限内通知出卖人。买受人在合理期限内未通知或者自收到标的物之日起二年内未通知出卖人的，视为标的物的数量或者质量符合约定；但是，对标的物有质量保证期的，适用质量保证期，不适用该二年的规定。
+    出卖人知道或者应当知道提供的标的物不符合约定的，买受人不受前两款规定的通知时间的限制。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - acceptance
+  - inspection
+  - quality
+- id: CC-622
+  law: 中华人民共和国民法典
+  article: 第六百二十二条
+  title: 检验期限过短
+  text: |-
+    当事人约定的检验期限过短，根据标的物的性质和交易习惯，买受人在检验期限内难以完成全面检验的，该期限仅视为买受人对标的物的外观瑕疵提出异议的期限。
+    约定的检验期限或者质量保证期短于法律、行政法规规定期限的，应当以法律、行政法规规定的期限为准。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - acceptance
+  - inspection
+- id: CC-623
+  law: 中华人民共和国民法典
+  article: 第六百二十三条
+  title: 签收与推定检验
+  text: |-
+    当事人对检验期限未作约定，买受人签收的送货单、确认单等载明标的物数量、型号、规格的，推定买受人已经对数量和外观瑕疵进行检验，但是有相关证据足以推翻的除外。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - acceptance
+  - deemed_inspection
+- id: CC-626
+  law: 中华人民共和国民法典
+  article: 第六百二十六条
+  title: 价款支付
+  text: |-
+    买受人应当按照约定的数额和支付方式支付价款。对价款的数额和支付方式没有约定或者约定不明确的，适用本法第五百一十条、第五百一十一条第二项和第五项的规定。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - payment
+- id: CC-628
+  law: 中华人民共和国民法典
+  article: 第六百二十八条
+  title: 价款支付时间
+  text: |-
+    买受人应当按照约定的时间支付价款。对支付时间没有约定或者约定不明确，依据本法第五百一十条的规定仍不能确定的，买受人应当在收到标的物或者提取标的物单证的同时支付。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - payment
+  - timing
+- id: CC-634
+  law: 中华人民共和国民法典
+  article: 第六百三十四条
+  title: 分期付款与解除
+  text: |-
+    分期付款的买受人未支付到期价款的数额达到全部价款的五分之一，经催告后在合理期限内仍未支付到期价款的，出卖人可以请求买受人支付全部价款或者解除合同。
+    出卖人解除合同的，可以向买受人请求支付该标的物的使用费。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - payment
+  - installment
+  - termination
+- id: CC-646
+  law: 中华人民共和国民法典
+  article: 第六百四十六条
+  title: 其他有偿合同参照适用
+  text: |-
+    法律对其他有偿合同有规定的，依照其规定；没有规定的，参照适用买卖合同的有关规定。
+  effective_date: '2021-01-01'
+  source_url: https://www.shandan.gov.cn/zfxxgk/xzzfxgk/qqz_7336/xzswgk1/ggflfw_7347/fzxcjy_7349/202204/t20220425_835318.html
+  tags:
+  - general
+  - sales
