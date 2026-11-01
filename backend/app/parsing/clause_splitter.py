@@ -10,8 +10,13 @@ import bisect
 import re
 from dataclasses import dataclass
 
+from app.config import settings
 from app.parsing.contract_parser import ParsedContract
 from app.schemas import Clause, ClauseType
+
+
+class ClauseSplitError(ValueError):
+    """条款数量超过配置上限。"""
 
 ARTICLE_PATTERNS = [
     re.compile(r"(?m)^[ \t]*(第[一二三四五六七八九十百千零〇\d]+条)[ \t　]*(?=\S|$)"),
@@ -114,11 +119,15 @@ def _make_clause(
     )
 
 
-def _heading_spans(text: str) -> list[_Span]:
+def _heading_spans(text: str, max_clauses: int) -> list[_Span]:
     matches: list[tuple[int, int, str]] = []
     for pattern in ARTICLE_PATTERNS:
         for match in pattern.finditer(text):
             matches.append((match.start(1), match.start(), match.group(1).strip()))
+            if len(matches) > max_clauses * 2:
+                raise ClauseSplitError(
+                    f"合同条款数超过上限 {max_clauses}，请拆分文件后重试。"
+                )
     # 去重：同一行可能被多个模式命中，保留最早的
     matches.sort(key=lambda item: (item[0], item[1]))
     deduped: list[tuple[int, int, str]] = []
@@ -134,7 +143,7 @@ def _heading_spans(text: str) -> list[_Span]:
     return spans
 
 
-def _paragraph_spans(text: str) -> list[_Span]:
+def _paragraph_spans(text: str, max_clauses: int) -> list[_Span]:
     pattern = re.compile(r"(?s)(?:\A|\n\s*\n)(.*?)(?=\n\s*\n|\Z)")
     spans: list[_Span] = []
     for match in pattern.finditer(text):
@@ -147,6 +156,10 @@ def _paragraph_spans(text: str) -> list[_Span]:
         spans.append(
             _Span(start=start + left, end=start + left + len(stripped), article=f"第{len(spans)+1}段")
         )
+        if len(spans) > max_clauses:
+            raise ClauseSplitError(
+                f"合同条款数超过上限 {max_clauses}，请拆分文件后重试。"
+            )
     # 把过短的块并入下一块，避免只有标题的“条款”
     merged: list[_Span] = []
     for span in spans:
@@ -157,7 +170,7 @@ def _paragraph_spans(text: str) -> list[_Span]:
     return merged
 
 
-def _sentence_spans(text: str) -> list[_Span]:
+def _sentence_spans(text: str, max_clauses: int) -> list[_Span]:
     spans: list[_Span] = []
     start = 0
     buffer_start = 0
@@ -169,22 +182,33 @@ def _sentence_spans(text: str) -> list[_Span]:
                 _Span(start=buffer_start, end=match.end(), article=f"第{len(spans)+1}段")
             )
             buffer_start = match.end()
+            if len(spans) > max_clauses:
+                raise ClauseSplitError(
+                    f"合同条款数超过上限 {max_clauses}，请拆分文件后重试。"
+                )
         start = match.end()
     if buffer_start < len(text):
         spans.append(_Span(start=buffer_start, end=len(text), article=f"第{len(spans)+1}段"))
     return spans
 
 
-def split_clauses(parsed: ParsedContract) -> list[Clause]:
+def split_clauses(
+    parsed: ParsedContract, max_clauses: int | None = None
+) -> list[Clause]:
+    limit = max(10, int(max_clauses or settings.max_clauses))
     text = parsed.text
-    heading_spans = _heading_spans(text)
+    heading_spans = _heading_spans(text, limit)
     spans: list[_Span]
     if len(heading_spans) >= 2:
         spans = heading_spans
     else:
-        spans = _paragraph_spans(text)
+        spans = _paragraph_spans(text, limit)
         if len(spans) < 2:
-            spans = _sentence_spans(text)
+            spans = _sentence_spans(text, limit)
+    if len(spans) > limit:
+        raise ClauseSplitError(
+            f"合同条款数超过上限 {limit}，请拆分文件后重试。"
+        )
     if not spans:
         spans = [_Span(start=0, end=len(text), article="全文")]
 
@@ -201,6 +225,10 @@ def split_clauses(parsed: ParsedContract) -> list[Clause]:
         )
         if clause and clause.text:
             clauses.append(clause)
+            if len(clauses) > limit:
+                raise ClauseSplitError(
+                    f"合同条款数超过上限 {limit}，请拆分文件后重试。"
+                )
     if not clauses:
         fallback = _make_clause(text, 0, len(text), "全文", 0, parsed)
         if fallback:

@@ -677,8 +677,8 @@ class BatchState(BaseModel):
 
 class BatchDecisionRequest(BaseModel):
     decision: Decision
-    note: str = ""
-    finding_ids: list[str] | None = None
+    note: str = Field(default="", max_length=2000)
+    finding_ids: list[str] | None = Field(default=None, max_length=500)
 
 
 class BatchDecisionItem(BaseModel):
@@ -728,7 +728,7 @@ class MetaResponse(BaseModel):
 
 class ReviewDecisionRequest(BaseModel):
     decision: Decision
-    note: str = ""
+    note: str = Field(default="", max_length=2000)
 
 
 class SuggestionUpdateRequest(BaseModel):

@@ -83,6 +83,15 @@ class Settings:
     ).strip()
     llm_timeout_s: int = max(5, _env_int("LLM_TIMEOUT_S", 90))
     llm_deadline_s: int = max(30, _env_int("LLM_DEADLINE_S", 180))
+    llm_max_clauses_per_agent: int = max(
+        1, _env_int("LLM_MAX_CLAUSES_PER_AGENT", 10)
+    )
+    llm_max_findings_per_agent: int = max(
+        1, _env_int("LLM_MAX_FINDINGS_PER_AGENT", 4)
+    )
+    llm_extraction_text_chars: int = max(
+        1000, _env_int("LLM_EXTRACTION_TEXT_CHARS", 12000)
+    )
     api_key: str = os.getenv("DASHSCOPE_API_KEY", "").strip()
     base_url: str = os.getenv(
         "DASHSCOPE_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"
@@ -100,6 +109,11 @@ class Settings:
     ).strip()
     embedding_model: str = os.getenv("EMBEDDING_MODEL", "text-embedding-v3").strip()
     embedding_dim: int = _env_int("EMBEDDING_DIM", 1024)
+    embedding_timeout_s: int = max(3, _env_int("EMBEDDING_TIMEOUT_S", 15))
+    embedding_max_retries: int = max(1, _env_int("EMBEDDING_MAX_RETRIES", 2))
+    embedding_warmup_timeout_s: int = max(
+        3, _env_int("EMBEDDING_WARMUP_TIMEOUT_S", 15)
+    )
     rerank_enabled: bool = _env_bool("RERANK_ENABLED", False)
     rerank_api_style: str = os.getenv("RERANK_API_STYLE", "native").strip().lower()
     rerank_instruct: str = os.getenv("RERANK_INSTRUCT", "").strip()
@@ -119,10 +133,19 @@ class Settings:
     max_docx_uncompressed_mb: int = max(
         1, _env_int("DOCX_MAX_UNCOMPRESSED_MB", 200)
     )
+    max_docx_entries: int = max(1, _env_int("DOCX_MAX_ENTRIES", 2000))
+    max_docx_xml_mb: int = max(1, _env_int("DOCX_MAX_XML_MB", 50))
+    max_text_chars: int = max(1_000, _env_int("MAX_TEXT_CHARS", 2_000_000))
+    max_clauses: int = max(10, _env_int("MAX_CLAUSES", 1000))
+    max_image_pixels: int = max(1_000_000, _env_int("MAX_IMAGE_PIXELS", 50_000_000))
+    max_json_body_mb: int = max(1, _env_int("MAX_JSON_BODY_MB", 2))
+    job_deadline_s: int = max(60, _env_int("JOB_DEADLINE_S", 900))
     max_active_jobs: int = max(1, _env_int("MAX_ACTIVE_JOBS", 20))
     rate_limit_per_minute: int = max(0, _env_int("RATE_LIMIT_PER_MINUTE", 0))
     # 可选单租户 Bearer Token；为空表示不启用鉴权（本地 demo 默认）。
     api_token: str = os.getenv("CONTRACTGUARD_API_TOKEN", "").strip()
+    require_auth: bool = _env_bool("CONTRACTGUARD_REQUIRE_AUTH", False)
+    allowed_hosts: str = os.getenv("CONTRACTGUARD_ALLOWED_HOSTS", "").strip()
     ocr_max_pages: int = max(1, _env_int("OCR_MAX_PAGES", 50))
     ocr_render_scale: float = min(
         4.0, max(0.5, _env_float("OCR_RENDER_SCALE", 2.0))
@@ -182,6 +205,21 @@ class Settings:
     def is_live(self) -> bool:
         """兼容旧调用；现在只表示 embedding 是否可用，聊天模式由 profiles 决定。"""
         return self.embedding_live
+
+    @property
+    def allowed_host_list(self) -> list[str]:
+        defaults = ["127.0.0.1", "localhost", "testserver", "[::1]"]
+        configured = [
+            item.strip()
+            for item in self.allowed_hosts.split(",")
+            if item.strip()
+        ]
+        return list(dict.fromkeys(defaults + configured))
+
+    @property
+    def has_non_local_hosts(self) -> bool:
+        local = {"127.0.0.1", "localhost", "testserver", "[::1]", "::1"}
+        return any(host not in local for host in self.allowed_host_list)
 
 
 settings = Settings()

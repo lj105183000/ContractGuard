@@ -2,12 +2,15 @@
 
 在 backend 目录运行：
     PYTHONUTF8=1 uv run python scripts/smoke_api.py
+
+脚本始终使用临时 SQLite/上传目录，不会清空或写入真实的 data/ 目录。
 """
 
 from __future__ import annotations
 
 import os
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -16,8 +19,17 @@ os.environ["SYNC_JOBS"] = "1"
 os.environ["HITL_ENABLED"] = "0"
 os.environ["WORKER_ENABLED"] = "0"
 
+# 必须在导入 app.config/app.main 之前设置，避免 smoke 触碰真实任务库。
+SMOKE_DIR = Path(tempfile.mkdtemp(prefix="contractguard-smoke-"))
+os.environ["CONTRACTGUARD_DB_PATH"] = str(SMOKE_DIR / "jobs.sqlite3")
+os.environ["CONTRACTGUARD_CHECKPOINT_DB_PATH"] = str(
+    SMOKE_DIR / "checkpoints.sqlite3"
+)
+os.environ["CONTRACTGUARD_UPLOAD_DIR"] = str(SMOKE_DIR / "uploads")
+
 from fastapi.testclient import TestClient  # noqa: E402
 
+from app.config import UPLOAD_DIR  # noqa: E402
 from app.main import app  # noqa: E402
 from app.services.jobs import store  # noqa: E402
 
@@ -50,7 +62,9 @@ CONTRACT = """设备采购合同
 
 
 def main() -> None:
-    store.reset()  # 仅用于本地冒烟
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    store.reset()  # 仅作用于 SMOKE_DIR 下的临时库
+    print(f"smoke data dir: {SMOKE_DIR}")
     with TestClient(app) as client:
         health = client.get("/api/health")
         print("health", health.status_code, health.json())
@@ -88,11 +102,11 @@ def main() -> None:
 
         md = client.get(f"/api/reviews/{job_id}/report?format=md")
         print("markdown", md.status_code, len(md.content), md.headers.get("content-type"))
-        Path("data/uploads/smoke_report.md").write_bytes(md.content)
+        (UPLOAD_DIR / "smoke_report.md").write_bytes(md.content)
 
         docx = client.get(f"/api/reviews/{job_id}/report?format=docx")
         print("docx", docx.status_code, len(docx.content), docx.headers.get("content-type"))
-        Path("data/uploads/smoke_report.docx").write_bytes(docx.content)
+        (UPLOAD_DIR / "smoke_report.docx").write_bytes(docx.content)
 
         data = client.get(f"/api/reviews/{job_id}/report?format=json")
         print("json", data.status_code, len(data.content))
@@ -120,7 +134,7 @@ def main() -> None:
         )
         assert revised_docx.status_code == 200, revised_docx.text
         assert revised_docx.content[:2] == b"PK"
-        Path("data/uploads/smoke_revised.docx").write_bytes(revised_docx.content)
+        (UPLOAD_DIR / "smoke_revised.docx").write_bytes(revised_docx.content)
 
 
 if __name__ == "__main__":

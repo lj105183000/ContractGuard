@@ -49,6 +49,12 @@ def _load_engine() -> Any:
 
 def prepare_image(image: Image.Image) -> Image.Image:
     """统一方向、色彩，并把超大图片缩到可控尺寸。"""
+    pixels = image.width * image.height
+    if pixels > settings.max_image_pixels:
+        raise OcrError(
+            f"图片像素数 {pixels:,} 超过上限 {settings.max_image_pixels:,}，"
+            "请缩小后重试。"
+        )
     image = ImageOps.exif_transpose(image)
     if image.mode != "RGB":
         image = image.convert("RGB")

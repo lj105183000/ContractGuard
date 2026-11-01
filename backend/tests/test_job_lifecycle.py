@@ -1,11 +1,16 @@
+import asyncio
+
 import pytest
 
+from app.config import settings
 from app.schemas import ContractMeta, JobStatus, ReviewResult
+from app.services import jobs
 from app.services.jobs import (
     JobNotCancellable,
     JobNotRetryable,
     JobStore,
     SourceMissing,
+    store,
 )
 from app.services.summary import build_summary
 
@@ -54,6 +59,29 @@ def test_cancel_running_job_then_retry_keeps_source(tmp_path):
         assert store.claim("worker-2", 60) is not None
     finally:
         store.close()
+
+
+@pytest.mark.asyncio
+async def test_run_review_enforces_job_deadline(tmp_path, monkeypatch):
+    class SlowGraph:
+        async def ainvoke(self, *args, **kwargs):
+            await asyncio.sleep(10)
+
+    source = tmp_path / "contract.txt"
+    source.write_text("设备采购合同\n\n第一条 标的\n设备。", encoding="utf-8")
+    job = store.create(
+        "contract.txt", source_path=str(source), cleanup_source=False
+    )
+    old_deadline = settings.job_deadline_s
+    object.__setattr__(settings, "job_deadline_s", 1)
+    monkeypatch.setattr(jobs, "build_graph", lambda: SlowGraph())
+    try:
+        await jobs.run_review(job.job_id, source, cleanup=False)
+        state = store.get(job.job_id, fresh=True)
+        assert state.status == JobStatus.FAILED
+        assert "截止时间" in (state.error or "")
+    finally:
+        object.__setattr__(settings, "job_deadline_s", old_deadline)
 
 
 def test_retry_failed_job_and_missing_source(tmp_path):

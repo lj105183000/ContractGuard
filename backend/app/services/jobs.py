@@ -1442,11 +1442,15 @@ async def run_review(
             graph = build_graph()
             config = {"recursion_limit": 30}
         if hitl:
-            result = await graph.ainvoke(
-                state, config=config, durability="sync"
+            result = await asyncio.wait_for(
+                graph.ainvoke(state, config=config, durability="sync"),
+                timeout=settings.job_deadline_s,
             )
         else:
-            result = await graph.ainvoke(state, config=config)
+            result = await asyncio.wait_for(
+                graph.ainvoke(state, config=config),
+                timeout=settings.job_deadline_s,
+            )
         if store.is_cancel_requested(job_id):
             store.set_cancelled(job_id, lease_token=lease_token)
             return
@@ -1522,6 +1526,26 @@ async def run_review(
             _save_trace(job_id, report)
     except LeaseLost:
         logger.warning("任务 %s 已失去租约，停止执行", job_id)
+    except TimeoutError:
+        message = (
+            f"审查超过 {settings.job_deadline_s}s 截止时间，已中止；"
+            "请缩小文件或拆分后重试。"
+        )
+        logger.warning("任务 %s 超时：%s", job_id, message)
+        store.add_event(
+            job_id,
+            JobEvent(
+                node="failed",
+                label="审查超时",
+                status=EventStatus.FAILED,
+                message=message,
+                progress=0,
+            ),
+            lease_token=lease_token,
+        )
+        store.set_failed(job_id, message, lease_token=lease_token)
+        if hitl:
+            await delete_checkpoint(job_id)
     except PipelineError as exc:
         store.add_event(
             job_id,
@@ -1634,8 +1658,9 @@ async def resume_review(
             command = Command(
                 resume={snapshot.interrupts[0].id: {"decisions": decisions}}
             )
-            result = await graph.ainvoke(
-                command, config=config, durability="sync"
+            result = await asyncio.wait_for(
+                graph.ainvoke(command, config=config, durability="sync"),
+                timeout=settings.job_deadline_s,
             )
             if store.is_cancel_requested(job_id):
                 store.set_cancelled(job_id, lease_token=lease_token)
@@ -1706,6 +1731,14 @@ async def resume_review(
                 _save_trace(job_id, report)
         except LeaseLost:
             logger.warning("任务 %s 已失去租约，停止恢复", job_id)
+        except TimeoutError:
+            message = (
+                f"恢复人工复核超过 {settings.job_deadline_s}s 截止时间，已中止；"
+                "请重试或重新上传。"
+            )
+            logger.warning("任务 %s 恢复超时：%s", job_id, message)
+            store.set_failed(job_id, message, lease_token=lease_token)
+            await delete_checkpoint(job_id)
         except Exception as exc:  # noqa: BLE001
             logger.exception("恢复人工复核失败：%s", exc)
             store.set_failed(

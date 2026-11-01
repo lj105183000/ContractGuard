@@ -97,17 +97,55 @@ def _iter_docx_blocks(document):  # type: ignore[no-untyped-def]
             yield Table(child, document)
 
 
-def _parse_docx(path: Path, filename: str) -> ParsedContract:
+def _check_docx_archive(path: Path) -> None:
+    """按实际解压流计数，避免只信任可伪造的中央目录 file_size。"""
+    limit = settings.max_docx_uncompressed_mb * 1024 * 1024
     try:
         with zipfile.ZipFile(path) as archive:
-            uncompressed = sum(info.file_size for info in archive.infolist())
+            entries = [info for info in archive.infolist() if not info.is_dir()]
+            if len(entries) > settings.max_docx_entries:
+                raise ContractParseError(
+                    f"DOCX 内部条目过多（{len(entries)}），超过上限 "
+                    f"{settings.max_docx_entries}。"
+                )
+            # 快速路径：声明大小已经超限时无需真正解压。
+            declared = sum(info.file_size for info in entries)
+            if declared > limit:
+                raise ContractParseError(
+                    f"DOCX 解压后超过 {settings.max_docx_uncompressed_mb}MB 限制。"
+                )
+            actual = 0
+            xml_limit = settings.max_docx_xml_mb * 1024 * 1024
+            for info in entries:
+                try:
+                    entry_actual = 0
+                    is_xml = info.filename.lower().endswith(".xml")
+                    with archive.open(info) as handle:
+                        while chunk := handle.read(1024 * 1024):
+                            actual += len(chunk)
+                            entry_actual += len(chunk)
+                            if actual > limit:
+                                raise ContractParseError(
+                                    "DOCX 实际解压后超过 "
+                                    f"{settings.max_docx_uncompressed_mb}MB 限制。"
+                                )
+                            if is_xml and entry_actual > xml_limit:
+                                raise ContractParseError(
+                                    f"DOCX 内部 XML 文件 {info.filename} 超过 "
+                                    f"{settings.max_docx_xml_mb}MB 限制。"
+                                )
+                except ContractParseError:
+                    raise
+                except Exception as exc:  # noqa: BLE001
+                    raise ContractParseError(
+                        f"DOCX 内部文件无法安全解压：{exc}"
+                    ) from exc
     except zipfile.BadZipFile as exc:
         raise ContractParseError("DOCX 文件损坏或不是有效的压缩包。") from exc
-    limit = settings.max_docx_uncompressed_mb * 1024 * 1024
-    if uncompressed > limit:
-        raise ContractParseError(
-            f"DOCX 解压后超过 {settings.max_docx_uncompressed_mb}MB 限制。"
-        )
+
+
+def _parse_docx(path: Path, filename: str) -> ParsedContract:
+    _check_docx_archive(path)
     document = Document(str(path))
     parts: list[str] = []
     for block in _iter_docx_blocks(document):
@@ -143,9 +181,20 @@ def _page_has_image(page) -> bool:  # type: ignore[no-untyped-def]
 def _render_pdf_page(pdf, index: int) -> Image.Image:  # type: ignore[no-untyped-def]
     page = pdf[index]
     width, height = page.get_size()
-    longest = max(width, height, 1.0)
+    longest = max(width, height)
+    if longest <= 0 or longest > 200_000:
+        raise ContractParseError(
+            f"PDF 第 {index + 1} 页尺寸异常（{width:.0f}×{height:.0f}），"
+            "已拒绝渲染。"
+        )
     scale = min(settings.ocr_render_scale, settings.ocr_max_render_side / longest)
-    bitmap = page.render(scale=max(scale, 0.05))
+    # 不要再把 scale 抬到 0.05：那会让超大页面绕过 OCR_MAX_RENDER_SIDE。
+    if scale < 0.05:
+        raise ContractParseError(
+            f"PDF 第 {index + 1} 页尺寸过大，无法在安全分辨率下 OCR；"
+            "请拆分或降低页面尺寸。"
+        )
+    bitmap = page.render(scale=scale)
     try:
         # to_pil() 的数据可能依赖 bitmap，复制后再关闭渲染对象。
         return bitmap.to_pil().copy()
@@ -251,6 +300,8 @@ def _parse_pdf(
                             used_pages += 1
                             if confidence is not None:
                                 confidences.append(confidence)
+                    except ContractParseError:
+                        raise
                     except Exception as exc:  # noqa: BLE001
                         failed_pages += 1
                         if isinstance(exc, ocr.OcrUnavailableError):
@@ -312,9 +363,25 @@ def _decode_txt(raw: bytes) -> str:
 
 
 def _parse_txt(path: Path, filename: str) -> ParsedContract:
-    text = _normalize(_decode_txt(path.read_bytes()))
+    size = path.stat().st_size
+    if size > settings.max_text_chars * 4:
+        raise ContractParseError(
+            f"TXT 文件过大（{size // (1024 * 1024)}MB），超过解析上限；"
+            "请拆分文件后重试。"
+        )
+    raw = path.read_bytes()
+    if len(raw) > settings.max_text_chars * 4:
+        raise ContractParseError(
+            f"TXT 文件过大（{len(raw) // (1024 * 1024)}MB），超过解析上限；"
+            "请拆分文件后重试。"
+        )
+    text = _normalize(_decode_txt(raw))
     if len(text) < 20:
         raise ContractParseError("TXT 文件内容为空或过短。")
+    if len(text) > settings.max_text_chars:
+        raise ContractParseError(
+            f"TXT 文本超过 {settings.max_text_chars} 字符上限，请拆分文件。"
+        )
     return ParsedContract(
         text=text,
         source_type="txt",
@@ -325,7 +392,15 @@ def _parse_txt(path: Path, filename: str) -> ParsedContract:
 def _parse_image(path: Path, filename: str) -> ParsedContract:
     try:
         with Image.open(path) as image:
+            pixels = image.width * image.height
+            if pixels > settings.max_image_pixels:
+                raise ContractParseError(
+                    f"图片像素数 {pixels:,} 超过上限 "
+                    f"{settings.max_image_pixels:,}，请缩小后重试。"
+                )
             text, confidence = ocr.ocr_image(image)
+    except ContractParseError:
+        raise
     except ocr.OcrUnavailableError as exc:
         raise ContractParseError(str(exc)) from exc
     except Exception as exc:  # noqa: BLE001
@@ -365,9 +440,15 @@ def parse_contract(
             "请上传 PDF、DOCX、TXT 或 JPG/PNG 图片。"
         )
     if suffix == ".pdf":
-        return _parse_pdf(path, filename, progress)
-    if suffix == ".docx":
-        return _parse_docx(path, filename)
-    if suffix == ".txt":
-        return _parse_txt(path, filename)
-    return _parse_image(path, filename)
+        parsed = _parse_pdf(path, filename, progress)
+    elif suffix == ".docx":
+        parsed = _parse_docx(path, filename)
+    elif suffix == ".txt":
+        parsed = _parse_txt(path, filename)
+    else:
+        parsed = _parse_image(path, filename)
+    if len(parsed.text) > settings.max_text_chars:
+        raise ContractParseError(
+            f"合同文本超过 {settings.max_text_chars} 字符上限，请拆分文件。"
+        )
+    return parsed

@@ -19,7 +19,9 @@ from fastapi.staticfiles import StaticFiles
 from langgraph.checkpoint.serde.encrypted import EncryptedSerializer
 from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
+from app.api.body_limit import BodyLimitMiddleware
 from app.api.routes import router
 from app.config import FRONTEND_DIST, ensure_dirs, settings
 from app.crypto import AesGcmCipher
@@ -84,8 +86,45 @@ async def _checkpoint_janitor() -> None:
         await asyncio.sleep(60)
 
 
+async def _warmup_embeddings(retriever) -> None:  # type: ignore[no-untyped-def]
+    """后台预热向量索引；超时/失败只降级 BM25，不阻塞应用启动。"""
+    try:
+        async with asyncio.timeout(settings.embedding_warmup_timeout_s):
+            await retriever.warmup()
+    except TimeoutError:
+        retriever.last_warning = (
+            f"向量索引预热超过 {settings.embedding_warmup_timeout_s}s，"
+            "已先以降级模式启动（BM25）"
+        )
+        logger.warning(retriever.last_warning)
+    except Exception:  # noqa: BLE001
+        logger.exception("向量索引预热失败，已降级为 BM25")
+    else:
+        if retriever.last_warning:
+            logger.warning(retriever.last_warning)
+        else:
+            logger.info("向量检索就绪：%s", retriever.retrieval_mode)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # type: ignore[no-untyped-def]
+    if settings.cors_origin.strip() == "*":
+        raise RuntimeError(
+            "CORS_ORIGIN=* 不安全：请配置明确的来源，或保持默认 localhost。"
+        )
+    if "*" in settings.allowed_host_list:
+        raise RuntimeError(
+            "CONTRACTGUARD_ALLOWED_HOSTS 不能使用通配符；请列出明确的 Host。"
+        )
+    if settings.require_auth and not settings.api_token:
+        raise RuntimeError(
+            "CONTRACTGUARD_REQUIRE_AUTH=1 但未设置 CONTRACTGUARD_API_TOKEN。"
+        )
+    if settings.has_non_local_hosts and not settings.api_token:
+        raise RuntimeError(
+            "CONTRACTGUARD_ALLOWED_HOSTS 含非本机地址时必须设置 "
+            "CONTRACTGUARD_API_TOKEN（避免内网无鉴权暴露）。"
+        )
     ensure_dirs()
     store.recover_incomplete()
     kb = load_kb()
@@ -111,12 +150,11 @@ async def lifespan(app: FastAPI):  # type: ignore[no-untyped-def]
         "live" if settings.embedding_live else "未配置/BM25",
     )
     retriever = get_retriever()
+    warmup_task: asyncio.Task | None = None
     if settings.embedding_live:
-        await retriever.warmup()
-        if retriever.last_warning:
-            logger.warning(retriever.last_warning)
-        else:
-            logger.info("向量检索就绪：%s", retriever.retrieval_mode)
+        warmup_task = asyncio.create_task(
+            _warmup_embeddings(retriever), name="contractguard-embedding-warmup"
+        )
 
     worker: WorkerPool | None = None
     janitor: asyncio.Task | None = None
@@ -164,6 +202,9 @@ async def lifespan(app: FastAPI):  # type: ignore[no-untyped-def]
                 await worker.start()
             yield
     finally:
+        if warmup_task is not None:
+            warmup_task.cancel()
+            await asyncio.gather(warmup_task, return_exceptions=True)
         if worker is not None:
             await worker.stop()
         if janitor is not None:
@@ -211,6 +252,15 @@ async def request_context(request: Request, call_next):  # type: ignore[no-untyp
             )
 
 
+# 必须在路由解析 multipart 之前限制请求体；放在 token guard 之内，
+# 这样未带 Token 的超大请求会先得到 401，而不是先落盘。
+app.add_middleware(
+    BodyLimitMiddleware,
+    max_multipart_bytes=settings.max_upload_mb * 1024 * 1024 + 2 * 1024 * 1024,
+    max_json_bytes=settings.max_json_body_mb * 1024 * 1024,
+)
+
+
 @app.middleware("http")
 async def api_token_guard(request: Request, call_next):  # type: ignore[no-untyped-def]
     token = settings.api_token
@@ -220,7 +270,9 @@ async def api_token_guard(request: Request, call_next):  # type: ignore[no-untyp
         authorization = request.headers.get("Authorization", "")
         if authorization.lower().startswith("bearer "):
             supplied = authorization[7:].strip()
-        if not supplied or not secrets.compare_digest(supplied, token):
+        if not supplied or not secrets.compare_digest(
+            supplied.encode("utf-8"), token.encode("utf-8")
+        ):
             return JSONResponse(
                 status_code=401,
                 content={"detail": "需要有效的 API Token。"},
@@ -229,22 +281,31 @@ async def api_token_guard(request: Request, call_next):  # type: ignore[no-untyp
     return await call_next(request)
 
 
+cors_origins: set[str] = set()
+if settings.cors_origin and settings.cors_origin != "*":
+    cors_origins.add(settings.cors_origin)
+if not settings.api_token:
+    cors_origins.update(
+        {"http://localhost:5173", "http://127.0.0.1:5173"}
+    )
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=list(
-        {
-            settings.cors_origin,
-            "http://localhost:5173",
-            "http://127.0.0.1:5173",
-        }
-    ),
-    allow_credentials=True,
+    allow_origins=list(cors_origins),
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # 合同全文进入 ReviewResult 后，轮询响应可能达到数十 KB，压缩后再返回。
 app.add_middleware(GZipMiddleware, minimum_size=1024)
+
+# 只接受明确配置的 Host，降低 DNS rebinding 读取本机 API 的风险。
+app.add_middleware(
+    TrustedHostMiddleware,
+    allowed_hosts=settings.allowed_host_list,
+    www_redirect=False,
+)
 
 app.include_router(router)
 
