@@ -21,10 +21,13 @@ rules:
   require_rule_findings_confirmed: true
 
 full:
-  note: "Live qwen-plus 结果；保存的快照用于披露回归，不代表每次重跑都会得到相同标题。"
+  note: "Live qwen-plus 2026-11-02 fresh confirmation 结果（full_confirm，P 64.9% / R 98.0% / F1 78.1%，27 FP）；保存的快照用于披露回归，不代表每次重跑都会得到相同标题。"
   known_false_positive_titles:
-    - "保密义务缺失"
     - "买方解除权缺失"
     - "质保期起算点不明确"
     - "合同生效条件表述不严谨"
     - "逾期违约金过低"
+    - "验收条款缺失不合格处理机制"
+    - "知识产权归属缺失"
+    - "交付期限约定模糊"
+    - "保密义务虽双向但范围与期限不明"
