@@ -2,102 +2,105 @@
   "source": "results_full.json",
   "mode": "full",
   "model": "qwen-plus",
-  "generated_at": "2026-11-02T00:42:35+08:00",
+  "generated_at": "2026-11-02T07:35:45+08:00",
   "samples": 8,
-  "calls": 51,
-  "failed_calls": 3,
+  "calls": 48,
+  "failed_calls": 2,
   "rate_limited_calls": 0,
-  "input_tokens": 117380,
-  "output_tokens": 40156,
+  "input_tokens": 110971,
+  "output_tokens": 37532,
   "input_price_per_1k": 0.0008,
   "output_price_per_1k": 0.002,
   "currency": "CNY",
-  "cost_estimate": 0.1742,
+  "cost_estimate": 0.1638,
   "latency_s": {
-    "mean": 83.71,
-    "p50": 84.89,
-    "p95": 94.74,
-    "min": 70.76,
-    "max": 96.9
+    "mean": 77.36,
+    "p50": 77.34,
+    "p95": 92.6,
+    "min": 61.83,
+    "max": 94.92
   },
   "model_counts": {
-    "qwen-plus": 51
+    "qwen-plus": 48
   },
   "failed_by_model": {
-    "qwen-plus": 3
+    "qwen-plus": 2
+  },
+  "failure_reasons": {
+    "validation": 2
   },
   "per_contract": [
     {
       "sample_id": "sample_01",
-      "duration_s": 85.79,
+      "duration_s": 78.14,
       "llm_calls": 6,
-      "input_tokens": 13632,
-      "output_tokens": 4992,
+      "input_tokens": 13604,
+      "output_tokens": 4656,
       "failed_calls": 0,
-      "cost_estimate": 0.0209
+      "cost_estimate": 0.0202
     },
     {
       "sample_id": "sample_02",
-      "duration_s": 70.76,
-      "llm_calls": 6,
-      "input_tokens": 13272,
-      "output_tokens": 4511,
+      "duration_s": 61.83,
+      "llm_calls": 5,
+      "input_tokens": 12338,
+      "output_tokens": 4029,
       "failed_calls": 0,
-      "cost_estimate": 0.0196
+      "cost_estimate": 0.0179
     },
     {
       "sample_id": "sample_03",
-      "duration_s": 80.41,
+      "duration_s": 76.55,
       "llm_calls": 6,
-      "input_tokens": 13593,
-      "output_tokens": 4837,
+      "input_tokens": 13481,
+      "output_tokens": 4679,
+      "failed_calls": 0,
+      "cost_estimate": 0.0201
+    },
+    {
+      "sample_id": "sample_04",
+      "duration_s": 94.92,
+      "llm_calls": 7,
+      "input_tokens": 16575,
+      "output_tokens": 5550,
+      "failed_calls": 1,
+      "cost_estimate": 0.0244
+    },
+    {
+      "sample_id": "sample_05",
+      "duration_s": 82.21,
+      "llm_calls": 6,
+      "input_tokens": 13423,
+      "output_tokens": 4881,
       "failed_calls": 0,
       "cost_estimate": 0.0205
     },
     {
-      "sample_id": "sample_04",
-      "duration_s": 96.9,
-      "llm_calls": 7,
-      "input_tokens": 16810,
-      "output_tokens": 5652,
-      "failed_calls": 1,
-      "cost_estimate": 0.0248
-    },
-    {
-      "sample_id": "sample_05",
-      "duration_s": 85.22,
-      "llm_calls": 6,
-      "input_tokens": 13519,
-      "output_tokens": 4991,
-      "failed_calls": 0,
-      "cost_estimate": 0.0208
-    },
-    {
       "sample_id": "sample_06",
-      "duration_s": 90.72,
+      "duration_s": 88.3,
       "llm_calls": 7,
-      "input_tokens": 16398,
-      "output_tokens": 5391,
+      "input_tokens": 16053,
+      "output_tokens": 5150,
       "failed_calls": 1,
-      "cost_estimate": 0.0239
+      "cost_estimate": 0.0231
     },
     {
       "sample_id": "sample_07",
-      "duration_s": 84.56,
-      "llm_calls": 7,
-      "input_tokens": 16770,
-      "output_tokens": 5099,
-      "failed_calls": 1,
-      "cost_estimate": 0.0236
+      "duration_s": 70.23,
+      "llm_calls": 6,
+      "input_tokens": 13211,
+      "output_tokens": 4361,
+      "failed_calls": 0,
+      "cost_estimate": 0.0193
     },
     {
       "sample_id": "sample_08",
-      "duration_s": 75.3,
-      "llm_calls": 6,
-      "input_tokens": 13386,
-      "output_tokens": 4683,
+      "duration_s": 66.66,
+      "llm_calls": 5,
+      "input_tokens": 12286,
+      "output_tokens": 4226,
       "failed_calls": 0,
-      "cost_estimate": 0.0201
+      "cost_estimate": 0.0183
     }
   ]
 }

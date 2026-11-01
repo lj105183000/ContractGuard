@@ -77,12 +77,24 @@ def summarize(
     ]
     model_counts: dict[str, int] = {}
     failed_by_model: dict[str, int] = {}
+    failure_reasons: dict[str, int] = {}
     for trace in traces:
         model = trace.get("model") or "unknown"
         model_counts[model] = model_counts.get(model, 0) + 1
     for trace in failed:
         model = trace.get("model") or "unknown"
         failed_by_model[model] = failed_by_model.get(model, 0) + 1
+        error = str(trace.get("error") or "")
+        lowered = error.lower()
+        if "429" in error:
+            reason = "429"
+        elif "validation" in lowered or "pydantic" in lowered:
+            reason = "validation"
+        elif "timeout" in lowered or "timed out" in lowered:
+            reason = "timeout"
+        else:
+            reason = "other"
+        failure_reasons[reason] = failure_reasons.get(reason, 0) + 1
 
     total_cost = estimate_cost(
         input_tokens, output_tokens, input_price_per_1k, output_price_per_1k
@@ -111,6 +123,7 @@ def summarize(
         },
         "model_counts": dict(sorted(model_counts.items())),
         "failed_by_model": dict(sorted(failed_by_model.items())),
+        "failure_reasons": dict(sorted(failure_reasons.items())),
         "per_contract": per_contract,
     }
 
@@ -157,7 +170,7 @@ def write_report(summary: dict, path: Path = REPORT_PATH) -> None:
             "",
             f"- 调用模型分布：{summary['model_counts']}",
             f"- 失败分布：{summary['failed_by_model']}",
-            "- 失败调用多来自 qwen-turbo 的 429/请求限流，随后回退到 qwen-plus；"
+            f"- 失败原因：{summary['failure_reasons']}",
             "失败调用不计 token，但会增加延迟和不确定性。",
             "",
         ]

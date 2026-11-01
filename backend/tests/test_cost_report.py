@@ -52,3 +52,4 @@ def test_summarize_usage_latency_and_failures():
     assert summary["latency_s"]["mean"] == 15.0
     assert summary["latency_s"]["p50"] == 15.0
     assert summary["model_counts"] == {"qwen-plus": 2, "qwen-turbo": 1}
+    assert summary["failure_reasons"] == {"429": 1}
