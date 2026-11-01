@@ -77,3 +77,67 @@ jobs:
         run: npm run test:diff
       - name: Error guidance checks
         run: node scripts/check_error_guidance.mjs
+
+  docker:
+    name: Docker build and HTTP smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t contractguard:ci .
+      - name: Start container
+        run: >-
+          docker run -d --name contractguard-ci --publish 8010:8000
+          -e LLM_MODE=mock -e HITL_ENABLED=1 -e WORKER_ENABLED=1
+          contractguard:ci
+      - name: HTTP smoke (upload, review, HITL, report)
+        run: >-
+          docker exec contractguard-ci
+          /app/backend/.venv/bin/python /app/backend/scripts/smoke_http.py
+          --base-url http://127.0.0.1:8000
+      - name: Container logs on failure
+        if: failure()
+        run: docker logs contractguard-ci
+      - name: Remove container
+        if: always()
+        run: docker rm -f contractguard-ci
+
+  desktop:
+    name: Windows desktop package smoke
+    runs-on: windows-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+      - name: Install backend dependencies
+        working-directory: backend
+        run: uv sync --frozen
+      - name: Install desktop dependencies
+        run: npm ci
+      - name: Build unpacked desktop app
+        run: npm run pack:dir
+      - name: Smoke packaged app
+        shell: pwsh
+        run: |
+          $env:CONTRACTGUARD_SMOKE_EXE = "release/win-unpacked/ContractGuard.exe"
+          node scripts/smoke.mjs
+      - name: Upload smoke screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-smoke
+          path: desktop/.smoke/**/*.png

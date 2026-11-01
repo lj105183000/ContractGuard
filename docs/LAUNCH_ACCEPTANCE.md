@@ -99,6 +99,6 @@ CONTRACTGUARD_SMOKE_EXE=release/win-unpacked/ContractGuard.exe node scripts/smok
 - 公网/多用户：无 RBAC/对象级授权、TLS、共享限流、租户隔离；当前只有单租户共享 Token。
 - 真实合同数据：默认明文存储；上传源文件、桌面历史、feedback/trace 未默认加密；无主动删除 API。
 - 桌面端：未签名、无自动更新；随机端口 + localStorage 导致 Token/偏好跨启动丢失；本地后端信任仅校验 `status:ok`。
-- CI：后端 eval 阈值已加；仍无 Windows 桌面打包 smoke、Docker 构建、前端 E2E、覆盖率/依赖扫描阈值。
+- CI：后端 eval 阈值、Docker 构建 + HTTP smoke、Windows 桌面打包 smoke 已加入 workflow（首次 GitHub 运行待确认）；仍无前端 E2E、覆盖率/依赖扫描阈值。
 - 评测：框架已补（口径/IAA/质量评分/消融/阈值），但仍只有 8 份合成合同、作者单标注、无真实双人 IAA 和人工质量评分；full 模式 P 56.8%、模型建议层 P 5.6%，精度不足以支撑自动审查。
 - 多进程并发/性能/soak/故障注入未做真实双进程 CI。

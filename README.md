@@ -518,7 +518,7 @@ contractguard/
 │  ├─ CODE_GUIDE.md                 # 初学者代码导读
 │  ├─ REAL_CONTRACT_EVAL.md         # 真实合同作者标注外部效度
 │  └─ images/                       # 截图
-├─ .github/workflows/ci.yml         # 后端测试 + live-offline + KB + rules/retrieval/cost/perturbation + 前端构建
+├─ .github/workflows/ci.yml         # 后端测试 + 评测门禁 + 前端构建 + Docker/HTTP smoke + Windows 桌面打包 smoke
 ├─ scripts/                         # Windows 启动脚本
 ├─ Dockerfile                       # 多阶段：前端构建 + 后端运行时
 ├─ docker-compose.yml               # mock 单端口 demo（127.0.0.1:8000）
