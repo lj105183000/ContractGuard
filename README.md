@@ -356,43 +356,43 @@ uv run python eval/run_eval.py --mode rules
 
 结果在 `backend/eval/results_rules.json` 与 `backend/eval/report_rules.md`。
 
-全量 LLM 结果（live，2026-11-02 实际运行：`deepseek-first` 回退链，实际调用 qwen-plus）：
+全量 LLM 结果（live，2026-11-02 fresh confirmation：`deepseek-first` 回退链，实际调用 qwen-plus）：
 
 | 指标 | 值 |
 |---|---|
-| Precision | **56.8%** |
+| Precision | **64.9%** |
 | Recall | **98.0%** |
-| F1 | **71.9%** |
-| TP / FP / FN | 50 / 38 / 1 |
-| 95% CI（按合同 bootstrap） | P 43.9–66.7%；R 93.6–100.0%；F1 60.5–80.0% |
-| 高风险 FP | 16 |
-| 证据定位率（83 条） | 100.0% |
-| 法条 ID 可解析率（190 个引用） | 100.0% |
-| 平均耗时 | 83.7s / 份 |
+| F1 | **78.1%** |
+| TP / FP / FN | 50 / 27 / 1 |
+| 95% CI（按合同 bootstrap） | P 51.4–75.0%；R 93.6–100.0%；F1 67.3–85.7% |
+| 高风险 FP | 9 |
+| 证据定位率（71 条） | 100.0% |
+| 法条 ID 可解析率（181 个引用） | 100.0% |
+| 平均耗时 | 77.4s / 份 |
 
-质量代理：已核实层 P 96.0%，模型建议层 P 5.6%；高风险 FP 16；模型来源无定位证据 0 条；无法条引用 2 / 88（2.3%）。法条相关性、建议可用性和人工幻觉率需要 `eval/run_quality_eval.py` 的独立评分，当前**尚未评分**。
+质量代理：已核实层 P **100%**，模型建议层 P 7.1%；高风险 FP 9；模型来源无定位证据 6 / 77（7.8%），其中 5 条是合同级规则+模型合并项（按设计无需条款证据），纯模型无证据 1 条（1.3%）；无法条引用 1 / 77（1.3%）。法条相关性、建议可用性和人工幻觉率需要 `eval/run_quality_eval.py` 的独立评分，当前**尚未评分**。
 
-38 个误报的归因：
+27 个误报的归因：
 
-- 按来源：36 个 `llm`、2 个 `rule+llm`，**没有纯规则误报**；
-- 按等级：高 16 / 中 17 / 低 5；
-- 按类别：合规 9、解除 5、质保 5、其他 5、争议 5、验收 3、违约 2、知识产权 2、交付 1、付款 1；
-- 按 Agent：合规 22、商务 9、违约解除 7；
-- 29 / 38 带 `rule_hint`，但这只是模型自报提示，**不等于规则引擎实际命中**；这也是置信分层只信规则实际命中的原因。
+- 按来源：27 个 `llm`，**没有纯规则或 rule+llm 误报**；
+- 按等级：高 9 / 中 12 / 低 6；
+- 按类别：合规 4、解除 4、质保 5、其他 5、验收 3、知识产权 2、违约 2、交付 1、付款 1；
+- 按 Agent：合规 12、商务 9、违约解除 6；
+- 22 / 27 带 `rule_hint`，但这只是模型自报提示，**不等于规则引擎实际命中**；这也是置信分层只信规则实际命中的原因。
 
 按置信分层：
 
 | 分层 | TP | FP | Precision |
 |---|---|---|---|
-| 已核实（规则命中/规则+模型合并） | 48 | 2 | **96.0%** |
-| 模型建议（有证据+法条，无规则佐证） | 2 | 34 | 5.6% |
-| 待核实 | 0 | 2 | 0.0% |
+| 已核实（规则命中/规则+模型合并） | 48 | 0 | **100%** |
+| 模型建议（有证据+法条，无规则佐证） | 2 | 26 | 7.1% |
+| 待核实 | 0 | 1 | 0.0% |
 
-> 这不是「真实泛化能力」：8 份合同、51 个标注点，其中 48 个是规则可检出点，规则基线接近满分是构造使然。full 模式相比 rules 只多命中 2 个语义点，却多出 38 个误报；二次去重把误报从上一版的 64 降到 38，但真正的质量差距仍在语义层：已核实层 P 96.0%，模型建议层只有 5.6%。因此系统把模型单独提出的高风险标为「模型建议」，不混进「已核实」层，也没有把它们从评测总数里删掉来美化 Precision。
+> 这不是「真实泛化能力」：8 份合同、51 个标注点，其中 48 个是规则可检出点，规则基线接近满分是构造使然。full 模式相比 rules 只多命中 2 个语义点，却多出 27 个误报；本轮通过确定性事实覆盖、合同级缺失去重和矛盾建议过滤，把误报从 38 降到 27，已核实层 P 提升到 100%，但模型建议层仍只有 7.1%。因此系统把模型单独提出的高风险标为「模型建议」，不混进「已核实」层，也没有把它们从评测总数里删掉来美化 Precision。
 >
 > 法条 ID 可解析率只衡量引用 ID 是否存在于知识库（分母包含被移除的无效 ID），不等于法条相关性准确率；证据定位率的分母只包含提供了原文引用的风险，也不衡量分析质量。
 >
-> 本次 live 运行改用 `deepseek-first` 回退链（实际调用 qwen-plus），避免默认 `balanced` 路由中 `dashscope-turbo` 的 429；51 次调用中 3 次失败、0 次 429，以上为实际落盘结果，未手工修改。默认 `balanced` 路由在本次复跑时仍出现 turbo 限流，部署时建议优先使用 qwen-plus 或配置独立配额。
+> 本次 confirmation run 使用 `deepseek-first` 回退链（实际调用 qwen-plus），48 次调用中 2 次失败、0 次 429，以上为实际落盘结果，未手工修改。默认 `balanced` 路由在此前复跑中仍出现 turbo 限流，部署时建议优先使用 qwen-plus 或配置独立配额。
 >
 > 95% CI 是按合同 bootstrap（2000 次、seed=42）的描述性区间；8 份合同样本很小，区间很宽，不能解释为统计显著性。
 
@@ -400,18 +400,18 @@ uv run python eval/run_eval.py --mode rules
 
 针对上述 38 个误报，追加了三项确定性修复：① 启发式明确看到保护性事实时覆盖 LLM 的否定误抽；② 把模型在任意条款上提出的“缺失类”建议并入同主题的合同级规则锚点，同时保留合同级作用域；③ 过滤与合同明确事实矛盾的 LLM-only 建议。
 
-用 07:16 的 live 落盘结果做离线回放后：
+先用 07:16 的 live 落盘结果做离线回放，再跑 fresh live 确认：
 
-| 指标 | 修复前基线 | 修复后回放 |
-|---|---:|---:|
-| TP / FP / FN | 50 / 38 / 1 | **50 / 29 / 1** |
-| Precision | 56.8% | **63.3%** |
-| Recall | 98.0% | **98.0%** |
-| F1 | 71.9% | **76.9%** |
-| 已核实层 P | 96.0% | **100%** |
-| 高风险 FP | 16 | **12** |
+| 指标 | 修复前基线 | 离线回放 | fresh 确认（当前基线） |
+|---|---:|---:|---:|
+| TP / FP / FN | 50 / 38 / 1 | 50 / 29 / 1 | **50 / 27 / 1** |
+| Precision | 56.8% | 63.3% | **64.9%** |
+| Recall | 98.0% | 98.0% | **98.0%** |
+| F1 | 71.9% | 76.9% | **78.1%** |
+| 已核实层 P | 96.0% | 100% | **100%** |
+| 高风险 FP | 16 | 12 | **9** |
 
-> 这是对同一次 live 结果的离线回放，不是新的 live 运行；默认 `results_full.json` 仍保留修复前基线。修复细节、恢复的 5 个合同级标签和剩余 29 个 advisory 误报见 [`backend/eval/report_precision_diag.md`](backend/eval/report_precision_diag.md)。确认后应再跑一次 `--output-suffix full_confirm`，再替换正式基线并重跑 no-RAG 消融。
+> 07:16 诊断运行暴露了合同级合并作用域回归；修复后离线回放为 50/29/1，随后 07:35 的 fresh live 确认通过，并已替换 `results_full.json` / `report_full.md`。当前正式基线为 50/27/1。修复细节、恢复的 5 个合同级标签和剩余 27 个 advisory 误报见 [`backend/eval/report_precision_diag.md`](backend/eval/report_precision_diag.md)。
 
 ### 检索评测
 
@@ -466,10 +466,10 @@ uv run python eval/run_eval.py --mode rules
 
 | 指标 | 值 |
 |---|---|
-| LLM 调用 | 51 次（失败 3，其中 429 = 0） |
-| Token | 输入 117,380 / 输出 40,156 |
-| 延迟 | mean 83.7s；p50 84.9s；p95 94.7s；max 96.9s |
-| 估算费用 | ¥0.1742（8 份，约 ¥0.022/份） |
+| LLM 调用 | 48 次（失败 2，其中 429 = 0；失败原因为 2 次 Pydantic 校验失败） |
+| Token | 输入 110,971 / 输出 37,532 |
+| 延迟 | mean 77.36s；p50 77.34s；p95 92.6s；max 94.92s |
+| 估算费用 | ¥0.1638（8 份，约 ¥0.0205/份） |
 
 费用按**假设单价** ¥0.0008/1K input、¥0.002/1K output 计算，不是百炼账单，不含 embedding/rerank/重试；正式引用前用 `eval/run_cost_report.py --input-price-per-1k ... --output-price-per-1k ...` 按当期价格重算。报告：[`backend/eval/report_cost.md`](backend/eval/report_cost.md)。
 
@@ -480,9 +480,9 @@ uv run python eval/run_eval.py --mode rules
 - **可报告 IAA**：`eval/run_iaa.py` 支持 `--universe` 固定候选集；不传时只给出 union-scope 乐观 kappa，不能写进正式报告。κ 不是召回率，共同漏标需单独裁决/报告。
 - **人工质量评分**：`eval/run_quality_eval.py` 汇总法条相关性、证据支持、建议可用性和人工幻觉率；这些数据必须由法务/采购评审产生。
 - **消融**：`eval/run_ablation.py` 汇总 rules-only、full、no-RAG 和检索配置对比；`run_eval.py --disable-rag --output-suffix full_no_rag` 用于隔离 RAG 贡献。HITL 只影响复核/导出流程，不作为 P/R 消融项。本次实测（8 份合成合同）：
-  - full vs rules：P 56.8% vs 100%，R 98.0% vs 94.1%，F1 71.9% vs 97.0%，高风险 FP 16 vs 0；LLM 主要提升语义召回，但引入大量误报。精度修复后的回放为 P 63.3% / F1 76.9%，但 no-RAG 尚未重跑，暂不并入本消融对比。
-  - no-RAG vs full：P 56.2% vs 56.8%，F1 71.4% vs 71.9%，高风险 FP 18 vs 16，无法条引用率 43.8% vs 2.3%；RAG 在这批合成数据上主要改善引用/置信与少量精度，没有提升 recall。
-  - no-RAG 成本 53 次调用 / 失败 5 / ¥0.1497 / p95 103.9s；full 51 次 / 失败 3 / ¥0.1742 / p95 94.7s。
+  - full vs rules：P 64.9% vs 100%，R 98.0% vs 94.1%，F1 78.1% vs 97.0%，高风险 FP 9 vs 0；LLM 主要提升语义召回，但仍引入 27 个 advisory 误报。
+  - no-RAG vs full：P 59.5% vs 64.9%，F1 74.1% vs 78.1%，高风险 FP 12 vs 9，无法条引用率 42.9% vs 1.3%；RAG 在这批合成数据上提升精度与引用质量，不改变 recall。
+  - no-RAG 成本 51 次调用 / 失败 4 / ¥0.1402 / p95 137.7s；full 48 次 / 失败 2 / ¥0.1638 / p95 92.6s。
   - 报告：[`backend/eval/report_ablation.md`](backend/eval/report_ablation.md)。
 - **真实数据仍未接入**：当前只有 3 份真实合同、1 份 in-scope、单人标注、无 IAA；20–30 份双人盲标 + holdout 完成前，不能声称真实泛化或法务准确率。完整流程见 [`docs/ANNOTATION_GUIDE.md`](docs/ANNOTATION_GUIDE.md)。
 
@@ -644,6 +644,6 @@ MIT 许可证，详见 [`LICENSE`](LICENSE)。真实合同 PDF、第三方法律
 
 ## English Abstract
 
-**ContractGuard** is a 3-day MVP for Chinese goods-procurement contract review. It combines a deterministic 25-rule playbook with three parallel LangGraph LLM agents, hybrid RAG over 32 statutory articles and enterprise rules, citation/evidence gates, deterministic confidence tiers, human review, and DOCX/Markdown/JSON report export. Scanned PDFs and JPG/PNG images are parsed with local RapidOCR (offline, max 50 pages per scan) and flagged for manual verification. Chat calls are routed across OpenAI-compatible provider profiles (Qwen/DeepSeek/Moonshot/OpenAI/local) with per-task model preferences and ordered fallback chains. On a small synthetic benchmark of 8 contracts and 51 labeled risks, the rules-only baseline reaches 100% precision and 94.1% recall; a live full-pipeline run (qwen-plus, 2026-11-02, deepseek-first fallback route) reached 98.0% recall and 56.8% precision with 38 false positives; the confirmed tier reaches 96.0% precision while the advisory tier reaches 5.6%, which is disclosed in full and drives the confirmed/advisory/needs-review split. A post-diagnostic offline replay after deterministic fact-precedence and contract-level merge fixes reaches 63.3% precision, 98.0% recall and 76.9% F1 with 29 false positives and 100% confirmed-tier precision, pending a fresh live confirmation run. The product also includes contract full-text navigation, in-app report preview, and status/search/sort filters. Job snapshots are persisted in SQLite behind a lease-based worker: completed jobs survive restarts, expired `resuming` work is retried up to three times, and `running` work is failed rather than replayed. Human-in-the-loop review is implemented with LangGraph `interrupt` and an `AsyncSqliteSaver` checkpoint so paused reviews survive restarts; optional AES-GCM encryption covers job state and checkpoints. The web UI supports up to three-file batch review with batch decisions and batch reports. Accepted findings can be turned into a revised contract draft (DOCX plus a change list): template suggestions are annotated inline, while complete clauses returned by a live model may replace the original clause. An optional DashScope reranker falls back to RRF when unavailable. Evaluation reports include contract-bootstrap 95% CIs, nDCG retrieval metrics with query-bootstrap CIs, known-badcase regression, deterministic perturbation stability checks, and a token/latency/cost summary with explicit price assumptions. The project deliberately trades breadth for a complete, explainable, testable loop.
+**ContractGuard** is a 3-day MVP for Chinese goods-procurement contract review. It combines a deterministic 25-rule playbook with three parallel LangGraph LLM agents, hybrid RAG over 32 statutory articles and enterprise rules, citation/evidence gates, deterministic confidence tiers, human review, and DOCX/Markdown/JSON report export. Scanned PDFs and JPG/PNG images are parsed with local RapidOCR (offline, max 50 pages per scan) and flagged for manual verification. Chat calls are routed across OpenAI-compatible provider profiles (Qwen/DeepSeek/Moonshot/OpenAI/local) with per-task model preferences and ordered fallback chains. On a small synthetic benchmark of 8 contracts and 51 labeled risks, the rules-only baseline reaches 100% precision and 94.1% recall; a fresh live full-pipeline run (qwen-plus, 2026-11-02, deepseek-first fallback route) reached 98.0% recall and 64.9% precision (F1 78.1%) with 27 false positives; the confirmed tier reaches 100% precision while the advisory tier reaches 7.1%, which is disclosed in full and drives the confirmed/advisory/needs-review split. These figures follow deterministic fact-precedence, contract-level merge and contradiction-filter fixes validated by a fresh live run. The product also includes contract full-text navigation, in-app report preview, and status/search/sort filters. Job snapshots are persisted in SQLite behind a lease-based worker: completed jobs survive restarts, expired `resuming` work is retried up to three times, and `running` work is failed rather than replayed. Human-in-the-loop review is implemented with LangGraph `interrupt` and an `AsyncSqliteSaver` checkpoint so paused reviews survive restarts; optional AES-GCM encryption covers job state and checkpoints. The web UI supports up to three-file batch review with batch decisions and batch reports. Accepted findings can be turned into a revised contract draft (DOCX plus a change list): template suggestions are annotated inline, while complete clauses returned by a live model may replace the original clause. An optional DashScope reranker falls back to RRF when unavailable. Evaluation reports include contract-bootstrap 95% CIs, nDCG retrieval metrics with query-bootstrap CIs, known-badcase regression, deterministic perturbation stability checks, and a token/latency/cost summary with explicit price assumptions. The project deliberately trades breadth for a complete, explainable, testable loop.
 
 > Built from scratch; no code was copied from reference projects.

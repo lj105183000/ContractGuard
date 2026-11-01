@@ -43,7 +43,7 @@ uv run python eval/run_perturbation_eval.py
 - **人工质量**：新增 `run_quality_eval.py`，汇总法条相关性、证据支持、建议可用性、人工幻觉率；示例和测试已加。
 - **消融**：新增 `run_ablation.py`；`run_eval.py --disable-rag --output-suffix full_no_rag` 可隔离 RAG 贡献；HITL 明确不作为 P/R 消融项。
 - **鲁棒性**：新增提示注入和双 worker 并发测试；长文件/畸形文件/OCR/429 仍有回归测试或手工 smoke。
-- **消融实测**：rules-only P 100% / R 94.1% / F1 97.0%（高风险 FP 0）；full P 56.8% / R 98.0% / F1 71.9%（高风险 FP 16）；no-RAG P 56.2% / R 98.0% / F1 71.4%（高风险 FP 18，无法条引用率 43.8%）。RAG 在这批合成集上主要改善引用/置信与少量精度，没有提升 recall。报告见 `backend/eval/report_ablation.md`。
+- **消融实测（fresh 确认后）**：rules-only P 100% / R 94.1% / F1 97.0%（高风险 FP 0）；full P 64.9% / R 98.0% / F1 78.1%（高风险 FP 9）；no-RAG P 59.5% / R 98.0% / F1 74.1%（高风险 FP 12，无法条引用率 42.9% vs full 1.3%）。RAG 在这批合成集上提升精度与引用质量，不改变 recall。报告见 `backend/eval/report_ablation.md`。
 - **尚未完成**：仍没有 20–30 份真实合同、第二位独立标注者或人工质量评分数据，因此不能声称真实泛化/法务准确率/IAA。完整流程见 [`docs/ANNOTATION_GUIDE.md`](ANNOTATION_GUIDE.md)。
 
 ### 前端
@@ -89,11 +89,13 @@ CONTRACTGUARD_SMOKE_EXE=release/win-unpacked/ContractGuard.exe node scripts/smok
 ## Live 评测
 
 - 默认 `balanced` 路由复跑时 `dashscope-turbo` 持续返回 429，采样受阻；已停止该次尝试。
-- 改用 `deepseek-first` 回退链（实际调用 qwen-plus）完成 8 份全量复跑（已修正 `rule_hint` 匹配口径）：TP/FP/FN = 50/38/1，P 56.8% / R 98.0% / F1 71.9%；证据定位率 100%（83 条），法条 ID 可解析率 100%（190 个引用）；平均 83.7s/份。
-- 质量代理：已核实层 P 96.0%，模型建议层 P 5.6%，高风险 FP 16，模型来源无定位证据 0，无法条引用 2/88；法条相关性/建议可用性/人工幻觉率尚未评分。
-- 成本：51 次 LLM 调用（失败 3，429=0），输入 117,380 / 输出 40,156 tokens，按脚本假设单价估算 ¥0.1742（8 份）。
+- 初始基线（修复前，已被下文 fresh 确认替换）：改用 `deepseek-first` 回退链（实际调用 qwen-plus）完成 8 份全量复跑（已修正 `rule_hint` 匹配口径）：TP/FP/FN = 50/38/1，P 56.8% / R 98.0% / F1 71.9%；证据定位率 100%（83 条），法条 ID 可解析率 100%（190 个引用）；平均 83.7s/份。
+- 初始质量代理：已核实层 P 96.0%，模型建议层 P 5.6%，高风险 FP 16，模型来源无定位证据 0，无法条引用 2/88；法条相关性/建议可用性/人工幻觉率尚未评分。
+- 初始成本：51 次 LLM 调用（失败 3，429=0），输入 117,380 / 输出 40,156 tokens，按脚本假设单价估算 ¥0.1742（8 份）。
 - 结果已落盘到 `backend/eval/results_full.json`、`report_full.md`、`results_cost.json`、`report_cost.md`。
-- 精度诊断（2026-11-02 07:16，deepseek-first/qwen-plus）：原始结果 TP/FP/FN = 45/34/6；定位并修复确定性事实覆盖、合同级缺失去重与矛盾建议过滤后，对同一次落盘结果离线回放为 **50/29/1，P 63.3% / R 98.0% / F1 76.9%**，已核实层 P 100%，高风险 FP 12。详见 `backend/eval/report_precision_diag.md`；默认 `results_full.json` 仍保留修复前基线，需 fresh live 确认后再替换。
+- 精度诊断（2026-11-02 07:16，deepseek-first/qwen-plus）：原始结果 TP/FP/FN = 45/34/6；定位并修复确定性事实覆盖、合同级缺失去重与矛盾建议过滤后，对同一次落盘结果离线回放为 50/29/1，P 63.3% / R 98.0% / F1 76.9%，已核实层 P 100%，高风险 FP 12。详见 `backend/eval/report_precision_diag.md`。
+- fresh 确认（2026-11-02 07:35，同一路由）：TP/FP/FN = **50/27/1，P 64.9% / R 98.0% / F1 78.1%**；已核实层 P 100%，模型建议层 P 7.1%，高风险 FP 9、高风险 FN 0；48 次 LLM 调用、失败 2（均为 Pydantic 校验失败）、429 = 0；输入 110,971 / 输出 37,532 tokens，估算 ¥0.1638。已替换 `results_full.json` / `report_full.md`，修复前基线保留在 git 历史。
+- no-RAG 重跑（07:48）：TP/FP/FN = 50/34/1，P 59.5% / R 98.0% / F1 74.1%，高风险 FP 12，无法条引用率 42.9%；51 次调用、失败 4、估算 ¥0.1402。RAG 相对 no-RAG 为 P +5.4pp / F1 +4.0pp，recall 不变。
 
 ## 已知未完成（P1）
 
@@ -101,5 +103,5 @@ CONTRACTGUARD_SMOKE_EXE=release/win-unpacked/ContractGuard.exe node scripts/smok
 - 真实合同数据：默认明文存储；上传源文件、桌面历史、feedback/trace 未默认加密；无主动删除 API。
 - 桌面端：未签名、无自动更新；随机端口 + localStorage 导致 Token/偏好跨启动丢失；本地后端信任仅校验 `status:ok`。
 - CI：后端 eval 阈值、Docker 构建 + HTTP smoke、Windows 桌面打包 smoke 已加入 workflow（首次 GitHub 运行待确认）；仍无前端 E2E、覆盖率/依赖扫描阈值。
-- 评测：框架已补（口径/IAA/质量评分/消融/阈值），但仍只有 8 份合成合同、作者单标注、无真实双人 IAA 和人工质量评分；精度修复后回放 full P 63.3%、已核实层 P 100%、模型建议层 P 6.5%，仍不足以支撑自动审查，且需要 fresh live 确认。
+- 评测：框架已补（口径/IAA/质量评分/消融/阈值），但仍只有 8 份合成合同、作者单标注、无真实双人 IAA 和人工质量评分；fresh 确认 full P 64.9%、已核实层 P 100%、模型建议层 P 7.1%，仍不足以支撑自动审查。
 - 多进程并发/性能/soak/故障注入未做真实双进程 CI。

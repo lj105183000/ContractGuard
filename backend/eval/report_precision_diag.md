@@ -2,16 +2,17 @@
 
 - 数据：8 份合成采购合同、51 个标注点（48 个规则点 + 3 个语义点）
 - 目的：定位 full 模式 38 个误报，做确定性精度修复，并披露剩余短板
-- 结论：修复后回放 **TP/FP/FN = 50/29/1，P 63.3% / R 98.0% / F1 76.9%**；已核实层 P 100%，高风险 FP 12、高风险 FN 0
-- 注意：本页的“修复后”数字是对 2026-11-02 07:16 live 落盘结果的**离线回放**，不是一次新的 live 运行；仍需一次 fresh live 运行才能替换默认基线
+- 结论：修复后离线回放 **TP/FP/FN = 50/29/1，P 63.3% / R 98.0% / F1 76.9%**；随后 07:35 fresh live 确认 **50/27/1，P 64.9% / R 98.0% / F1 78.1%**，已核实层 P 100%，高风险 FP 9、高风险 FN 0
+- 状态：fresh 确认已通过并替换默认基线 `results_full.json` / `report_full.md`；本页保留离线回放，用于说明修复是如何被验证的
 
-## 基线、诊断运行与修复回放
+## 基线、诊断运行、回放与 fresh 确认
 
 | 版本 | TP | FP | FN | P | R | F1 | 已核实层 P | 高风险 FP |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 修复前基线（2026-11-02 00:42） | 50 | 38 | 1 | 56.8% | 98.0% | 71.9% | 96.0% | 16 |
 | live 诊断运行（07:16，未含最终 scope 修复） | 45 | 34 | 6 | 57.0% | 88.2% | 69.2% | 89.6% | 17 |
-| **修复后离线回放** | **50** | **29** | **1** | **63.3%** | **98.0%** | **76.9%** | **100%** | **12** |
+| 修复后离线回放 | 50 | 29 | 1 | 63.3% | 98.0% | 76.9% | 100% | 12 |
+| **fresh live 确认（07:35，当前基线）** | **50** | **27** | **1** | **64.9%** | **98.0%** | **78.1%** | **100%** | **9** |
 
 修复后 95% CI（按合同 bootstrap，2000 次，seed=42）：P 50.7–72.7%，R 93.6–100%，F1 66.1–84.2%。样本仅 8 份，区间很宽。
 
@@ -58,23 +59,23 @@
   - 1 个“买方解除权不足”与合同事实矛盾；
   - 其中 2 个原本是 confirmed 层规则误报（`sample_02` 的 DIS-001、`sample_08` 的 TER-001）。
 
-## 剩余 29 个误报
+## 剩余 27 个误报（fresh 确认）
 
 | 维度 | 分布 |
 |---|---|
-| 来源 | 全部为 `llm`（advisory 层） |
-| 等级 | high 12 / medium 12 / low 5 |
-| 类别 | warranty 6、compliance 5、termination 4、general 4、acceptance 3、ip 3、liability 2、delivery 1、payment 1 |
-| Agent | compliance 13、commercial 9、liability 7 |
-| 证据/法条 | 证据定位 29/29，有法条引用 29/29 |
+| 来源 | 全部为 `llm`（advisory / needs_review 层） |
+| 等级 | high 9 / medium 12 / low 6 |
+| 类别 | warranty 5、general 5、termination 4、compliance 4、acceptance 3、ip 2、liability 2、delivery 1、payment 1 |
+| Agent | compliance 12、commercial 9、liability 6 |
+| 证据/法条 | 证据定位 26/27，有法条引用 26/27 |
 
-这些主要是“质保期起算点”“合同生效签章细节”“验收不合格处理”“保密范围/期限”“知识产权归属”等**合同起草建议**；当前 51 个标签没有把它们计为正例，因此按本评测口径算误报。它们全部在 advisory 层，不阻断导出，也不会被当成已核实风险。
+这些主要是“质保期起算点”“合同生效签章细节”“验收不合格处理”“保密范围/期限”“知识产权归属”等**合同起草建议**；当前 51 个标签没有把它们计为正例，因此按本评测口径算误报。它们全部在 advisory / needs_review 层，不阻断导出，也不会被当成已核实风险。
 
 ## 局限与下一步
 
 - 8 份合成合同、51 个标签，标签集不是穷尽的；不能据此声称真实泛化或法务准确率。
-- 修复后数字是离线回放，不是 fresh live；建议在预算允许时跑一次 `--output-suffix full_confirm` 确认，再把 `results_full.json` 替换为修复后基线。
-- `results_full_no_rag.json` 与 `results_ablation.json` 仍是修复前代码的运行结果；在确认基线更新前，不应把新的 full 数字与旧 no-RAG 数字直接做消融对比。
+- 07:35 fresh live 已确认修复并替换基线；离线回放 29 FP 与 fresh 确认 27 FP 的差异属于 live 运行波动。
+- no-RAG 已用修复后代码重跑：P 59.5% / R 98.0% / F1 74.1%，34 FP，高风险 FP 12，无法条引用率 42.9%；full 相对 no-RAG 为 P +5.4pp / F1 +4.0pp，recall 不变。`results_ablation.json` / `report_ablation.md` 已更新。
 - 剩余 advisory 误报的进一步压缩需要更完整的标签集或人工质量评分，不能只靠继续加关键词过滤。
 
 ## 复现
@@ -82,7 +83,13 @@
 ```bash
 cd backend
 export LLM_MODE=live
+# 诊断运行（修复前）
 uv run python eval/run_eval.py --mode full --route deepseek-first --output-suffix full_diag
+# fresh 确认（已执行并替换基线）
+uv run python eval/run_eval.py --mode full --route deepseek-first --output-suffix full_confirm
+# no-RAG 消融
+uv run python eval/run_eval.py --mode full --route deepseek-first \
+  --disable-rag --output-suffix full_no_rag
 ```
 
-原始运行结果见 `results_full_diag.json` / `report_full_diag.md`；修复后回放见 `results_precision_diag.json`，其中 `corrections` 字段逐条列出被恢复的 5 个标签。
+原始诊断运行结果见 `results_full_diag.json` / `report_full_diag.md`；修复后回放见 `results_precision_diag.json`，其中 `corrections` 字段逐条列出被恢复的 5 个标签；fresh 确认产物已替换 `results_full.json` / `report_full.md`。
