@@ -15,7 +15,7 @@ export LLM_MODE=mock
 uv run pytest -q
 ```
 
-结果：`213 passed`（含新增的请求体/解析上限、Host/Token、默认 Worker+HITL E2E、任务超时、embedding 预热超时、评测口径/IAA/质量评分/消融/鲁棒性测试）。
+结果：`213 passed`（含新增的请求体/解析上限、Host/Token、默认 Worker+HITL E2E、任务超时、embedding 预热超时、评测口径/IAA/质量评分/消融/鲁棒性测试）。后续精度修复新增 8 个回归测试，当前为 `221 passed`。
 
 ```bash
 uv run python scripts/validate_kb.py
@@ -93,6 +93,7 @@ CONTRACTGUARD_SMOKE_EXE=release/win-unpacked/ContractGuard.exe node scripts/smok
 - 质量代理：已核实层 P 96.0%，模型建议层 P 5.6%，高风险 FP 16，模型来源无定位证据 0，无法条引用 2/88；法条相关性/建议可用性/人工幻觉率尚未评分。
 - 成本：51 次 LLM 调用（失败 3，429=0），输入 117,380 / 输出 40,156 tokens，按脚本假设单价估算 ¥0.1742（8 份）。
 - 结果已落盘到 `backend/eval/results_full.json`、`report_full.md`、`results_cost.json`、`report_cost.md`。
+- 精度诊断（2026-11-02 07:16，deepseek-first/qwen-plus）：原始结果 TP/FP/FN = 45/34/6；定位并修复确定性事实覆盖、合同级缺失去重与矛盾建议过滤后，对同一次落盘结果离线回放为 **50/29/1，P 63.3% / R 98.0% / F1 76.9%**，已核实层 P 100%，高风险 FP 12。详见 `backend/eval/report_precision_diag.md`；默认 `results_full.json` 仍保留修复前基线，需 fresh live 确认后再替换。
 
 ## 已知未完成（P1）
 
@@ -100,5 +101,5 @@ CONTRACTGUARD_SMOKE_EXE=release/win-unpacked/ContractGuard.exe node scripts/smok
 - 真实合同数据：默认明文存储；上传源文件、桌面历史、feedback/trace 未默认加密；无主动删除 API。
 - 桌面端：未签名、无自动更新；随机端口 + localStorage 导致 Token/偏好跨启动丢失；本地后端信任仅校验 `status:ok`。
 - CI：后端 eval 阈值、Docker 构建 + HTTP smoke、Windows 桌面打包 smoke 已加入 workflow（首次 GitHub 运行待确认）；仍无前端 E2E、覆盖率/依赖扫描阈值。
-- 评测：框架已补（口径/IAA/质量评分/消融/阈值），但仍只有 8 份合成合同、作者单标注、无真实双人 IAA 和人工质量评分；full 模式 P 56.8%、模型建议层 P 5.6%，精度不足以支撑自动审查。
+- 评测：框架已补（口径/IAA/质量评分/消融/阈值），但仍只有 8 份合成合同、作者单标注、无真实双人 IAA 和人工质量评分；精度修复后回放 full P 63.3%、已核实层 P 100%、模型建议层 P 6.5%，仍不足以支撑自动审查，且需要 fresh live 确认。
 - 多进程并发/性能/soak/故障注入未做真实双进程 CI。

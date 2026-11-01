@@ -61,7 +61,7 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 | 前端 | React 19 + Vite 7 + 手写 CSS |
 | 桌面端 | Electron 45 + electron-builder 26 + PyInstaller |
 | 部署 | Docker Compose（mock 单端口 demo） |
-| 测试 | pytest（213 个离线测试） |
+| 测试 | pytest（221 个离线测试） |
 
 ## 截图
 
@@ -396,6 +396,23 @@ uv run python eval/run_eval.py --mode rules
 >
 > 95% CI 是按合同 bootstrap（2000 次、seed=42）的描述性区间；8 份合同样本很小，区间很宽，不能解释为统计显著性。
 
+### 精度修复诊断（2026-11-02）
+
+针对上述 38 个误报，追加了三项确定性修复：① 启发式明确看到保护性事实时覆盖 LLM 的否定误抽；② 把模型在任意条款上提出的“缺失类”建议并入同主题的合同级规则锚点，同时保留合同级作用域；③ 过滤与合同明确事实矛盾的 LLM-only 建议。
+
+用 07:16 的 live 落盘结果做离线回放后：
+
+| 指标 | 修复前基线 | 修复后回放 |
+|---|---:|---:|
+| TP / FP / FN | 50 / 38 / 1 | **50 / 29 / 1** |
+| Precision | 56.8% | **63.3%** |
+| Recall | 98.0% | **98.0%** |
+| F1 | 71.9% | **76.9%** |
+| 已核实层 P | 96.0% | **100%** |
+| 高风险 FP | 16 | **12** |
+
+> 这是对同一次 live 结果的离线回放，不是新的 live 运行；默认 `results_full.json` 仍保留修复前基线。修复细节、恢复的 5 个合同级标签和剩余 29 个 advisory 误报见 [`backend/eval/report_precision_diag.md`](backend/eval/report_precision_diag.md)。确认后应再跑一次 `--output-suffix full_confirm`，再替换正式基线并重跑 no-RAG 消融。
+
 ### 检索评测
 
 25 条作者构造的 query → 相关法条场景，语料 32 条法条，比较 BM25 / hybrid / rerank：
@@ -463,7 +480,7 @@ uv run python eval/run_eval.py --mode rules
 - **可报告 IAA**：`eval/run_iaa.py` 支持 `--universe` 固定候选集；不传时只给出 union-scope 乐观 kappa，不能写进正式报告。κ 不是召回率，共同漏标需单独裁决/报告。
 - **人工质量评分**：`eval/run_quality_eval.py` 汇总法条相关性、证据支持、建议可用性和人工幻觉率；这些数据必须由法务/采购评审产生。
 - **消融**：`eval/run_ablation.py` 汇总 rules-only、full、no-RAG 和检索配置对比；`run_eval.py --disable-rag --output-suffix full_no_rag` 用于隔离 RAG 贡献。HITL 只影响复核/导出流程，不作为 P/R 消融项。本次实测（8 份合成合同）：
-  - full vs rules：P 56.8% vs 100%，R 98.0% vs 94.1%，F1 71.9% vs 97.0%，高风险 FP 16 vs 0；LLM 主要提升语义召回，但引入大量误报。
+  - full vs rules：P 56.8% vs 100%，R 98.0% vs 94.1%，F1 71.9% vs 97.0%，高风险 FP 16 vs 0；LLM 主要提升语义召回，但引入大量误报。精度修复后的回放为 P 63.3% / F1 76.9%，但 no-RAG 尚未重跑，暂不并入本消融对比。
   - no-RAG vs full：P 56.2% vs 56.8%，F1 71.4% vs 71.9%，高风险 FP 18 vs 16，无法条引用率 43.8% vs 2.3%；RAG 在这批合成数据上主要改善引用/置信与少量精度，没有提升 recall。
   - no-RAG 成本 53 次调用 / 失败 5 / ¥0.1497 / p95 103.9s；full 51 次 / 失败 3 / ¥0.1742 / p95 94.7s。
   - 报告：[`backend/eval/report_ablation.md`](backend/eval/report_ablation.md)。
@@ -510,7 +527,7 @@ contractguard/
 │  ├─ data/                         # 法条、Playbook、示例合同、llm_profiles.yaml
 │  ├─ eval/                         # 标签、评测脚本、结果
 │  ├─ scripts/                      # 生成数据、校验 KB、冒烟
-│  └─ tests/                        # 213 个离线测试
+│  └─ tests/                        # 221 个离线测试
 ├─ frontend/                        # React 单页
 │  └─ src/components/               # ContractViewer / ReportPreview / RevisedContractView / BatchPanel
 ├─ desktop/                         # Electron 桌面端（主进程、preload、打包配置）
@@ -601,7 +618,7 @@ contractguard/
 
 - [ ] `backend/.env` 不在仓库；`git status` 里没有 Key、真实合同、`node_modules`、`dist`。
 - [ ] 截图/录屏里没有 Key、终端敏感信息、真实合同。
-- [ ] `LLM_MODE=mock uv run pytest -q` 通过（当前 213 个离线测试，含默认 Worker+HITL E2E）；`eval/report_rules.md` 是真实运行结果。
+- [ ] `LLM_MODE=mock uv run pytest -q` 通过（当前 221 个离线测试，含默认 Worker+HITL E2E）；`eval/report_rules.md` 是真实运行结果。
 - [ ] `WORKER_ENABLED=1` 下示例审查可完成；`ENCRYPTION_ENABLED=1` 时重启后仍能读取任务、HITL checkpoint 可恢复。
 - [ ] 复核完成后「修订稿」Tab 能预览并下载 DOCX；MOCK 建议以 `【修订建议】` 标注而非直接改写原文。
 - [ ] 设置 `CONTRACTGUARD_API_TOKEN` 时 Token 登录页可用，`/api/health` 仍返回 200；取消/重试流程可用。
@@ -627,6 +644,6 @@ MIT 许可证，详见 [`LICENSE`](LICENSE)。真实合同 PDF、第三方法律
 
 ## English Abstract
 
-**ContractGuard** is a 3-day MVP for Chinese goods-procurement contract review. It combines a deterministic 25-rule playbook with three parallel LangGraph LLM agents, hybrid RAG over 32 statutory articles and enterprise rules, citation/evidence gates, deterministic confidence tiers, human review, and DOCX/Markdown/JSON report export. Scanned PDFs and JPG/PNG images are parsed with local RapidOCR (offline, max 50 pages per scan) and flagged for manual verification. Chat calls are routed across OpenAI-compatible provider profiles (Qwen/DeepSeek/Moonshot/OpenAI/local) with per-task model preferences and ordered fallback chains. On a small synthetic benchmark of 8 contracts and 51 labeled risks, the rules-only baseline reaches 100% precision and 94.1% recall; a live full-pipeline run (qwen-plus, 2026-11-02, deepseek-first fallback route) reached 98.0% recall and 56.8% precision with 38 false positives; the confirmed tier reaches 96.0% precision while the advisory tier reaches 5.6%, which is disclosed in full and drives the confirmed/advisory/needs-review split. The product also includes contract full-text navigation, in-app report preview, and status/search/sort filters. Job snapshots are persisted in SQLite behind a lease-based worker: completed jobs survive restarts, expired `resuming` work is retried up to three times, and `running` work is failed rather than replayed. Human-in-the-loop review is implemented with LangGraph `interrupt` and an `AsyncSqliteSaver` checkpoint so paused reviews survive restarts; optional AES-GCM encryption covers job state and checkpoints. The web UI supports up to three-file batch review with batch decisions and batch reports. Accepted findings can be turned into a revised contract draft (DOCX plus a change list): template suggestions are annotated inline, while complete clauses returned by a live model may replace the original clause. An optional DashScope reranker falls back to RRF when unavailable. Evaluation reports include contract-bootstrap 95% CIs, nDCG retrieval metrics with query-bootstrap CIs, known-badcase regression, deterministic perturbation stability checks, and a token/latency/cost summary with explicit price assumptions. The project deliberately trades breadth for a complete, explainable, testable loop.
+**ContractGuard** is a 3-day MVP for Chinese goods-procurement contract review. It combines a deterministic 25-rule playbook with three parallel LangGraph LLM agents, hybrid RAG over 32 statutory articles and enterprise rules, citation/evidence gates, deterministic confidence tiers, human review, and DOCX/Markdown/JSON report export. Scanned PDFs and JPG/PNG images are parsed with local RapidOCR (offline, max 50 pages per scan) and flagged for manual verification. Chat calls are routed across OpenAI-compatible provider profiles (Qwen/DeepSeek/Moonshot/OpenAI/local) with per-task model preferences and ordered fallback chains. On a small synthetic benchmark of 8 contracts and 51 labeled risks, the rules-only baseline reaches 100% precision and 94.1% recall; a live full-pipeline run (qwen-plus, 2026-11-02, deepseek-first fallback route) reached 98.0% recall and 56.8% precision with 38 false positives; the confirmed tier reaches 96.0% precision while the advisory tier reaches 5.6%, which is disclosed in full and drives the confirmed/advisory/needs-review split. A post-diagnostic offline replay after deterministic fact-precedence and contract-level merge fixes reaches 63.3% precision, 98.0% recall and 76.9% F1 with 29 false positives and 100% confirmed-tier precision, pending a fresh live confirmation run. The product also includes contract full-text navigation, in-app report preview, and status/search/sort filters. Job snapshots are persisted in SQLite behind a lease-based worker: completed jobs survive restarts, expired `resuming` work is retried up to three times, and `running` work is failed rather than replayed. Human-in-the-loop review is implemented with LangGraph `interrupt` and an `AsyncSqliteSaver` checkpoint so paused reviews survive restarts; optional AES-GCM encryption covers job state and checkpoints. The web UI supports up to three-file batch review with batch decisions and batch reports. Accepted findings can be turned into a revised contract draft (DOCX plus a change list): template suggestions are annotated inline, while complete clauses returned by a live model may replace the original clause. An optional DashScope reranker falls back to RRF when unavailable. Evaluation reports include contract-bootstrap 95% CIs, nDCG retrieval metrics with query-bootstrap CIs, known-badcase regression, deterministic perturbation stability checks, and a token/latency/cost summary with explicit price assumptions. The project deliberately trades breadth for a complete, explainable, testable loop.
 
 > Built from scratch; no code was copied from reference projects.

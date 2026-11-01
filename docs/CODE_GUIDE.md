@@ -284,7 +284,7 @@ uv run python eval/run_ablation.py
 uv run python eval/run_quality_eval.py --scores ../../contractguard-private/real_eval/quality_scores.jsonl
 ```
 
-- `pytest`：213 个离线测试；
+- `pytest`：221 个离线测试；
 - `validate_kb`：法条/规则引用是否一致；
 - `check_samples`：每份合同切出多少条款、规则命中/漏报/误报；
 - `eval/stats.py`：按合同/query 的 bootstrap CI、nDCG；
