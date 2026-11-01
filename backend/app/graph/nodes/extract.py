@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import asyncio
 import time
 
+from app.config import settings
 from app.graph.errors import PipelineError
 from app.graph.progress import emit
 from app.graph.state import ReviewState
@@ -13,7 +15,7 @@ from app.llm.prompts import (
     MAX_EXTRACTION_CLAUSES,
     build_extraction_prompt,
 )
-from app.parsing.clause_splitter import split_clauses
+from app.parsing.clause_splitter import ClauseSplitError, split_clauses
 from app.parsing.contract_parser import ParsedContract
 from app.parsing.facts import extract_heuristic_facts, merge_facts
 from app.schemas import ClauseExtraction, ClauseType, EventStatus
@@ -31,17 +33,28 @@ async def extract_node(state: ReviewState) -> dict:
         page_count=state.get("page_count", 0),
         page_offsets=state.get("page_offsets", []),
     )
-    clauses = split_clauses(parsed)
+    try:
+        clauses = await asyncio.to_thread(split_clauses, parsed)
+    except ClauseSplitError as exc:
+        raise PipelineError(str(exc)) from exc
     if not clauses:
         raise PipelineError("无法从合同中切分出条款，请检查文档内容。")
 
     warnings: list[str] = []
-    heuristic_facts = extract_heuristic_facts(text, clauses)
+    heuristic_facts = await asyncio.to_thread(
+        extract_heuristic_facts, text, clauses
+    )
     prompt_clauses = clauses[:MAX_EXTRACTION_CLAUSES]
     if len(clauses) > len(prompt_clauses):
         warnings.append(
             f"文档条款较多（{len(clauses)} 条），LLM 抽取仅处理前 {len(prompt_clauses)} 条；"
             "规则与启发式事实仍覆盖全文。"
+        )
+    if len(text) > settings.llm_extraction_text_chars:
+        warnings.append(
+            f"合同全文 {len(text):,} 字符，LLM 事实抽取仅参考前 "
+            f"{settings.llm_extraction_text_chars:,} 字符；条款抽取仍覆盖前 "
+            f"{len(prompt_clauses)} 条。"
         )
     extraction: ClauseExtraction | None = None
     try:

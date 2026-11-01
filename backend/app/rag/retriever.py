@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import asyncio
 from dataclasses import dataclass
 
 from app.config import Settings, settings
@@ -58,6 +59,8 @@ class HybridRetriever:
         ok = await self.embeddings.ensure_built()
         if not ok:
             self.last_warning = "向量检索不可用，已降级为 BM25（不影响规则与报告）"
+        else:
+            self.last_warning = None
 
     def _allowed_ids(
         self,
@@ -90,11 +93,23 @@ class HybridRetriever:
 
         dense_results: list[tuple[str, float]] = []
         if self.embeddings.available:
-            if await self.embeddings.ensure_built():
+            try:
+                built = await asyncio.wait_for(
+                    self.embeddings.ensure_built(),
+                    timeout=max(3, self.config.embedding_timeout_s),
+                )
+            except TimeoutError:
+                built = False
+                self.last_warning = (
+                    f"向量检索初始化超过 {self.config.embedding_timeout_s}s，"
+                    "已降级为 BM25（不影响规则与报告）"
+                )
+            if built:
                 dense_results = await self.embeddings.search(
                     query, top_k=top_k * 2, allowed_ids=allowed
                 )
-            else:
+                self.last_warning = None
+            elif not self.last_warning:
                 self.last_warning = "向量检索不可用，已降级为 BM25（不影响规则与报告）"
 
         scores: dict[str, float] = {}

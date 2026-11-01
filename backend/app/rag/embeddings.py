@@ -22,7 +22,6 @@ from app.rag.corpus import KBDocument
 logger = logging.getLogger(__name__)
 
 BATCH_SIZE = 10
-MAX_RETRIES = 3
 
 
 class EmbeddingError(RuntimeError):
@@ -46,7 +45,7 @@ class EmbeddingStore:
             AsyncOpenAI(
                 api_key=config.embedding_api_key,
                 base_url=config.embedding_base_url,
-                timeout=90,
+                timeout=config.embedding_timeout_s,
                 max_retries=0,
             )
             if config.embedding_live
@@ -160,7 +159,8 @@ class EmbeddingStore:
 
     async def _embed_batch(self, batch: list[str]) -> list[list[float]]:
         last_error: Exception | None = None
-        for attempt in range(MAX_RETRIES):
+        max_retries = max(1, int(self.config.embedding_max_retries))
+        for attempt in range(max_retries):
             try:
                 kwargs = {
                     "model": self.config.embedding_model,
@@ -185,7 +185,7 @@ class EmbeddingStore:
                         return [list(item.embedding) for item in response.data]
                     except Exception as inner:  # noqa: BLE001
                         last_error = inner
-                if attempt < MAX_RETRIES - 1:
+                if attempt < max_retries - 1:
                     await asyncio.sleep(2**attempt)
         raise EmbeddingError(f"embedding 调用失败：{last_error}")
 

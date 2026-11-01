@@ -16,6 +16,7 @@ from typing import Any
 from app.graph.evidence import find_quote_span
 from app.graph.progress import emit
 from app.graph.state import ReviewState
+from app.config import settings
 from app.llm.client import get_llm
 from app.llm.prompts import AGENTS, AGENT_SYSTEM, AgentSpec, build_agent_prompt
 from app.rag.corpus import KnowledgeBase, load_kb
@@ -32,12 +33,26 @@ from app.schemas import (
 )
 
 
-def _select_clauses(spec: AgentSpec, clauses: list[Clause]) -> list[Clause]:
-    focused = [clause for clause in clauses if clause.clause_type in spec.focus_clause_types]
+def _select_clauses(
+    spec: AgentSpec, clauses: list[Clause], limit: int
+) -> tuple[list[Clause], str | None]:
+    focused = [
+        clause
+        for clause in clauses
+        if clause.clause_type in spec.focus_clause_types
+    ]
+    scope = "相关"
     if not focused:
         focused = list(clauses)
-    # 条款多时优先保留靠前的条款，避免 prompt 过长
-    return focused[:10]
+        scope = "全部"
+    selected = focused[:limit]
+    warning = None
+    if len(focused) > limit:
+        warning = (
+            f"{spec.name} 仅审查前 {limit} 条{scope}条款"
+            f"（共 {len(focused)} 条）；其余条款仅由规则/启发式事实覆盖。"
+        )
+    return selected, warning
 
 
 def _build_query(spec: AgentSpec, clauses: list[Clause], facts: ContractFacts) -> str:
@@ -115,7 +130,13 @@ def _validate_findings(
     warnings: list[str] = []
     seen: set[str] = set()
 
-    for item in items[:4]:
+    limit = settings.llm_max_findings_per_agent
+    if len(items) > limit:
+        warnings.append(
+            f"{spec.name} 返回了 {len(items)} 条候选，"
+            f"仅保留前 {limit} 条；请人工复核其余内容。"
+        )
+    for item in items[:limit]:
         clause = clauses_by_id.get(item.clause_id)
         if clause is None:
             warnings.append(f"{spec.name} 返回了未知条款 ID：{item.clause_id}，已丢弃")
@@ -188,19 +209,29 @@ def make_agent_node(spec: AgentSpec):  # type: ignore[no-untyped-def]
         started = time.perf_counter()
         emit(job_id, f"agent_{spec.key}", spec.name, EventStatus.STARTED, progress=32)
 
-        clauses = _select_clauses(spec, state.get("clauses", []))
+        clauses, coverage_warning = _select_clauses(
+            spec,
+            state.get("clauses", []),
+            settings.llm_max_clauses_per_agent,
+        )
         facts = state["facts"]
         kb = load_kb()
         retriever = get_retriever()
         query = _build_query(spec, clauses, facts)
 
-        law_results = await retriever.retrieve(query, top_k=6, doc_types=["law"])
-        rule_results = await retriever.retrieve(
-            query,
-            top_k=4,
-            doc_types=["rule"],
-            categories=list(spec.focus_categories),
-        )
+        if state.get("disable_rag"):
+            law_results = []
+            rule_results = []
+        else:
+            law_results = await retriever.retrieve(
+                query, top_k=6, doc_types=["law"]
+            )
+            rule_results = await retriever.retrieve(
+                query,
+                top_k=4,
+                doc_types=["rule"],
+                categories=list(spec.focus_categories),
+            )
         law_payload = _law_payload(kb, [item.document.id for item in law_results])
         rule_payload = _rule_payload(kb, [item.document.id for item in rule_results])
         allowed_law_ids = {item["id"] for item in law_payload}
@@ -226,11 +257,16 @@ def make_agent_node(spec: AgentSpec):  # type: ignore[no-untyped-def]
                 progress=70,
                 duration_ms=int((time.perf_counter() - started) * 1000),
             )
-            return {"warnings": [message]}
+            warnings = [message]
+            if coverage_warning:
+                warnings.append(coverage_warning)
+            return {"warnings": warnings}
 
         findings, warnings = _validate_findings(
             spec, output.findings, state.get("clauses", []), allowed_law_ids, kb
         )
+        if coverage_warning:
+            warnings.append(coverage_warning)
         message = f"{len(findings)} 条风险 · 检索模式 {retriever.retrieval_mode}"
         if retriever.last_warning:
             warnings.append(retriever.last_warning)

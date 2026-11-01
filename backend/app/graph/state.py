@@ -19,6 +19,7 @@ class ReviewState(TypedDict, total=False):
     source_path: str
     llm_route: str | None
     llm_mode: str
+    disable_rag: bool
 
     contract_text: str
     source_type: str

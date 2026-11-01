@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import time
 
 from app.graph.progress import emit
@@ -11,13 +12,14 @@ from app.rules.engine import evaluate_rules
 from app.schemas import EventStatus
 
 
-def rule_engine_node(state: ReviewState) -> dict:
+async def rule_engine_node(state: ReviewState) -> dict:
     job_id = state.get("job_id", "unknown")
     started = time.perf_counter()
     emit(job_id, "rule_engine", "规则引擎", EventStatus.STARTED, progress=32)
     kb = load_kb()
     try:
-        result = evaluate_rules(
+        result = await asyncio.to_thread(
+            evaluate_rules,
             kb.rules,
             state.get("clauses", []),
             state["facts"],

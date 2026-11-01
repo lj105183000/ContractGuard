@@ -13,6 +13,7 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
+from app.config import settings
 from app.schemas import Clause, ClauseType, ContractFacts, Finding
 
 CLAUSE_TYPES = [
@@ -179,7 +180,7 @@ def build_extraction_prompt(contract_text: str, clauses: list[Clause]) -> str:
 </clauses>
 
 <contract>
-{contract_text[:12000]}
+{contract_text[: settings.llm_extraction_text_chars]}
 </contract>
 """
 
@@ -308,7 +309,7 @@ def build_agent_prompt(
 {json.dumps(example, ensure_ascii=False, indent=2)}
 
 硬性要求：
-- 最多 4 条 findings；没有风险就输出 {{"findings": []}}；
+- 最多 {settings.llm_max_findings_per_agent} 条 findings；没有风险就输出 {{"findings": []}}；
 - category 只能是：{", ".join(CATEGORY_VALUES)}；
 - severity 只能是 high / medium / low；
 - clause_id 必须来自上面的“相关条款”，不得虚构；
