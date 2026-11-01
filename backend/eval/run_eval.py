@@ -43,12 +43,13 @@ from app.parsing.facts import extract_heuristic_facts  # noqa: E402
 from app.rag.corpus import load_kb  # noqa: E402
 from app.rag.retriever import get_retriever  # noqa: E402
 from app.rules.engine import evaluate_rules  # noqa: E402
-from app.schemas import EvalLabel, Finding  # noqa: E402
+from app.schemas import EvalLabel, Finding, Source  # noqa: E402
 from app.services.confidence import apply_confidence_tier  # noqa: E402
 from app.services.summary import (  # noqa: E402
     compute_citation_metrics,
     compute_evidence_metrics,
 )
+from eval.gates import check_min, enforce  # noqa: E402
 from eval.stats import bootstrap_prf  # noqa: E402
 
 BACKEND = Path(__file__).resolve().parents[1]
@@ -66,7 +67,13 @@ def load_labels(sample_id: str) -> list[EvalLabel]:
 
 
 def predicted_rule_id(finding: Finding) -> str | None:
-    return finding.rule_id or finding.rule_hint
+    """Only the deterministic rule engine may satisfy a rule label.
+
+    ``rule_hint`` is model self-reporting and is deliberately not used here;
+    otherwise an LLM finding could claim a rule hit without the rule engine
+    actually firing.
+    """
+    return finding.rule_id
 
 
 def _normalize_anchor(text: str) -> str:
@@ -118,6 +125,7 @@ def score(labels: list[EvalLabel], findings: list[Finding]) -> dict:
                         "label_id": label.id,
                         "finding_id": finding.id,
                         "rule_id": predicted_rule_id(finding),
+                        "rule_hint": finding.rule_hint,
                         "clause": label.clause_article,
                         "severity": label.severity.value,
                     }
@@ -213,6 +221,52 @@ def score(labels: list[EvalLabel], findings: list[Finding]) -> dict:
 
     evidence_checked, evidence_valid, evidence_rate = compute_evidence_metrics(findings)
     citation_checked, citation_valid, citation_rate = compute_citation_metrics(findings)
+    unsupported = [
+        finding
+        for finding in findings
+        if finding.source in {Source.LLM, Source.RULE_LLM}
+        and finding.evidence_start is None
+    ]
+    uncited = [
+        finding
+        for finding in findings
+        if finding.source in {Source.LLM, Source.RULE_LLM}
+        and not finding.legal_basis_ids
+    ]
+    finding_count = len(findings)
+    quality = {
+        "unsupported_findings": len(unsupported),
+        "unsupported_rate": round(len(unsupported) / finding_count, 4)
+        if finding_count
+        else None,
+        "uncited_findings": len(uncited),
+        "uncited_rate": round(len(uncited) / finding_count, 4)
+        if finding_count
+        else None,
+        "high_risk_fp": severity_stats["high"]["fp"],
+        "high_risk_fn": severity_stats["high"]["fn"],
+        "confirmed_precision": (
+            round(
+                tier_stats["confirmed"]["tp"]
+                / (tier_stats["confirmed"]["tp"] + tier_stats["confirmed"]["fp"]),
+                4,
+            )
+            if tier_stats.get("confirmed", {}).get("tp", 0)
+            + tier_stats.get("confirmed", {}).get("fp", 0)
+            else None
+        ),
+        "advisory_precision": (
+            round(
+                tier_stats["advisory"]["tp"]
+                / (tier_stats["advisory"]["tp"] + tier_stats["advisory"]["fp"]),
+                4,
+            )
+            if tier_stats.get("advisory", {}).get("tp", 0)
+            + tier_stats.get("advisory", {}).get("fp", 0)
+            else None
+        ),
+        "total_findings": finding_count,
+    }
 
     return {
         "tp": tp,
@@ -239,6 +293,7 @@ def score(labels: list[EvalLabel], findings: list[Finding]) -> dict:
         "citation_valid_rate": (
             round(citation_rate, 4) if citation_rate is not None else None
         ),
+        "quality": quality,
         "matches": pairs,
         "unmatched_findings": [
             finding.model_dump(mode="json")
@@ -272,6 +327,7 @@ async def full_run(
     labels: list[EvalLabel],
     route_id: str | None = None,
     llm_mode: str = "mock",
+    disable_rag: bool = False,
 ) -> tuple[list[Finding], float, dict]:
     started = time.perf_counter()
     trace = TraceCollector()
@@ -283,6 +339,7 @@ async def full_run(
         "source_path": str(path),
         "llm_route": route_id,
         "llm_mode": llm_mode,
+        "disable_rag": disable_rag,
         "trace": trace,
     }
     result = await graph.ainvoke(state, config={"recursion_limit": 30})
@@ -323,6 +380,13 @@ def aggregate(sample_results: list[dict]) -> dict:
 
     source_totals: dict[str, dict[str, int]] = {}
     tier_totals: dict[str, dict[str, int]] = {}
+    quality_totals = {
+        "unsupported_findings": 0,
+        "uncited_findings": 0,
+        "high_risk_fp": 0,
+        "high_risk_fn": 0,
+        "total_findings": 0,
+    }
     fp_attribution: dict = {
         "total": 0,
         "by_source": {},
@@ -346,6 +410,9 @@ def aggregate(sample_results: list[dict]) -> dict:
             target = tier_totals.setdefault(key, {"tp": 0, "fp": 0})
             target["tp"] += bucket["tp"]
             target["fp"] += bucket["fp"]
+        quality = score_data.get("quality", {})
+        for key in quality_totals:
+            quality_totals[key] += int(quality.get(key, 0) or 0)
         attribution = score_data["fp_attribution"]
         fp_attribution["total"] += attribution["total"]
         for dimension in ("by_source", "by_severity", "by_category", "by_agent"):
@@ -392,6 +459,49 @@ def aggregate(sample_results: list[dict]) -> dict:
         "citation_valid_rate": round(valid_citations / citations, 4)
         if citations
         else None,
+        "quality": {
+            **quality_totals,
+            "unsupported_rate": round(
+                quality_totals["unsupported_findings"]
+                / quality_totals["total_findings"],
+                4,
+            )
+            if quality_totals["total_findings"]
+            else None,
+            "uncited_rate": round(
+                quality_totals["uncited_findings"]
+                / quality_totals["total_findings"],
+                4,
+            )
+            if quality_totals["total_findings"]
+            else None,
+            "confirmed_precision": (
+                round(
+                    tier_totals["confirmed"]["tp"]
+                    / (
+                        tier_totals["confirmed"]["tp"]
+                        + tier_totals["confirmed"]["fp"]
+                    ),
+                    4,
+                )
+                if tier_totals.get("confirmed", {}).get("tp", 0)
+                + tier_totals.get("confirmed", {}).get("fp", 0)
+                else None
+            ),
+            "advisory_precision": (
+                round(
+                    tier_totals["advisory"]["tp"]
+                    / (
+                        tier_totals["advisory"]["tp"]
+                        + tier_totals["advisory"]["fp"]
+                    ),
+                    4,
+                )
+                if tier_totals.get("advisory", {}).get("tp", 0)
+                + tier_totals.get("advisory", {}).get("fp", 0)
+                else None
+            ),
+        },
     }
 
 
@@ -457,6 +567,31 @@ def write_report(results: dict, path: Path) -> None:
             f"| {tier} | {stats['tp']} | {stats['fp']} | {stats['precision']:.1%} |"
         )
 
+    quality = results["overall"].get("quality") or {}
+
+    def quality_pct(key: str) -> str:
+        value = quality.get(key)
+        return "—" if value is None else f"{value:.1%}"
+
+    lines.extend(
+        [
+            "",
+            "## 质量信号",
+            "",
+            "| 指标 | 值 |",
+            "|---|---|",
+            f"| 高风险 FP / FN | {quality.get('high_risk_fp', 0)} / {quality.get('high_risk_fn', 0)} |",
+            f"| 模型来源无定位证据 | {quality.get('unsupported_findings', 0)} "
+            f"（{quality_pct('unsupported_rate')}） |",
+            f"| 模型来源无法条引用 | {quality.get('uncited_findings', 0)} "
+            f"（{quality_pct('uncited_rate')}） |",
+            f"| 已核实层 Precision | {quality_pct('confirmed_precision')} |",
+            f"| 模型建议层 Precision | {quality_pct('advisory_precision')} |",
+            "",
+            "> 这些都是确定性代理指标，不是法律正确性结论；法条相关性、幻觉率和建议可用性需要独立人工评分（见 `eval/run_quality_eval.py`）。",
+        ]
+    )
+
     attribution = results["overall"]["fp_attribution"]
     lines.extend(["", "## 误报归因", "", f"- 误报总数：{attribution['total']}"])
     for dimension, label in (
@@ -498,6 +633,16 @@ def write_report(results: dict, path: Path) -> None:
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def _enforce_thresholds(args: argparse.Namespace, overall: dict) -> None:
+    enforce(
+        [
+            check_min("precision", overall.get("precision"), args.min_precision),
+            check_min("recall", overall.get("recall"), args.min_recall),
+            check_min("f1", overall.get("f1"), args.min_f1),
+        ]
+    )
+
+
 async def main_async(args: argparse.Namespace) -> None:
     if args.from_results:
         suffix = args.from_results
@@ -515,6 +660,7 @@ async def main_async(args: argparse.Namespace) -> None:
         )
         write_report(results, report_path)
         print(f"已重算 {suffix} 的 bootstrap CI 并写入 {result_path} / {report_path}")
+        _enforce_thresholds(args, results["overall"])
         return
 
     runtime = chat_runtime(settings)
@@ -555,6 +701,7 @@ async def main_async(args: argparse.Namespace) -> None:
                 labels,
                 route.id if route else args.route,
                 runtime.mode,
+                disable_rag=args.disable_rag,
             )
         score_data = score(labels, findings)
         durations.append(duration)
@@ -628,6 +775,7 @@ async def main_async(args: argparse.Namespace) -> None:
         "llm_route": route.id if route else args.route,
         "llm_route_label": route.label if route else None,
         "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+        "ablation": {"disable_rag": bool(args.disable_rag)},
         "dataset": {
             "samples": len(samples),
             "labels": sum(item["label_count"] for item in sample_results),
@@ -647,7 +795,7 @@ async def main_async(args: argparse.Namespace) -> None:
         "average_duration_s": round(sum(durations) / len(durations), 2) if durations else 0,
         "samples": sample_results,
     }
-    suffix = (
+    suffix = args.output_suffix or (
         "full_mock"
         if args.mode == "full" and runtime.mode != "live"
         else args.mode
@@ -660,6 +808,7 @@ async def main_async(args: argparse.Namespace) -> None:
     write_report(results, output_md)
     print("\n总体：", json.dumps(overall, ensure_ascii=False))
     print(f"写入 {output_json} 和 {output_md}")
+    _enforce_thresholds(args, overall)
 
 
 def main() -> None:
@@ -668,6 +817,19 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--allow-mock", action="store_true")
     parser.add_argument("--route", default=None, help="LLM 路由 ID")
+    parser.add_argument(
+        "--disable-rag",
+        action="store_true",
+        help="消融用：不把检索到的法条/Playbook 放进 prompt",
+    )
+    parser.add_argument(
+        "--output-suffix",
+        default=None,
+        help="自定义结果/报告后缀，例如 full_no_rag（不覆盖默认 full 结果）",
+    )
+    parser.add_argument("--min-precision", type=float, default=None)
+    parser.add_argument("--min-recall", type=float, default=None)
+    parser.add_argument("--min-f1", type=float, default=None)
     parser.add_argument(
         "--from-results",
         choices=["rules", "full"],

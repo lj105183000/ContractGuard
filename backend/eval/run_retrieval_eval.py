@@ -26,6 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.config import settings  # noqa: E402
 from app.rag.corpus import load_kb  # noqa: E402
 from app.rag.retriever import HybridRetriever  # noqa: E402
+from eval.gates import check_min, enforce  # noqa: E402
 from eval.stats import bootstrap_metric, ndcg_at_k  # noqa: E402
 
 BACKEND = Path(__file__).resolve().parents[1]
@@ -275,6 +276,7 @@ async def main_async(args: argparse.Namespace) -> None:
         )
         write_report(results, results["configs"][0]["queries"])
         print(f"已重算 nDCG/CI 并写入 {RESULTS_PATH} 和 {REPORT_PATH}")
+        _enforce_thresholds(args, results)
         return
 
     queries = load_queries(args.limit)
@@ -298,12 +300,38 @@ async def main_async(args: argparse.Namespace) -> None:
     )
     write_report(results, queries)
     print(f"写入 {RESULTS_PATH} 和 {REPORT_PATH}")
+    _enforce_thresholds(args, results)
+
+
+def _enforce_thresholds(args: argparse.Namespace, results: dict) -> None:
+    config = next(
+        (item for item in results["configs"] if item["name"] == args.threshold_config),
+        None,
+    )
+    overall = (config or {}).get("overall") or {}
+    enforce(
+        [
+            check_min(
+                f"{args.threshold_config}.recall@10",
+                overall.get("recall@10"),
+                args.min_recall_at_10,
+            ),
+            check_min(
+                f"{args.threshold_config}.ndcg@10",
+                overall.get("ndcg@10"),
+                args.min_ndcg_at_10,
+            ),
+        ]
+    )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--no-rerank", action="store_true")
+    parser.add_argument("--threshold-config", default="hybrid")
+    parser.add_argument("--min-recall-at-10", type=float, default=None)
+    parser.add_argument("--min-ndcg-at-10", type=float, default=None)
     parser.add_argument(
         "--from-results",
         action="store_true",

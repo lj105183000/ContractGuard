@@ -1,10 +1,13 @@
 {
   "mode": "rules",
-  "mock": false,
-  "model": "unknown",
+  "mock": true,
+  "model": "mock/rules-only",
   "llm_route": null,
   "llm_route_label": null,
-  "generated_at": "2026-10-28T16:30:18+08:00",
+  "generated_at": "2026-11-02T00:56:52+08:00",
+  "ablation": {
+    "disable_rag": false
+  },
   "dataset": {
     "samples": 8,
     "labels": 51,
@@ -51,7 +54,18 @@
       "without_legal_basis": 0
     },
     "evidence_valid_rate": 1.0,
-    "citation_valid_rate": 1.0
+    "citation_valid_rate": 1.0,
+    "quality": {
+      "unsupported_findings": 0,
+      "uncited_findings": 0,
+      "high_risk_fp": 0,
+      "high_risk_fn": 0,
+      "total_findings": 48,
+      "unsupported_rate": 0.0,
+      "uncited_rate": 0.0,
+      "confirmed_precision": 1.0,
+      "advisory_precision": null
+    }
   },
   "overall_ci": {
     "precision": {
@@ -178,11 +192,23 @@
         "citation_checked": 16,
         "citation_valid": 16,
         "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 0,
+          "uncited_rate": 0.0,
+          "high_risk_fp": 0,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 7
+        },
         "matches": [
           {
             "label_id": "sample_01-L01",
             "finding_id": "rule-PAY-001-cl_003",
             "rule_id": "PAY-001",
+            "rule_hint": null,
             "clause": "第三条",
             "severity": "high"
           },
@@ -190,6 +216,7 @@
             "label_id": "sample_01-L02",
             "finding_id": "rule-ACC-002-cl_005",
             "rule_id": "ACC-002",
+            "rule_hint": null,
             "clause": "第五条",
             "severity": "high"
           },
@@ -197,6 +224,7 @@
             "label_id": "sample_01-L03",
             "finding_id": "rule-ACC-003-cl_005",
             "rule_id": "ACC-003",
+            "rule_hint": null,
             "clause": "第五条",
             "severity": "medium"
           },
@@ -204,6 +232,7 @@
             "label_id": "sample_01-L04",
             "finding_id": "rule-LIA-001-cl_007",
             "rule_id": "LIA-001",
+            "rule_hint": null,
             "clause": "第七条",
             "severity": "medium"
           },
@@ -211,6 +240,7 @@
             "label_id": "sample_01-L05",
             "finding_id": "rule-LIA-002-cl_007",
             "rule_id": "LIA-002",
+            "rule_hint": null,
             "clause": "第七条",
             "severity": "high"
           },
@@ -218,6 +248,7 @@
             "label_id": "sample_01-L06",
             "finding_id": "rule-DIS-001-cl_008",
             "rule_id": "DIS-001",
+            "rule_hint": null,
             "clause": "第八条",
             "severity": "high"
           },
@@ -225,6 +256,7 @@
             "label_id": "sample_01-L07",
             "finding_id": "rule-COM-001-contract",
             "rule_id": "COM-001",
+            "rule_hint": null,
             "clause": "合同级",
             "severity": "medium"
           }
@@ -310,11 +342,23 @@
         "citation_checked": 16,
         "citation_valid": 16,
         "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 0,
+          "uncited_rate": 0.0,
+          "high_risk_fp": 0,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 7
+        },
         "matches": [
           {
             "label_id": "sample_02-L01",
             "finding_id": "rule-PAY-003-cl_003",
             "rule_id": "PAY-003",
+            "rule_hint": null,
             "clause": "第三条",
             "severity": "medium"
           },
@@ -322,6 +366,7 @@
             "label_id": "sample_02-L02",
             "finding_id": "rule-LIA-001-cl_007",
             "rule_id": "LIA-001",
+            "rule_hint": null,
             "clause": "第七条",
             "severity": "medium"
           },
@@ -329,6 +374,7 @@
             "label_id": "sample_02-L03",
             "finding_id": "rule-LIA-004-cl_006",
             "rule_id": "LIA-004",
+            "rule_hint": null,
             "clause": "第六条",
             "severity": "high"
           },
@@ -336,6 +382,7 @@
             "label_id": "sample_02-L04",
             "finding_id": "rule-WAR-001-cl_006",
             "rule_id": "WAR-001",
+            "rule_hint": null,
             "clause": "第六条",
             "severity": "medium"
           },
@@ -343,6 +390,7 @@
             "label_id": "sample_02-L05",
             "finding_id": "rule-TER-002-cl_008",
             "rule_id": "TER-002",
+            "rule_hint": null,
             "clause": "第八条",
             "severity": "medium"
           },
@@ -350,6 +398,7 @@
             "label_id": "sample_02-L06",
             "finding_id": "rule-ACC-003-cl_005",
             "rule_id": "ACC-003",
+            "rule_hint": null,
             "clause": "第五条",
             "severity": "medium"
           },
@@ -357,6 +406,7 @@
             "label_id": "sample_02-L07",
             "finding_id": "rule-COM-001-contract",
             "rule_id": "COM-001",
+            "rule_hint": null,
             "clause": "合同级",
             "severity": "medium"
           }
@@ -442,11 +492,23 @@
         "citation_checked": 16,
         "citation_valid": 16,
         "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 0,
+          "uncited_rate": 0.0,
+          "high_risk_fp": 0,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 7
+        },
         "matches": [
           {
             "label_id": "sample_03-L01",
             "finding_id": "rule-PAY-002-cl_003",
             "rule_id": "PAY-002",
+            "rule_hint": null,
             "clause": "第三条",
             "severity": "high"
           },
@@ -454,6 +516,7 @@
             "label_id": "sample_03-L02",
             "finding_id": "rule-LIA-002-cl_007",
             "rule_id": "LIA-002",
+            "rule_hint": null,
             "clause": "第七条",
             "severity": "high"
           },
@@ -461,6 +524,7 @@
             "label_id": "sample_03-L03",
             "finding_id": "rule-LIA-003-cl_007",
             "rule_id": "LIA-003",
+            "rule_hint": null,
             "clause": "第七条",
             "severity": "high"
           },
@@ -468,6 +532,7 @@
             "label_id": "sample_03-L04",
             "finding_id": "rule-LIA-004-cl_006",
             "rule_id": "LIA-004",
+            "rule_hint": null,
             "clause": "第六条",
             "severity": "high"
           },
@@ -475,6 +540,7 @@
             "label_id": "sample_03-L05",
             "finding_id": "rule-TER-001-cl_008",
             "rule_id": "TER-001",
+            "rule_hint": null,
             "clause": "第八条",
             "severity": "high"
           },
@@ -482,6 +548,7 @@
             "label_id": "sample_03-L06",
             "finding_id": "rule-DIS-002-cl_009",
             "rule_id": "DIS-002",
+            "rule_hint": null,
             "clause": "第九条",
             "severity": "high"
           },
@@ -489,6 +556,7 @@
             "label_id": "sample_03-L07",
             "finding_id": "rule-COM-001-contract",
             "rule_id": "COM-001",
+            "rule_hint": null,
             "clause": "合同级",
             "severity": "medium"
           }
@@ -496,7 +564,7 @@
         "unmatched_findings": [],
         "unmatched_labels": []
       },
-      "duration_s": 0.01,
+      "duration_s": 0.02,
       "usage": null,
       "citation_count": 16,
       "valid_citation_count": 16,
@@ -574,11 +642,23 @@
         "citation_checked": 15,
         "citation_valid": 15,
         "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 0,
+          "uncited_rate": 0.0,
+          "high_risk_fp": 0,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 6
+        },
         "matches": [
           {
             "label_id": "sample_04-L01",
             "finding_id": "rule-PAY-001-cl_003",
             "rule_id": "PAY-001",
+            "rule_hint": null,
             "clause": "第三条",
             "severity": "high"
           },
@@ -586,6 +666,7 @@
             "label_id": "sample_04-L02",
             "finding_id": "rule-PAY-003-cl_003",
             "rule_id": "PAY-003",
+            "rule_hint": null,
             "clause": "第三条",
             "severity": "medium"
           },
@@ -593,6 +674,7 @@
             "label_id": "sample_04-L03",
             "finding_id": "rule-IP-001-cl_007",
             "rule_id": "IP-001",
+            "rule_hint": null,
             "clause": "第七条",
             "severity": "medium"
           },
@@ -600,6 +682,7 @@
             "label_id": "sample_04-L04",
             "finding_id": "rule-COM-001-cl_008",
             "rule_id": "COM-001",
+            "rule_hint": null,
             "clause": "第八条",
             "severity": "medium"
           },
@@ -607,6 +690,7 @@
             "label_id": "sample_04-L05",
             "finding_id": "rule-LIA-002-cl_009",
             "rule_id": "LIA-002",
+            "rule_hint": null,
             "clause": "第九条",
             "severity": "high"
           },
@@ -614,6 +698,7 @@
             "label_id": "sample_04-L06",
             "finding_id": "rule-DEL-002-cl_004",
             "rule_id": "DEL-002",
+            "rule_hint": null,
             "clause": "第四条",
             "severity": "medium"
           }
@@ -641,7 +726,7 @@
           }
         ]
       },
-      "duration_s": 0.02,
+      "duration_s": 0.01,
       "usage": null,
       "citation_count": 15,
       "valid_citation_count": 15,
@@ -719,11 +804,23 @@
         "citation_checked": 24,
         "citation_valid": 24,
         "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 0,
+          "uncited_rate": 0.0,
+          "high_risk_fp": 0,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 9
+        },
         "matches": [
           {
             "label_id": "sample_05-L01",
             "finding_id": "rule-PAY-001-cl_003",
             "rule_id": "PAY-001",
+            "rule_hint": null,
             "clause": "第三条",
             "severity": "high"
           },
@@ -731,6 +828,7 @@
             "label_id": "sample_05-L02",
             "finding_id": "rule-PAY-002-cl_003",
             "rule_id": "PAY-002",
+            "rule_hint": null,
             "clause": "第三条",
             "severity": "high"
           },
@@ -738,6 +836,7 @@
             "label_id": "sample_05-L03",
             "finding_id": "rule-DEL-001-cl_004",
             "rule_id": "DEL-001",
+            "rule_hint": null,
             "clause": "第四条",
             "severity": "high"
           },
@@ -745,6 +844,7 @@
             "label_id": "sample_05-L04",
             "finding_id": "rule-DEL-002-cl_004",
             "rule_id": "DEL-002",
+            "rule_hint": null,
             "clause": "第四条",
             "severity": "medium"
           },
@@ -752,6 +852,7 @@
             "label_id": "sample_05-L05",
             "finding_id": "rule-ACC-002-cl_005",
             "rule_id": "ACC-002",
+            "rule_hint": null,
             "clause": "第五条",
             "severity": "high"
           },
@@ -759,6 +860,7 @@
             "label_id": "sample_05-L06",
             "finding_id": "rule-WAR-001-cl_006",
             "rule_id": "WAR-001",
+            "rule_hint": null,
             "clause": "第六条",
             "severity": "medium"
           },
@@ -766,6 +868,7 @@
             "label_id": "sample_05-L07",
             "finding_id": "rule-LIA-001-cl_007",
             "rule_id": "LIA-001",
+            "rule_hint": null,
             "clause": "第七条",
             "severity": "medium"
           },
@@ -773,6 +876,7 @@
             "label_id": "sample_05-L08",
             "finding_id": "rule-LIA-003-cl_007",
             "rule_id": "LIA-003",
+            "rule_hint": null,
             "clause": "第七条",
             "severity": "high"
           },
@@ -780,6 +884,7 @@
             "label_id": "sample_05-L09",
             "finding_id": "rule-DIS-003-contract",
             "rule_id": "DIS-003",
+            "rule_hint": null,
             "clause": "合同级",
             "severity": "high"
           }
@@ -787,7 +892,7 @@
         "unmatched_findings": [],
         "unmatched_labels": []
       },
-      "duration_s": 0.03,
+      "duration_s": 0.02,
       "usage": null,
       "citation_count": 24,
       "valid_citation_count": 24,
@@ -865,11 +970,23 @@
         "citation_checked": 11,
         "citation_valid": 11,
         "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 0,
+          "uncited_rate": 0.0,
+          "high_risk_fp": 0,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 5
+        },
         "matches": [
           {
             "label_id": "sample_06-L01",
             "finding_id": "rule-WAR-001-cl_006",
             "rule_id": "WAR-001",
+            "rule_hint": null,
             "clause": "第六条",
             "severity": "medium"
           },
@@ -877,6 +994,7 @@
             "label_id": "sample_06-L02",
             "finding_id": "rule-PRI-002-cl_002",
             "rule_id": "PRI-002",
+            "rule_hint": null,
             "clause": "第二条",
             "severity": "medium"
           },
@@ -884,6 +1002,7 @@
             "label_id": "sample_06-L03",
             "finding_id": "rule-COM-001-contract",
             "rule_id": "COM-001",
+            "rule_hint": null,
             "clause": "合同级",
             "severity": "medium"
           },
@@ -891,6 +1010,7 @@
             "label_id": "sample_06-L04",
             "finding_id": "rule-DEL-002-cl_004",
             "rule_id": "DEL-002",
+            "rule_hint": null,
             "clause": "第四条",
             "severity": "medium"
           },
@@ -898,6 +1018,7 @@
             "label_id": "sample_06-L06",
             "finding_id": "rule-LIA-004-cl_006",
             "rule_id": "LIA-004",
+            "rule_hint": null,
             "clause": "第六条",
             "severity": "high"
           }
@@ -1004,11 +1125,23 @@
         "citation_checked": 13,
         "citation_valid": 13,
         "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 0,
+          "uncited_rate": 0.0,
+          "high_risk_fp": 0,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 7
+        },
         "matches": [
           {
             "label_id": "sample_07-L01",
             "finding_id": "rule-PAY-003-cl_003",
             "rule_id": "PAY-003",
+            "rule_hint": null,
             "clause": "第三条",
             "severity": "medium"
           },
@@ -1016,6 +1149,7 @@
             "label_id": "sample_07-L02",
             "finding_id": "rule-LIA-001-cl_007",
             "rule_id": "LIA-001",
+            "rule_hint": null,
             "clause": "第七条",
             "severity": "medium"
           },
@@ -1023,6 +1157,7 @@
             "label_id": "sample_07-L03",
             "finding_id": "rule-FOR-001-cl_008",
             "rule_id": "FOR-001",
+            "rule_hint": null,
             "clause": "第八条",
             "severity": "medium"
           },
@@ -1030,6 +1165,7 @@
             "label_id": "sample_07-L04",
             "finding_id": "rule-TER-002-cl_009",
             "rule_id": "TER-002",
+            "rule_hint": null,
             "clause": "第九条",
             "severity": "medium"
           },
@@ -1037,6 +1173,7 @@
             "label_id": "sample_07-L05",
             "finding_id": "rule-DIS-001-cl_011",
             "rule_id": "DIS-001",
+            "rule_hint": null,
             "clause": "第十一条",
             "severity": "high"
           },
@@ -1044,6 +1181,7 @@
             "label_id": "sample_07-L06",
             "finding_id": "rule-ACC-003-cl_005",
             "rule_id": "ACC-003",
+            "rule_hint": null,
             "clause": "第五条",
             "severity": "medium"
           },
@@ -1051,6 +1189,7 @@
             "label_id": "sample_07-L07",
             "finding_id": "rule-COM-001-cl_010",
             "rule_id": "COM-001",
+            "rule_hint": null,
             "clause": "第十条",
             "severity": "medium"
           }
@@ -1124,6 +1263,17 @@
         "citation_checked": 0,
         "citation_valid": 0,
         "citation_valid_rate": null,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": null,
+          "uncited_findings": 0,
+          "uncited_rate": null,
+          "high_risk_fp": 0,
+          "high_risk_fn": 0,
+          "confirmed_precision": null,
+          "advisory_precision": null,
+          "total_findings": 0
+        },
         "matches": [],
         "unmatched_findings": [],
         "unmatched_labels": [

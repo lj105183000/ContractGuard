@@ -44,6 +44,23 @@ def test_rule_label_rejects_wrong_clause():
     assert not matches(_label(), _finding(clause_article="第四条"))
 
 
+def test_rule_hint_does_not_satisfy_rule_label():
+    finding = _finding(
+        source=Source.LLM,
+        rule_id=None,
+        rule_hint="PAY-001",
+        evidence_quote="原文",
+        evidence_start=0,
+        evidence_end=2,
+    )
+    assert not matches(_label(), finding)
+    data = score([_label()], [finding])
+    assert data["tp"] == 0
+    assert data["fp"] == 1
+    assert data["fn"] == 1
+    assert data["matches"] == []
+
+
 def test_semantic_label_matches_category_clause_and_keyword():
     label = _label(
         label_id="L2",
@@ -99,6 +116,37 @@ def test_score_breaks_down_source_and_tier():
     assert data["fp_attribution"]["by_source"]["llm"] == 1
     assert data["fp_attribution"]["with_rule_hint"] == 1
     assert data["fp_attribution"]["evidence_located"] == 1
+
+
+def test_quality_signals_count_unsupported_and_uncited_findings():
+    unsupported = _finding(
+        "f1",
+        source=Source.LLM,
+        rule_id=None,
+        evidence_quote="原文",
+        evidence_start=None,
+        legal_basis_ids=[],
+        confidence_tier=ConfidenceTier.NEEDS_REVIEW,
+    )
+    supported = _finding(
+        "f2",
+        source=Source.LLM,
+        rule_id=None,
+        evidence_quote="原文",
+        evidence_start=0,
+        evidence_end=2,
+        legal_basis_ids=["CC-509"],
+        confidence_tier=ConfidenceTier.ADVISORY,
+    )
+    data = score([], [unsupported, supported])
+    quality = data["quality"]
+    assert quality["total_findings"] == 2
+    assert quality["unsupported_findings"] == 1
+    assert quality["unsupported_rate"] == 0.5
+    assert quality["uncited_findings"] == 1
+    assert quality["high_risk_fp"] == 2
+    assert quality["confirmed_precision"] is None
+    assert quality["advisory_precision"] == 0.0
 
 
 def test_evidence_metric_excludes_rule_without_quote():

@@ -52,19 +52,44 @@ uv run python eval/run_real_eval.py ... --mode full --limit 1
 
 ## 双人标注与 IAA（待执行）
 
+完整流程、标签 schema、裁决和 holdout 规则见 [`docs/ANNOTATION_GUIDE.md`](../../../docs/ANNOTATION_GUIDE.md)。
+
 1. 第二位标注者只拿到合同原文和标注 schema，不看系统输出、不看作者标签。
 2. 按同一 `clause_id`/`quote` 锚点独立标注，保存为 `real_01.annotator_b.json`；作者标签可另存为 `real_01.annotator_a.json`。
-3. 运行：
+3. 生成固定 universe（候选键全集）：
 
 ```bash
 cd backend
+uv run python scripts/annotate_real.py universe \
+  --parsed ../../contractguard-private/real_eval/work/real_01/parsed.json \
+  --out ../../contractguard-private/real_eval/work/real_01/universe.json
+```
+
+4. 运行 IAA（必须带 `--universe`；否则 kappa 只是乐观的 union-scope 口径）：
+
+```bash
 uv run python eval/run_iaa.py \
   --labels-a ../../contractguard-private/real_eval/labels/real_01.annotator_a.json \
   --labels-b ../../contractguard-private/real_eval/labels/real_01.annotator_b.json \
-  --out ../../contractguard-private/real_eval/report_iaa.md
+  --universe ../../contractguard-private/real_eval/work/real_01/universe.json \
+  --out ../../contractguard-private/real_eval/real_01.iaa.json \
+  --markdown-out ../../contractguard-private/real_eval/real_01.iaa.md \
+  --min-kappa 0.60
 ```
 
-工具按 `(clause_id 或 clause_article, category, rule_id)` 的二值存在性计算 Cohen's kappa，并列出双方独有的标签；分歧由第三人/作者裁决后再更新评测标签。只有完成这一步，报告才能写 IAA 指标。
+工具按 `(clause_id 或 clause_article, category, rule_id)` 的二值存在性计算 fixed-universe Cohen's kappa，同时输出 Jaccard、positive agreement 和双方独有标签；分歧由第三人裁决后再生成 final 标签。**IAA 不是召回率**：双方共同漏掉的风险仍可能表现为高一致；因此还需用裁决后的 final 标签计算系统 recall，并单独报告共同漏标案例。
+
+## 人工质量评分
+
+法条相关性、证据支持、建议可用性和幻觉率需要人工逐条评分，不能由风险 P/R/F1 代替。评分格式和阈值见 `docs/ANNOTATION_GUIDE.md` 第 5 节；运行：
+
+```bash
+uv run python eval/run_quality_eval.py \
+  --scores ../../contractguard-private/real_eval/quality_scores.jsonl \
+  --min-legal-relevance 3.5 --min-evidence-support 4.0 \
+  --min-suggestion-usability 3.0 --max-hallucination-rate 0.10
+```
+
 
 ## 隐私
 

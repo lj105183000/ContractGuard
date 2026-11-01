@@ -1,0 +1,2 @@
+{"contract_id":"real_01","finding_id":"finding-example-1","reviewer":"legal_a","legal_relevance":4,"evidence_support":5,"suggestion_usability":4,"hallucinated":false,"notes":"法条与风险相关，证据可逐字定位。"}
+{"contract_id":"real_01","finding_id":"finding-example-2","reviewer":"legal_a","legal_relevance":2,"evidence_support":3,"suggestion_usability":2,"hallucinated":false,"notes":"证据存在但不足以支持高风险判断。"}

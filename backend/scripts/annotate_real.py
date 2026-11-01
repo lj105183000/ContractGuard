@@ -26,7 +26,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.parsing.clause_splitter import split_clauses  # noqa: E402
 from app.parsing.contract_parser import parse_contract  # noqa: E402
-from app.schemas import EvalLabel  # noqa: E402
+from app.rag.corpus import load_kb  # noqa: E402
+from app.schemas import Category, EvalLabel  # noqa: E402
 
 
 def _normalize(text: str) -> str:
@@ -68,6 +69,58 @@ def dump(args: argparse.Namespace) -> int:
     for clause in clauses[:20]:
         preview = clause.text.replace("\n", " ")[:80]
         print(f"  {clause.id}  article={clause.article!r}  page={clause.page}  {preview}")
+    return 0
+
+
+def universe(args: argparse.Namespace) -> int:
+    """Generate a fixed candidate universe for IAA kappa.
+
+    Candidate keys are (clause_id, category, "") for semantic risks plus
+    (clause_id, rule.category, rule.id) for rule-detectable risks. The universe
+    is intentionally generous; it is the negative space for agreement, not a
+    claim that every candidate is a real risk.
+    """
+    parsed = json.loads(Path(args.parsed).read_text(encoding="utf-8"))
+    clauses = parsed.get("clauses", [])
+    kb = load_kb()
+    categories = [category.value for category in Category]
+    keys = []
+    seen = set()
+    for clause in clauses:
+        clause_id = str(clause.get("id") or "")
+        article = str(clause.get("article") or "")
+        if not clause_id:
+            continue
+        for category in categories:
+            key = (clause_id, category, "")
+            if key not in seen:
+                seen.add(key)
+                keys.append(
+                    {
+                        "clause_id": clause_id,
+                        "clause_article": article,
+                        "category": category,
+                        "rule_id": "",
+                    }
+                )
+        for rule in kb.rules:
+            key = (clause_id, rule.category.value, rule.id)
+            if key not in seen:
+                seen.add(key)
+                keys.append(
+                    {
+                        "clause_id": clause_id,
+                        "clause_article": article,
+                        "category": rule.category.value,
+                        "rule_id": rule.id,
+                    }
+                )
+    out = Path(args.out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(
+        json.dumps(keys, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    print(f"写入 {out}；候选键 {len(keys)} 条（clauses={len(clauses)}）")
     return 0
 
 
@@ -127,6 +180,11 @@ def main() -> None:
     validate_parser.add_argument("--labels", required=True)
     validate_parser.add_argument("--parsed", required=True)
     validate_parser.set_defaults(func=validate)
+
+    universe_parser = sub.add_parser("universe")
+    universe_parser.add_argument("--parsed", required=True)
+    universe_parser.add_argument("--out", required=True)
+    universe_parser.set_defaults(func=universe)
 
     args = parser.parse_args()
     raise SystemExit(args.func(args))

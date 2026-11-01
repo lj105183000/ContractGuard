@@ -1,0 +1,103 @@
+{
+  "source": "results_full_no_rag.json",
+  "mode": "full",
+  "model": "qwen-plus",
+  "generated_at": "2026-11-02T00:54:59+08:00",
+  "samples": 8,
+  "calls": 53,
+  "failed_calls": 5,
+  "rate_limited_calls": 0,
+  "input_tokens": 83773,
+  "output_tokens": 41341,
+  "input_price_per_1k": 0.0008,
+  "output_price_per_1k": 0.002,
+  "currency": "CNY",
+  "cost_estimate": 0.1497,
+  "latency_s": {
+    "mean": 88.22,
+    "p50": 87.82,
+    "p95": 103.91,
+    "min": 70.47,
+    "max": 103.97
+  },
+  "model_counts": {
+    "qwen-plus": 53
+  },
+  "failed_by_model": {
+    "qwen-plus": 5
+  },
+  "per_contract": [
+    {
+      "sample_id": "sample_01",
+      "duration_s": 90.59,
+      "llm_calls": 7,
+      "input_tokens": 11236,
+      "output_tokens": 5186,
+      "failed_calls": 1,
+      "cost_estimate": 0.0194
+    },
+    {
+      "sample_id": "sample_02",
+      "duration_s": 70.47,
+      "llm_calls": 6,
+      "input_tokens": 9063,
+      "output_tokens": 4361,
+      "failed_calls": 0,
+      "cost_estimate": 0.016
+    },
+    {
+      "sample_id": "sample_03",
+      "duration_s": 79.34,
+      "llm_calls": 6,
+      "input_tokens": 9510,
+      "output_tokens": 4812,
+      "failed_calls": 0,
+      "cost_estimate": 0.0172
+    },
+    {
+      "sample_id": "sample_04",
+      "duration_s": 89.96,
+      "llm_calls": 7,
+      "input_tokens": 11159,
+      "output_tokens": 5353,
+      "failed_calls": 1,
+      "cost_estimate": 0.0196
+    },
+    {
+      "sample_id": "sample_05",
+      "duration_s": 103.81,
+      "llm_calls": 7,
+      "input_tokens": 11436,
+      "output_tokens": 5858,
+      "failed_calls": 1,
+      "cost_estimate": 0.0209
+    },
+    {
+      "sample_id": "sample_06",
+      "duration_s": 103.97,
+      "llm_calls": 7,
+      "input_tokens": 10985,
+      "output_tokens": 5879,
+      "failed_calls": 1,
+      "cost_estimate": 0.0205
+    },
+    {
+      "sample_id": "sample_07",
+      "duration_s": 85.69,
+      "llm_calls": 7,
+      "input_tokens": 11363,
+      "output_tokens": 5064,
+      "failed_calls": 1,
+      "cost_estimate": 0.0192
+    },
+    {
+      "sample_id": "sample_08",
+      "duration_s": 81.89,
+      "llm_calls": 6,
+      "input_tokens": 9021,
+      "output_tokens": 4828,
+      "failed_calls": 0,
+      "cost_estimate": 0.0169
+    }
+  ]
+}

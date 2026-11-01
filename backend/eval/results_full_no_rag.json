@@ -1,0 +1,3759 @@
+{
+  "mode": "full",
+  "mock": false,
+  "model": "qwen-plus",
+  "llm_route": "deepseek-first",
+  "llm_route_label": "DeepSeek 优先",
+  "generated_at": "2026-11-02T00:54:59+08:00",
+  "ablation": {
+    "disable_rag": true
+  },
+  "dataset": {
+    "samples": 8,
+    "labels": 51,
+    "rule_labels": 48,
+    "semantic_labels": 3,
+    "note": "8 synthetic procurement contracts; 48 rule-detectable labels + 3 semantic labels"
+  },
+  "overall": {
+    "tp": 50,
+    "fp": 39,
+    "fn": 1,
+    "precision": 0.5618,
+    "recall": 0.9804,
+    "f1": 0.7143,
+    "findings": 89,
+    "labels": 51,
+    "evidence_checked": 83,
+    "citation_checked": 114,
+    "by_source": {
+      "rule+llm": {
+        "tp": 31,
+        "fp": 2,
+        "precision": 0.9394
+      },
+      "rule": {
+        "tp": 17,
+        "fp": 0,
+        "precision": 1.0
+      },
+      "llm": {
+        "tp": 2,
+        "fp": 37,
+        "precision": 0.0513
+      }
+    },
+    "by_confidence": {
+      "confirmed": {
+        "tp": 48,
+        "fp": 2,
+        "precision": 0.96
+      },
+      "needs_review": {
+        "tp": 2,
+        "fp": 37,
+        "precision": 0.0513
+      }
+    },
+    "fp_attribution": {
+      "total": 39,
+      "by_source": {
+        "llm": 37,
+        "rule+llm": 2
+      },
+      "by_severity": {
+        "medium": 19,
+        "high": 18,
+        "low": 2
+      },
+      "by_category": {
+        "compliance": 7,
+        "warranty": 5,
+        "general": 4,
+        "dispute": 7,
+        "acceptance": 4,
+        "ip": 3,
+        "price": 2,
+        "termination": 3,
+        "delivery": 1,
+        "payment": 1,
+        "liability": 2
+      },
+      "by_agent": {
+        "compliance": 20,
+        "commercial": 13,
+        "liability": 6
+      },
+      "with_rule_hint": 0,
+      "without_rule_hint": 39,
+      "evidence_located": 37,
+      "evidence_missing": 2,
+      "with_legal_basis": 2,
+      "without_legal_basis": 37
+    },
+    "evidence_valid_rate": 0.988,
+    "citation_valid_rate": 1.0,
+    "quality": {
+      "unsupported_findings": 2,
+      "uncited_findings": 39,
+      "high_risk_fp": 18,
+      "high_risk_fn": 0,
+      "total_findings": 89,
+      "unsupported_rate": 0.0225,
+      "uncited_rate": 0.4382,
+      "confirmed_precision": 0.96,
+      "advisory_precision": null
+    }
+  },
+  "overall_ci": {
+    "precision": {
+      "point": 0.5618,
+      "low": 0.4337,
+      "high": 0.6667,
+      "iterations": 2000,
+      "seed": 42,
+      "confidence": 0.95
+    },
+    "recall": {
+      "point": 0.9804,
+      "low": 0.9362,
+      "high": 1.0,
+      "iterations": 2000,
+      "seed": 42,
+      "confidence": 0.95
+    },
+    "f1": {
+      "point": 0.7143,
+      "low": 0.5926,
+      "high": 0.8,
+      "iterations": 2000,
+      "seed": 42,
+      "confidence": 0.95
+    }
+  },
+  "overall_by_severity": {
+    "high": {
+      "tp": 21,
+      "fp": 18,
+      "fn": 0,
+      "precision": 0.5385,
+      "recall": 1.0,
+      "f1": 0.7
+    },
+    "medium": {
+      "tp": 28,
+      "fp": 19,
+      "fn": 0,
+      "precision": 0.5957,
+      "recall": 1.0,
+      "f1": 0.7467
+    },
+    "low": {
+      "tp": 1,
+      "fp": 2,
+      "fn": 1,
+      "precision": 0.3333,
+      "recall": 0.5,
+      "f1": 0.4
+    }
+  },
+  "average_duration_s": 88.22,
+  "samples": [
+    {
+      "sample_id": "sample_01",
+      "title": "数控设备采购合同",
+      "label_count": 7,
+      "finding_count": 10,
+      "score": {
+        "tp": 7,
+        "fp": 3,
+        "fn": 0,
+        "precision": 0.7,
+        "recall": 1.0,
+        "f1": 0.8235,
+        "by_severity": {
+          "high": {
+            "tp": 4,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.8,
+            "recall": 1.0,
+            "f1": 0.8889
+          },
+          "medium": {
+            "tp": 3,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.75
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule+llm": {
+            "tp": 4,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "rule": {
+            "tp": 3,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "llm": {
+            "tp": 0,
+            "fp": 3,
+            "precision": 0.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "needs_review": {
+            "tp": 0,
+            "fp": 3,
+            "precision": 0.0
+          }
+        },
+        "fp_attribution": {
+          "total": 3,
+          "by_source": {
+            "llm": 3
+          },
+          "by_severity": {
+            "medium": 2,
+            "high": 1
+          },
+          "by_category": {
+            "compliance": 1,
+            "warranty": 1,
+            "general": 1
+          },
+          "by_agent": {
+            "compliance": 2,
+            "commercial": 1
+          },
+          "with_rule_hint": 0,
+          "without_rule_hint": 3,
+          "evidence_located": 3,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 3
+        },
+        "evidence_checked": 9,
+        "evidence_valid": 9,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 16,
+        "citation_valid": 16,
+        "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 3,
+          "uncited_rate": 0.3,
+          "high_risk_fp": 1,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 10
+        },
+        "matches": [
+          {
+            "label_id": "sample_01-L01",
+            "finding_id": "rule-PAY-001-cl_003",
+            "rule_id": "PAY-001",
+            "rule_hint": null,
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L02",
+            "finding_id": "rule-ACC-002-cl_005",
+            "rule_id": "ACC-002",
+            "rule_hint": null,
+            "clause": "第五条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L03",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "rule_hint": null,
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_01-L04",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "rule_hint": null,
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_01-L05",
+            "finding_id": "rule-LIA-002-cl_007",
+            "rule_id": "LIA-002",
+            "rule_hint": null,
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L06",
+            "finding_id": "rule-DIS-001-cl_008",
+            "rule_id": "DIS-001",
+            "rule_hint": null,
+            "clause": "第八条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_01-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "rule_hint": null,
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-compliance-cl_008-250ac525",
+            "clause_id": "cl_008",
+            "clause_article": "第八条",
+            "clause_text": "第八条 争议解决\n因本合同发生争议，双方应协商解决；协商不成的，提交乙方所在地人民法院诉讼解决。",
+            "category": "compliance",
+            "severity": "high",
+            "source": "llm",
+            "title": "保密义务缺失",
+            "analysis": "合同未设置任何保密条款，买方在交易中可能向供应商披露技术参数、采购计划等商业信息，缺乏法律约束将导致信息泄露风险。\n\n模型补充：合同未约定设备交付后产生的改进技术、操作数据、定制化软件等衍生知识产权归属，亦未明确设备本身所涉知识产权是否随所有权转移，存在权属争议风险。",
+            "evidence_quote": "第八条 争议解决\n因本合同发生争议，双方应协商解决；协商不成的，提交乙方所在地人民法院诉讼解决。",
+            "evidence_start": 0,
+            "evidence_end": 48,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "增加独立保密与知识产权条款，明确保密范围、期限及知识产权归属。",
+            "suggested_text": "双方承诺对在本合同履行过程中知悉的对方商业秘密、技术资料、图纸、软件代码、工艺参数、采购计划、客户信息及其他未公开信息承担严格保密义务，保密期限自本合同生效之日起持续十年。未经对方事先书面同意，任何一方不得向第三方披露、复制、使用或允许他人使用上述信息。本合同项下设备所涉全部知识产权（含改进技术、操作数据、定制化软件等衍生权利）归买方所有；设备交付不导致卖方原有知识产权转移，但卖方应确保买方对设备的合法、完整、无负担使用。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "保密与知识产权条款为强制新增项，不得以‘行业惯例’或‘另行约定’为由省略。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_006-f31a1088",
+            "clause_id": "cl_006",
+            "clause_article": "第六条",
+            "clause_text": "第六条 质量保证\n质保期为验收合格后 12 个月；质保期内出现质量问题，乙方负责免费维修。",
+            "category": "warranty",
+            "severity": "medium",
+            "source": "llm",
+            "title": "质保期起算点与验收条款冲突",
+            "analysis": "第六条约定‘质保期为验收合格后12个月’，但第五条中‘验收合格’依赖于3日内未提异议的推定规则，未绑定设备实际运行状态；若设备在推定验收后短期内暴露出隐蔽缺陷，买方将难以主张质保责任，因质保期已开始计算。",
+            "evidence_quote": "质保期为验收合格后 12 个月；",
+            "evidence_start": 9,
+            "evidence_end": 25,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "质保期自买方签署正式验收合格文件之日起计算。",
+            "suggested_text": "质保期为自甲方签署《最终验收合格确认书》之日起满 12 个月；若因乙方原因导致验收延迟超过 30 日的，质保期自乙方完成全部交付、安装调试并满足验收启动条件之日起算。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "质保期起算必须与买方真实验收行为挂钩，严禁以推定验收或收货时间作为起点。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_009-88acf2fe",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 其他\n本合同自双方签字盖章之日起生效。未尽事宜，双方另行协商。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "general",
+            "severity": "medium",
+            "source": "llm",
+            "title": "合同生效条件过于简略",
+            "analysis": "仅约定‘双方签字盖章之日起生效’，未明确是否需加盖公章/合同专用章、法定代表人或授权代表签字是否必需、附件是否为生效前提等，易引发效力争议。",
+            "evidence_quote": "第九条 其他\n本合同自双方签字盖章之日起生效。未尽事宜，双方另行协商。",
+            "evidence_start": 0,
+            "evidence_end": 35,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "本合同自双方法定代表人或授权代表签字并加盖公司公章之日起生效；附件为本合同组成部分。",
+            "suggested_text": "本合同自双方法定代表人或授权代表签字并加盖公司公章或合同专用章之日起生效；附件一《技术规格书》、附件二《服务范围说明》为本合同不可分割的组成部分，与本合同具有同等法律效力。未尽事宜，双方可签订书面补充协议，补充协议与本合同具有同等法律效力。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须明确签字+盖章双重要件及附件效力，避免单方主张签字即生效或附件无效。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 90.59,
+      "usage": {
+        "llm_calls": 7,
+        "input_tokens": 11236,
+        "output_tokens": 5186,
+        "duration_ms": 90589,
+        "mode": "live",
+        "embedding_mode": "bm25_only",
+        "rerank_mode": "off",
+        "llm_route": "deepseek-first",
+        "llm_route_label": "DeepSeek 优先",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 22987,
+            "input_tokens": 2342,
+            "output_tokens": 997,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 13428,
+            "input_tokens": 1250,
+            "output_tokens": 587,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14534,
+            "input_tokens": 1149,
+            "output_tokens": 640,
+            "mock": false,
+            "success": false,
+            "error": "1 validation error for AgentOutput\nfindings.3.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14900,
+            "input_tokens": 1442,
+            "output_tokens": 647,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 11880,
+            "input_tokens": 1894,
+            "output_tokens": 523,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 31227,
+            "input_tokens": 2409,
+            "output_tokens": 1397,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 9049,
+            "input_tokens": 750,
+            "output_tokens": 395,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 16,
+      "valid_citation_count": 16,
+      "evidence_checked": 9,
+      "evidence_valid": 9
+    },
+    {
+      "sample_id": "sample_02",
+      "title": "办公家具采购合同",
+      "label_count": 7,
+      "finding_count": 10,
+      "score": {
+        "tp": 7,
+        "fp": 3,
+        "fn": 0,
+        "precision": 0.7,
+        "recall": 1.0,
+        "f1": 0.8235,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          "medium": {
+            "tp": 6,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.8571,
+            "recall": 1.0,
+            "f1": 0.9231
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule+llm": {
+            "tp": 5,
+            "fp": 1,
+            "precision": 0.8333
+          },
+          "rule": {
+            "tp": 2,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "llm": {
+            "tp": 0,
+            "fp": 2,
+            "precision": 0.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 1,
+            "precision": 0.875
+          },
+          "needs_review": {
+            "tp": 0,
+            "fp": 2,
+            "precision": 0.0
+          }
+        },
+        "fp_attribution": {
+          "total": 3,
+          "by_source": {
+            "llm": 2,
+            "rule+llm": 1
+          },
+          "by_severity": {
+            "high": 2,
+            "medium": 1
+          },
+          "by_category": {
+            "compliance": 2,
+            "dispute": 1
+          },
+          "by_agent": {
+            "compliance": 3
+          },
+          "with_rule_hint": 0,
+          "without_rule_hint": 3,
+          "evidence_located": 3,
+          "evidence_missing": 0,
+          "with_legal_basis": 1,
+          "without_legal_basis": 2
+        },
+        "evidence_checked": 9,
+        "evidence_valid": 9,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 17,
+        "citation_valid": 17,
+        "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 2,
+          "uncited_rate": 0.2,
+          "high_risk_fp": 2,
+          "high_risk_fn": 0,
+          "confirmed_precision": 0.875,
+          "advisory_precision": null,
+          "total_findings": 10
+        },
+        "matches": [
+          {
+            "label_id": "sample_02-L01",
+            "finding_id": "rule-PAY-003-cl_003",
+            "rule_id": "PAY-003",
+            "rule_hint": null,
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L02",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "rule_hint": null,
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L03",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "rule_hint": null,
+            "clause": "第六条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_02-L04",
+            "finding_id": "rule-WAR-001-cl_006",
+            "rule_id": "WAR-001",
+            "rule_hint": null,
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L05",
+            "finding_id": "rule-TER-002-cl_008",
+            "rule_id": "TER-002",
+            "rule_hint": null,
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L06",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "rule_hint": null,
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_02-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "rule_hint": null,
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "rule-DIS-001-cl_009",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "dispute",
+            "severity": "high",
+            "source": "rule+llm",
+            "title": "管辖法院对买方不利",
+            "analysis": "约定由供应商所在地法院管辖，买方异地诉讼成本高，维权意愿下降。\n\n模型补充：合同约定由甲方（买方）所在地人民法院管辖，表面看似有利，但结合合同事实中 'unfavorable_venue': true，表明该约定在实际履约场景中可能因甲方所在地司法环境、执行效率或地方保护倾向而对买方构成实质不利；且未排除专属管辖或级别管辖冲突风险。",
+            "evidence_quote": "第九条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [
+              "CPL-35"
+            ],
+            "rule_id": "DIS-001",
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 1.0,
+            "confidence_tier": "confirmed",
+            "confidence_reasons": [
+              "规则引擎命中 DIS-001",
+              "规则与模型结论已合并"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "改为买方所在地法院管辖，或约定合同履行地（买方所在地）法院管辖。",
+            "fallback": "由买方所在地有管辖权的人民法院管辖。",
+            "suggested_text": "因本合同引起的或与本合同有关的任何争议，由买方所在地有管辖权的人民法院管辖。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "管辖法院必须明确指向买方所在地且限定为“有管辖权的人民法院”，排除异地管辖可能。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "pending",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）",
+              "与规则引擎命中项合并（同条款、同类、证据重叠）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_009-5a8f8107",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "compliance",
+            "severity": "high",
+            "source": "llm",
+            "title": "争议解决条款缺失仲裁选项且未明确排除仲裁",
+            "analysis": "合同仅约定诉讼管辖，未明确排除仲裁，亦未约定仲裁机构，存在诉讼与仲裁并存的解释风险；根据《仲裁法》第十六条，仲裁协议须具备明确的仲裁意思表示、仲裁事项和选定的仲裁委员会，本条款完全缺失，导致争议解决机制单一且刚性，买方丧失灵活救济路径。\n\n模型补充：合同未设置任何保密条款，买方在采购过程中可能向供应商披露经营数据、办公布局、技术参数等商业信息，缺乏法律约束将导致信息泄露风险敞口。",
+            "evidence_quote": "第九条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "明确约定排除仲裁，仅可通过买方所在地法院诉讼解决。",
+            "suggested_text": "因本合同引起的或与本合同有关的任何争议，由买方所在地有管辖权的人民法院诉讼解决；双方明确排除仲裁方式，未经买方事先书面同意，不得提交任何仲裁机构仲裁。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须明示排除仲裁，避免因条款不完整引发程序争议，确保争议解决路径唯一可控。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_010-bcee0c41",
+            "clause_id": "cl_010",
+            "clause_article": "第十条",
+            "clause_text": "第十条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "compliance",
+            "severity": "medium",
+            "source": "llm",
+            "title": "知识产权归属不明",
+            "analysis": "合同未就办公家具设计图、定制化方案、标识等可能产生的知识产权归属作出约定，若涉及定制开发或品牌联名，买方可能无法当然取得相关权利，存在权属争议隐患。",
+            "evidence_quote": "第十条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "evidence_start": 0,
+            "evidence_end": 51,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "卖方应确保交付成果不侵犯第三方知识产权，并在交付时出具知识产权无瑕疵承诺函；买方对定制化成果享有永久、免费、不可撤销的使用权。",
+            "suggested_text": "第十条 知识产权归属\n因履行本合同所产生或衍生的全部知识产权（包括但不限于办公家具设计图、定制化方案、外观造型、标识、文案、软件及技术文档等）均归买方所有；卖方应于交付成果时同步签署知识产权转让确认书，并配合办理权属登记手续。卖方保证其交付成果不侵犯第三方知识产权，否则应承担全部法律责任及买方因此遭受的损失。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "买方必须取得定制成果的完整知识产权，不得接受仅限使用权的让步；转让手续和承诺函为底线要求。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 70.47,
+      "usage": {
+        "llm_calls": 6,
+        "input_tokens": 9063,
+        "output_tokens": 4361,
+        "duration_ms": 70473,
+        "mode": "live",
+        "embedding_mode": "bm25_only",
+        "rerank_mode": "off",
+        "llm_route": "deepseek-first",
+        "llm_route_label": "DeepSeek 优先",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 21828,
+            "input_tokens": 2193,
+            "output_tokens": 968,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 13780,
+            "input_tokens": 1165,
+            "output_tokens": 608,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14419,
+            "input_tokens": 1350,
+            "output_tokens": 634,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14634,
+            "input_tokens": 1216,
+            "output_tokens": 644,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 25171,
+            "input_tokens": 2397,
+            "output_tokens": 1122,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 8796,
+            "input_tokens": 742,
+            "output_tokens": 385,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 17,
+      "valid_citation_count": 17,
+      "evidence_checked": 9,
+      "evidence_valid": 9
+    },
+    {
+      "sample_id": "sample_03",
+      "title": "钢材年度采购合同",
+      "label_count": 7,
+      "finding_count": 11,
+      "score": {
+        "tp": 7,
+        "fp": 4,
+        "fn": 0,
+        "precision": 0.6364,
+        "recall": 1.0,
+        "f1": 0.7778,
+        "by_severity": {
+          "high": {
+            "tp": 6,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571
+          },
+          "medium": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule+llm": {
+            "tp": 4,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "rule": {
+            "tp": 3,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "llm": {
+            "tp": 0,
+            "fp": 4,
+            "precision": 0.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "needs_review": {
+            "tp": 0,
+            "fp": 4,
+            "precision": 0.0
+          }
+        },
+        "fp_attribution": {
+          "total": 4,
+          "by_source": {
+            "llm": 4
+          },
+          "by_severity": {
+            "high": 2,
+            "medium": 2
+          },
+          "by_category": {
+            "dispute": 1,
+            "compliance": 1,
+            "acceptance": 1,
+            "warranty": 1
+          },
+          "by_agent": {
+            "commercial": 3,
+            "compliance": 1
+          },
+          "with_rule_hint": 0,
+          "without_rule_hint": 4,
+          "evidence_located": 3,
+          "evidence_missing": 1,
+          "with_legal_basis": 0,
+          "without_legal_basis": 4
+        },
+        "evidence_checked": 10,
+        "evidence_valid": 9,
+        "evidence_valid_rate": 0.9,
+        "citation_checked": 16,
+        "citation_valid": 16,
+        "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 1,
+          "unsupported_rate": 0.0909,
+          "uncited_findings": 4,
+          "uncited_rate": 0.3636,
+          "high_risk_fp": 2,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 11
+        },
+        "matches": [
+          {
+            "label_id": "sample_03-L01",
+            "finding_id": "rule-PAY-002-cl_003",
+            "rule_id": "PAY-002",
+            "rule_hint": null,
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L02",
+            "finding_id": "rule-LIA-002-cl_007",
+            "rule_id": "LIA-002",
+            "rule_hint": null,
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L03",
+            "finding_id": "rule-LIA-003-cl_007",
+            "rule_id": "LIA-003",
+            "rule_hint": null,
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L04",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "rule_hint": null,
+            "clause": "第六条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L05",
+            "finding_id": "rule-TER-001-cl_008",
+            "rule_id": "TER-001",
+            "rule_hint": null,
+            "clause": "第八条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L06",
+            "finding_id": "rule-DIS-002-cl_009",
+            "rule_id": "DIS-002",
+            "rule_hint": null,
+            "clause": "第九条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_03-L07",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "rule_hint": null,
+            "clause": "合同级",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-commercial-cl_007-b9770495",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交货的，按日万分之五支付违约金；违约金累计不超过合同总价的 3%。\n乙方应赔偿因违约给甲方造成的全部损失，包括间接损失和可得利益损失。\n甲方逾期付款的，按日万分之五支付违约金。",
+            "category": "dispute",
+            "severity": "high",
+            "source": "llm",
+            "title": "争议解决条款同时约定诉讼与仲裁，无效风险",
+            "analysis": "合同既约定‘甲方所在地人民法院’又约定‘上海仲裁委员会’，构成‘或裁或诉’条款，根据司法实践将被认定为无效，导致争议解决路径不明，显著增加买方维权不确定性。",
+            "evidence_quote": "双方因本合同发生争议，应协商解决；协商不成的，任何一方可向甲方所在地人民法院提起诉讼，或提交上海仲裁委员会仲裁。",
+            "evidence_start": null,
+            "evidence_end": null,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "未提供可定位的原文证据",
+              "没有可用的法条依据"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "因本合同引起的或与本合同有关的任何争议，由甲方所在地人民法院管辖。",
+            "suggested_text": "因本合同引起的或与本合同有关的任何争议，均应提交上海仲裁委员会按照其届时有效的仲裁规则进行仲裁，仲裁裁决是终局的，对双方均有约束力。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "仲裁与诉讼不可并存，优先选择上海仲裁委员会以保障程序确定性与专业性。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）",
+              "证据无法在原文中逐字定位，需人工确认"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_009-f62f829f",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 争议解决\n因本合同发生争议，提交上海仲裁委员会仲裁，也可以向甲方所在地人民法院起诉。",
+            "category": "compliance",
+            "severity": "high",
+            "source": "llm",
+            "title": "保密义务缺失",
+            "analysis": "合同未设置任何保密条款，买方在交易中可能向供应商披露技术参数、采购计划等商业信息，缺乏法律约束将导致信息泄露风险。\n\n模型补充：合同未约定履约过程中产生的技术资料、检测报告、改进成果等知识产权归属，买方后续使用或维权可能存在障碍。",
+            "evidence_quote": "第九条 争议解决\n因本合同发生争议，提交上海仲裁委员会仲裁，也可以向甲方所在地人民法院起诉。",
+            "evidence_start": 0,
+            "evidence_end": 46,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "双方应对履行本合同过程中知悉的对方商业秘密和技术信息承担保密义务，保密期不少于3年。",
+            "suggested_text": "双方应对在履行本合同过程中知悉的对方商业秘密、技术资料、图纸、规格参数、采购计划及其他未公开信息承担保密义务，保密期限自合同签订之日起不少于3年；未经书面同意，不得向任何第三方披露或用于本合同以外目的。因一方泄密造成对方损失的，应全额赔偿。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须设置最低3年保密期及违约赔偿责任，否则买方技术信息与采购策略将暴露于无约束状态。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_005-2503cfa6",
+            "clause_id": "cl_005",
+            "clause_article": "第五条",
+            "clause_text": "第五条 验收\n甲方应在收货后 15 日内完成验收，验收标准见附件技术协议。",
+            "category": "acceptance",
+            "severity": "medium",
+            "source": "llm",
+            "title": "验收期限起算点模糊，未明确‘收货’指签收还是到货",
+            "analysis": "‘收货后15日内’未界定‘收货’是物流交付、签收单签署或入库完成，易引发争议；且与交付条款（cl_004）‘交货至甲方仓库’未衔接验收起算时点，可能导致验收期限计算失当。",
+            "evidence_quote": "甲方应在收货后 15 日内完成验收，验收标准见附件技术协议。",
+            "evidence_start": 7,
+            "evidence_end": 37,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "甲方应在货物运抵其指定仓库后15日内完成验收；如因甲方原因延迟签收，验收期限自约定交货日起算。",
+            "suggested_text": "第五条 验收\n甲方应在货物运抵其指定仓库并完成签收（以甲方或其指定收货人签署的签收单为准）后15日内完成验收，验收标准见附件技术协议；逾期未提出书面异议的，视为初步验收通过。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须明确以‘签收单签署’为起算点，避免以模糊的‘到货’或‘收货’引发争议。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_006-acf99a7b",
+            "clause_id": "cl_006",
+            "clause_article": "第六条",
+            "clause_text": "第六条 质量保证\n质保期为验收合格后 12 个月。",
+            "category": "warranty",
+            "severity": "medium",
+            "source": "llm",
+            "title": "质保期起算点与验收条款不一致",
+            "analysis": "cl_006规定‘质保期为验收合格后12个月’，但cl_005仅约定‘收货后15日内完成验收’，未明确‘验收合格’是否需书面确认；若未约定视为验收合格的默认机制，则质保期起算时间不确定，影响质保权利行使。",
+            "evidence_quote": "质保期为验收合格后 12 个月。",
+            "evidence_start": 9,
+            "evidence_end": 25,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "质保期为甲方签收货物之日起12个月；若甲方在收货后15日内未提出书面异议，视为验收合格，质保期自该日起算。",
+            "suggested_text": "第六条 质量保证\n质保期为甲方签署《验收合格确认书》之日起12个月；若甲方未在第五条约定的验收期限内提出书面异议且未拒绝签收，则自签收单签署之日起满15日视为验收合格，质保期自该日起算。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "质保期必须与可确定的时间点挂钩，优先绑定书面确认，次选默认验收机制，杜绝‘验收合格’无定义导致起算失据。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 79.34,
+      "usage": {
+        "llm_calls": 6,
+        "input_tokens": 9510,
+        "output_tokens": 4812,
+        "duration_ms": 79341,
+        "mode": "live",
+        "embedding_mode": "bm25_only",
+        "rerank_mode": "off",
+        "llm_route": "deepseek-first",
+        "llm_route_label": "DeepSeek 优先",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 22457,
+            "input_tokens": 2311,
+            "output_tokens": 1001,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 13444,
+            "input_tokens": 1220,
+            "output_tokens": 590,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15725,
+            "input_tokens": 1356,
+            "output_tokens": 694,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 17027,
+            "input_tokens": 1207,
+            "output_tokens": 755,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 27999,
+            "input_tokens": 2462,
+            "output_tokens": 1252,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 11811,
+            "input_tokens": 954,
+            "output_tokens": 520,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 16,
+      "valid_citation_count": 16,
+      "evidence_checked": 10,
+      "evidence_valid": 9
+    },
+    {
+      "sample_id": "sample_04",
+      "title": "仓储软件及设备采购合同",
+      "label_count": 7,
+      "finding_count": 10,
+      "score": {
+        "tp": 7,
+        "fp": 3,
+        "fn": 0,
+        "precision": 0.7,
+        "recall": 1.0,
+        "f1": 0.8235,
+        "by_severity": {
+          "high": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "medium": {
+            "tp": 5,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.625,
+            "recall": 1.0,
+            "f1": 0.7692
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule+llm": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "rule": {
+            "tp": 1,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "llm": {
+            "tp": 1,
+            "fp": 3,
+            "precision": 0.25
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 6,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "needs_review": {
+            "tp": 1,
+            "fp": 3,
+            "precision": 0.25
+          }
+        },
+        "fp_attribution": {
+          "total": 3,
+          "by_source": {
+            "llm": 3
+          },
+          "by_severity": {
+            "medium": 3
+          },
+          "by_category": {
+            "warranty": 1,
+            "dispute": 1,
+            "general": 1
+          },
+          "by_agent": {
+            "compliance": 2,
+            "commercial": 1
+          },
+          "with_rule_hint": 0,
+          "without_rule_hint": 3,
+          "evidence_located": 3,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 3
+        },
+        "evidence_checked": 10,
+        "evidence_valid": 10,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 15,
+        "citation_valid": 15,
+        "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 4,
+          "uncited_rate": 0.4,
+          "high_risk_fp": 0,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 10
+        },
+        "matches": [
+          {
+            "label_id": "sample_04-L01",
+            "finding_id": "rule-PAY-001-cl_003",
+            "rule_id": "PAY-001",
+            "rule_hint": null,
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_04-L02",
+            "finding_id": "rule-PAY-003-cl_003",
+            "rule_id": "PAY-003",
+            "rule_hint": null,
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L03",
+            "finding_id": "rule-IP-001-cl_007",
+            "rule_id": "IP-001",
+            "rule_hint": null,
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L04",
+            "finding_id": "rule-COM-001-cl_008",
+            "rule_id": "COM-001",
+            "rule_hint": null,
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L05",
+            "finding_id": "rule-LIA-002-cl_009",
+            "rule_id": "LIA-002",
+            "rule_hint": null,
+            "clause": "第九条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_04-L06",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "rule_hint": null,
+            "clause": "第四条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_04-L07",
+            "finding_id": "llm-commercial-cl_005-23fcc447",
+            "rule_id": null,
+            "rule_hint": null,
+            "clause": "第五条",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-commercial-cl_006-a20b9967",
+            "clause_id": "cl_006",
+            "clause_article": "第六条",
+            "clause_text": "第六条 质量保证\n软件免费维护期为验收合格后 12 个月；维护期内出现缺陷，乙方负责修理或更换。",
+            "category": "warranty",
+            "severity": "medium",
+            "source": "llm",
+            "title": "质保期起算点与验收脱钩",
+            "analysis": "质保期‘自验收合格后12个月’在合同中未明示（cl_006原文为‘验收合格后12个月’），但主文验收条款（cl_005）未写明‘验收合格’的认定机制（如签署验收报告），亦无视为验收合格条款，导致质保期起算不确定，削弱买方质量保障权益。",
+            "evidence_quote": "软件免费维护期为验收合格后 12 个月；维护期内出现缺陷，乙方负责修理或更换。",
+            "evidence_start": 9,
+            "evidence_end": 48,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "质保期自双方签署验收报告之日起算 12 个月，且须在验收条款中明确验收合格以签署书面报告为唯一认定标准。",
+            "suggested_text": "软件及设备的质量保证期为自双方签署《验收报告》之日起 12 个月；质保期内出现任何功能缺陷、性能不达标或兼容性问题，乙方应在接到通知后 2 小时内响应、24 小时内提供远程支持、3 个工作日内完成修复或更换；未能按时修复的，甲方有权自行或委托第三方处理，相关费用由乙方承担。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "质保期起算必须与书面验收报告强绑定，不得使用‘验收合格后’等无操作定义的表述。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_010-7181dbc9",
+            "clause_id": "cl_010",
+            "clause_article": "第十条",
+            "clause_text": "第十条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "dispute",
+            "severity": "medium",
+            "source": "llm",
+            "title": "管辖法院约定对买方不利",
+            "analysis": "合同约定由甲方（买方）所在地人民法院管辖，表面看似有利，但结合交易实质（买方为采购方、供应商提供软件及设备），若发生争议多因交付、验收、质量或知识产权引发，实际诉讼中买方作为原告需主动起诉，该约定未排除乙方（供应商）提起反诉或另行起诉的权利，且未明确排除其他法院管辖，存在被主张协议管辖无效或移送的风险；同时未约定诉讼语言、送达等程序细节，实操性不足。",
+            "evidence_quote": "第十条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "明确约定‘仅由甲方所在地人民法院专属管辖’，并增加‘双方放弃向其他任何法院提起诉讼的权利’表述。",
+            "suggested_text": "因本合同引起的或与本合同有关的任何争议，双方应首先通过友好协商解决；协商不成的，任何一方均有权向甲方所在地有管辖权的人民法院提起诉讼；乙方（供应商）不得就本合同项下争议向其他法院提起诉讼，甲方亦不得就乙方已提起的反诉或本合同项下同一争议另行起诉；诉讼语言为中文，双方确认以本合同载明的通讯地址为司法送达地址，任何一方变更地址须书面通知对方，未通知的，原地址仍视为有效送达地址。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须锁定甲方所在地法院为唯一管辖法院，并覆盖反诉及送达等实操要素，避免管辖争议消耗维权成本。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_011-9f4c1a98",
+            "clause_id": "cl_011",
+            "clause_article": "第十一条",
+            "clause_text": "第十一条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "general",
+            "severity": "medium",
+            "source": "llm",
+            "title": "合同生效条件未覆盖全部签署要件",
+            "analysis": "虽约定‘自双方签字盖章之日起生效’，但未明确是否须加盖公章/合同专用章、法定代表人或授权代表签字是否必需、附件是否为生效前提；实践中若仅签字未盖章或附件未签署，易引发效力争议，尤其涉及软件许可及设备交付等关键义务。",
+            "evidence_quote": "第十一条 其他\n本合同自双方签字盖章之日起生效。",
+            "evidence_start": 0,
+            "evidence_end": 24,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "明确要求附件须与主合同同步签署并盖章，否则主合同不生效；可接受‘附件未签署不影响主合同关于付款、保密等通用条款的效力’作为让步。",
+            "suggested_text": "本合同自双方法定代表人或授权代表签字并加盖公司公章或合同专用章之日起生效；附件一《软件功能清单》、附件二《设备配置及验收标准》、附件三《售后服务承诺书》为本合同不可分割的组成部分，与本合同具有同等法律效力；任一附件未签署或未加盖公章/合同专用章的，本合同不生效。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "附件是交付、验收和知识产权归属的核心依据，必须与主合同同步生效，否则关键义务将缺乏约束基础。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 89.96,
+      "usage": {
+        "llm_calls": 7,
+        "input_tokens": 11159,
+        "output_tokens": 5353,
+        "duration_ms": 89957,
+        "mode": "live",
+        "embedding_mode": "bm25_only",
+        "rerank_mode": "off",
+        "llm_route": "deepseek-first",
+        "llm_route_label": "DeepSeek 优先",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 23095,
+            "input_tokens": 2297,
+            "output_tokens": 1027,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14303,
+            "input_tokens": 1111,
+            "output_tokens": 630,
+            "mock": false,
+            "success": false,
+            "error": "2 validation errors for AgentOutput\nfindings.2.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type\nfindings.3.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14678,
+            "input_tokens": 1376,
+            "output_tokens": 647,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 16112,
+            "input_tokens": 1331,
+            "output_tokens": 713,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 8436,
+            "input_tokens": 1897,
+            "output_tokens": 368,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 34267,
+            "input_tokens": 2304,
+            "output_tokens": 1536,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 9806,
+            "input_tokens": 843,
+            "output_tokens": 432,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 15,
+      "valid_citation_count": 15,
+      "evidence_checked": 10,
+      "evidence_valid": 10
+    },
+    {
+      "sample_id": "sample_05",
+      "title": "食品包装材料采购合同",
+      "label_count": 9,
+      "finding_count": 15,
+      "score": {
+        "tp": 9,
+        "fp": 6,
+        "fn": 0,
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.75,
+        "by_severity": {
+          "high": {
+            "tp": 6,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.75
+          },
+          "medium": {
+            "tp": 3,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.75
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "llm": {
+            "tp": 0,
+            "fp": 6,
+            "precision": 0.0
+          },
+          "rule+llm": {
+            "tp": 4,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "rule": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "needs_review": {
+            "tp": 0,
+            "fp": 6,
+            "precision": 0.0
+          },
+          "confirmed": {
+            "tp": 9,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 6,
+          "by_source": {
+            "llm": 6
+          },
+          "by_severity": {
+            "high": 4,
+            "medium": 2
+          },
+          "by_category": {
+            "ip": 1,
+            "price": 1,
+            "termination": 1,
+            "dispute": 1,
+            "delivery": 1,
+            "compliance": 1
+          },
+          "by_agent": {
+            "compliance": 4,
+            "commercial": 1,
+            "liability": 1
+          },
+          "with_rule_hint": 0,
+          "without_rule_hint": 6,
+          "evidence_located": 6,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 6
+        },
+        "evidence_checked": 14,
+        "evidence_valid": 14,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 24,
+        "citation_valid": 24,
+        "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 6,
+          "uncited_rate": 0.4,
+          "high_risk_fp": 4,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 15
+        },
+        "matches": [
+          {
+            "label_id": "sample_05-L01",
+            "finding_id": "rule-PAY-001-cl_003",
+            "rule_id": "PAY-001",
+            "rule_hint": null,
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L02",
+            "finding_id": "rule-PAY-002-cl_003",
+            "rule_id": "PAY-002",
+            "rule_hint": null,
+            "clause": "第三条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L03",
+            "finding_id": "rule-DEL-001-cl_004",
+            "rule_id": "DEL-001",
+            "rule_hint": null,
+            "clause": "第四条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L04",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "rule_hint": null,
+            "clause": "第四条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L05",
+            "finding_id": "rule-ACC-002-cl_005",
+            "rule_id": "ACC-002",
+            "rule_hint": null,
+            "clause": "第五条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L06",
+            "finding_id": "rule-WAR-001-cl_006",
+            "rule_id": "WAR-001",
+            "rule_hint": null,
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L07",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "rule_hint": null,
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_05-L08",
+            "finding_id": "rule-LIA-003-cl_007",
+            "rule_id": "LIA-003",
+            "rule_hint": null,
+            "clause": "第七条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_05-L09",
+            "finding_id": "rule-DIS-003-contract",
+            "rule_id": "DIS-003",
+            "rule_hint": null,
+            "clause": "合同级",
+            "severity": "high"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-compliance-cl_000-7e143377",
+            "clause_id": "cl_000",
+            "clause_article": "首部",
+            "clause_text": "食品包装材料采购合同\n甲方：绿源食品有限公司\n乙方：安泰包装材料有限公司",
+            "category": "ip",
+            "severity": "high",
+            "source": "llm",
+            "title": "知识产权归属条款缺失",
+            "analysis": "合同未就履约过程中可能产生的改进技术、定制化设计成果等知识产权归属作出约定，存在买方委托开发成果被供应商主张权利的风险。",
+            "evidence_quote": "食品包装材料采购合同\n甲方：绿源食品有限公司\n乙方：安泰包装材料有限公司",
+            "evidence_start": 0,
+            "evidence_end": 36,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "所有定制化成果及履约中产生的技术改进知识产权归甲方所有。",
+            "suggested_text": "双方确认，因本合同履行所产生或衍生的全部知识产权（包括但不限于技术改进、定制化设计、图纸、模具、软件、文档等）均归甲方所有；乙方应自成果产生之日起3日内向甲方移交全部载体及权利凭证，并签署必要文件以配合甲方完成权属登记或确权手续。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "知识产权归属必须明确且单向归属买方，不得接受‘共有’或‘背景知识产权除外’等模糊表述。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_002-785cb753",
+            "clause_id": "cl_002",
+            "clause_article": "第二条",
+            "clause_text": "第二条 合同价款\n合同总价暂定人民币 260,000 元（含税），按实际供货量结算。",
+            "category": "price",
+            "severity": "high",
+            "source": "llm",
+            "title": "合同金额表述模糊且与结算机制冲突",
+            "analysis": "条款称‘合同总价暂定260,000元（含税），按实际供货量结算’，但未约定单价或计价方式，导致总价不具确定性，违反《民法典》第510条关于合同内容应明确的要求；同时‘暂定’与‘含税’并存，未说明税额是否可调，易引发计税争议。",
+            "evidence_quote": "合同总价暂定人民币 260,000 元（含税），按实际供货量结算。",
+            "evidence_start": 9,
+            "evidence_end": 42,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "明确约定单价及计价方式，总价为含税固定单价×实际数量，税额锁定不变。",
+            "suggested_text": "第二条 合同价款\n本合同采用单价计价方式，具体单价见附件一《供货清单及价格明细表》；合同总价为人民币260,000元（含税），该金额系按附件一所列规格、数量及单价计算得出的暂定总额，最终结算金额以双方签字确认的实际供货数量乘以对应单价为准；增值税税率为13%，税额不因市场价格或政策调整而变动。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须删除‘暂定’歧义，绑定单价与数量计算逻辑，杜绝结算争议。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-liability-cl_007-378542a7",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交货的，按日万分之二支付违约金。\n乙方对甲方因此遭受的损失承担一切责任。",
+            "category": "termination",
+            "severity": "high",
+            "source": "llm",
+            "title": "买方单方解除权缺失",
+            "analysis": "合同未约定买方在供应商严重违约（如逾期超期、质量不合格）情形下的单方解除权，亦无解除条件、程序及通知期限，导致买方救济手段严重不足。",
+            "evidence_quote": "乙方逾期交货的，按日万分之二支付违约金。乙方对甲方因此遭受的损失承担一切责任。",
+            "evidence_start": 9,
+            "evidence_end": 49,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "liability",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "甲方有权在乙方逾期交货超10日或货物经一次验收不合格且未在5日内更换时单方解除合同；解除通知送达即生效。",
+            "suggested_text": "乙方发生下列情形之一的，甲方有权单方解除本合同：（1）逾期交货超过15日；（2）交付货物经两次验收仍不合格；（3）因乙方原因导致无法按约履行核心义务且未在收到甲方书面通知后5日内纠正。甲方解除合同的，应以书面形式通知乙方，通知送达乙方之日合同解除；乙方应在收到通知后5日内退还已收款项，并按合同总价20%向甲方支付解约违约金。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须明确具体解除条件、程序和违约责任，避免赋予乙方任意补救机会而架空买方解约权。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_009-fb0dbb7e",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "dispute",
+            "severity": "high",
+            "source": "llm",
+            "title": "争议解决条款缺失",
+            "analysis": "合同未约定管辖法院或仲裁机构，亦无诉讼或仲裁条款，导致争议发生时缺乏明确解决路径，买方维权成本和不确定性显著增加。",
+            "evidence_quote": "本合同自双方签字盖章之日起生效。",
+            "evidence_start": 7,
+            "evidence_end": 23,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "争议由甲方所在地有管辖权的人民法院管辖。",
+            "suggested_text": "因本合同引起的或与本合同有关的任何争议，双方应首先通过友好协商解决；协商不成的，任何一方均有权向甲方所在地有管辖权的人民法院提起诉讼。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "坚持买方所在地法院管辖，排除仲裁及异地管辖，确保维权便利性和成本可控。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_000-a0e43350",
+            "clause_id": "cl_000",
+            "clause_article": "首部",
+            "clause_text": "食品包装材料采购合同\n甲方：绿源食品有限公司\n乙方：安泰包装材料有限公司",
+            "category": "delivery",
+            "severity": "medium",
+            "source": "llm",
+            "title": "交货时间约定模糊",
+            "analysis": "合同首部未载明交货条款，而事实中‘收到订单后尽快交货，具体时间另行通知’属典型模糊表述，缺乏可执行性，易引发履约争议且不利于买方计划安排。",
+            "evidence_quote": "食品包装材料采购合同\n甲方：绿源食品有限公司\n乙方：安泰包装材料有限公司",
+            "evidence_start": 0,
+            "evidence_end": 36,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "交货时间以订单确认函载明为准，最迟不晚于订单发出后15个自然日。",
+            "suggested_text": "乙方应在收到甲方正式采购订单后5个工作日内确认交货时间，并于订单确认之日起10个自然日内完成全部货物交付；交货时间以乙方书面确认函载明日期为准，逾期视为违约。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须将‘尽快’等模糊表述替换为可量化、可追溯的具体时限，并绑定订单确认动作。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_008-f12eedf9",
+            "clause_id": "cl_008",
+            "clause_article": "第八条",
+            "clause_text": "第八条 保密\n双方应对本合同内容及履行过程中获知的对方商业信息承担保密义务。",
+            "category": "compliance",
+            "severity": "medium",
+            "source": "llm",
+            "title": "保密义务虽双向但范围不明",
+            "analysis": "第八条约定双方互负保密义务，但未界定‘商业信息’范围、保密期限及除外情形，实际执行中易产生解释分歧，削弱对买方核心数据（如配方、销量）的保护效力。",
+            "evidence_quote": "第八条 保密\n双方应对本合同内容及履行过程中获知的对方商业信息承担保密义务。",
+            "evidence_start": 0,
+            "evidence_end": 38,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "保密范围包括合同内容及履行中知悉的对方经营、技术信息；保密期3年；法定披露除外。",
+            "suggested_text": "双方应对本合同内容及履行过程中获知的对方商业秘密和技术信息承担保密义务，包括但不限于产品配方、工艺参数、客户名单、销售数据、价格体系及本合同项下所有技术资料；保密义务持续至相关信息进入公知领域后满3年；下列情形不视为泄密：（1）已公开或非因接收方过错进入公知领域；（2）接收方能证明在披露前已合法持有；（3）依法应向监管机构披露且已提前5个工作日书面通知披露方。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须明确定义保密信息类型、期限及法定例外情形，防止乙方以‘不知情’或‘已公开’为由规避责任。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 103.81,
+      "usage": {
+        "llm_calls": 7,
+        "input_tokens": 11436,
+        "output_tokens": 5858,
+        "duration_ms": 103813,
+        "mode": "live",
+        "embedding_mode": "bm25_only",
+        "rerank_mode": "off",
+        "llm_route": "deepseek-first",
+        "llm_route_label": "DeepSeek 优先",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 21050,
+            "input_tokens": 2159,
+            "output_tokens": 936,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 12698,
+            "input_tokens": 1211,
+            "output_tokens": 556,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 13009,
+            "input_tokens": 1097,
+            "output_tokens": 572,
+            "mock": false,
+            "success": false,
+            "error": "1 validation error for AgentOutput\nfindings.3.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15616,
+            "input_tokens": 1362,
+            "output_tokens": 691,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 13607,
+            "input_tokens": 1774,
+            "output_tokens": 603,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 29526,
+            "input_tokens": 2197,
+            "output_tokens": 1321,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 26573,
+            "input_tokens": 1636,
+            "output_tokens": 1179,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 24,
+      "valid_citation_count": 24,
+      "evidence_checked": 14,
+      "evidence_valid": 14
+    },
+    {
+      "sample_id": "sample_06",
+      "title": "实验室仪器采购合同",
+      "label_count": 6,
+      "finding_count": 13,
+      "score": {
+        "tp": 5,
+        "fp": 8,
+        "fn": 1,
+        "precision": 0.3846,
+        "recall": 0.8333,
+        "f1": 0.5263,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.2,
+            "recall": 1.0,
+            "f1": 0.3333
+          },
+          "medium": {
+            "tp": 4,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6667
+          },
+          "low": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "llm": {
+            "tp": 0,
+            "fp": 8,
+            "precision": 0.0
+          },
+          "rule": {
+            "tp": 3,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "rule+llm": {
+            "tp": 2,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "by_confidence": {
+          "needs_review": {
+            "tp": 0,
+            "fp": 8,
+            "precision": 0.0
+          },
+          "confirmed": {
+            "tp": 5,
+            "fp": 0,
+            "precision": 1.0
+          }
+        },
+        "fp_attribution": {
+          "total": 8,
+          "by_source": {
+            "llm": 8
+          },
+          "by_severity": {
+            "high": 4,
+            "medium": 4
+          },
+          "by_category": {
+            "acceptance": 2,
+            "payment": 1,
+            "termination": 1,
+            "liability": 1,
+            "compliance": 1,
+            "dispute": 1,
+            "general": 1
+          },
+          "by_agent": {
+            "liability": 3,
+            "compliance": 3,
+            "commercial": 2
+          },
+          "with_rule_hint": 0,
+          "without_rule_hint": 8,
+          "evidence_located": 8,
+          "evidence_missing": 0,
+          "with_legal_basis": 0,
+          "without_legal_basis": 8
+        },
+        "evidence_checked": 12,
+        "evidence_valid": 12,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 11,
+        "citation_valid": 11,
+        "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 8,
+          "uncited_rate": 0.6154,
+          "high_risk_fp": 4,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 13
+        },
+        "matches": [
+          {
+            "label_id": "sample_06-L01",
+            "finding_id": "rule-WAR-001-cl_006",
+            "rule_id": "WAR-001",
+            "rule_hint": null,
+            "clause": "第六条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L02",
+            "finding_id": "rule-PRI-002-cl_002",
+            "rule_id": "PRI-002",
+            "rule_hint": null,
+            "clause": "第二条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L03",
+            "finding_id": "rule-COM-001-contract",
+            "rule_id": "COM-001",
+            "rule_hint": null,
+            "clause": "合同级",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L04",
+            "finding_id": "rule-DEL-002-cl_004",
+            "rule_id": "DEL-002",
+            "rule_hint": null,
+            "clause": "第四条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_06-L06",
+            "finding_id": "rule-LIA-004-cl_006",
+            "rule_id": "LIA-004",
+            "rule_hint": null,
+            "clause": "第六条",
+            "severity": "high"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-commercial-cl_003-fe9cb0dc",
+            "clause_id": "cl_003",
+            "clause_article": "第三条",
+            "clause_text": "第三条 付款方式\n验收合格后 30 日内，甲方向乙方支付全部价款。",
+            "category": "payment",
+            "severity": "high",
+            "source": "llm",
+            "title": "付款条件与验收安排存在逻辑断层",
+            "analysis": "约定‘验收合格后30日内支付全部价款’，但未约定验收不合格的处理机制（如整改、退货、扣款），亦无质保金条款，买方缺乏质量违约制约手段。",
+            "evidence_quote": "验收合格后 30 日内，甲方向乙方支付全部价款。",
+            "evidence_start": 9,
+            "evidence_end": 33,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "验收不合格的，乙方须在7个工作日内无偿更换或修复；整改超期或再次不合格的，甲方有权解除合同并索赔；保留5%质保金。",
+            "suggested_text": "验收合格后30日内，甲方向乙方支付全部价款；如验收不合格，乙方应在收到甲方书面通知后5个工作日内完成整改并重新提交验收，逾期未整改或二次验收仍不合格的，甲方有权退货、拒付全部价款，并要求乙方承担由此产生的检测、运输、仓储等费用；合同总价的10%作为质量保证金，于质保期满且无质量争议后15日内无息返还。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须嵌入验收不合格处理路径与质保金机制，否则买方丧失质量制约抓手。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-liability-cl_007-a102b66a",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "category": "termination",
+            "severity": "high",
+            "source": "llm",
+            "title": "买方解除权缺失",
+            "analysis": "合同未约定买方在供应商逾期交付、质量不合格、拒不修理等根本违约情形下的单方解除权，亦无解除条件、程序及后果条款，导致买方缺乏有效退出机制，权利严重不对等。",
+            "evidence_quote": "乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "evidence_start": 9,
+            "evidence_end": 45,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "liability",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "乙方逾期交付超10日、或验收不合格经一次整改仍不达标，甲方可解除合同；乙方须退还已收款并支付15%解约违约金。",
+            "suggested_text": "发生下列情形之一的，甲方有权单方解除合同：（1）乙方逾期交付超过15日；（2）验收不合格且经两次整改仍未通过；（3）乙方拒不履行修理、更换义务或拒绝配合验收；（4）乙方严重违反保密、知识产权或质量保证义务。合同解除后，乙方应于5个工作日内退还甲方已付款项，并按合同总价20%支付解约违约金；甲方有权就实际损失超出违约金部分另行索赔。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "解除权必须绑定具体、可验证的触发条件和后果，否则形同虚设。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-liability-cl_007-2605d33e",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "category": "liability",
+            "severity": "high",
+            "source": "llm",
+            "title": "逾期违约金过低且上限偏低",
+            "analysis": "日万分之五（0.05%）折合年化18.25%，虽略高于LPR四倍（约14.8%），但结合合同金额45万元及60日交付期，违约金总额上限仅4.5万元（10%），不足以覆盖买方停产、检测延误等实际损失；司法实践中对显失公平的违约金上限可能调增。\n\n模型补充：条款仅约定逾期交付违约责任，未就仪器质量不符合附件技术参数的情形设置退换货、修理、降价或索赔等法定救济路径，违反《民法典》第617条关于出卖人瑕疵担保义务的要求，导致买方实质性权利缺位。",
+            "evidence_quote": "乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "evidence_start": 9,
+            "evidence_end": 45,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "liability",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "逾期违约金提高至日万分之八，上限调至合同总价20%；质量不符参数的，按每项2%计违约金，总额不超10%。",
+            "suggested_text": "乙方逾期交付的，自逾期之日起按日千分之一向甲方支付违约金；逾期超过15日的，甲方有权解除合同并要求乙方支付合同总价20%的违约金；本违约金系对甲方停产停工、检测延误、替代采购等可预见损失的合理预估，不因实际损失高低而调整。乙方交付的仪器不符合附件技术参数的，除适用第六条质量救济外，还应按每项不符参数对应合同金额的5%支付单项违约金，累计不超过合同总价15%。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "违约金标准须覆盖真实商业损失，且与解除权联动，否则难以形成有效约束。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_008-b0a17dc5",
+            "clause_id": "cl_008",
+            "clause_article": "第八条",
+            "clause_text": "第八条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "compliance",
+            "severity": "high",
+            "source": "llm",
+            "title": "保密义务缺失",
+            "analysis": "合同未设置任何保密条款，双方在履行过程中可能接触对方技术资料、商业信息（如仪器参数、采购用途、内部验收标准等），缺乏保密义务将导致买方商业秘密及技术信息保护缺位，违反《民法典》合同编关于附随义务的基本要求。\n\n模型补充：合同未就标的物（高效液相色谱仪）所涉软件、固件、操作文档、定制化功能等衍生知识产权归属作出约定；若设备含专有分析算法或需配合乙方软件使用，买方可能无法获得必要使用权或面临后续授权限制，构成重大权属风险。",
+            "evidence_quote": "第八条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "双方应对履行中获知的对方技术及商业信息保密，保密期5年；仪器配套软件及文档甲方享有永久免费使用权。",
+            "suggested_text": "双方承诺对在合同订立、履行及后续服务过程中知悉的对方技术资料、商业信息（包括但不限于仪器软硬件架构、操作文档、分析算法、采购用途、内部验收标准、价格构成等）承担永久保密义务；未经书面同意，不得向任何第三方披露、复制或用于本合同以外目的；本义务不因合同终止而失效。仪器所涉全部软件、固件、操作文档及定制化功能的使用权永久、免费授予甲方，乙方不得设置访问限制、远程关停或额外授权收费；相关知识产权归乙方所有，但甲方享有不可撤销的、免许可费的、可转授权的使用权。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "保密义务必须覆盖全周期、全信息类型，软件使用权条款是设备可用性的前提保障。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_005-ac371cd0",
+            "clause_id": "cl_005",
+            "clause_article": "第五条",
+            "clause_text": "第五条 验收\n甲方应在收货后 15 日内完成验收，验收标准见附件技术参数。",
+            "category": "acceptance",
+            "severity": "medium",
+            "source": "llm",
+            "title": "验收期限起算点不明确",
+            "analysis": "约定‘收货后15日内完成验收’，但未定义‘收货’标准（如签收单、到货通知、开箱完成），易导致双方对验收起算时间产生争议。",
+            "evidence_quote": "甲方应在收货后 15 日内完成验收，验收标准见附件技术参数。",
+            "evidence_start": 7,
+            "evidence_end": 37,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "验收自甲方签署《到货签收单》次日起算15日；签收单缺失的，以甲方书面通知送达日为起算日。",
+            "suggested_text": "甲方应在仪器运抵指定交付地点并完成签收（以双方签署的《到货签收单》为准）后15日内完成验收；《到货签收单》须载明到货时间、外包装完整性、箱数、外观状态及随机文件清单；未签署签收单的，以甲方发出的书面到货通知送达乙方之日为验收起算日。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须将‘收货’定义为可验证的签收行为，杜绝以模糊事实主张起算时间。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-liability-cl_007-e980fd1a",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "category": "acceptance",
+            "severity": "medium",
+            "source": "llm",
+            "title": "验收期过短且无视为验收条款",
+            "analysis": "验收期15日，对于LC-2050型高效液相色谱仪（需安装调试、方法验证、稳定性测试）明显不足；且未约定逾期未提出异议视为验收合格，易引发争议并使买方丧失质量异议权。",
+            "evidence_quote": "乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "evidence_start": 9,
+            "evidence_end": 45,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "liability",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "验收期延长至 30 日，逾期未提出书面异议且未拒绝签署验收文件的，视为验收合格。",
+            "suggested_text": "甲方应在货物到货并完成安装调试后 45 日内组织验收；验收内容包括设备运行、方法验证及连续 72 小时稳定性测试。甲方未在上述期限内提出书面异议且未拒绝签署《验收合格报告》的，视为验收合格。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "LC-2050型设备需充分验证周期，验收期必须匹配技术要求，否则买方质量异议权将实质性丧失。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_008-5b1b192d",
+            "clause_id": "cl_008",
+            "clause_article": "第八条",
+            "clause_text": "第八条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "dispute",
+            "severity": "medium",
+            "source": "llm",
+            "title": "争议解决条款单方约定管辖法院，未明确是否排除仲裁且未体现买方协商地位",
+            "analysis": "条款仅约定‘甲方所在地人民法院管辖’，虽甲方为买方（康泽生物科技有限公司），形式上对买方有利，但未明确排除仲裁、亦未体现双方合意选择诉讼的表述；结合实务中卖方常主导合同起草，该单向诉讼约定可能隐含格式条款风险，且未设置备选争议解决机制，灵活性不足。",
+            "evidence_quote": "第八条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "因本合同引起的或与本合同有关的任何争议，由甲方所在地有管辖权的人民法院管辖。",
+            "suggested_text": "因本合同引起的或与本合同有关的任何争议，双方应首先通过友好协商解决；协商不成的，任何一方均有权向甲方所在地有管辖权的人民法院提起诉讼；双方确认本条款系经平等协商达成，不构成格式条款。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须体现双方合意选择诉讼，排除仲裁歧义，并明示非格式条款，以防范效力风险。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_009-7bca7e17",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "general",
+            "severity": "medium",
+            "source": "llm",
+            "title": "合同生效条件虽明确但未限定签署主体资质",
+            "analysis": "虽约定‘双方签字盖章之日起生效’，但未明确签署人权限（如是否需法定代表人或授权代表）、印章类型（公章/合同专用章/电子签有效性），在发生争议时可能影响合同成立与效力认定，尤其对买方风控合规构成隐患。",
+            "evidence_quote": "本合同自双方签字盖章之日起生效。",
+            "evidence_start": 7,
+            "evidence_end": 23,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "本合同自双方法定代表人或授权代表签字并加盖公章之日起生效。",
+            "suggested_text": "本合同自双方法定代表人或其授权代表签字并加盖公司公章或合同专用章之日起生效；电子签名须符合《中华人民共和国电子签名法》规定的可靠电子签名要件，且经双方事先书面确认。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "签署主体和印章类型必须明确限定，防止无权代理或用章瑕疵导致合同效力争议。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          }
+        ],
+        "unmatched_labels": [
+          {
+            "id": "sample_06-L05",
+            "clause_article": "第四条",
+            "category": "delivery",
+            "rule_id": null,
+            "severity": "low",
+            "keywords": [
+              "运费",
+              "风险"
+            ],
+            "clause_id": null,
+            "quote": null,
+            "page": null,
+            "scope": null,
+            "label_layer": null,
+            "annotator": "author",
+            "annotation_pass": 1,
+            "confidence": null,
+            "notes": ""
+          }
+        ]
+      },
+      "duration_s": 103.97,
+      "usage": {
+        "llm_calls": 7,
+        "input_tokens": 10985,
+        "output_tokens": 5879,
+        "duration_ms": 103973,
+        "mode": "live",
+        "embedding_mode": "bm25_only",
+        "rerank_mode": "off",
+        "llm_route": "deepseek-first",
+        "llm_route_label": "DeepSeek 优先",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 20747,
+            "input_tokens": 2060,
+            "output_tokens": 922,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 13162,
+            "input_tokens": 1335,
+            "output_tokens": 572,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 14156,
+            "input_tokens": 1112,
+            "output_tokens": 626,
+            "mock": false,
+            "success": false,
+            "error": "2 validation errors for AgentOutput\nfindings.2.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type\nfindings.3.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15267,
+            "input_tokens": 1219,
+            "output_tokens": 673,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15491,
+            "input_tokens": 1894,
+            "output_tokens": 688,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 35400,
+            "input_tokens": 1986,
+            "output_tokens": 1588,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 18137,
+            "input_tokens": 1379,
+            "output_tokens": 810,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 11,
+      "valid_citation_count": 11,
+      "evidence_checked": 12,
+      "evidence_valid": 12
+    },
+    {
+      "sample_id": "sample_07",
+      "title": "冷链保温箱采购合同",
+      "label_count": 7,
+      "finding_count": 11,
+      "score": {
+        "tp": 7,
+        "fp": 4,
+        "fn": 0,
+        "precision": 0.6364,
+        "recall": 1.0,
+        "f1": 0.7778,
+        "by_severity": {
+          "high": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          "medium": {
+            "tp": 6,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.8571,
+            "recall": 1.0,
+            "f1": 0.9231
+          },
+          "low": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "by_source": {
+          "rule+llm": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "llm": {
+            "tp": 0,
+            "fp": 4,
+            "precision": 0.0
+          }
+        },
+        "by_confidence": {
+          "confirmed": {
+            "tp": 7,
+            "fp": 0,
+            "precision": 1.0
+          },
+          "needs_review": {
+            "tp": 0,
+            "fp": 4,
+            "precision": 0.0
+          }
+        },
+        "fp_attribution": {
+          "total": 4,
+          "by_source": {
+            "llm": 4
+          },
+          "by_severity": {
+            "high": 2,
+            "medium": 1,
+            "low": 1
+          },
+          "by_category": {
+            "dispute": 1,
+            "ip": 1,
+            "warranty": 1,
+            "general": 1
+          },
+          "by_agent": {
+            "commercial": 2,
+            "compliance": 2
+          },
+          "with_rule_hint": 0,
+          "without_rule_hint": 4,
+          "evidence_located": 3,
+          "evidence_missing": 1,
+          "with_legal_basis": 0,
+          "without_legal_basis": 4
+        },
+        "evidence_checked": 10,
+        "evidence_valid": 10,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 13,
+        "citation_valid": 13,
+        "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 1,
+          "unsupported_rate": 0.0909,
+          "uncited_findings": 4,
+          "uncited_rate": 0.3636,
+          "high_risk_fp": 2,
+          "high_risk_fn": 0,
+          "confirmed_precision": 1.0,
+          "advisory_precision": null,
+          "total_findings": 11
+        },
+        "matches": [
+          {
+            "label_id": "sample_07-L01",
+            "finding_id": "rule-PAY-003-cl_003",
+            "rule_id": "PAY-003",
+            "rule_hint": null,
+            "clause": "第三条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L02",
+            "finding_id": "rule-LIA-001-cl_007",
+            "rule_id": "LIA-001",
+            "rule_hint": null,
+            "clause": "第七条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L03",
+            "finding_id": "rule-FOR-001-cl_008",
+            "rule_id": "FOR-001",
+            "rule_hint": null,
+            "clause": "第八条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L04",
+            "finding_id": "rule-TER-002-cl_009",
+            "rule_id": "TER-002",
+            "rule_hint": null,
+            "clause": "第九条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L05",
+            "finding_id": "rule-DIS-001-cl_011",
+            "rule_id": "DIS-001",
+            "rule_hint": null,
+            "clause": "第十一条",
+            "severity": "high"
+          },
+          {
+            "label_id": "sample_07-L06",
+            "finding_id": "rule-ACC-003-cl_005",
+            "rule_id": "ACC-003",
+            "rule_hint": null,
+            "clause": "第五条",
+            "severity": "medium"
+          },
+          {
+            "label_id": "sample_07-L07",
+            "finding_id": "rule-COM-001-cl_010",
+            "rule_id": "COM-001",
+            "rule_hint": null,
+            "clause": "第十条",
+            "severity": "medium"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "llm-commercial-cl_007-c4783989",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交付的，按日万分之二支付违约金；违约金累计不超过合同总价的 10%。",
+            "category": "dispute",
+            "severity": "high",
+            "source": "llm",
+            "title": "争议解决条款未在提供的条款中体现，但事实字段标记为不利管辖",
+            "analysis": "事实字段显示‘unfavorable_venue’: true 且 ‘court’: ‘乙方所在地人民法院’，但所列相关条款中无对应争议解决条款（cl_007 未提供原文），存在条款缺失或引用错误风险；买方作为甲方，在乙方所在地诉讼将增加维权成本与不确定性。",
+            "evidence_quote": "",
+            "evidence_start": null,
+            "evidence_end": null,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "未提供可定位的原文证据",
+              "没有可用的法条依据"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "由买方所在地有管辖权的人民法院管辖。",
+            "suggested_text": "因本合同引起的或与本合同有关的任何争议，应提交买方所在地有管辖权的人民法院诉讼解决。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "管辖法院必须锁定买方所在地，不得接受任何‘协商不成时’‘可选择’等模糊表述，否则程序成本不可控。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）",
+              "证据无法在原文中逐字定位，需人工确认",
+              "模型未提供原文证据，需人工确认"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_012-95746d50",
+            "clause_id": "cl_012",
+            "clause_article": "第十二条",
+            "clause_text": "第十二条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "ip",
+            "severity": "high",
+            "source": "llm",
+            "title": "知识产权归属缺失",
+            "analysis": "合同全文未就履约过程中可能产生的技术改进、定制化设计、图纸、测试数据等知识产权归属作出约定，买方无法确保对定制化成果享有权利，存在权属风险。",
+            "evidence_quote": "第十二条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "evidence_start": 0,
+            "evidence_end": 52,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "履约中产生的定制化成果知识产权归甲方所有，乙方须无条件配合确权。",
+            "suggested_text": "乙方根据本合同为甲方定制开发、设计、测试或交付过程中产生的所有知识产权（包括但不限于技术方案、图纸、源代码、测试数据、改进成果、外观设计及专利权）均归甲方所有。乙方应配合甲方办理相关知识产权登记手续，并签署一切必要文件。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "知识产权归属必须绝对明确且单方归属甲方，禁止‘共有’‘乙方保留背景知识产权’等保留性表述。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_006-acf99a7b",
+            "clause_id": "cl_006",
+            "clause_article": "第六条",
+            "clause_text": "第六条 质量保证\n质保期为验收合格后 12 个月。\n质量不合格的，甲方有权要求退货、换货或修理，费用由乙方承担。",
+            "category": "warranty",
+            "severity": "medium",
+            "source": "llm",
+            "title": "质保期起算点与验收条款不一致",
+            "analysis": "第六条约定‘质保期为验收合格后12个月’，但第五条仅规定‘收货后15日内完成验收’，未明确‘验收合格’是否以书面确认为准，亦未约定逾期未验收的法律后果；若甲方拖延验收，质保期将无法起算，损害买方权益。",
+            "evidence_quote": "质保期为验收合格后 12 个月。",
+            "evidence_start": 9,
+            "evidence_end": 25,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "质保期自收货之日起满15日后起算，但甲方在该期间内提出书面异议的，自异议解决并签署验收合格文件之日起算。",
+            "suggested_text": "质保期为甲方签署书面验收合格文件之日起12个月；甲方应在收货后15日内完成验收并出具书面验收意见，逾期未提出书面异议且未出具验收不合格说明的，视为验收合格。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须锁定质保期起算时点，避免因甲方怠于验收导致乙方无限期免责。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_012-cddc4e6c",
+            "clause_id": "cl_012",
+            "clause_article": "第十二条",
+            "clause_text": "第十二条 其他\n本合同自双方签字盖章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "general",
+            "severity": "low",
+            "source": "llm",
+            "title": "合同生效条件表述简略但基本明确",
+            "analysis": "‘双方签字盖章之日起生效’符合《民法典》关于合同生效的一般规定，虽未明确是否需加盖公章或合同专用章，但签署主体清晰，风险较低。",
+            "evidence_quote": "第十二条 其他\n本合同自双方签字盖章之日起生效。",
+            "evidence_start": 0,
+            "evidence_end": 24,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "本合同自双方法定代表人或授权代表签字并加盖公司公章之日起生效。",
+            "suggested_text": "本合同自双方法定代表人或授权代表签字并加盖公司公章或合同专用章之日起生效。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "明确用章类型可减少效力争议，优先争取‘公章或合同专用章’，底线为‘公章’。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 85.69,
+      "usage": {
+        "llm_calls": 7,
+        "input_tokens": 11363,
+        "output_tokens": 5064,
+        "duration_ms": 85687,
+        "mode": "live",
+        "embedding_mode": "bm25_only",
+        "rerank_mode": "off",
+        "llm_route": "deepseek-first",
+        "llm_route_label": "DeepSeek 优先",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 23597,
+            "input_tokens": 2356,
+            "output_tokens": 1052,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 13118,
+            "input_tokens": 1274,
+            "output_tokens": 573,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 13306,
+            "input_tokens": 1233,
+            "output_tokens": 581,
+            "mock": false,
+            "success": false,
+            "error": "1 validation error for AgentOutput\nfindings.3.clause_id\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15848,
+            "input_tokens": 1361,
+            "output_tokens": 701,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 10619,
+            "input_tokens": 1919,
+            "output_tokens": 466,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 27668,
+            "input_tokens": 2201,
+            "output_tokens": 1230,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 10452,
+            "input_tokens": 1019,
+            "output_tokens": 461,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 13,
+      "valid_citation_count": 13,
+      "evidence_checked": 10,
+      "evidence_valid": 10
+    },
+    {
+      "sample_id": "sample_08",
+      "title": "电子元器件采购合同",
+      "label_count": 1,
+      "finding_count": 9,
+      "score": {
+        "tp": 1,
+        "fp": 8,
+        "fn": 0,
+        "precision": 0.1111,
+        "recall": 1.0,
+        "f1": 0.2,
+        "by_severity": {
+          "high": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "medium": {
+            "tp": 0,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "low": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6667
+          }
+        },
+        "by_source": {
+          "llm": {
+            "tp": 1,
+            "fp": 7,
+            "precision": 0.125
+          },
+          "rule+llm": {
+            "tp": 0,
+            "fp": 1,
+            "precision": 0.0
+          }
+        },
+        "by_confidence": {
+          "needs_review": {
+            "tp": 1,
+            "fp": 7,
+            "precision": 0.125
+          },
+          "confirmed": {
+            "tp": 0,
+            "fp": 1,
+            "precision": 0.0
+          }
+        },
+        "fp_attribution": {
+          "total": 8,
+          "by_source": {
+            "llm": 7,
+            "rule+llm": 1
+          },
+          "by_severity": {
+            "medium": 4,
+            "high": 3,
+            "low": 1
+          },
+          "by_category": {
+            "termination": 1,
+            "compliance": 1,
+            "ip": 1,
+            "acceptance": 1,
+            "warranty": 1,
+            "liability": 1,
+            "dispute": 1,
+            "price": 1
+          },
+          "by_agent": {
+            "compliance": 3,
+            "commercial": 3,
+            "liability": 2
+          },
+          "with_rule_hint": 0,
+          "without_rule_hint": 8,
+          "evidence_located": 8,
+          "evidence_missing": 0,
+          "with_legal_basis": 1,
+          "without_legal_basis": 7
+        },
+        "evidence_checked": 9,
+        "evidence_valid": 9,
+        "evidence_valid_rate": 1.0,
+        "citation_checked": 2,
+        "citation_valid": 2,
+        "citation_valid_rate": 1.0,
+        "quality": {
+          "unsupported_findings": 0,
+          "unsupported_rate": 0.0,
+          "uncited_findings": 8,
+          "uncited_rate": 0.8889,
+          "high_risk_fp": 3,
+          "high_risk_fn": 0,
+          "confirmed_precision": 0.0,
+          "advisory_precision": null,
+          "total_findings": 9
+        },
+        "matches": [
+          {
+            "label_id": "sample_08-L01",
+            "finding_id": "llm-commercial-cl_003-ef3a28b4",
+            "rule_id": null,
+            "rule_hint": null,
+            "clause": "第三条",
+            "severity": "low"
+          }
+        ],
+        "unmatched_findings": [
+          {
+            "id": "rule-TER-001-cl_008",
+            "clause_id": "cl_008",
+            "clause_article": "第八条",
+            "clause_text": "第八条 合同解除\n乙方逾期超过 30 日或质量不合格拒不整改的，甲方有权解除合同。",
+            "category": "termination",
+            "severity": "high",
+            "source": "rule+llm",
+            "title": "买方解除权缺失或条件不对等",
+            "analysis": "只赋予供应商解除权，或买方解除条件过于苛刻，出现重大违约时难以退出合同。\n\n模型补充：仅允许甲方在乙方逾期超30日或质量不合格拒不整改时解除合同，未涵盖‘逾期超15日’‘经两次整改仍不合格’‘关键参数不达标’等常见买方合理解除情形；对比卖方单方解约权缺失，构成权利义务不对等。",
+            "evidence_quote": "第八条 合同解除\n乙方逾期超过 30 日或质量不合格拒不整改的，甲方有权解除合同。",
+            "evidence_start": 0,
+            "evidence_end": 41,
+            "legal_basis_ids": [
+              "CC-563",
+              "CC-577"
+            ],
+            "rule_id": "TER-001",
+            "rule_hint": null,
+            "agent": "liability",
+            "confidence": 1.0,
+            "confidence_tier": "confirmed",
+            "confidence_reasons": [
+              "规则引擎命中 TER-001",
+              "规则与模型结论已合并"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "明确买方在供应商逾期、质量不合格、根本违约等情形下的解除权及退款/赔偿机制。",
+            "fallback": "甲方有权在乙方逾期超30日、关键参数不达标或经两次整改仍不合格时解除合同，并要求退还已付款及支付合同总价10%违约金。",
+            "suggested_text": "第八条 合同解除\n出现下列情形之一的，甲方有权单方解除合同：（1）乙方逾期交付超过15日；（2）乙方交付货物关键参数不符合附件一《技术规格书》要求；（3）乙方对同一质量问题经两次整改仍未达标；（4）乙方拒不配合验收或拒绝签署《验收合格确认书》超过5个工作日；（5）乙方质量不合格且拒不整改。合同解除后，乙方应于5日内退还甲方已付款项，并按合同总价20%支付违约金；造成甲方其他损失的，乙方应另行赔偿。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "解除条件须覆盖常见实质性违约情形，违约金比例应与买方实际风险匹配，不可低于10%。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "pending",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）",
+              "与规则引擎命中项合并（同条款、同类、证据重叠）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_009-ac1c88ec",
+            "clause_id": "cl_009",
+            "clause_article": "第九条",
+            "clause_text": "第九条 保密\n双方应对因履行本合同获知的对方商业信息承担保密义务。",
+            "category": "compliance",
+            "severity": "high",
+            "source": "llm",
+            "title": "保密义务条款过于简略，缺乏关键要素",
+            "analysis": "仅约定‘承担保密义务’，未明确保密信息范围、保密期限、除外情形、违约责任及救济方式，不符合商业合同常见审慎标准，可能导致执行困难和救济落空。",
+            "evidence_quote": "第九条 保密\n双方应对因履行本合同获知的对方商业信息承担保密义务。",
+            "evidence_start": 0,
+            "evidence_end": 33,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "保密义务持续期不少于3年，违约金不低于合同总价5%，且明确除外情形及举证责任。",
+            "suggested_text": "第九条 保密\n双方承诺对因履行本合同所知悉的对方技术资料、商业数据、产品参数、客户信息、成本结构等一切非公开信息（以下简称“保密信息”）承担严格保密义务。保密义务持续至该等信息进入公知领域后满三年；但技术秘密、源代码、算法等核心知识产权信息永久保密。下列情形不视为泄密：（1）信息已合法公开；（2）接收方能证明其在披露前已合法持有；（3）依法应向监管机构提供。一方违反保密义务的，应赔偿守约方全部实际损失，并承担不低于人民币50万元的违约金。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "保密期限、范围、除外情形和违约金必须具象化，否则条款无执行效力。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_011-8724d43d",
+            "clause_id": "cl_011",
+            "clause_article": "第十一条",
+            "clause_text": "第十一条 其他\n本合同自双方授权代表签字并加盖公章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "category": "ip",
+            "severity": "high",
+            "source": "llm",
+            "title": "知识产权归属条款缺失",
+            "analysis": "合同全文未约定履约过程中产生的技术成果、改进方案、文档资料等知识产权归属，尤其在涉及定制化元器件或联合开发场景下，易引发权属争议，买方无法确保对交付物相关知识产权的完整控制。",
+            "evidence_quote": "第十一条 其他\n本合同自双方授权代表签字并加盖公章之日起生效。\n（本文件为合成示例，仅用于系统测试，不构成真实合同。）",
+            "evidence_start": 0,
+            "evidence_end": 59,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "所有交付成果及相关知识产权归甲方所有，乙方须签署权属确认文件并承担侵权责任。",
+            "suggested_text": "第十一条 知识产权\n乙方为履行本合同所开发、交付或产生的所有技术成果、设计文档、测试报告、源代码、固件、改进方案、技术方案及相应知识产权（包括但不限于著作权、专利权、技术秘密），均归甲方单独所有。乙方应于交付同时签署《知识产权归属确认函》及必要权利转让文件，并配合甲方办理登记手续。乙方保证其交付成果不侵犯第三方知识产权；如发生侵权纠纷，由乙方承担全部责任并赔偿甲方损失。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "定制化成果必须实现知识产权完全归属买方，不得接受‘背景知识产权除外’等模糊保留。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_005-64546f0d",
+            "clause_id": "cl_005",
+            "clause_article": "第五条",
+            "clause_text": "第五条 验收\n甲方应在收货后 15 日内按附件一《技术规格书》及 GB/T 2828.1 抽样标准验收。",
+            "category": "acceptance",
+            "severity": "medium",
+            "source": "llm",
+            "title": "验收起算点不明确，易引发争议",
+            "analysis": "条款规定‘收货后15日内验收’，但未明确定义‘收货’时点（如签收单签署、货物实际抵达仓库并完成入库等），可能导致双方对验收期限起算日产生分歧，影响验收效力及后续付款、质保起算。",
+            "evidence_quote": "甲方应在收货后 15 日内按附件一《技术规格书》及 GB/T 2828.1 抽样标准验收。",
+            "evidence_start": 7,
+            "evidence_end": 52,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "验收起算点明确为甲方签收并完成入库登记之日，签收单与入库单不一致时以入库单为准。",
+            "suggested_text": "第五条 验收\n甲方应在乙方完成交货、货物实际抵达甲方指定仓库并完成入库登记后15日内，依据附件一《技术规格书》及GB/T 2828.1抽样标准组织验收；‘完成入库登记’以甲方ERP系统生成有效入库单为准。如乙方未提供完整随货资料（含出厂检验报告、合格证、装箱清单），甲方有权顺延验收起算时间直至资料齐备。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须绑定可验证的客观节点（如ERP入库单），杜绝‘收货’定义模糊导致的期限争议。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_006-7206a3ee",
+            "clause_id": "cl_006",
+            "clause_article": "第六条",
+            "clause_text": "第六条 质量保证\n质保期为验收合格后 12 个月；质保期内出现质量问题，乙方负责免费修理、更换或退货，并承担由此产生的费用。",
+            "category": "warranty",
+            "severity": "medium",
+            "source": "llm",
+            "title": "质保期起算点与验收条款不衔接",
+            "analysis": "质保期约定为‘验收合格后12个月’，但验收条款未明确‘验收合格’的认定方式（如书面确认、默示视为合格等），亦无验收不合格的救济路径，导致质保期起算缺乏确定性，可能被供应商单方主张验收完成而启动质保期。",
+            "evidence_quote": "质保期为验收合格后 12 个月；质保期内出现质量问题，乙方负责免费修理、更换或退货，并承担由此产生的费用。",
+            "evidence_start": 9,
+            "evidence_end": 62,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "质保期自《验收合格确认书》签署日起算；无确认书时，自验收期满后第6日起算；乙方须在48小时内响应、5个工作日内完成维修或更换。",
+            "suggested_text": "第六条 质量保证\n质保期自甲方签署《验收合格确认书》之日起计算12个月；若甲方未在验收期内提出书面异议且未签署确认书，则自验收期届满次日起自动视为验收合格，质保期同步起算。质保期内出现质量问题，乙方须在接到通知后24小时内响应，48小时内提供解决方案，5个工作日内完成修理、更换或退货，并承担全部运输、人工及连带损失费用。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "质保起算必须与验收结果强绑定，严禁默示合格即启动质保，且须设定刚性响应时限。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-liability-cl_007-50840e01",
+            "clause_id": "cl_007",
+            "clause_article": "第七条",
+            "clause_text": "第七条 违约责任\n乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。\n因乙方故意或重大过失造成的损失，依法承担赔偿责任。",
+            "category": "liability",
+            "severity": "medium",
+            "source": "llm",
+            "title": "逾期违约金日利率过低",
+            "analysis": "日万分之五（0.05%）折合年化约18.25%，虽高于LPR，但对电子元器件类快周转采购而言，难以充分覆盖买方停产、换料、紧急空运等实际损失；行业常见为日0.1%–0.2%。\n\n模型补充：违约金上限为合同总价10%（22,000元），低于《民法典》第585条‘过分低于造成损失’的司法审查标准；对于22万元合同，该上限难以覆盖买方因批量交货延误导致的产线停摆、客户索赔等可得利益损失。\n\n模型补充：条款仅笼统提及‘质量不合格’，但未规定退换货、修理、降价、索赔等具体救济方式及响应时限，与《民法典》第617条要求的‘出卖人应承担违约责任’不符，买方执行难度大。",
+            "evidence_quote": "乙方逾期交付的，按日万分之五支付违约金；违约金上限为合同总价的 10%。",
+            "evidence_start": 9,
+            "evidence_end": 45,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "liability",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "逾期违约金提高至日0.1%，上限20%；质量不合格须在48小时内响应、5个工作日内完成退换修。",
+            "suggested_text": "第七条 违约责任\n乙方逾期交付的，自逾期之日起按日0.15%向甲方支付违约金；逾期超过15日的，甲方有权解除合同，乙方除支付违约金外，还应赔偿甲方停产损失、紧急采购差价、客户索赔等全部直接及可得利益损失。违约金累计不超过合同总价30%。乙方交付货物质量不合格的，甲方有权选择要求修理、更换、降价（按不合格比例扣减货款）或退货；乙方须在收到通知后48小时内书面回复处理方案，并于5个工作日内完成执行。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "违约金须达行业合理水平（日0.1%起），且必须配套明确的质量救济路径与时限。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-compliance-cl_010-7181dbc9",
+            "clause_id": "cl_010",
+            "clause_article": "第十条",
+            "clause_text": "第十条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "category": "dispute",
+            "severity": "medium",
+            "source": "llm",
+            "title": "管辖法院约定对买方不利",
+            "analysis": "合同约定由甲方（芯联电子有限公司）所在地人民法院管辖，虽形式上符合《民事诉讼法》第二十四条，但买方即甲方作为采购方，在争议中可能处于主张权利地位，该约定未预留中立或对双方平等的争议解决机制，且未排除专属管辖例外情形，存在程序性被动风险。",
+            "evidence_quote": "第十条 争议解决\n因本合同发生争议，由甲方所在地人民法院管辖。",
+            "evidence_start": 0,
+            "evidence_end": 31,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "compliance",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "争议由甲方所在地法院管辖，但允许甲方根据争议性质选择更便利的履行地法院。",
+            "suggested_text": "第十条 争议解决\n因本合同引起的或与本合同有关的任何争议，双方应友好协商解决；协商不成的，任何一方均有权向甲方所在地有管辖权的人民法院提起诉讼；但如争议涉及知识产权、保密义务或产品质量责任，甲方有权选择向其主营业地（上海市浦东新区）或合同履行地（乙方交货仓库所在地）人民法院起诉。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "管辖约定须保留买方在不同争议类型下的程序选择权，避免被锁定于单一法院被动应诉。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          },
+          {
+            "id": "llm-commercial-cl_002-3f40bb00",
+            "clause_id": "cl_002",
+            "clause_article": "第二条",
+            "clause_text": "第二条 合同价款\n合同总价为人民币 220,000 元（含 13% 增值税）。",
+            "category": "price",
+            "severity": "low",
+            "source": "llm",
+            "title": "含税金额未拆分，影响进项税抵扣管理",
+            "analysis": "合同仅载明总价含13%增值税，但未列明不含税金额及税额，不利于买方财务做账、进项税认证及税务合规管理，虽不构成法律瑕疵，但增加操作成本与审计风险。",
+            "evidence_quote": "合同总价为人民币 220,000 元（含 13% 增值税）。",
+            "evidence_start": 9,
+            "evidence_end": 39,
+            "legal_basis_ids": [],
+            "rule_id": null,
+            "rule_hint": null,
+            "agent": "commercial",
+            "confidence": 0.3,
+            "confidence_tier": "needs_review",
+            "confidence_reasons": [
+              "原文证据已逐字定位",
+              "没有可用的法条依据",
+              "确定性信号不足，已转为人工确认"
+            ],
+            "rejected_legal_basis_ids": [],
+            "recommendation": "",
+            "fallback": "至少明确列示不含税金额及对应税额，允许四舍五入至分位。",
+            "suggested_text": "第二条 合同价款\n合同总价为人民币 220,000 元，其中不含税金额为人民币 194,690.27 元，增值税额为人民币 25,309.73 元（税率 13%）。",
+            "suggested_text_source": "llm",
+            "negotiation_note": "必须拆分含税价，否则买方无法完成进项税认证与财务核算，属基本税务合规要求。",
+            "review_note": "",
+            "reviewed_at": null,
+            "review_history": [],
+            "status": "needs_human",
+            "gate_notes": [
+              "无检索到的法条依据（模型建议）"
+            ]
+          }
+        ],
+        "unmatched_labels": []
+      },
+      "duration_s": 81.89,
+      "usage": {
+        "llm_calls": 6,
+        "input_tokens": 9021,
+        "output_tokens": 4828,
+        "duration_ms": 81891,
+        "mode": "live",
+        "embedding_mode": "bm25_only",
+        "rerank_mode": "off",
+        "llm_route": "deepseek-first",
+        "llm_route_label": "DeepSeek 优先",
+        "llm_models": [
+          "qwen-plus"
+        ],
+        "traces": [
+          {
+            "name": "clause_extraction",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 24078,
+            "input_tokens": 2376,
+            "output_tokens": 1071,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_compliance",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 11496,
+            "input_tokens": 1300,
+            "output_tokens": 492,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_commercial",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 15677,
+            "input_tokens": 1400,
+            "output_tokens": 694,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "agent_liability",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 16005,
+            "input_tokens": 1207,
+            "output_tokens": 709,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 37675,
+            "input_tokens": 2128,
+            "output_tokens": 1691,
+            "mock": false,
+            "success": true,
+            "error": null
+          },
+          {
+            "name": "redline",
+            "model": "qwen-plus",
+            "profile": "dashscope",
+            "latency_ms": 4089,
+            "input_tokens": 610,
+            "output_tokens": 171,
+            "mock": false,
+            "success": true,
+            "error": null
+          }
+        ]
+      },
+      "citation_count": 2,
+      "valid_citation_count": 2,
+      "evidence_checked": 9,
+      "evidence_valid": 9
+    }
+  ]
+}

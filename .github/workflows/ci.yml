@@ -6,8 +6,9 @@ on:
 
 jobs:
   backend:
-    name: Backend tests and rules eval
+    name: Backend tests and eval gates
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: backend
@@ -27,14 +28,23 @@ jobs:
         run: uv run python scripts/test_live_offline.py
       - name: Validate knowledge base
         run: uv run python scripts/validate_kb.py
-      - name: Rules baseline evaluation
-        run: uv run python eval/run_eval.py --mode rules
-      - name: Retrieval evaluation (BM25/hybrid)
-        run: uv run python eval/run_retrieval_eval.py --no-rerank
-      - name: Perturbation stability check
-        run: uv run python eval/run_perturbation_eval.py
-      - name: Cost report from saved full results
-        run: uv run python eval/run_cost_report.py
+      - name: Rules baseline evaluation gate
+        run: >-
+          uv run python eval/run_eval.py --mode rules
+          --min-precision 0.99 --min-recall 0.93 --min-f1 0.96
+      - name: Retrieval evaluation gate (offline BM25 baseline)
+        run: >-
+          uv run python eval/run_retrieval_eval.py --no-rerank
+          --threshold-config bm25 --min-recall-at-10 0.45 --min-ndcg-at-10 0.35
+      - name: Perturbation stability gate
+        run: >-
+          uv run python eval/run_perturbation_eval.py
+          --min-baseline-f1 0.95 --max-f1-drop-pp 5
+      - name: Cost/latency gate from saved full results
+        run: >-
+          uv run python eval/run_cost_report.py
+          --max-cost-cny 1.0 --max-p95-s 120
+          --max-failed-calls 10 --max-rate-limited-calls 10
       - name: Upload evaluation reports
         uses: actions/upload-artifact@v4
         with:

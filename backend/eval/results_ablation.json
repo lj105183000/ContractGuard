@@ -1,0 +1,115 @@
+{
+  "generated_at": "2026-11-02T00:55:35+08:00",
+  "variants": {
+    "rules_only": {
+      "precision": 1.0,
+      "recall": 0.9412,
+      "f1": 0.9697,
+      "tp": 48,
+      "fp": 0,
+      "fn": 3,
+      "evidence_valid_rate": 1.0,
+      "citation_valid_rate": 1.0,
+      "confirmed_precision": 1.0,
+      "advisory_precision": null,
+      "unsupported_rate": 0.0,
+      "uncited_rate": 0.0,
+      "high_risk_fp": 0,
+      "high_risk_fn": 0
+    },
+    "full_rag": {
+      "precision": 0.5682,
+      "recall": 0.9804,
+      "f1": 0.7194,
+      "tp": 50,
+      "fp": 38,
+      "fn": 1,
+      "evidence_valid_rate": 1.0,
+      "citation_valid_rate": 1.0,
+      "confirmed_precision": 0.96,
+      "advisory_precision": 0.0556,
+      "unsupported_rate": 0.0,
+      "uncited_rate": 0.0227,
+      "high_risk_fp": 16,
+      "high_risk_fn": 0
+    },
+    "full_no_rag": {
+      "precision": 0.5618,
+      "recall": 0.9804,
+      "f1": 0.7143,
+      "tp": 50,
+      "fp": 39,
+      "fn": 1,
+      "evidence_valid_rate": 0.988,
+      "citation_valid_rate": 1.0,
+      "confirmed_precision": 0.96,
+      "advisory_precision": null,
+      "unsupported_rate": 0.0225,
+      "uncited_rate": 0.4382,
+      "high_risk_fp": 18,
+      "high_risk_fn": 0
+    }
+  },
+  "deltas": {
+    "full_rag_minus_rules_only": {
+      "precision": -0.4318,
+      "recall": 0.0392,
+      "f1": -0.2503,
+      "high_risk_fp": 16,
+      "unsupported_rate": 0.0,
+      "uncited_rate": 0.0227
+    },
+    "full_no_rag_minus_full_rag": {
+      "precision": -0.0064,
+      "recall": 0.0,
+      "f1": -0.0051,
+      "high_risk_fp": 2,
+      "unsupported_rate": 0.0225,
+      "uncited_rate": 0.4155
+    }
+  },
+  "retrieval": [
+    {
+      "name": "bm25",
+      "retrieval_mode": "bm25_only",
+      "rerank_mode": "off",
+      "hit@10": 0.8,
+      "recall@10": 0.5,
+      "mrr@10": 0.5054,
+      "ndcg@10": 0.419
+    },
+    {
+      "name": "hybrid",
+      "retrieval_mode": "hybrid",
+      "rerank_mode": "off",
+      "hit@10": 0.88,
+      "recall@10": 0.66,
+      "mrr@10": 0.645,
+      "ndcg@10": 0.5556
+    },
+    {
+      "name": "bm25_rerank",
+      "retrieval_mode": "bm25_only",
+      "rerank_mode": "dashscope",
+      "hit@10": 0.84,
+      "recall@10": 0.58,
+      "mrr@10": 0.6644,
+      "ndcg@10": 0.5318
+    },
+    {
+      "name": "hybrid_rerank",
+      "retrieval_mode": "hybrid",
+      "rerank_mode": "dashscope",
+      "hit@10": 0.96,
+      "recall@10": 0.8333,
+      "mrr@10": 0.6983,
+      "ndcg@10": 0.6631
+    }
+  ],
+  "notes": [
+    "rules_only 不需要 LLM；full_rag 使用当前 graph 的 LLM + RAG。",
+    "full_no_rag 需要先运行 --disable-rag --output-suffix full_no_rag；它仍调用 LLM，但不提供检索到的法条/Playbook。",
+    "rerank 对比来自 run_retrieval_eval 的各配置；需要配置 Key 才有 rerank 行。",
+    "HITL 不改变 findings，因此不作为 P/R 消融项；它只影响复核/导出流程。"
+  ]
+}

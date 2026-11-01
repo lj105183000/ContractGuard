@@ -13,6 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from eval.gates import check_max, enforce  # noqa: E402
 from eval.stats import percentile  # noqa: E402
 
 BACKEND = Path(__file__).resolve().parents[1]
@@ -38,6 +39,7 @@ def summarize(
     payload: dict,
     input_price_per_1k: float,
     output_price_per_1k: float,
+    source_name: str = SOURCE_PATH.name,
 ) -> dict:
     durations = [float(item["duration_s"]) for item in payload["samples"]]
     calls = 0
@@ -86,7 +88,7 @@ def summarize(
         input_tokens, output_tokens, input_price_per_1k, output_price_per_1k
     )
     return {
-        "source": SOURCE_PATH.name,
+        "source": source_name,
         "mode": payload.get("mode"),
         "model": payload.get("model"),
         "generated_at": payload.get("generated_at"),
@@ -113,7 +115,7 @@ def summarize(
     }
 
 
-def write_report(summary: dict) -> None:
+def write_report(summary: dict, path: Path = REPORT_PATH) -> None:
     latency = summary["latency_s"]
     lines = [
         "# ContractGuard 成本与延迟摘要",
@@ -160,28 +162,61 @@ def write_report(summary: dict) -> None:
             "",
         ]
     )
-    REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def _enforce_thresholds(args: argparse.Namespace, summary: dict) -> None:
+    enforce(
+        [
+            check_max("cost_estimate", summary.get("cost_estimate"), args.max_cost_cny),
+            check_max(
+                "latency.p95", summary.get("latency_s", {}).get("p95"), args.max_p95_s
+            ),
+            check_max("failed_calls", summary.get("failed_calls"), args.max_failed_calls),
+            check_max(
+                "rate_limited_calls",
+                summary.get("rate_limited_calls"),
+                args.max_rate_limited_calls,
+            ),
+        ]
+    )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-price-per-1k", type=float, default=0.0008)
     parser.add_argument("--output-price-per-1k", type=float, default=0.002)
+    parser.add_argument("--max-cost-cny", type=float, default=None)
+    parser.add_argument("--max-p95-s", type=float, default=None)
+    parser.add_argument("--max-failed-calls", type=int, default=None)
+    parser.add_argument("--max-rate-limited-calls", type=int, default=None)
+    parser.add_argument("--source", default=str(SOURCE_PATH))
+    parser.add_argument("--out", default=str(JSON_PATH))
+    parser.add_argument("--report", default=str(REPORT_PATH))
     args = parser.parse_args()
-    payload = json.loads(SOURCE_PATH.read_text(encoding="utf-8"))
+    source_path = Path(args.source)
+    payload = json.loads(source_path.read_text(encoding="utf-8"))
     summary = summarize(
-        payload, args.input_price_per_1k, args.output_price_per_1k
+        payload,
+        args.input_price_per_1k,
+        args.output_price_per_1k,
+        source_name=source_path.name,
     )
-    JSON_PATH.write_text(
+    out = Path(args.out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    write_report(summary)
-    print(f"写入 {JSON_PATH} 和 {REPORT_PATH}")
+    report_path = Path(args.report)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    write_report(summary, report_path)
+    print(f"写入 {out} 和 {args.report}")
     print(
         f"calls={summary['calls']} failed={summary['failed_calls']} "
         f"cost={summary['cost_estimate']:.4f} CNY "
         f"p95={summary['latency_s']['p95']}s"
     )
+    _enforce_thresholds(args, summary)
 
 
 if __name__ == "__main__":

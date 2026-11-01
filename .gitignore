@@ -26,6 +26,9 @@ backend/eval/real/raw/
 backend/eval/results_real_raw*
 backend/eval/report_real_raw*
 backend/eval/report_iaa.md
+backend/eval/report_iaa.json
+backend/eval/results_quality.json
+backend/eval/report_quality.md
 backend/data/legal/_parsed/
 backend/logs/
 backend/eval/*_full_mock.*

@@ -7,6 +7,7 @@ clause reordering on the synthetic set.
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -21,6 +22,7 @@ from app.parsing.facts import extract_heuristic_facts  # noqa: E402
 from app.rag.corpus import load_kb  # noqa: E402
 from app.rules.engine import evaluate_rules  # noqa: E402
 from app.services.confidence import apply_confidence_tier  # noqa: E402
+from eval.gates import check_max, check_min, enforce  # noqa: E402
 from eval.perturb import apply_text_perturbation  # noqa: E402
 from eval.run_eval import SAMPLES_DIR, load_labels, rules_run, score  # noqa: E402
 from eval.stats import prf_counts  # noqa: E402
@@ -38,7 +40,33 @@ def _totals(results: list[dict]) -> dict:
     return {"tp": tp, "fp": fp, "fn": fn, **prf_counts(tp, fp, fn)}
 
 
+def _enforce_thresholds(
+    summary: dict,
+    *,
+    max_f1_drop_pp: float | None,
+    min_baseline_f1: float | None,
+) -> None:
+    baseline = summary["baseline"]
+    worst_drop = max(
+        (
+            (baseline["f1"] - stats["f1"]) * 100
+            for stats in summary["perturbations"].values()
+        ),
+        default=0.0,
+    )
+    enforce(
+        [
+            check_min("baseline.f1", baseline.get("f1"), min_baseline_f1),
+            check_max("perturbation.max_f1_drop_pp", worst_drop, max_f1_drop_pp),
+        ]
+    )
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--max-f1-drop-pp", type=float, default=None)
+    parser.add_argument("--min-baseline-f1", type=float, default=None)
+    args = parser.parse_args()
     samples = yaml.safe_load(
         (SAMPLES_DIR / "samples.yaml").read_text(encoding="utf-8")
     )
@@ -84,6 +112,11 @@ def main() -> None:
     )
     write_report(summary, len(samples))
     print(f"写入 {JSON_PATH} 和 {REPORT_PATH}")
+    _enforce_thresholds(
+        summary,
+        max_f1_drop_pp=args.max_f1_drop_pp,
+        min_baseline_f1=args.min_baseline_f1,
+    )
 
 
 def write_report(summary: dict, sample_count: int) -> None:
