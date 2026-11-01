@@ -1,19 +1,19 @@
 # ContractGuard 消融对比
 
-- 生成时间：2026-11-02T00:55:35+08:00
+- 生成时间：2026-11-02T07:48:39+08:00
 
 ## 风险识别
 
 | 变体 | P | R | F1 | TP/FP/FN | 高风险 FP | 无证据率 | 无法条引用率 |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | 规则 only | 100.0% | 94.1% | 97.0% | 48/0/3 | 0 | 0.0% | 0.0% |
-| 规则 + Agent + RAG | 56.8% | 98.0% | 71.9% | 50/38/1 | 16 | 0.0% | 2.3% |
-| 规则 + Agent（无 RAG 上下文） | 56.2% | 98.0% | 71.4% | 50/39/1 | 18 | 2.2% | 43.8% |
+| 规则 + Agent + RAG | 64.9% | 98.0% | 78.1% | 50/27/1 | 9 | 7.8% | 1.3% |
+| 规则 + Agent（无 RAG 上下文） | 59.5% | 98.0% | 74.1% | 50/34/1 | 12 | 9.5% | 42.9% |
 
 ## Delta
 
-- full - rules：`{'precision': -0.4318, 'recall': 0.0392, 'f1': -0.2503, 'high_risk_fp': 16, 'unsupported_rate': 0.0, 'uncited_rate': 0.0227}`
-- no-RAG - full：`{'precision': -0.0064, 'recall': 0.0, 'f1': -0.0051, 'high_risk_fp': 2, 'unsupported_rate': 0.0225, 'uncited_rate': 0.4155}`
+- full - rules：`{'precision': -0.3506, 'recall': 0.0392, 'f1': -0.1885, 'high_risk_fp': 9, 'unsupported_rate': 0.0779, 'uncited_rate': 0.013}`
+- no-RAG - full：`{'precision': -0.0542, 'recall': 0.0, 'f1': -0.0405, 'high_risk_fp': 3, 'unsupported_rate': 0.0173, 'uncited_rate': 0.4156}`
 
 ## 检索
 
