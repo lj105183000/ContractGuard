@@ -35,7 +35,7 @@
 | 证据定位率（3 条） | 100.0% |
 | 法条 ID 可解析率（11 个引用） | 100.0% |
 
-目前没有第二位独立标注者，`inter_annotator_agreement` 为 `null`；IAA 工具与双人标注流程见 [`backend/eval/real/README.md`](../backend/eval/real/README.md)，但尚未用真实第二标注数据运行。
+目前没有第二位独立标注者，`inter_annotator_agreement` 为 `null`；IAA、固定 universe、裁决和人工质量评分流程见 [`docs/ANNOTATION_GUIDE.md`](ANNOTATION_GUIDE.md)，但尚未用真实第二标注数据或人工评分运行。
 
 R2/R3 没有作者标签，只报告 findings 数和 OCR 统计，不与 R1 混合计算微平均。
 
@@ -44,7 +44,7 @@ R2/R3 没有作者标签，只报告 findings 数和 OCR 统计，不与 R1 混�
 - 真实 PDF 的条款切分把金额/编号（如 `6459`）识别成 article；真实标签不能依赖 `clause_article` 精确匹配。
 - R1 的 IP 规则 finding 证据挂到了质保条款，报告如实计入 FP/FN；这暴露了规则事实与证据绑定的真实问题。
 - R2 36 页 OCR、R3 8 页 OCR；OCR 文本有表格/页眉页脚噪声，扫描件结果需对照原件。
-- R1 有 59 个 clause，未超过 LLM 抽取上限；R2 有 253 个 clause，full 模式只会抽取前 120 条。
+- R1 有 59 个 clause，未超过 LLM 抽取上限；R2 有 253 个 clause，full 模式只会抽取前 120 条，且每个 Agent 只审查前 10 条相关条款；R2 的 full 结果不能视为全量语义覆盖。
 
 ## 不能据此声称
 

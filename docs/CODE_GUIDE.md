@@ -278,17 +278,25 @@ uv run python scripts/check_samples.py
 uv run python scripts/smoke_api.py
 uv run python scripts/test_live_offline.py
 uv run python scripts/smoke_ocr.py "C:\path\to\your-scanned-contract.pdf"
+uv run python eval/run_eval.py --mode rules --min-precision 0.99 --min-recall 0.93 --min-f1 0.96
+uv run python eval/run_retrieval_eval.py --no-rerank --threshold-config bm25 --min-recall-at-10 0.45 --min-ndcg-at-10 0.35
+uv run python eval/run_ablation.py
+uv run python eval/run_quality_eval.py --scores ../../contractguard-private/real_eval/quality_scores.jsonl
 ```
 
-- `pytest`：177 个离线测试；
+- `pytest`：213 个离线测试；
 - `validate_kb`：法条/规则引用是否一致；
 - `check_samples`：每份合同切出多少条款、规则命中/漏报/误报；
 - `eval/stats.py`：按合同/query 的 bootstrap CI、nDCG；
+- `eval/gates.py`：评测脚本共用的阈值检查；CI 规则/检索/扰动/成本门禁见 `docs/ANNOTATION_GUIDE.md`；
 - `eval/badcases.yaml` + `tests/test_badcases.py`：已知 FP/FN 与置信分层回归；
 - `eval/run_perturbation_eval.py`：改名/金额/OCR 噪声/条款倒序稳定性；
 - `eval/run_cost_report.py`：从 full 结果汇总 token、延迟、429 与假设单价费用；
-- `eval/run_iaa.py`：两位标注者的 Cohen's kappa（需要第二份标签数据）；
-- `smoke_api`：完整 API + 报告导出（mock）；
+- `eval/run_iaa.py`：双人标注一致性；正式报告必须传 `--universe`，否则只是乐观 union-scope kappa；
+- `eval/run_quality_eval.py`：汇总法条相关性/证据支持/建议可用性/人工幻觉率；
+- `eval/run_ablation.py`：汇总 rules/full/no-RAG/检索消融；`run_eval.py --disable-rag` 生成 no-RAG 变体；
+- **完整标注、IAA、holdout 和报告口径见 [`docs/ANNOTATION_GUIDE.md`](ANNOTATION_GUIDE.md)**；
+- `smoke_api`：完整 API + 报告导出（mock）；**始终使用临时 SQLite/上传目录，不会清空真实 data/**；
 - `test_live_offline`：启动本地假 OpenAI 服务，验证 live 的 JSON 模式、Pydantic、embedding、图、报告，以及“主 Provider 401 → 备用 Provider 成功”的 fallback，不需要真实 Key/不产生费用；
 - `smoke_ocr`：真实扫描件 OCR（8 页约 20 秒），用于验证模型和页面进度。
 
@@ -342,7 +350,7 @@ uv run python scripts/smoke_ocr.py "C:\path\to\your-scanned-contract.pdf"
 - 扫描页数上限来自 `/api/meta` 的 `ocr_max_pages`（默认 50）；解析节点在 OCR 时发送「扫描件 OCR：x/n 页」进度事件，完成后把 OCR 警告写入 `warnings`，前端和报告直接复用现有展示。
 - 模型路由来自 `/api/meta` 的 `llm_routes`/`llm_route`；上传/示例请求通过 `?llm_route=` 传给后端，结果头的「路由/模型」来自 `result.usage.llm_route_label`/`llm_models`。历史快照包含这些字段，旧快照缺失时前端使用可选链。
 - 审查失败页由 `frontend/src/errorGuidance.js` 根据真实错误 `{message, source, status}` 映射标题、原因和操作建议；已知错误不再显示固定「常见原因」列表，只有未知错误才显示兜底提示。修改后端错误文案时同步更新该映射，并运行 `node frontend/scripts/check_error_guidance.mjs` 回归。
-- 如果要做成生产前端：加 Router、请求库、错误边界、鉴权、SSE，拆分 `App.jsx` 的状态。
+- 如果要做成生产前端：加 Router、请求库、SSE，拆分 `App.jsx` 的状态；全局错误边界与请求超时已加（`main.jsx` / `api.js`）。
 
 ### 桌面端增量
 

@@ -61,7 +61,7 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 | 前端 | React 19 + Vite 7 + 手写 CSS |
 | 桌面端 | Electron 45 + electron-builder 26 + PyInstaller |
 | 部署 | Docker Compose（mock 单端口 demo） |
-| 测试 | pytest（177 个离线测试） |
+| 测试 | pytest（213 个离线测试） |
 
 ## 截图
 
@@ -87,7 +87,7 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 
 - Windows 10/11（其它系统也可，启动脚本是 `.bat`，命令可手动执行）
 - [uv](https://docs.astral.sh/uv/)（会用项目里的 `.python-version` 安装 Python 3.12）
-- Node.js 18+（Web 前端；桌面端依赖 Electron 45，需要 Node.js 22.12+，本项目用 Node 24 验证）
+- Node.js 20.19+ 或 22.12+（Vite 7 要求；建议统一 Node 22；桌面端 Electron 45 需要 22.12+，本项目用 Node 24 验证）
 - 扫描件 OCR 由 RapidOCR + onnxruntime 提供，随 `uv sync` 安装；模型已打包，无需 Tesseract 或联网下载
 - Docker Desktop（可选，用于 `docker-compose up --build` 容器化演示）
 
@@ -148,7 +148,7 @@ npm run dist
 docker-compose up --build
 ```
 
-打开 <http://127.0.0.1:8000>。若 8000 被占用，可用 `CONTRACTGUARD_PORT=8001 docker-compose up --build`。镜像内自带法条、Playbook、示例合同和前端构建产物，默认 `LLM_MODE=mock`、`HITL_ENABLED=1`、`WORKER_ENABLED=1`，只绑定 localhost。容器 entrypoint 会修正 named volume 权限后以非 root `appuser` 运行 uvicorn；任务 SQLite、checkpoint SQLite 与上传源文件都保存在 named volume `contractguard-data`：`docker-compose down/up` 不丢暂停任务和已完成任务，`docker-compose down -v` 才会清空。若要 live，可在 `docker-compose.yml` 取消 `DASHSCOPE_API_KEY` 注释并设置 `LLM_MODE=live`。公网部署前必须自行加鉴权/限流。
+打开 <http://127.0.0.1:8000>。若 8000 被占用，可用 `CONTRACTGUARD_PORT=8001 docker-compose up --build`。镜像内自带法条、Playbook、示例合同和前端构建产物，默认 `LLM_MODE=mock`、`HITL_ENABLED=1`、`WORKER_ENABLED=1`，只绑定 localhost。容器 entrypoint 会修正 named volume 权限后以非 root `appuser` 运行 uvicorn；任务 SQLite、checkpoint SQLite 与上传源文件都保存在 named volume `contractguard-data`：`docker-compose down/up` 不丢暂停任务和已完成任务，`docker-compose down -v` 才会清空。若要 live，可在 `docker-compose.yml` 取消 `DASHSCOPE_API_KEY` 注释并设置 `LLM_MODE=live`。**如需从内网其它机器访问，必须把端口绑定改为可访问地址，并同时设置 `CONTRACTGUARD_API_TOKEN`、`CONTRACTGUARD_REQUIRE_AUTH=1`、`CONTRACTGUARD_ALLOWED_HOSTS`；否则后端会拒绝启动或拒绝 Host。** 公网部署前还必须自行加 TLS/反代和共享限流。
 
 ### 6. 切换到 live（调用真实模型）
 
@@ -210,17 +210,27 @@ CONTRACTGUARD_MASTER_KEY=<至少 16 字符的随机值>
 
 生成密钥：`python -c "import secrets; print(secrets.token_urlsafe(32))"`。旧的明文记录仍可读；主密钥丢失后无法解密，不支持在线轮换。关闭加密不会解密已有数据，旧库需要保持密钥或清空重建。任务列表的 filename/summary/error、上传临时文件和桌面端历史快照仍是明文。
 
-可选单租户鉴权与配额：
+可选单租户鉴权、Host 校验与资源配额：
 
 ```dotenv
 CONTRACTGUARD_API_TOKEN=<随机 Token>   # 留空关闭鉴权
+CONTRACTGUARD_REQUIRE_AUTH=0          # 内网多机访问必须设为 1
+CONTRACTGUARD_ALLOWED_HOSTS=          # 默认 127.0.0.1/localhost；内网 IP/域名逗号分隔
 MAX_ACTIVE_JOBS=20
 RATE_LIMIT_PER_MINUTE=0                # 0 关闭；进程内滑动窗口
+MAX_UPLOAD_MB=50
+MAX_JSON_BODY_MB=2
 PDF_MAX_PAGES=200
 DOCX_MAX_UNCOMPRESSED_MB=200
+DOCX_MAX_ENTRIES=2000
+DOCX_MAX_XML_MB=50
+MAX_TEXT_CHARS=2000000
+MAX_CLAUSES=1000
+MAX_IMAGE_PIXELS=50000000
+JOB_DEADLINE_S=900
 ```
 
-设置 Token 后，除 `/api/health` 外的 API 都要求 `Authorization: Bearer <token>`；前端会弹出 Token 登录页。限流是单进程内存实现，多进程/公网部署仍应在反向代理层做共享限流。上传会校验 PDF/DOCX/PNG/JPEG 文件头，并限制 PDF 页数与 DOCX 解压大小。
+设置 Token 后，除 `/api/health` 外的 API 都要求 `Authorization: Bearer <token>`；前端会弹出 Token 登录页。**内网多机访问必须同时设置 Token、`CONTRACTGUARD_REQUIRE_AUTH=1` 和 `CONTRACTGUARD_ALLOWED_HOSTS`（非本机地址）；否则后端拒绝启动。** 服务默认只接受本机 Host（防 DNS rebinding），`CORS_ORIGIN` 不允许 `*`。请求体在解析前按 `MAX_UPLOAD_MB`/`MAX_JSON_BODY_MB` 限制；解析阶段再限制文本、条款、图片像素、PDF 页面尺寸和 DOCX 实际解压体积。限流是单进程内存实现，多进程/公网部署仍应在反向代理层做共享限流。
 
 备份/恢复（先停止服务再恢复）：
 
@@ -236,14 +246,18 @@ uv run python scripts/restore_db.py --backup-dir backups/20261028_120000 --inclu
 
 ```bash
 cd backend
+export LLM_MODE=mock          # Windows cmd: set LLM_MODE=mock；避免 .env 的 live Key 被 eval/scripts 使用
 uv run pytest -q
 uv run python scripts/validate_kb.py
+uv run python scripts/smoke_api.py             # 使用临时库，不写真实 data/
 uv run python scripts/test_live_offline.py     # 本地假 OpenAI，验证 live + 模型回退，不需要 Key
 uv run python eval/run_eval.py --mode rules   # 无需 Key
-uv run python eval/run_eval.py --mode full    # 需要 live Key
-uv run python eval/run_retrieval_eval.py --no-rerank
+uv run python eval/run_eval.py --mode full    # 需要 live Key；先 export LLM_MODE=live
+uv run python eval/run_retrieval_eval.py --no-rerank  # mock 下 hybrid 会退化为 BM25
 uv run python eval/run_perturbation_eval.py   # 无需 Key
 uv run python eval/run_cost_report.py         # 读取已落盘 full 结果
+uv run python eval/run_ablation.py            # 汇总 rules/full/no-RAG/检索消融
+uv run python eval/run_quality_eval.py --scores <quality_scores.jsonl>  # 需要人工评分
 ```
 
 ## 架构
@@ -342,7 +356,7 @@ uv run python eval/run_eval.py --mode rules
 
 结果在 `backend/eval/results_rules.json` 与 `backend/eval/report_rules.md`。
 
-全量 LLM 结果（live，qwen-plus，2026-10-28 实际运行）：
+全量 LLM 结果（live，2026-11-02 实际运行：`deepseek-first` 回退链，实际调用 qwen-plus）：
 
 | 指标 | 值 |
 |---|---|
@@ -350,19 +364,21 @@ uv run python eval/run_eval.py --mode rules
 | Recall | **98.0%** |
 | F1 | **71.9%** |
 | TP / FP / FN | 50 / 38 / 1 |
-| 95% CI（按合同 bootstrap） | P 43.9–65.9%；R 93.6–100.0%；F1 60.3–79.4% |
-| 高风险 FP | 18 |
-| 证据定位率（83 条） | 98.8% |
-| 法条 ID 可解析率（189 个引用） | 100.0% |
-| 平均耗时 | 87.0s / 份 |
+| 95% CI（按合同 bootstrap） | P 43.9–66.7%；R 93.6–100.0%；F1 60.5–80.0% |
+| 高风险 FP | 16 |
+| 证据定位率（83 条） | 100.0% |
+| 法条 ID 可解析率（190 个引用） | 100.0% |
+| 平均耗时 | 83.7s / 份 |
+
+质量代理：已核实层 P 96.0%，模型建议层 P 5.6%；高风险 FP 16；模型来源无定位证据 0 条；无法条引用 2 / 88（2.3%）。法条相关性、建议可用性和人工幻觉率需要 `eval/run_quality_eval.py` 的独立评分，当前**尚未评分**。
 
 38 个误报的归因：
 
 - 按来源：36 个 `llm`、2 个 `rule+llm`，**没有纯规则误报**；
-- 按等级：高 18 / 中 16 / 低 4；
-- 按类别：合规 6、其他 6、争议 6、解除 5、质保 5、验收 3、知识产权 3、违约 2、交付 1、付款 1；
-- 按 Agent：合规 21、商务 10、违约解除 7；
-- 27 / 38 带 `rule_hint`，但这只是模型自报提示，**不等于规则引擎实际命中**；这也是置信分层只信规则实际命中的原因。
+- 按等级：高 16 / 中 17 / 低 5；
+- 按类别：合规 9、解除 5、质保 5、其他 5、争议 5、验收 3、违约 2、知识产权 2、交付 1、付款 1；
+- 按 Agent：合规 22、商务 9、违约解除 7；
+- 29 / 38 带 `rule_hint`，但这只是模型自报提示，**不等于规则引擎实际命中**；这也是置信分层只信规则实际命中的原因。
 
 按置信分层：
 
@@ -376,7 +392,7 @@ uv run python eval/run_eval.py --mode rules
 >
 > 法条 ID 可解析率只衡量引用 ID 是否存在于知识库（分母包含被移除的无效 ID），不等于法条相关性准确率；证据定位率的分母只包含提供了原文引用的风险，也不衡量分析质量。
 >
-> 本次 live 运行中有部分 `dashscope-turbo` 回退请求遇到 429，主模型 qwen-plus 完成；以上为实际落盘结果，未手工修改。
+> 本次 live 运行改用 `deepseek-first` 回退链（实际调用 qwen-plus），避免默认 `balanced` 路由中 `dashscope-turbo` 的 429；51 次调用中 3 次失败、0 次 429，以上为实际落盘结果，未手工修改。默认 `balanced` 路由在本次复跑时仍出现 turbo 限流，部署时建议优先使用 qwen-plus 或配置独立配额。
 >
 > 95% CI 是按合同 bootstrap（2000 次、seed=42）的描述性区间；8 份合同样本很小，区间很宽，不能解释为统计显著性。
 
@@ -406,7 +422,8 @@ uv run python eval/run_eval.py --mode rules
 
 - R1（政府采购货物，唯一 in-scope）：rules 模式 TP/FP/FN = 2/3/2，Precision 40.0%、Recall 50.0%；只有 1 份 in-scope 合同，bootstrap CI 退化为点估计。
 - R2（36 页施工合同，域外）与 R3（8 页 IT 采购，相邻域）只做定性观察，不与 R1 混合计算。
-- 目前没有第二位独立标注者，`inter_annotator_agreement` 为 `null`；`eval/run_iaa.py` 和双人标注流程已就绪，但尚未有第二份标注数据。
+- 目前没有第二位独立标注者，`inter_annotator_agreement` 为 `null`；`eval/run_iaa.py`、`scripts/annotate_real.py universe`、`eval/run_quality_eval.py` 和双人标注流程已就绪，但尚未有第二份标注数据或人工质量评分。
+- 完整标注 schema、固定 universe、裁决、holdout 和质量评分流程见 [`docs/ANNOTATION_GUIDE.md`](docs/ANNOTATION_GUIDE.md)。
 
 报告：[`docs/REAL_CONTRACT_EVAL.md`](docs/REAL_CONTRACT_EVAL.md)。这也不是 benchmark，样本量和标注独立性都不足。
 
@@ -432,12 +449,25 @@ uv run python eval/run_eval.py --mode rules
 
 | 指标 | 值 |
 |---|---|
-| LLM 调用 | 98 次（失败 50，其中 429 = 48） |
-| Token | 输入 112,491 / 输出 39,668 |
-| 延迟 | mean 87.0s；p50 86.3s；p95 98.9s；max 100.1s |
-| 估算费用 | ¥0.1693（8 份，约 ¥0.021/份） |
+| LLM 调用 | 51 次（失败 3，其中 429 = 0） |
+| Token | 输入 117,380 / 输出 40,156 |
+| 延迟 | mean 83.7s；p50 84.9s；p95 94.7s；max 96.9s |
+| 估算费用 | ¥0.1742（8 份，约 ¥0.022/份） |
 
 费用按**假设单价** ¥0.0008/1K input、¥0.002/1K output 计算，不是百炼账单，不含 embedding/rerank/重试；正式引用前用 `eval/run_cost_report.py --input-price-per-1k ... --output-price-per-1k ...` 按当期价格重算。报告：[`backend/eval/report_cost.md`](backend/eval/report_cost.md)。
+
+### 评测门禁与短板
+
+- **离线 CI 门禁**：rules P/R/F1 阈值、BM25 检索 Recall/nDCG 阈值、扰动最大 F1 下降、成本/延迟/失败调用阈值；指标下降会让 CI 失败。命令见 `docs/ANNOTATION_GUIDE.md` 第 7 节。
+- **口径修正**：规则标签只认规则引擎实际 `rule_id`，不再把模型自报的 `rule_hint` 当作规则命中。
+- **可报告 IAA**：`eval/run_iaa.py` 支持 `--universe` 固定候选集；不传时只给出 union-scope 乐观 kappa，不能写进正式报告。κ 不是召回率，共同漏标需单独裁决/报告。
+- **人工质量评分**：`eval/run_quality_eval.py` 汇总法条相关性、证据支持、建议可用性和人工幻觉率；这些数据必须由法务/采购评审产生。
+- **消融**：`eval/run_ablation.py` 汇总 rules-only、full、no-RAG 和检索配置对比；`run_eval.py --disable-rag --output-suffix full_no_rag` 用于隔离 RAG 贡献。HITL 只影响复核/导出流程，不作为 P/R 消融项。本次实测（8 份合成合同）：
+  - full vs rules：P 56.8% vs 100%，R 98.0% vs 94.1%，F1 71.9% vs 97.0%，高风险 FP 16 vs 0；LLM 主要提升语义召回，但引入大量误报。
+  - no-RAG vs full：P 56.2% vs 56.8%，F1 71.4% vs 71.9%，高风险 FP 18 vs 16，无法条引用率 43.8% vs 2.3%；RAG 在这批合成数据上主要改善引用/置信与少量精度，没有提升 recall。
+  - no-RAG 成本 53 次调用 / 失败 5 / ¥0.1497 / p95 103.9s；full 51 次 / 失败 3 / ¥0.1742 / p95 94.7s。
+  - 报告：[`backend/eval/report_ablation.md`](backend/eval/report_ablation.md)。
+- **真实数据仍未接入**：当前只有 3 份真实合同、1 份 in-scope、单人标注、无 IAA；20–30 份双人盲标 + holdout 完成前，不能声称真实泛化或法务准确率。完整流程见 [`docs/ANNOTATION_GUIDE.md`](docs/ANNOTATION_GUIDE.md)。
 
 ## 设计取舍
 
@@ -480,7 +510,7 @@ contractguard/
 │  ├─ data/                         # 法条、Playbook、示例合同、llm_profiles.yaml
 │  ├─ eval/                         # 标签、评测脚本、结果
 │  ├─ scripts/                      # 生成数据、校验 KB、冒烟
-│  └─ tests/                        # 177 个离线测试
+│  └─ tests/                        # 213 个离线测试
 ├─ frontend/                        # React 单页
 │  └─ src/components/               # ContractViewer / ReportPreview / RevisedContractView / BatchPanel
 ├─ desktop/                         # Electron 桌面端（主进程、preload、打包配置）
@@ -532,18 +562,19 @@ contractguard/
 - **法条节选**：32 条，不含司法解释、地方规定；引用相关性未做大样本盲评。
 - **多 LLM 回退成本**：主模型失败会按路由尝试备用模型，耗时可达成倍增加；traces 会记录每次尝试，默认每个 profile 最多 2 次。Embedding 不参与聊天路由，未配置 embedding 服务时只有 BM25。
 - **条款抽取误差**：复杂表格、跨页版面、手写/低清晰度扫描件识别质量有限；OCR 文本仍需对照原件核对。
-- **上传与解析**：默认上限 50MB，可用 `MAX_UPLOAD_MB` 调整；解析会把文件读入内存，超大 PDF/DOCX 更慢、更占内存。条款超过 120 条时 LLM 抽取只处理前 120 条，规则与启发式事实仍覆盖全文。
+- **上传与解析**：默认上限 50MB（`MAX_UPLOAD_MB`），请求体在 multipart 解析前由 ASGI 中间件限制；另有 `MAX_JSON_BODY_MB`、`MAX_TEXT_CHARS`、`MAX_CLAUSES`、`MAX_IMAGE_PIXELS`、`PDF_MAX_PAGES`、`DOCX_MAX_UNCOMPRESSED_MB`/`DOCX_MAX_ENTRIES`/`DOCX_MAX_XML_MB`、`JOB_DEADLINE_S`。条款超过 120 条时 LLM 抽取只处理前 120 条；事实抽取 prompt 的合同正文上限为 `LLM_EXTRACTION_TEXT_CHARS`（默认 12,000 字符），规则与启发式事实仍覆盖全文。
+- **语义审查覆盖上限**：每个 LLM Agent 默认只审查前 `LLM_MAX_CLAUSES_PER_AGENT=10` 条相关条款、最多保留 `LLM_MAX_FINDINGS_PER_AGENT=4` 条候选；超出时结果页会显示运行提示，长合同应拆分审查或调高配置。规则/启发式分支不受此上限影响。
 - **OCR 限制**：扫描件默认最多 OCR 50 页（`OCR_MAX_PAGES`），只做文字识别，不做版面还原/表格结构化；平均置信度和识别失败页数会写入运行提示。
 - **任务存储与 worker**：SQLite 单表快照 + DB 租约 worker；上传完成后入队，多进程用 CAS 领取，心跳续租。进程崩溃后过期租约会被回收：`resuming` 最多重试 3 次，`running` 不自动重放 LLM，标记为失败。仍是单机 SQLite，不是高吞吐/分布式队列；无登录/多租户/权限，**不要直接暴露公网**。
 - **Docker demo**：单容器、mock 模式、只绑定 `127.0.0.1`，默认开启 HITL 与 worker；任务 SQLite、checkpoint SQLite 与上传源文件都在 named volume `contractguard-data`，`down -v` 会清空；默认不启用鉴权，可配置单租户 Token，但没有多用户/权限，公网部署必须自行加保护。
 - **HITL 限制**：图内 `interrupt` + `AsyncSqliteSaver`；暂停任务可跨重启恢复决策。完成/失败/过期任务的 checkpoint 会被删除；暂停任务的 checkpoint 按 `JOB_RETENTION_DAYS` 保留。`running/queued` 崩溃后不自动重放 LLM。
 - **合同修订稿**：修订稿是基于解析后纯文本重新排版的 AI 草稿，不保留原 DOCX/PDF 的表格、页眉页脚、编号与页面样式；不生成 Word 修订痕迹（tracked changes）。MOCK/模板建议只做原位标注，不直接改写原文；同一条款多条建议全部标注；旧任务保守按模板处理。仍需法务逐条复核后才能作为正式合同使用。
 - **静态加密边界**：`ENCRYPTION_ENABLED=1` 时只加密 `jobs.state_json` 与 checkpoint；任务列表的 filename/summary/error、上传临时文件和桌面端历史快照仍是明文。主密钥不支持轮换，丢失后旧数据无法解密。
-- **鉴权/配额边界**：`CONTRACTGUARD_API_TOKEN` 是单租户共享 Token，不是账号/角色/多租户；限流和配额是单进程内存实现，多进程部署需在反向代理层补共享限流。`MAX_ACTIVE_JOBS` 包含待复核任务。
+- **鉴权/配额边界**：`CONTRACTGUARD_API_TOKEN` 是单租户共享 Token，不是账号/角色/多租户；默认只接受本机 Host（`TrustedHostMiddleware`），`CORS_ORIGIN` 不允许 `*`；内网多机访问必须同时设置 Token、`CONTRACTGUARD_REQUIRE_AUTH=1` 和非本机 `CONTRACTGUARD_ALLOWED_HOSTS`，否则拒绝启动。限流和配额是单进程内存实现，多进程部署需在反向代理层补共享限流。`MAX_ACTIVE_JOBS` 包含待复核任务。
 - **取消/重试边界**：取消通过 `cancel_requested` 标记 + worker 心跳生效，最长延迟一个心跳周期；上传任务失败后源文件通常已清理，此时重试返回 409，需要重新上传。同步/旧后台任务路径只在图执行结束后检查取消。
 - **人工编辑边界**：编辑的是修改建议文本，不是原合同条款；编辑历史暂未单独版本化。修订稿替换 diff 是行级预览，不是正式 Word 修订痕迹。
 - **事后复核**：`completed/completed_with_warnings` 任务仍可继续采纳/忽略（HITL 关闭时这是必要的兜底路径），导出报告和修订稿会反映最新决策；目前没有独立的“重新复核”流程或决策版本 UI。
-- **Worker 边界**：解析/OCR 通过 `asyncio.to_thread` 执行，不直接阻塞事件循环，但大文件仍会占用 CPU/GIL 与内存、拉长任务时间；多进程部署或大扫描件场景应调大 `LEASE_SECONDS`。已支持取消/重试：取消 running 任务最多延迟一个心跳周期；`running` 失败后源文件通常已清理，需要重新上传。多进程是设计+进程内测试，尚未做真实双进程 CI。
+- **Worker 边界**：解析/OCR 通过 `asyncio.to_thread` 执行，条款切分与规则求值也移到线程池；但大文件仍会占用 CPU/GIL 与内存、拉长任务时间，线程无法被强制杀死，靠输入上限和 `JOB_DEADLINE_S`（默认 900s）兜底。多进程部署或大扫描件场景应调大 `LEASE_SECONDS`。已支持取消/重试：取消 running 任务最多延迟一个心跳周期；`running` 失败后源文件通常已清理，需要重新上传。多进程是设计+进程内测试，尚未做真实双进程 CI。
 - **批量限制**：批次仍是前端 fan-out（最多 3 份、2 并发），通过 `batch_id` 聚合；后端支持批量复核已核实高风险和批次报告，但没有服务端批次实体、逐 finding 批量意见或批次修订稿。
 - **Reranker 可选**：默认关闭；只有配置 `RERANK_ENABLED=1` 与 DashScope Key 才启用，接口失败会自动回退 RRF，且没有做检索相关性大样本评测。
 - **Mock 结果**：没有 Key 时只跑规则，不能把 mock 指标当作 LLM 能力。
@@ -570,15 +601,23 @@ contractguard/
 
 - [ ] `backend/.env` 不在仓库；`git status` 里没有 Key、真实合同、`node_modules`、`dist`。
 - [ ] 截图/录屏里没有 Key、终端敏感信息、真实合同。
-- [ ] `uv run pytest -q` 通过；`eval/report_rules.md` 是真实运行结果。
+- [ ] `LLM_MODE=mock uv run pytest -q` 通过（当前 213 个离线测试，含默认 Worker+HITL E2E）；`eval/report_rules.md` 是真实运行结果。
 - [ ] `WORKER_ENABLED=1` 下示例审查可完成；`ENCRYPTION_ENABLED=1` 时重启后仍能读取任务、HITL checkpoint 可恢复。
 - [ ] 复核完成后「修订稿」Tab 能预览并下载 DOCX；MOCK 建议以 `【修订建议】` 标注而非直接改写原文。
 - [ ] 设置 `CONTRACTGUARD_API_TOKEN` 时 Token 登录页可用，`/api/health` 仍返回 200；取消/重试流程可用。
-- [ ] `scripts/backup_db.py` / `restore_db.py` 可备份并恢复 jobs/checkpoints；恢复前已停服务。
+- [ ] `CONTRACTGUARD_REQUIRE_AUTH=1` 且无 Token 时后端拒绝启动；`Host: attacker.example` 返回 400；`CORS_ORIGIN=*` 被拒绝。
+- [ ] 超限上传返回 413；50MB TXT/海量条款/超大 PDF 页面/超像素图片/伪造 DOCX 解压大小被明确拒绝，正常五类文件与 OCR 通过。
+- [ ] live 模式 embedding 不可达时 15s 内启动并降级 BM25；示例审查仍可完成。
+- [ ] `scripts/smoke_api.py` 使用临时库，不清空真实任务数据；`scripts/backup_db.py` / `restore_db.py` 可备份并恢复 jobs/checkpoints；恢复前已停服务。
 - [ ] `cd desktop && npm run dist` 可生成安装包；`desktop/release`、`backend/dist` 不入库，安装包内不含 `.env`。
 - [ ] `docker-compose up --build` 后 `/api/health` 正常，示例审查可完成。
-- [ ] README 的启动命令在干净环境可复现（至少 mock 模式）。
+- [ ] Node 22 + uv 的干净环境按 README 可复现 mock 演示。
 - [ ] 如果要写“live 模式评测”，先把真实跑出来的指标填进去；没跑就不写。
+- [ ] CI 的 rules/检索/扰动/成本阈值全部通过；live full 只在发布前手工跑并归档。
+- [ ] 如果对外声称真实合同质量：按 [`docs/ANNOTATION_GUIDE.md`](docs/ANNOTATION_GUIDE.md) 完成 20–30 份真实合同、双人盲标、裁决、fixed-universe IAA 和人工质量评分；否则只能写“合成集工程回归”。
+- [ ] 需要消融结论时运行 `eval/run_ablation.py`，并区分 rules-only、full、no-RAG；不要用 HITL 冒充识别质量提升。
+
+本次验收的实际命令与结果见 [`docs/LAUNCH_ACCEPTANCE.md`](docs/LAUNCH_ACCEPTANCE.md)。
 
 ## License
 
@@ -588,6 +627,6 @@ MIT 许可证，详见 [`LICENSE`](LICENSE)。真实合同 PDF、第三方法律
 
 ## English Abstract
 
-**ContractGuard** is a 3-day MVP for Chinese goods-procurement contract review. It combines a deterministic 25-rule playbook with three parallel LangGraph LLM agents, hybrid RAG over 32 statutory articles and enterprise rules, citation/evidence gates, deterministic confidence tiers, human review, and DOCX/Markdown/JSON report export. Scanned PDFs and JPG/PNG images are parsed with local RapidOCR (offline, max 50 pages per scan) and flagged for manual verification. Chat calls are routed across OpenAI-compatible provider profiles (Qwen/DeepSeek/Moonshot/OpenAI/local) with per-task model preferences and ordered fallback chains. On a small synthetic benchmark of 8 contracts and 51 labeled risks, the rules-only baseline reaches 100% precision and 94.1% recall; a live full-pipeline run (qwen-plus, 2026-10-28) reached 98.0% recall and 56.8% precision with 38 false positives; the confirmed tier reaches 96.0% precision while the advisory tier reaches 5.6%, which is disclosed in full and drives the confirmed/advisory/needs-review split. The product also includes contract full-text navigation, in-app report preview, and status/search/sort filters. Job snapshots are persisted in SQLite behind a lease-based worker: completed jobs survive restarts, expired `resuming` work is retried up to three times, and `running` work is failed rather than replayed. Human-in-the-loop review is implemented with LangGraph `interrupt` and an `AsyncSqliteSaver` checkpoint so paused reviews survive restarts; optional AES-GCM encryption covers job state and checkpoints. The web UI supports up to three-file batch review with batch decisions and batch reports. Accepted findings can be turned into a revised contract draft (DOCX plus a change list): template suggestions are annotated inline, while complete clauses returned by a live model may replace the original clause. An optional DashScope reranker falls back to RRF when unavailable. Evaluation reports include contract-bootstrap 95% CIs, nDCG retrieval metrics with query-bootstrap CIs, known-badcase regression, deterministic perturbation stability checks, and a token/latency/cost summary with explicit price assumptions. The project deliberately trades breadth for a complete, explainable, testable loop.
+**ContractGuard** is a 3-day MVP for Chinese goods-procurement contract review. It combines a deterministic 25-rule playbook with three parallel LangGraph LLM agents, hybrid RAG over 32 statutory articles and enterprise rules, citation/evidence gates, deterministic confidence tiers, human review, and DOCX/Markdown/JSON report export. Scanned PDFs and JPG/PNG images are parsed with local RapidOCR (offline, max 50 pages per scan) and flagged for manual verification. Chat calls are routed across OpenAI-compatible provider profiles (Qwen/DeepSeek/Moonshot/OpenAI/local) with per-task model preferences and ordered fallback chains. On a small synthetic benchmark of 8 contracts and 51 labeled risks, the rules-only baseline reaches 100% precision and 94.1% recall; a live full-pipeline run (qwen-plus, 2026-11-02, deepseek-first fallback route) reached 98.0% recall and 56.8% precision with 38 false positives; the confirmed tier reaches 96.0% precision while the advisory tier reaches 5.6%, which is disclosed in full and drives the confirmed/advisory/needs-review split. The product also includes contract full-text navigation, in-app report preview, and status/search/sort filters. Job snapshots are persisted in SQLite behind a lease-based worker: completed jobs survive restarts, expired `resuming` work is retried up to three times, and `running` work is failed rather than replayed. Human-in-the-loop review is implemented with LangGraph `interrupt` and an `AsyncSqliteSaver` checkpoint so paused reviews survive restarts; optional AES-GCM encryption covers job state and checkpoints. The web UI supports up to three-file batch review with batch decisions and batch reports. Accepted findings can be turned into a revised contract draft (DOCX plus a change list): template suggestions are annotated inline, while complete clauses returned by a live model may replace the original clause. An optional DashScope reranker falls back to RRF when unavailable. Evaluation reports include contract-bootstrap 95% CIs, nDCG retrieval metrics with query-bootstrap CIs, known-badcase regression, deterministic perturbation stability checks, and a token/latency/cost summary with explicit price assumptions. The project deliberately trades breadth for a complete, explainable, testable loop.
 
 > Built from scratch; no code was copied from reference projects.
