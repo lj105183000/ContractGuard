@@ -426,7 +426,40 @@ def _merge_dict(primary: Any, fallback: Any) -> Any:
     return primary
 
 
+# 这些事实由合同原文的明确措辞决定。LLM 偶尔把“已存在”的条款抽成缺失，
+# 进而让高风险规则误触发；启发式给出肯定证据时以它为准。
+_POSITIVE_HEURISTIC_FIELDS = {
+    ("termination", "buyer_right"),
+    ("compliance", "confidentiality_present"),
+    ("compliance", "confidentiality_mutual"),
+    ("compliance", "attachments_present"),
+    ("compliance", "signatory_clear"),
+    ("acceptance", "present"),
+    ("warranty", "present"),
+    ("liability", "quality_remedy"),
+}
+
+# 只有“明确无风险”的否定值覆盖 LLM；不反向覆盖，避免把真实风险抹掉。
+_NEGATIVE_HEURISTIC_FIELDS = {
+    ("dispute", "unfavorable_venue"),
+    ("termination", "one_sided"),
+}
+
+
+def _apply_deterministic_overrides(
+    merged: ContractFacts, heuristic: ContractFacts
+) -> ContractFacts:
+    for section, field in _POSITIVE_HEURISTIC_FIELDS:
+        if getattr(getattr(heuristic, section), field) is True:
+            setattr(getattr(merged, section), field, True)
+    for section, field in _NEGATIVE_HEURISTIC_FIELDS:
+        if getattr(getattr(heuristic, section), field) is False:
+            setattr(getattr(merged, section), field, False)
+    return merged
+
+
 def merge_facts(primary: ContractFacts, fallback: ContractFacts) -> ContractFacts:
-    """LLM 抽取优先，启发式只补空缺。"""
+    """LLM 抽取优先，启发式补空缺；明确条款证据覆盖 LLM 的否定误抽。"""
     merged = _merge_dict(primary.model_dump(), fallback.model_dump())
-    return ContractFacts.model_validate(merged)
+    result = ContractFacts.model_validate(merged)
+    return _apply_deterministic_overrides(result, fallback)

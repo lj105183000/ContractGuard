@@ -1,5 +1,16 @@
-from app.graph.nodes.aggregate import _merge_findings
-from app.schemas import Category, Finding, Severity, Source
+from app.graph.nodes.aggregate import (
+    _drop_contradicted_findings,
+    _merge_findings,
+)
+from app.schemas import (
+    Category,
+    ContractFacts,
+    DisputeFacts,
+    Finding,
+    Severity,
+    Source,
+    TerminationFacts,
+)
 
 
 def _finding(finding_id, **overrides):
@@ -85,3 +96,87 @@ def test_rejected_citation_ids_survive_merge():
     llm = _finding("llm-1", rejected_legal_basis_ids=["FAKE-2"])
     merged = _merge_findings([rule, llm])
     assert set(merged[0].rejected_legal_basis_ids) == {"FAKE-1", "FAKE-2"}
+
+
+def test_contract_level_absence_merges_into_rule_anchor():
+    rule = _finding(
+        "rule-1",
+        clause_id=None,
+        category=Category.COMPLIANCE,
+        source=Source.RULE,
+        rule_id="COM-001",
+        title="保密义务单向或缺失",
+        evidence_quote="",
+        evidence_start=None,
+        evidence_end=None,
+    )
+    llm = _finding(
+        "llm-1",
+        clause_id="cl_008",
+        category=Category.COMPLIANCE,
+        title="保密义务缺失",
+        evidence_quote="第八条 争议解决",
+        evidence_start=0,
+        evidence_end=10,
+    )
+    merged = _merge_findings([rule, llm])
+    assert len(merged) == 1
+    assert merged[0].id == "rule-1"
+    assert merged[0].source == Source.RULE_LLM
+    assert merged[0].rule_id == "COM-001"
+    assert merged[0].clause_id is None
+    assert merged[0].evidence_start is None
+
+
+def test_llm_venue_claim_is_dropped_when_facts_show_favorable_venue():
+    finding = _finding(
+        "llm-1",
+        category=Category.DISPUTE,
+        title="管辖法院对买方不利",
+    )
+    facts = ContractFacts(dispute=DisputeFacts(unfavorable_venue=False))
+    kept, dropped = _drop_contradicted_findings([finding], facts)
+    assert kept == []
+    assert dropped == 1
+
+
+def test_rule_anchored_venue_finding_is_not_dropped():
+    finding = _finding(
+        "rule-1",
+        category=Category.DISPUTE,
+        title="管辖法院对买方不利",
+        source=Source.RULE_LLM,
+        rule_id="DIS-001",
+    )
+    facts = ContractFacts(dispute=DisputeFacts(unfavorable_venue=False))
+    kept, dropped = _drop_contradicted_findings([finding], facts)
+    assert kept == [finding]
+    assert dropped == 0
+
+
+def test_llm_termination_gap_is_dropped_when_buyer_right_exists():
+    finding = _finding(
+        "llm-1",
+        category=Category.TERMINATION,
+        title="买方解除权条件不对等且未覆盖根本违约情形",
+    )
+    facts = ContractFacts(
+        termination=TerminationFacts(buyer_right=True, one_sided=False)
+    )
+    kept, dropped = _drop_contradicted_findings([finding], facts)
+    assert kept == []
+    assert dropped == 1
+
+
+def test_unrelated_llm_finding_is_kept():
+    finding = _finding(
+        "llm-1",
+        category=Category.TERMINATION,
+        title="违约金过低",
+    )
+    facts = ContractFacts(
+        termination=TerminationFacts(buyer_right=True, one_sided=False)
+    )
+    kept, dropped = _drop_contradicted_findings([finding], facts)
+    assert kept == [finding]
+    assert dropped == 0

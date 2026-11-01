@@ -11,6 +11,8 @@ from app.graph.state import ReviewState
 from app.llm.profiles import chat_runtime
 from app.rag.corpus import load_kb
 from app.schemas import (
+    Category,
+    ContractFacts,
     ContractMeta,
     EventStatus,
     Finding,
@@ -94,6 +96,98 @@ def _is_rule_anchored(finding: Finding) -> bool:
     return finding.source in {Source.RULE, Source.RULE_LLM} or bool(finding.rule_id)
 
 
+_ABSENCE_MARKERS = ("缺失", "未约定", "未设置", "没有约定", "未明确约定")
+_TOPIC_KEYWORDS = (
+    "保密",
+    "争议",
+    "管辖",
+    "仲裁",
+    "知识产权",
+    "验收",
+    "质保",
+    "保修",
+    "交付",
+    "付款",
+    "解除",
+    "终止",
+    "违约金",
+    "赔偿",
+)
+
+
+def _is_contract_absence_duplicate(anchor: Finding, item: Finding) -> bool:
+    """合同级规则“某条款缺失”与模型在任意条款上提出的同类缺失合并。
+
+    模型常把合同级缺失挂到首部或生效条款；如果规则已经在合同级命中同一
+    主题，就不应再作为第二条独立风险计入。
+    """
+    if anchor.clause_id is not None or anchor.category != item.category:
+        return False
+    title = item.title or ""
+    if not any(marker in title for marker in _ABSENCE_MARKERS):
+        return False
+    anchor_title = anchor.title or ""
+    return any(
+        keyword in title and keyword in anchor_title
+        for keyword in _TOPIC_KEYWORDS
+    )
+
+
+def _contradicts_facts(finding: Finding, facts: ContractFacts) -> bool:
+    """模型建议与合同明确事实相反时丢弃；规则锚定项永不在此丢弃。"""
+    title = finding.title or ""
+    if (
+        finding.category == Category.DISPUTE
+        and facts.dispute.unfavorable_venue is False
+        and "管辖" in title
+        and "不利" in title
+    ):
+        return True
+    if (
+        finding.category == Category.TERMINATION
+        and facts.termination.buyer_right is True
+        and facts.termination.one_sided is False
+        and "解除" in title
+        and any(marker in title for marker in ("缺失", "不对等", "受限", "未覆盖"))
+    ):
+        return True
+    if (
+        finding.category == Category.COMPLIANCE
+        and facts.compliance.confidentiality_present is True
+        and "保密" in title
+        and "缺失" in title
+    ):
+        return True
+    if (
+        finding.category == Category.IP
+        and facts.compliance.ip_ownership
+        and "知识产权" in title
+        and any(marker in title for marker in ("缺失", "未约定", "不明"))
+    ):
+        return True
+    if (
+        finding.category == Category.DELIVERY
+        and facts.delivery.vague is False
+        and "交付" in title
+        and any(marker in title for marker in ("模糊", "不明确", "不明"))
+    ):
+        return True
+    return False
+
+
+def _drop_contradicted_findings(
+    findings: list[Finding], facts: ContractFacts
+) -> tuple[list[Finding], int]:
+    kept: list[Finding] = []
+    dropped = 0
+    for finding in findings:
+        if not _is_rule_anchored(finding) and _contradicts_facts(finding, facts):
+            dropped += 1
+            continue
+        kept.append(finding)
+    return kept, dropped
+
+
 def _merge_into(existing: Finding, incoming: Finding, reason: str) -> None:
     """把 incoming 合并进 existing，保留 existing 的规则锚点。"""
     sources = {existing.source, incoming.source}
@@ -121,7 +215,11 @@ def _merge_into(existing: Finding, incoming: Finding, reason: str) -> None:
         existing.analysis = (
             existing.analysis + "\n\n模型补充：" + incoming.analysis
         ).strip()
-    if existing.evidence_start is None and incoming.evidence_start is not None:
+    if (
+        not (existing.clause_id is None and _is_rule_anchored(existing))
+        and existing.evidence_start is None
+        and incoming.evidence_start is not None
+    ):
         existing.clause_id = incoming.clause_id
         existing.clause_article = incoming.clause_article
         existing.clause_text = incoming.clause_text
@@ -146,6 +244,11 @@ def _merge_similar(findings: list[Finding]) -> list[Finding]:
         key = (finding.clause_id or "contract", finding.category.value)
         groups.setdefault(key, []).append(finding)
 
+    contract_anchors: dict[Category, list[Finding]] = {}
+    for finding in findings:
+        if _is_rule_anchored(finding) and finding.clause_id is None:
+            contract_anchors.setdefault(finding.category, []).append(finding)
+
     order = {id(finding): index for index, finding in enumerate(findings)}
     merged: list[Finding] = []
     for items in groups.values():
@@ -162,6 +265,15 @@ def _merge_similar(findings: list[Finding]) -> list[Finding]:
                 ),
                 None,
             )
+            if target is None:
+                target = next(
+                    (
+                        anchor
+                        for anchor in contract_anchors.get(item.category, [])
+                        if _is_contract_absence_duplicate(anchor, item)
+                    ),
+                    None,
+                )
             if target is None:
                 remaining.append(item)
                 continue
@@ -234,7 +346,11 @@ def _merge_findings(findings: list[Finding]) -> list[Finding]:
             existing.analysis = (
                 existing.analysis + "\n\n模型补充：" + finding.analysis
             ).strip()
-        if existing.evidence_start is None and finding.evidence_start is not None:
+        if (
+            not (existing.clause_id is None and _is_rule_anchored(existing))
+            and existing.evidence_start is None
+            and finding.evidence_start is not None
+        ):
             existing.clause_id = finding.clause_id
             existing.clause_article = finding.clause_article
             existing.clause_text = finding.clause_text
@@ -259,8 +375,17 @@ def aggregate_node(state: ReviewState) -> dict:
     clauses_by_id = {clause.id: clause for clause in clauses}
     clause_order = {clause.id: clause.index for clause in clauses}
     findings = _merge_findings(state.get("findings", []))
+    facts = state.get("facts")
+    suppressed = 0
+    if isinstance(facts, ContractFacts):
+        findings, suppressed = _drop_contradicted_findings(findings, facts)
 
     warnings: list[str] = list(state.get("warnings", []))
+    if suppressed:
+        warnings.append(
+            f"已过滤 {suppressed} 条与合同明确事实矛盾的模型建议"
+            "（如已有管辖/解除权仍报缺失）。"
+        )
     for finding in findings:
         if finding.clause_id and finding.clause_id in clauses_by_id:
             clause = clauses_by_id[finding.clause_id]
