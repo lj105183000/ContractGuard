@@ -159,6 +159,55 @@ const cases = [
     title: "无法连接本地后端",
   },
   {
+    name: "request timeout",
+    info: {
+      message: "请求超时（15 秒），请检查后端服务后重试。",
+      source: "network",
+    },
+    title: "请求超时",
+  },
+  {
+    name: "request body limit",
+    info: {
+      message: "请求体超过大小限制（52MB），请压缩文件或拆分后重试。",
+      source: "job",
+      status: 413,
+    },
+    title: "请求体超过上限",
+  },
+  {
+    name: "clause limit",
+    info: {
+      message: "合同条款数超过上限 1000，请拆分文件后重试。",
+      source: "job",
+    },
+    title: "合同条款/文本超过解析上限",
+  },
+  {
+    name: "docx decompression limit",
+    info: {
+      message: "DOCX 实际解压后超过 200MB 限制。",
+      source: "job",
+    },
+    title: "DOCX 解压后过大",
+  },
+  {
+    name: "pdf page dimensions",
+    info: {
+      message: "PDF 第 1 页尺寸过大，无法在安全分辨率下 OCR；请拆分或降低页面尺寸。",
+      source: "job",
+    },
+    title: "PDF 页面尺寸异常",
+  },
+  {
+    name: "image pixel limit",
+    info: {
+      message: "图片像素数 60,000,000 超过上限 50,000,000，请缩小后重试。",
+      source: "job",
+    },
+    title: "图片像素过大",
+  },
+  {
     name: "custom limits interpolation",
     info: {
       message: "图片中没有识别到文字。请上传更清晰、端正的扫描件。",

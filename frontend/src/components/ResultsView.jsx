@@ -157,6 +157,20 @@ export default function ResultsView({
         </div>
       ) : null}
 
+      {result.warnings?.length > 0 &&
+      (job.status === "completed_with_warnings" ||
+        /调用失败|仅审查|仅覆盖|截断|超时|降级/.test(
+          result.warnings.join(" "),
+        )) ? (
+        <div className="warning-banner">
+          <strong>本次审查有运行提示，结果可能不完整</strong>
+          <span>
+            部分模型调用失败或语义审查覆盖范围有限。请展开下方“运行提示”逐条核对；
+            长合同建议拆分后重新审查，并由法务复核。
+          </span>
+        </div>
+      ) : null}
+
       {result.warnings?.length ? (
         <details className="warnings-box">
           <summary>运行提示（{result.warnings.length}）</summary>

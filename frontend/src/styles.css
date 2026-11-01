@@ -1184,6 +1184,24 @@ h3 {
   line-height: 1.7;
 }
 
+.warning-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  border: 1px solid rgba(181, 71, 8, 0.45);
+  border-radius: 12px;
+  background: rgba(181, 71, 8, 0.1);
+  color: var(--warning);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.warning-banner strong {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
 /* ---------- summary ---------- */
 
 .summary-wrap {
@@ -3739,6 +3757,27 @@ h3 {
   .revised-compare-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.error-boundary {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.error-boundary-card {
+  max-width: 560px;
+  padding: 32px;
+  text-align: center;
+}
+
+.error-boundary-card h1 {
+  margin: 8px 0 12px;
+}
+
+.error-boundary-card .btn {
+  margin-top: 16px;
 }
 
 @media (prefers-reduced-motion: reduce) {

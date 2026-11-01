@@ -5,6 +5,12 @@ const OCR_NO_TEXT =
   /OCR 未识别出有效文字|没有识别到文字|没有可提取的文字|未识别出文字/;
 const PDF_ENCRYPTED = /已加密/;
 const FILE_TOO_LARGE = /文件超过\s*\d+\s*MB|超过\s*\d+\s*MB\s*限制/;
+const REQUEST_TIMEOUT = /请求超时|超时（\d+\s*秒）/;
+const BODY_LIMIT = /请求体超过大小限制/;
+const CLAUSE_LIMIT = /条款数超过上限|合同文本超过|TXT 文本超过|TXT 文件过大/;
+const DOCX_LIMIT = /DOCX.*超过|DOCX 内部条目过多/;
+const PDF_PAGE_LIMIT = /PDF 第\s*\d+\s*页尺寸|PDF 页尺寸过大/;
+const IMAGE_LIMIT = /图片像素数/;
 const UNSUPPORTED_TYPE = /不支持的文件类型|只支持\s*PDF/;
 const EMPTY_FILE = /上传文件为空|内容为空或过短|中没有可读取的文字/;
 const ROUTE_UNAVAILABLE = /模型路由不可用/;
@@ -100,7 +106,14 @@ export function buildErrorGuidance(
     );
   }
 
-  if (status === 413 || FILE_TOO_LARGE.test(message)) {
+  if (
+    !BODY_LIMIT.test(message) &&
+    !DOCX_LIMIT.test(message) &&
+    !CLAUSE_LIMIT.test(message) &&
+    !PDF_PAGE_LIMIT.test(message) &&
+    !IMAGE_LIMIT.test(message) &&
+    (status === 413 || FILE_TOO_LARGE.test(message))
+  ) {
     const matched = message.match(/文件超过\s*(\d+)\s*MB/);
     const limit = matched ? Number(matched[1]) : maxUploadMb;
     return result(
@@ -110,6 +123,56 @@ export function buildErrorGuidance(
         "压缩文件或拆分为多份后重新上传。",
         `或调高 MAX_UPLOAD_MB（当前 ${maxUploadMb}MB）后重启后端。`,
       ],
+    );
+  }
+
+  if (BODY_LIMIT.test(message)) {
+    return result(
+      "请求体超过上限",
+      "上传或提交的数据在解析前就被拒绝。",
+      [
+        "压缩或拆分合同后重新上传。",
+        "不要一次提交多个大文件；批量审查请逐份提交。",
+        `或调高 MAX_UPLOAD_MB / MAX_JSON_BODY_MB 后重启后端。`,
+      ],
+    );
+  }
+
+  if (CLAUSE_LIMIT.test(message)) {
+    return result(
+      "合同条款/文本超过解析上限",
+      "文件条款或文字量过大，系统为避免内存耗尽拒绝了解析。",
+      [
+        "把合同拆分成多份后分别审查。",
+        "或调高 MAX_CLAUSES / MAX_TEXT_CHARS 后重启后端（需评估内存）。",
+      ],
+    );
+  }
+
+  if (DOCX_LIMIT.test(message)) {
+    return result(
+      "DOCX 解压后过大",
+      "DOCX 内部文件数量或解压体积超过安全上限。",
+      [
+        "用 Office/WPS 重新另存为 DOCX，去掉不必要的嵌入对象。",
+        "或把合同拆分为多份后重新上传。",
+      ],
+    );
+  }
+
+  if (PDF_PAGE_LIMIT.test(message)) {
+    return result(
+      "PDF 页面尺寸异常",
+      "页面尺寸过大，无法在安全分辨率下渲染/OCR。",
+      ["把页面缩放到常规 A4 尺寸后重新导出 PDF。", "或拆分为多份后上传。"],
+    );
+  }
+
+  if (IMAGE_LIMIT.test(message)) {
+    return result(
+      "图片像素过大",
+      "图片分辨率超过 OCR 安全上限。",
+      ["缩小图片到 3000 像素以内后重新上传。", "或改用 PDF/DOCX。"],
     );
   }
 
@@ -163,6 +226,18 @@ export function buildErrorGuidance(
       [
         "用 Office/WPS 重新导出 PDF/DOCX 后重试。",
         "确认文件非空且不是只有图片的扫描件。",
+      ],
+    );
+  }
+
+  if (REQUEST_TIMEOUT.test(message)) {
+    return result(
+      "请求超时",
+      "后端在等待时间内没有响应，可能正在处理大文件、重启，或网络中断。",
+      [
+        "稍等片刻后重试；刷新页面可恢复轮询。",
+        "如果反复超时，缩小合同或查看后端日志。",
+        `开发版日志：${LOG_PATHS.dev}；安装版：${LOG_PATHS.packaged}。`,
       ],
     );
   }

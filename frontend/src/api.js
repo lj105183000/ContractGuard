@@ -1,5 +1,9 @@
 const BASE = import.meta.env.VITE_API_BASE || "/api";
 
+const DEFAULT_TIMEOUT_MS = 15000;
+const UPLOAD_TIMEOUT_MS = 120000;
+const DOWNLOAD_TIMEOUT_MS = 120000;
+
 function authHeaders() {
   try {
     const token = window.localStorage.getItem("contractguard.apiToken");
@@ -15,6 +19,31 @@ export class ApiError extends Error {
     this.name = "ApiError";
     this.status = status;
     this.payload = payload;
+  }
+}
+
+export class RequestTimeoutError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "RequestTimeoutError";
+    this.status = null;
+  }
+}
+
+async function fetchWithTimeout(url, options = {}, timeoutMs = DEFAULT_TIMEOUT_MS) {
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      throw new RequestTimeoutError(
+        `请求超时（${Math.round(timeoutMs / 1000)} 秒），请检查后端服务后重试。`,
+      );
+    }
+    throw error;
+  } finally {
+    window.clearTimeout(timer);
   }
 }
 
@@ -60,11 +89,15 @@ async function parseError(response) {
   return new ApiError(message, response.status, payload);
 }
 
-async function request(path, options = {}) {
-  const response = await fetch(`${BASE}${path}`, {
-    ...options,
-    headers: { ...(options.headers || {}), ...authHeaders() },
-  });
+async function request(path, options = {}, timeoutMs = DEFAULT_TIMEOUT_MS) {
+  const response = await fetchWithTimeout(
+    `${BASE}${path}`,
+    {
+      ...options,
+      headers: { ...(options.headers || {}), ...authHeaders() },
+    },
+    timeoutMs,
+  );
   if (!response.ok) {
     throw await parseError(response);
   }
@@ -90,21 +123,26 @@ function routeQuery(llmRoute, batchId) {
 export async function startReview(file, llmRoute = "", batchId = "") {
   const form = new FormData();
   form.append("file", file);
-  return request(`/reviews${routeQuery(llmRoute, batchId)}`, {
-    method: "POST",
-    body: form,
-  });
+  return request(
+    `/reviews${routeQuery(llmRoute, batchId)}`,
+    {
+      method: "POST",
+      body: form,
+    },
+    UPLOAD_TIMEOUT_MS,
+  );
 }
 
 export async function startSample(sampleId, llmRoute = "", batchId = "") {
   return request(
     `/reviews/samples/${encodeURIComponent(sampleId)}${routeQuery(llmRoute, batchId)}`,
     { method: "POST" },
+    UPLOAD_TIMEOUT_MS,
   );
 }
 
 export async function getReview(jobId) {
-  return request(`/reviews/${encodeURIComponent(jobId)}`);
+  return request(`/reviews/${encodeURIComponent(jobId)}`, {}, 30000);
 }
 
 export async function listReviews({ status, limit = 50, offset = 0 } = {}) {
@@ -164,15 +202,19 @@ export async function getBatch(batchId) {
 }
 
 export async function decideBatch(batchId, { decision, note = "", findingIds } = {}) {
-  return request(`/batches/${encodeURIComponent(batchId)}/decisions`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      decision,
-      note,
-      finding_ids: findingIds || null,
-    }),
-  });
+  return request(
+    `/batches/${encodeURIComponent(batchId)}/decisions`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        decision,
+        note,
+        finding_ids: findingIds || null,
+      }),
+    },
+    60000,
+  );
 }
 
 export async function getBatchReportPreview(batchId) {
@@ -180,7 +222,11 @@ export async function getBatchReportPreview(batchId) {
 }
 
 async function downloadBlob(url, fallbackName) {
-  const response = await fetch(url, { headers: authHeaders() });
+  const response = await fetchWithTimeout(
+    url,
+    { headers: authHeaders() },
+    DOWNLOAD_TIMEOUT_MS,
+  );
   if (!response.ok) {
     throw await parseError(response);
   }
