@@ -25,7 +25,8 @@ backend/**/__pycache__
 backend/.pytest_cache
 backend/eval
 backend/tests
-backend/scripts
+backend/scripts/*
+!backend/scripts/smoke_http.py
 
 # Frontend build/cache
 frontend/node_modules
