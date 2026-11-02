@@ -141,7 +141,10 @@ state -> node(state) -> 部分 state 更新
 | `backend/app/services/summary.py` | 风险统计与指标口径 | `build_summary`、`compute_evidence_metrics` |
 | `backend/app/graph/runtime.py` | lifespan 持有的 checkpointer/图 | `init_runtime`、`get_graph`、`hitl_active` |
 | `backend/app/graph/nodes/human_review.py` | 图内人工复核 interrupt | `human_review_node` |
-| `backend/app/services/jobs.py` | SQLite 快照任务 + 执行图 | `JobStore`、`run_review`、`resume_review`、`list_jobs` |
+| `backend/app/services/jobs.py` | SQLite 快照任务 + 执行图 + feedback v2/保留期 | `JobStore`、`run_review`、`resume_review`、`list_jobs`、`delete` |
+| `backend/app/provenance.py` | git/prompt/KB/合同哈希、命令路径脱敏 | `git_provenance`、`prompt_provenance`、`kb_provenance`、`redact_argv` |
+| `backend/eval/provenance.py` | 评测 dataset/label/KB/真实合同哈希 | `synthetic_dataset_provenance`、`real_contracts_provenance` |
+| `backend/scripts/export_feedback.py` | 反馈 JSONL 导出与孤儿报告 | `export` |
 | `backend/app/worker.py` | SQLite 租约 worker 与过期回收 | `WorkerPool`、`_heartbeat`、`_reaper` |
 | `backend/app/crypto.py` | 任务快照/checkpoint AES-GCM 加密 | `encrypt_state`、`AesGcmCipher` |
 | `backend/app/rag/rerank.py` | 可选 DashScope reranker | `DashScopeReranker.rerank` |
@@ -274,6 +277,8 @@ state -> node(state) -> 部分 state 更新
 cd backend
 uv run pytest -q
 uv run python scripts/validate_kb.py
+uv run python scripts/validate_eval_assets.py
+uv run python scripts/export_feedback.py --out-dir ../exports/feedback --formats jsonl,csv,sqlite
 uv run python scripts/check_samples.py
 uv run python scripts/smoke_api.py
 uv run python scripts/test_live_offline.py
@@ -284,8 +289,10 @@ uv run python eval/run_ablation.py
 uv run python eval/run_quality_eval.py --scores ../../contractguard-private/real_eval/quality_scores.jsonl
 ```
 
-- `pytest`：227 个离线测试（CI 覆盖率门槛 80%）；
+- `pytest`：242 个离线测试（CI 覆盖率门槛 80%）；
 - `validate_kb`：法条/规则引用是否一致；
+- `validate_eval_assets`：samples/labels/retrieval/真实公共 manifest 的 ID、文件、split、隐私字段；
+- `export_feedback`：feedback v2 → JSONL/CSV/SQLite，报告 legacy/孤儿；
 - `check_samples`：每份合同切出多少条款、规则命中/漏报/误报；
 - `eval/stats.py`：按合同/query 的 bootstrap CI、nDCG；
 - `eval/gates.py`：评测脚本共用的阈值检查；CI 规则/检索/扰动/成本门禁见 `docs/ANNOTATION_GUIDE.md`；

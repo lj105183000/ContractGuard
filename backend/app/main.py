@@ -149,6 +149,12 @@ async def lifespan(app: FastAPI):  # type: ignore[no-untyped-def]
         settings.embedding_model,
         "live" if settings.embedding_live else "未配置/BM25",
     )
+    if not settings.encryption_enabled:
+        logger.warning(
+            "ENCRYPTION_ENABLED=0：job state/checkpoint 之外的合同数据"
+            "（上传源文件、feedback、run trace、桌面历史）为明文；"
+            "真实合同请开启加密或使用磁盘/卷加密。"
+        )
     retriever = get_retriever()
     warmup_task: asyncio.Task | None = None
     if settings.embedding_live:

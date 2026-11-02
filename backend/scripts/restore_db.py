@@ -13,13 +13,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.config import UPLOAD_DIR, settings  # noqa: E402
+from app.config import FEEDBACK_DIR, RUNS_DIR, UPLOAD_DIR, settings  # noqa: E402
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--backup-dir", required=True)
     parser.add_argument("--include-uploads", action="store_true")
+    parser.add_argument("--include-feedback", action="store_true")
+    parser.add_argument("--include-traces", action="store_true")
+    parser.add_argument("--include-eval", action="store_true")
     parser.add_argument("--yes", action="store_true")
     args = parser.parse_args()
     if not args.yes:
@@ -43,6 +46,23 @@ def main() -> None:
         if uploads.exists():
             shutil.copytree(uploads, UPLOAD_DIR, dirs_exist_ok=True)
             print(f"restored uploads -> {UPLOAD_DIR}")
+    if args.include_feedback:
+        feedback = source / "feedback" / "feedback.jsonl"
+        if feedback.exists():
+            FEEDBACK_DIR.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(feedback, FEEDBACK_DIR / "feedback.jsonl")
+            print(f"restored feedback -> {FEEDBACK_DIR}")
+    if args.include_traces:
+        runs = source / "runs"
+        if runs.exists():
+            shutil.copytree(runs, RUNS_DIR, dirs_exist_ok=True)
+            print(f"restored traces -> {RUNS_DIR}")
+    if args.include_eval:
+        eval_backup = source / "eval"
+        if eval_backup.exists():
+            eval_target = Path(__file__).resolve().parents[1] / "eval"
+            shutil.copytree(eval_backup, eval_target, dirs_exist_ok=True)
+            print(f"restored eval artifacts -> {eval_target}")
 
 
 if __name__ == "__main__":

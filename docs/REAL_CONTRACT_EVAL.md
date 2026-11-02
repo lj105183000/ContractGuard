@@ -59,7 +59,10 @@ cd backend
 uv run python eval/run_real_eval.py \
   --contracts-dir ../../contractguard-private/docs \
   --manifest ../../contractguard-private/real_eval/manifest.yaml \
-  --labels-dir ../../contractguard-private/real_eval/labels
+  --labels-dir ../../contractguard-private/real_eval/labels \
+  --split dev
 ```
 
-详细说明见 [`backend/eval/real/README.md`](../backend/eval/real/README.md)。
+- 当前 3 份真实合同全部为 `dev`；holdout 尚未建立。`--split holdout`/`all` 含 holdout 时必须加 `--allow-holdout`，且只能用于最终报告。
+- 结果会记录 git/prompt/KB/dataset/label 版本、manifest/合同/标签哈希与脱敏命令；公共报告不写私有文件名/路径/逐合同哈希。
+- 详细说明见 [`backend/eval/real/README.md`](../backend/eval/real/README.md) 与 [`DATA_GOVERNANCE.md`](DATA_GOVERNANCE.md)。

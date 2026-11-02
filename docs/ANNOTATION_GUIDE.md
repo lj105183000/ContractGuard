@@ -176,6 +176,29 @@ uv run python eval/run_cost_report.py \
 
 live full、真实合同、IAA 和人工质量评分不放在普通 CI（需要 Key/人力/数据），应在发布前手工执行并归档报告。
 
+### 7.1 Provenance 与 holdout 运行
+
+Phase 0A 起评测结果会写入：
+
+- `git.commit/dirty`、prompt 版本与文件哈希、KB 版本、dataset/label 哈希；
+- 脱敏后的运行命令（私有路径替换为 `<redacted>`）；
+- `--limit` 时标记 `limited=true`，不把子集当成完整数据集。
+
+真实评测：
+
+```bash
+cd backend
+# 默认 all；dev 只跑 dev split
+uv run python eval/run_real_eval.py ... --split dev --output-suffix dev
+# holdout 只能用于最终报告，必须显式允许
+uv run python eval/run_real_eval.py ... --split holdout --allow-holdout --output-suffix holdout
+```
+
+- 当前 3 份真实合同全部为 `dev`，holdout 尚未建立；不要用它们声称 holdout 泛化。
+- `--from-results` 只重算 bootstrap CI，不重新盖 git/prompt/KB 版本；旧结果标 `legacy_missing_provenance`。
+- 反馈记录 `schema_version=2` 含合同 SHA/模式/路由/模型/prompt/KB 版本，不含全文/文件名；导出与孤儿报告见 `scripts/export_feedback.py`。
+- 评测资产校验：`uv run python scripts/validate_eval_assets.py`。
+
 ## 8. 报告口径
 
 必须分开报告：

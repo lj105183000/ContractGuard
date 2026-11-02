@@ -32,6 +32,8 @@ jobs:
         run: uv run python scripts/test_live_offline.py
       - name: Validate knowledge base
         run: uv run python scripts/validate_kb.py
+      - name: Validate evaluation assets
+        run: uv run python scripts/validate_eval_assets.py
       - name: Rules baseline evaluation gate
         run: >-
           uv run python eval/run_eval.py --mode rules
