@@ -4,16 +4,81 @@
   "model": "mock/rules-only",
   "llm_route": null,
   "llm_route_label": null,
-  "generated_at": "2026-11-02T00:56:52+08:00",
+  "generated_at": "2026-11-02T09:55:01+08:00",
   "ablation": {
     "disable_rag": false
   },
   "dataset": {
+    "id": "synthetic_procurement",
+    "version": "6eb351635007",
+    "label_version": "ea81ed111260",
+    "split": "regression_only",
+    "samples_sha256": "995ee76fafb8ba52fe39b2d9f1490b76d212247832c78fd0aca3db7f4d8709d0",
+    "labels_sha256": "ea81ed1112605b78fb24d68cb364a16f684d0a0efddd2d344dff08416cad1530",
+    "limited": false,
     "samples": 8,
     "labels": 51,
     "rule_labels": 48,
     "semantic_labels": 3,
     "note": "8 synthetic procurement contracts; 48 rule-detectable labels + 3 semantic labels"
+  },
+  "provenance": {
+    "schema_version": 1,
+    "kind": "synthetic_eval",
+    "git": {
+      "commit": "ceaa762201fc0de0a4afb8ae28276ae53ad3edfe",
+      "dirty": false
+    },
+    "prompt": {
+      "version": "2026-11-02.1",
+      "file_sha256": "2099c9ba682bfbb9d9ce57b5b1a81fb036e0cc2f54ed304703564de5bed501cb",
+      "source": "app/llm/prompts.py"
+    },
+    "profiles": {
+      "version": "profiles-ef40a1e921d3",
+      "sha256": "ef40a1e921d38cfd2fc734ee4cb86f704914e59eafedf33aa2a7e608ad9d24c6",
+      "source": "data/llm_profiles.yaml"
+    },
+    "kb": {
+      "version": "kb-ef1264fad156",
+      "sha256": "ef1264fad156e963f4f8a5d2c16141bbe9b52980ece0bba4e1eb5c0306cf6ef0",
+      "legal_articles": 32,
+      "rules": 25
+    },
+    "dataset": {
+      "id": "synthetic_procurement",
+      "version": "6eb351635007",
+      "dataset_sha256": "6eb351635007567a26564d16626bb4195980ecae59286d3912171799c2c9cf8d",
+      "label_version": "ea81ed111260",
+      "labels_sha256": "ea81ed1112605b78fb24d68cb364a16f684d0a0efddd2d344dff08416cad1530",
+      "samples_sha256": "995ee76fafb8ba52fe39b2d9f1490b76d212247832c78fd0aca3db7f4d8709d0",
+      "sample_count": 8,
+      "label_count": 51,
+      "label_files": 8,
+      "kb_version": "kb-ef1264fad156",
+      "kb_sha256": "ef1264fad156e963f4f8a5d2c16141bbe9b52980ece0bba4e1eb5c0306cf6ef0",
+      "legal_articles": 32,
+      "rules": 25,
+      "split": "regression_only",
+      "limited": false
+    },
+    "runtime": {
+      "eval_mode": "rules",
+      "chat_runtime_mode": "mock",
+      "route": null,
+      "route_label": null,
+      "models": []
+    },
+    "command": {
+      "entrypoint": "eval/run_eval.py",
+      "argv": [
+        "--mode",
+        "rules"
+      ],
+      "redacted_paths": 0
+    },
+    "app_version": "0.1.0",
+    "python_version": "3.12.14"
   },
   "overall": {
     "tp": 48,
@@ -264,7 +329,7 @@
         "unmatched_findings": [],
         "unmatched_labels": []
       },
-      "duration_s": 0.13,
+      "duration_s": 0.14,
       "usage": null,
       "citation_count": 16,
       "valid_citation_count": 16,
@@ -414,7 +479,7 @@
         "unmatched_findings": [],
         "unmatched_labels": []
       },
-      "duration_s": 0.01,
+      "duration_s": 0.02,
       "usage": null,
       "citation_count": 16,
       "valid_citation_count": 16,

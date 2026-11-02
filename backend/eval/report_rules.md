@@ -1,9 +1,18 @@
 # ContractGuard 评测报告（rules）
 
-- 运行时间：2026-11-02T00:56:52+08:00
+- 运行时间：2026-11-02T09:55:01+08:00
 - 运行模式：rules（模型：mock/rules-only）
 - 数据集：8 份合成采购合同，51 个标注风险点
 - 说明：合成数据、小样本，指标不代表真实泛化能力；规则标签按 rule_id + 条款匹配，语义标签按类别 + 条款 + 关键词匹配。
+
+## 复现信息
+
+- 代码：ceaa762201fc0de0a4afb8ae28276ae53ad3edfe（dirty: False）
+- Prompt：2026-11-02.1 / 2099c9ba682b
+- 知识库：kb-ef1264fad156 （32 法条 / 25 规则）
+- 数据集：synthetic_procurement 6eb351635007；labels ea81ed111260
+- 哈希：samples 995ee76fafb8；labels ea81ed111260
+- 命令：`eval/run_eval.py --mode rules`（路径已脱敏）
 
 ## 总体指标
 
