@@ -32,9 +32,9 @@ https://github.com/user-attachments/assets/b6941557-3abe-4ff3-9e0f-8a1db5eda1ea
 
 </details>
 
-[▶ 演示页](https://lj105183000.github.io/ContractGuard/interview/) · [下载 1080p MP4](docs/interview/ContractGuard-demo-60s-1080p.mp4) · [面试 PPT](docs/interview/ContractGuard-面试演示.pptx) · [讲解提纲](docs/interview/讲解提纲.md)
+[▶ 演示页](https://lj105183000.github.io/ContractGuard/interview/) · [下载 1080p MP4](docs/interview/ContractGuard-demo-60s-1080p.mp4)
 
-> 视频为 mock 模式界面录屏；live 指标与评测口径见面试 PPT 第 10 页。若在非 github.com 镜像中无法播放，请打开演示页。
+> 视频为 mock 模式界面录屏，不调用真实模型；若在非 github.com 镜像中无法播放，请打开演示页。
 
 ## 这是什么
 
@@ -553,7 +553,7 @@ contractguard/
 │  ├─ DATA_GOVERNANCE.md            # Phase 0 数据治理策略
 │  ├─ REAL_CONTRACT_EVAL.md         # 真实合同作者标注外部效度
 │  ├─ images/                       # 截图
-│  └─ interview/                    # 60 秒演示视频、播放页、面试 PPT
+│  └─ interview/                    # 60 秒演示视频与播放页
 ├─ .github/workflows/ci.yml         # 后端测试/覆盖率/依赖审计 + 评测门禁 + 前端构建 + 浏览器 E2E + Docker/HTTP smoke + Windows 桌面打包 smoke
 ├─ scripts/                         # Windows 启动脚本
 ├─ Dockerfile                       # 多阶段：前端构建 + 后端运行时

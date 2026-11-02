@@ -1,13 +1,10 @@
-# ContractGuard 面试演示材料
+# ContractGuard 60 秒演示
 
 [![60 秒男声中文配音 Demo](./ContractGuard-demo-poster-960.jpg)](./ContractGuard-demo-60s-1080p.mp4)
 
 **[▶ 观看 60 秒 Demo（1080p，男声中文配音）](./ContractGuard-demo-60s-1080p.mp4)**
 
 - 视频：`ContractGuard-demo-60s-1080p.mp4`，1920×1080 / H.264 + AAC / 60.0s / 约 8 MB（已压缩到 GitHub 免费账号 10 MB 视频附件上限内）/ 男声中文旁白
-- 面试 PPT：`ContractGuard-面试演示.pptx`（14 页，第 13 页内嵌视频 + 男声中文旁白）
-- PDF 预览：`ContractGuard-面试演示.pdf`（视频页为静态封面帧）
-- 讲解提纲：`讲解提纲.md`（15 分钟节奏、60 秒旁白、Q&A 准备）
 
 ## 视频内容
 
@@ -54,6 +51,4 @@ https://<your-name>.github.io/<repo>/interview/
 |---|---:|---|
 | `ContractGuard-demo-60s-1080p.mp4` | ~8 MB | 已压缩到 GitHub 免费账号 10 MB 视频附件上限内；页面/仓库下载均可用 |
 | `ContractGuard-demo-poster-960.jpg` | ~90 KB | 文档/兜底封面 |
-| `ContractGuard-demo-poster.png` | ~1.1 MB | PPT/PDF 视频封面帧 |
-| `ContractGuard-面试演示.pptx` | ~14 MB | 14 页，含内嵌视频 |
-| `ContractGuard-面试演示.pdf` | ~2.4 MB | 静态预览 |
+| `ContractGuard-demo-poster.png` | ~1.1 MB | 视频封面帧 |
