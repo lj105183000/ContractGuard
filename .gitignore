@@ -62,3 +62,6 @@ backend/htmlcov/
 Thumbs.db
 .vscode/
 .idea/
+
+# Local-only assets (not published)
+local-assets/
