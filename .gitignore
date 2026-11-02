@@ -63,5 +63,5 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Local-only interview materials (not published)
-interview-local/
+# Local-only assets (not published)
+local-assets/
