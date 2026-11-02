@@ -7,11 +7,7 @@
 
 [快速开始](#快速开始) · [架构](#架构) · [评测](#评测) · [设计取舍](#设计取舍) · [局限](#局限)
 
-<!-- GitHub 内联视频：在下一行粘贴拖拽上传生成的 user-attachments 裸链接（前后留空行） -->
-
-
 https://github.com/user-attachments/assets/b6941557-3abe-4ff3-9e0f-8a1db5eda1ea
-
 
 [▶ 演示页](https://lj105183000.github.io/ContractGuard/interview/) · [下载 1080p MP4](docs/interview/ContractGuard-demo-60s-1080p.mp4) · [面试 PPT](docs/interview/ContractGuard-面试演示.pptx) · [讲解提纲](docs/interview/讲解提纲.md)
 
