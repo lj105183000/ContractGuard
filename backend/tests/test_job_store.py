@@ -10,6 +10,7 @@ from app.schemas import (
     Source,
 )
 import json
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -103,6 +104,75 @@ def test_delete_removes_feedback_and_run_trace(tmp_path, monkeypatch):
         remaining = feedback.read_text(encoding="utf-8")
         assert job.job_id not in remaining
         assert "other-job" in remaining
+    finally:
+        store.close()
+
+
+def test_decide_writes_feedback_v2_provenance(tmp_path, monkeypatch):
+    feedback_dir = tmp_path / "feedback"
+    monkeypatch.setattr("app.services.jobs.FEEDBACK_DIR", feedback_dir)
+    store = JobStore(tmp_path / "jobs.sqlite3")
+    try:
+        job = store.create("contract.txt")
+        store.set_running(job.job_id)
+        finding = _finding()
+        report = _report(finding)
+        report.full_text = "合同正文：预付款50%。"
+        store.set_result(job.job_id, report, [])
+        store.decide(job.job_id, finding.id, Decision.ACCEPTED, "同意")
+
+        record = json.loads(
+            (feedback_dir / "feedback.jsonl").read_text(encoding="utf-8").splitlines()[0]
+        )
+        assert record["schema_version"] == 2
+        assert record["decision_scope"] == "single"
+        assert record["contract_sha256"]
+        assert record["prompt_version"]
+        assert record["kb_version"].startswith("kb-")
+        assert "full_text" not in record
+        assert "合同正文" not in json.dumps(record, ensure_ascii=False)
+    finally:
+        store.close()
+
+
+def test_cleanup_removes_feedback_and_run_trace(tmp_path, monkeypatch):
+    feedback_dir = tmp_path / "feedback"
+    runs_dir = tmp_path / "runs"
+    feedback_dir.mkdir()
+    runs_dir.mkdir()
+    monkeypatch.setattr("app.services.jobs.FEEDBACK_DIR", feedback_dir)
+    monkeypatch.setattr("app.services.jobs.RUNS_DIR", runs_dir)
+    store = JobStore(tmp_path / "jobs.sqlite3")
+    try:
+        job = store.create("contract.txt")
+        store.set_running(job.job_id)
+        store.set_result(job.job_id, _report(), [])
+        feedback = feedback_dir / "feedback.jsonl"
+        feedback.write_text(
+            json.dumps({"job_id": job.job_id})
+            + "\n"
+            + json.dumps({"job_id": "other-job"})
+            + "\n",
+            encoding="utf-8",
+        )
+        trace = runs_dir / f"{job.job_id}.json"
+        trace.write_text("{}", encoding="utf-8")
+        old = (datetime.now(timezone.utc) - timedelta(days=30)).isoformat(
+            timespec="seconds"
+        )
+        store._connection().execute(
+            "UPDATE jobs SET updated_at = ? WHERE job_id = ?",
+            (old, job.job_id),
+        )
+
+        store.cleanup_expired()
+
+        assert not trace.exists()
+        remaining = feedback.read_text(encoding="utf-8")
+        assert job.job_id not in remaining
+        assert "other-job" in remaining
+        with pytest.raises(JobNotFound):
+            store.get(job.job_id)
     finally:
         store.close()
 

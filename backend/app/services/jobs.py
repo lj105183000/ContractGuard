@@ -34,6 +34,12 @@ from app.graph.errors import PipelineError
 from app.graph.progress import subscribe, unsubscribe
 from app.llm.profiles import chat_runtime, resolve_route
 from app.llm.trace import TraceCollector
+from app.provenance import (
+    contract_sha256,
+    kb_provenance,
+    profiles_provenance,
+    prompt_provenance,
+)
 from app.rag.retriever import get_retriever
 from app.schemas import (
     ConfidenceTier,
@@ -432,6 +438,7 @@ class JobStore:
             """,
             (time.time(),),
         ).fetchall()
+        expired_ids: set[str] = set()
         for row in rows:
             try:
                 updated = datetime.fromisoformat(row["updated_at"])
@@ -439,6 +446,7 @@ class JobStore:
                 continue
             if updated < cutoff:
                 job_id = row["job_id"]
+                expired_ids.add(job_id)
                 try:
                     job = JobState.model_validate_json(
                         decrypt_state(job_id, row["state_json"])
@@ -453,6 +461,9 @@ class JobStore:
                     "DELETE FROM jobs WHERE job_id = ?", (job_id,)
                 )
                 self._queue_checkpoint_cleanup(job_id)
+        for job_id in expired_ids:
+            self._delete_run_trace(job_id)
+        self._delete_feedback_many(expired_ids)
 
     def _queue_checkpoint_cleanup(self, job_id: str) -> None:
         self._checkpoint_cleanup.add(job_id)
@@ -510,7 +521,9 @@ class JobStore:
         except OSError as exc:
             logger.warning("删除运行 trace 失败 %s：%s", job_id, exc)
 
-    def _delete_feedback(self, job_id: str) -> None:
+    def _delete_feedback_many(self, job_ids: set[str]) -> None:
+        if not job_ids:
+            return
         path = FEEDBACK_DIR / "feedback.jsonl"
         if not path.exists():
             return
@@ -524,7 +537,7 @@ class JobStore:
                 except json.JSONDecodeError:
                     kept.append(line)
                     continue
-                if record.get("job_id") == job_id:
+                if record.get("job_id") in job_ids:
                     removed = True
                 else:
                     kept.append(line)
@@ -534,7 +547,10 @@ class JobStore:
                     encoding="utf-8",
                 )
         except OSError as exc:
-            logger.warning("删除人工反馈失败 %s：%s", job_id, exc)
+            logger.warning("删除人工反馈失败 %s：%s", sorted(job_ids), exc)
+
+    def _delete_feedback(self, job_id: str) -> None:
+        self._delete_feedback_many({job_id})
 
     def cleanup_source(
         self, job_id: str, lease_token: str | None = None
@@ -1058,7 +1074,7 @@ class JobStore:
             else:
                 raise StaleRevision(job_id)
 
-        self._append_feedback(job_id, updated, decision, note)
+        self._append_feedback(job, updated, decision, note, scope="single")
         return ReviewDecisionResponse(finding=updated, summary=summary)
 
     def update_suggestion(
@@ -1137,7 +1153,7 @@ class JobStore:
                 raise StaleRevision(job_id)
 
         for finding in changed:
-            self._append_feedback(job_id, finding, decision, note)
+            self._append_feedback(job, finding, decision, note, scope="bulk")
         return len(changed), summary
 
     def list_jobs(
@@ -1376,12 +1392,27 @@ class JobStore:
         ]
 
     def _append_feedback(
-        self, job_id: str, finding: Finding, decision: Decision, note: str
+        self,
+        job: JobState,
+        finding: Finding,
+        decision: Decision,
+        note: str,
+        *,
+        scope: str,
     ) -> None:
         try:
             FEEDBACK_DIR.mkdir(parents=True, exist_ok=True)
+            result = job.result
+            usage = result.usage if result else None
+            full_text = result.full_text if result else ""
+            contract_digest = contract_sha256(full_text)
+            prompt = prompt_provenance()
+            kb = kb_provenance()
+            profiles = profiles_provenance()
             record = {
-                "job_id": job_id,
+                "schema_version": 2,
+                "feedback_id": uuid.uuid4().hex,
+                "job_id": job.job_id,
                 "finding_id": finding.id,
                 "rule_id": finding.rule_id,
                 "category": finding.category.value,
@@ -1389,6 +1420,32 @@ class JobStore:
                 "decision": decision.value,
                 "note": note,
                 "at": datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds"),
+                "decision_scope": scope,
+                "contract_sha256": contract_digest,
+                "contract_sha256_scope": (
+                    "parsed_full_text_utf8_v1" if contract_digest else "unavailable"
+                ),
+                "contract_chars": len(full_text),
+                "mode": result.mode if result else None,
+                "llm_route": job.llm_route or (usage.llm_route if usage else None),
+                "llm_route_label": usage.llm_route_label if usage else None,
+                "llm_models": list(usage.llm_models) if usage else [],
+                "embedding_mode": usage.embedding_mode if usage else None,
+                "rerank_mode": usage.rerank_mode if usage else None,
+                "prompt_version": prompt["version"],
+                "prompt_sha256": prompt["file_sha256"],
+                "kb_version": kb["version"],
+                "profiles_version": profiles["version"],
+                "source": finding.source.value,
+                "confidence_tier": (
+                    finding.confidence_tier.value
+                    if finding.confidence_tier is not None
+                    else None
+                ),
+                "clause_id": finding.clause_id,
+                "clause_article": finding.clause_article,
+                "title": finding.title,
+                "job_created_at": job.created_at,
             }
             with (FEEDBACK_DIR / "feedback.jsonl").open("a", encoding="utf-8") as handle:
                 handle.write(json.dumps(record, ensure_ascii=False) + "\n")
