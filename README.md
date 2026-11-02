@@ -9,6 +9,10 @@
 
 <!-- GitHub 内联视频：在下一行粘贴拖拽上传生成的 user-attachments 裸链接（前后留空行） -->
 
+
+https://github.com/user-attachments/assets/b6941557-3abe-4ff3-9e0f-8a1db5eda1ea
+
+
 [▶ 演示页](https://lj105183000.github.io/ContractGuard/interview/) · [下载 1080p MP4](docs/interview/ContractGuard-demo-60s-1080p.mp4) · [面试 PPT](docs/interview/ContractGuard-面试演示.pptx) · [讲解提纲](docs/interview/讲解提纲.md)
 
 > 视频为 mock 模式界面录屏；live 指标与评测口径见面试 PPT 第 10 页。若在非 github.com 镜像中无法播放，请打开演示页。
