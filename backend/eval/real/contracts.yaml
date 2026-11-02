@@ -3,18 +3,23 @@
 - id: real_01
   title: R1
   scope: in_scope
+  split: dev
   pages: 7
   text_layer: true
   notes: 政府采购框架协议货物采购；唯一 in-scope 样本。
 - id: real_02
   title: R2
   scope: out_of_scope
+  split: dev
   pages: 36
   text_layer: false
   notes: 建设工程施工合同，超出货物采购 Playbook；仅定性。
 - id: real_03
   title: R3
   scope: adjacent
+  split: dev
   pages: 8
   text_layer: false
   notes: IT/智治系统采购，与货物采购相邻；扫描件，仅定性。
+# holdout 尚未建立：当前只有 3 份真实合同、1 份 in-scope，达不到 20–30 份
+# 的目标；新增 holdout 前必须按 docs/ANNOTATION_GUIDE.md 完成双人标注与裁决。

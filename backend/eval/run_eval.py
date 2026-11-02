@@ -40,6 +40,15 @@ from app.llm.trace import TraceCollector  # noqa: E402
 from app.parsing.clause_splitter import split_clauses  # noqa: E402
 from app.parsing.contract_parser import parse_contract  # noqa: E402
 from app.parsing.facts import extract_heuristic_facts  # noqa: E402
+from app.provenance import (  # noqa: E402
+    APP_VERSION,
+    SCHEMA_VERSION,
+    command_provenance,
+    git_provenance,
+    profiles_provenance,
+    prompt_provenance,
+    python_version,
+)
 from app.rag.corpus import load_kb  # noqa: E402
 from app.rag.retriever import get_retriever  # noqa: E402
 from app.rules.engine import evaluate_rules  # noqa: E402
@@ -50,6 +59,7 @@ from app.services.summary import (  # noqa: E402
     compute_evidence_metrics,
 )
 from eval.gates import check_min, enforce  # noqa: E402
+from eval.provenance import synthetic_dataset_provenance  # noqa: E402
 from eval.stats import bootstrap_prf  # noqa: E402
 
 BACKEND = Path(__file__).resolve().parents[1]
@@ -520,8 +530,38 @@ def write_report(results: dict, path: Path) -> None:
         f"- 运行模式：{results['mode']}（模型：{results['model']}）",
         f"- 数据集：8 份合成采购合同，{results['dataset']['labels']} 个标注风险点",
         "- 说明：合成数据、小样本，指标不代表真实泛化能力；规则标签按 rule_id + 条款匹配，语义标签按类别 + 条款 + 关键词匹配。",
-        "",
-        "## 总体指标",
+    ]
+    provenance = results.get("provenance") or {}
+    if provenance:
+        git = provenance.get("git") or {}
+        prompt = provenance.get("prompt") or {}
+        kb = provenance.get("kb") or {}
+        dataset = provenance.get("dataset") or {}
+        command = provenance.get("command") or {}
+        lines.extend(
+            [
+                "",
+                "## 复现信息",
+                "",
+                f"- 代码：{git.get('commit') or 'unknown'}（dirty: {git.get('dirty')}）",
+                f"- Prompt：{prompt.get('version') or 'unknown'} / "
+                f"{(prompt.get('file_sha256') or '')[:12]}",
+                f"- 知识库：{kb.get('version') or 'unknown'} "
+                f"（{kb.get('legal_articles', '?')} 法条 / {kb.get('rules', '?')} 规则）",
+                f"- 数据集：{dataset.get('id') or 'unknown'} "
+                f"{dataset.get('version') or 'unknown'}；"
+                f"labels {dataset.get('label_version') or 'unknown'}",
+                f"- 哈希：samples {(dataset.get('samples_sha256') or '')[:12]}；"
+                f"labels {(dataset.get('labels_sha256') or '')[:12]}"
+                f"{'（子集）' if dataset.get('limited') else ''}",
+                f"- 命令：`{command.get('entrypoint') or 'eval/run_eval.py'} "
+                f"{' '.join(command.get('argv') or [])}`（路径已脱敏）",
+            ]
+        )
+    lines.extend(
+        [
+            "",
+            "## 总体指标",
         "",
         "| 指标 | 值 |",
         "|---|---|",
@@ -533,11 +573,12 @@ def write_report(results: dict, path: Path) -> None:
         f"| 法条 ID 可解析率（{results['overall']['citation_checked']} 个引用） | {results['overall']['citation_valid_rate'] or 0:.1%} |",
         f"| 平均耗时 | {results['average_duration_s']:.2f}s / 份 |",
         "",
-        "## 分合同",
-        "",
-        "| 合同 | 标签 | 命中 | 误报 | 漏报 | P | R | F1 |",
-        "|---|---|---|---|---|---|---|---|",
-    ]
+            "## 分合同",
+            "",
+            "| 合同 | 标签 | 命中 | 误报 | 漏报 | P | R | F1 |",
+            "|---|---|---|---|---|---|---|---|",
+        ]
+    )
     for item in results["samples"]:
         score = item["score"]
         lines.append(
@@ -655,6 +696,21 @@ async def main_async(args: argparse.Namespace) -> None:
         results["stats_recomputed_at"] = datetime.now().astimezone().isoformat(
             timespec="seconds"
         )
+        results.setdefault("reruns", []).append(
+            {
+                "at": results["stats_recomputed_at"],
+                "command": command_provenance(
+                    "eval/run_eval.py",
+                    ["--from-results", suffix],
+                ),
+            }
+        )
+        if "provenance" not in results:
+            results["provenance"] = {
+                "schema_version": SCHEMA_VERSION,
+                "status": "legacy_missing_provenance",
+                "note": "原结果未记录 provenance；本次仅重算 CI。",
+            }
         result_path.write_text(
             json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8"
         )
@@ -767,6 +823,37 @@ async def main_async(args: argparse.Namespace) -> None:
         or " / ".join(route_labels)
         or ("mock/rules-only" if runtime.mode != "live" else "unknown")
     )
+    dataset_prov = synthetic_dataset_provenance(
+        samples,
+        SAMPLES_DIR,
+        LABELS_DIR,
+        load_kb(),
+        limited=bool(args.limit),
+    )
+    provenance = {
+        "schema_version": SCHEMA_VERSION,
+        "kind": "synthetic_eval",
+        "git": git_provenance(),
+        "prompt": prompt_provenance(),
+        "profiles": profiles_provenance(),
+        "kb": {
+            "version": dataset_prov["kb_version"],
+            "sha256": dataset_prov["kb_sha256"],
+            "legal_articles": dataset_prov["legal_articles"],
+            "rules": dataset_prov["rules"],
+        },
+        "dataset": dataset_prov,
+        "runtime": {
+            "eval_mode": args.mode,
+            "chat_runtime_mode": runtime.mode,
+            "route": route.id if route else args.route,
+            "route_label": route.label if route else None,
+            "models": used_models,
+        },
+        "command": command_provenance("eval/run_eval.py", sys.argv[1:]),
+        "app_version": APP_VERSION,
+        "python_version": python_version(),
+    }
 
     results = {
         "mode": args.mode,
@@ -777,6 +864,13 @@ async def main_async(args: argparse.Namespace) -> None:
         "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
         "ablation": {"disable_rag": bool(args.disable_rag)},
         "dataset": {
+            "id": dataset_prov["id"],
+            "version": dataset_prov["version"],
+            "label_version": dataset_prov["label_version"],
+            "split": dataset_prov["split"],
+            "samples_sha256": dataset_prov["samples_sha256"],
+            "labels_sha256": dataset_prov["labels_sha256"],
+            "limited": dataset_prov["limited"],
             "samples": len(samples),
             "labels": sum(item["label_count"] for item in sample_results),
             "rule_labels": rule_label_count,
@@ -787,6 +881,7 @@ async def main_async(args: argparse.Namespace) -> None:
                 f"{semantic_label_count} semantic labels"
             ),
         },
+        "provenance": provenance,
         "overall": overall,
         "overall_ci": bootstrap_prf(
             [item["score"] for item in sample_results]

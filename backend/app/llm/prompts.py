@@ -16,6 +16,10 @@ from typing import Any
 from app.config import settings
 from app.schemas import Clause, ClauseType, ContractFacts, Finding
 
+# Bump whenever prompt constants/builders change materially. Eval results also
+# record a content hash of this file, so comments/builders are covered too.
+PROMPT_VERSION = "2026-11-02.1"
+
 CLAUSE_TYPES = [
     "preamble",
     "subject",

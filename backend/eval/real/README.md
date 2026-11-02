@@ -10,7 +10,7 @@
 
 ## 目录
 
-- `contracts.yaml`：匿名 ID、页数、是否有文字层、scope。
+- `contracts.yaml`：匿名 ID、页数、是否有文字层、scope、split（当前全为 `dev`，holdout 尚未建立）。
 - `labels/`：真实标签（本仓库不提交，放在 private 目录）。
 - `.work/`：`annotate_real.py dump` 生成的解析文本/条款快照（gitignore）。
 - `run_real_eval.py`：复用 `eval/run_eval.py` 的评分函数，输出 `results_real_summary.json` 和 `report_real.md`。
@@ -32,15 +32,20 @@ uv run python scripts/annotate_real.py validate \
   --labels "../contractguard-private/real_eval/labels/real_01.json" \
   --parsed "../contractguard-private/real_eval/work/real_01/parsed.json"
 
-# 3) rules 模式评测（无需 Key）
+# 3) rules 模式评测（无需 Key；默认 all，当前全部 dev）
 uv run python eval/run_real_eval.py \
   --contracts-dir "../../contractguard-private/docs" \
   --manifest "../../contractguard-private/real_eval/manifest.yaml" \
-  --labels-dir "../../contractguard-private/real_eval/labels"
+  --labels-dir "../../contractguard-private/real_eval/labels" \
+  --split dev
 
 # 4) 可选：只对 R1 跑 full live（会产生模型调用）
-uv run python eval/run_real_eval.py ... --mode full --limit 1
+uv run python eval/run_real_eval.py ... --mode full --limit 1 --split dev
 ```
+
+- holdout 只能用于最终报告：`--split holdout` 或含 holdout 的 `--split all` 必须显式加 `--allow-holdout`。
+- 结果会写 git/prompt/KB/dataset/label 版本、manifest/合同/标签哈希和脱敏命令；公共报告不写私有路径、文件名或逐合同哈希。
+- 旧版 list（无 `dataset`/`contracts` 包装）仍可运行，但会标记 `split_inferred=true`，迁移到 v2 manifest 前不能用于 holdout。
 
 ## 当前结果（仅 rules 模式）
 

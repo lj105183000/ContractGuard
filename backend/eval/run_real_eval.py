@@ -29,9 +29,21 @@ from app.llm.trace import TraceCollector  # noqa: E402
 from app.parsing.clause_splitter import split_clauses  # noqa: E402
 from app.parsing.contract_parser import parse_contract  # noqa: E402
 from app.parsing.facts import extract_heuristic_facts  # noqa: E402
+from app.provenance import (  # noqa: E402
+    SCHEMA_VERSION,
+    command_provenance,
+    git_provenance,
+    profiles_provenance,
+    prompt_provenance,
+    sha256_file,
+)
 from app.rag.corpus import load_kb  # noqa: E402
 from app.rules.engine import evaluate_rules  # noqa: E402
 from app.schemas import EvalLabel  # noqa: E402
+from eval.provenance import (  # noqa: E402
+    kb_fingerprint,
+    real_contracts_provenance,
+)
 from eval.run_eval import score  # noqa: E402
 from eval.stats import bootstrap_prf  # noqa: E402
 
@@ -52,18 +64,56 @@ def rule_findings(parsed, clauses, facts):
     return evaluate_rules(kb.rules, clauses, facts, parsed.text).findings
 
 
+def load_manifest(path: Path) -> tuple[dict, list[dict]]:
+    """Load legacy list or v2 mapping; infer dev split for legacy manifests."""
+    data = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+    if isinstance(data, dict):
+        meta = dict(data.get("dataset") or {})
+        contracts = list(data.get("contracts") or [])
+    else:
+        meta = {"split_inferred": True}
+        contracts = list(data or [])
+    for item in contracts:
+        item.setdefault("split", "dev")
+    return meta, contracts
+
+
+def select_contracts(
+    contracts: list[dict], split: str, allow_holdout: bool
+) -> list[dict]:
+    if split not in {"all", "dev", "holdout"}:
+        raise SystemExit(f"非法 split：{split}")
+    has_holdout = any(item.get("split", "dev") == "holdout" for item in contracts)
+    if split in {"all", "holdout"} and has_holdout and not allow_holdout:
+        raise SystemExit(
+            "holdout 数据只能用于最终报告；请显式加 --allow-holdout。"
+        )
+    selected = (
+        contracts
+        if split == "all"
+        else [item for item in contracts if item.get("split", "dev") == split]
+    )
+    if not selected:
+        raise SystemExit(f"split={split} 没有可选合同。")
+    return selected
+
+
 async def full_findings(path: Path, filename: str):
     graph = build_graph()
+    trace = TraceCollector()
     state = {
         "job_id": f"real-eval-{path.stem[:20]}",
         "filename": filename,
         "source_path": str(path),
         "llm_mode": "live",
-        "trace": TraceCollector(),
+        "trace": trace,
     }
     result = await graph.ainvoke(state, config={"recursion_limit": 30})
     report = result.get("report")
-    return report.findings if report is not None else []
+    return (
+        report.findings if report is not None else [],
+        report.usage if report is not None else None,
+    )
 
 
 def summarize_score(score_data: dict | None) -> dict | None:
@@ -87,22 +137,61 @@ def summarize_score(score_data: dict | None) -> dict | None:
 
 
 def write_report(
-    rows: list[dict], mode: str, bootstrap_ci: dict[str, dict]
+    rows: list[dict],
+    mode: str,
+    bootstrap_ci: dict[str, dict],
+    *,
+    provenance: dict | None = None,
+    split: str = "all",
+    report_path: Path = REPORT_PATH,
 ) -> None:
     lines = [
         "# ContractGuard 真实合同外部效度检查",
         "",
         f"- 运行时间：{datetime.now().astimezone().isoformat(timespec='seconds')}",
         f"- 模式：{mode}（rules 模式不调用 LLM；full 模式会调用 live 模型）",
+        f"- 数据：{len(rows)} 份真实合同（split={split}）。",
         "- 定位：**作者标注、非独立、非盲测**；不是 benchmark，不能代表真实泛化。",
-        "- 数据：3 份真实合同，只有 R1 属于货物采购目标场景；R3 相邻，R2 域外。",
-        "- 公开报告只含 R1/R2/R3 匿名 ID、计数和指标；不含合同全文、文件名或个人信息。",
-        "",
-        "## 总览",
-        "",
-        "| 合同 | 场景 | 页数 | OCR | 条款数 | 规则/模型 findings | 标注数 | Precision | Recall | F1 |",
-        "|---|---|---|---|---|---|---|---|---|---|",
+        "- 公开报告只含匿名 ID、计数和指标；不含合同全文、文件名或个人信息。",
     ]
+    if split == "holdout":
+        lines.extend(
+            [
+                "",
+                "> **HOLDOUT**：仅用于最终报告，不得用于调规则/Prompt/阈值。",
+            ]
+        )
+    if provenance:
+        dataset = provenance.get("dataset") or {}
+        git = provenance.get("git") or {}
+        prompt = provenance.get("prompt") or {}
+        kb = provenance.get("kb") or {}
+        command = provenance.get("command") or {}
+        lines.extend(
+            [
+                "",
+                "## 复现信息",
+                "",
+                f"- 代码：{git.get('commit') or 'unknown'}（dirty: {git.get('dirty')}）",
+                f"- Prompt：{prompt.get('version') or 'unknown'}",
+                f"- 知识库：{kb.get('version') or 'unknown'} "
+                f"（{kb.get('legal_articles', '?')} 法条 / {kb.get('rules', '?')} 规则）",
+                f"- 数据集：{dataset.get('id') or 'unknown'} "
+                f"{dataset.get('version') or 'unknown'}；"
+                f"labels {dataset.get('label_version') or 'unknown'}",
+                f"- 命令：`{command.get('entrypoint') or 'eval/run_real_eval.py'} "
+                f"{' '.join(command.get('argv') or [])}`（路径已脱敏）",
+            ]
+        )
+    lines.extend(
+        [
+            "",
+            "## 总览",
+            "",
+            "| 合同 | 场景 | 页数 | OCR | 条款数 | 规则/模型 findings | 标注数 | Precision | Recall | F1 |",
+            "|---|---|---|---|---|---|---|---|---|---|",
+        ]
+    )
     for row in rows:
         metrics = row.get("score") or {}
         suffix = "" if row.get("scope") == "in_scope" else "（仅定性）"
@@ -167,15 +256,14 @@ def write_report(
             "",
         ]
     )
-    REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
+    report_path.write_text("\n".join(lines), encoding="utf-8")
 
 
 async def main_async(args: argparse.Namespace) -> None:
-    manifest = yaml.safe_load(
-        Path(args.manifest).read_text(encoding="utf-8")
-    )
+    manifest_meta, contracts = load_manifest(Path(args.manifest))
     if args.limit:
-        manifest = manifest[: args.limit]
+        contracts = contracts[: args.limit]
+    selected = select_contracts(contracts, args.split, args.allow_holdout)
     contracts_dir = Path(args.contracts_dir)
     labels_dir = Path(args.labels_dir)
     raw_dir = Path(args.raw_dir) if args.raw_dir else None
@@ -183,13 +271,23 @@ async def main_async(args: argparse.Namespace) -> None:
         raw_dir.mkdir(parents=True, exist_ok=True)
 
     rows = []
-    for item in manifest:
+    provenance_contracts = []
+    models: set[str] = set()
+    route_label = None
+    for item in selected:
         path = contracts_dir / item["filename"]
+        actual_sha = sha256_file(path)
+        expected_sha = item.get("sha256")
+        if expected_sha and actual_sha != expected_sha:
+            raise SystemExit(f"{item['id']} 文件 SHA-256 不匹配：{path.name}")
         parsed = parse_contract(path, item["filename"])
         clauses = split_clauses(parsed)
         facts = extract_heuristic_facts(parsed.text, clauses)
         if args.mode == "full":
-            findings = await full_findings(path, item["filename"])
+            findings, usage = await full_findings(path, item["filename"])
+            if usage is not None:
+                models.update(usage.llm_models or [])
+                route_label = route_label or usage.llm_route_label
         else:
             findings = rule_findings(parsed, clauses, facts)
         labels = load_labels(labels_dir / f"{item['id']}.json")
@@ -198,6 +296,7 @@ async def main_async(args: argparse.Namespace) -> None:
             "id": item["id"],
             "title": item.get("title") or item["id"],
             "scope": item.get("scope", "in_scope"),
+            "split": item.get("split", "dev"),
             "pages": parsed.page_count,
             "used_ocr": parsed.used_ocr,
             "ocr_pages": parsed.ocr_pages,
@@ -210,6 +309,13 @@ async def main_async(args: argparse.Namespace) -> None:
             "notes": item.get("notes", ""),
         }
         rows.append(row)
+        provenance_contracts.append(
+            {
+                "id": item["id"],
+                "sha256": actual_sha,
+                "has_labels": bool(labels),
+            }
+        )
         if raw_dir:
             raw_path = raw_dir / f"{item['id']}.findings.json"
             raw_path.write_text(
@@ -221,10 +327,10 @@ async def main_async(args: argparse.Namespace) -> None:
                 encoding="utf-8",
             )
         print(
-            f"{row['id']}: scope={row['scope']} pages={row['pages']} "
-            f"ocr={row['used_ocr']} clauses={row['clauses']} "
-            f"findings={row['findings']} labels={row['labels']} "
-            f"score={row['score']}"
+            f"{row['id']}: scope={row['scope']} split={row['split']} "
+            f"pages={row['pages']} ocr={row['used_ocr']} "
+            f"clauses={row['clauses']} findings={row['findings']} "
+            f"labels={row['labels']} score={row['score']}"
         )
 
     bootstrap_ci = {
@@ -232,9 +338,41 @@ async def main_async(args: argparse.Namespace) -> None:
         for row in rows
         if row.get("score")
     }
+    dataset_prov = real_contracts_provenance(
+        provenance_contracts, labels_dir, Path(args.manifest)
+    )
+    dataset_prov.update(
+        {
+            "declared_version": manifest_meta.get("dataset_version"),
+            "declared_label_version": manifest_meta.get("label_version"),
+            "split": args.split,
+            "holdout_used": any(
+                item.get("split", "dev") == "holdout" for item in selected
+            ),
+            "split_inferred": bool(manifest_meta.get("split_inferred")),
+            "limited": bool(args.limit),
+        }
+    )
+    provenance = {
+        "schema_version": SCHEMA_VERSION,
+        "kind": "real_eval",
+        "git": git_provenance(),
+        "prompt": prompt_provenance(),
+        "profiles": profiles_provenance(),
+        "kb": kb_fingerprint(load_kb()),
+        "dataset": dataset_prov,
+        "runtime": {
+            "mode": args.mode,
+            "models": sorted(models),
+            "route_label": route_label,
+        },
+        "command": command_provenance("eval/run_real_eval.py", sys.argv[1:]),
+    }
     results = {
         "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
         "mode": args.mode,
+        "split_filter": args.split,
+        "holdout_used": dataset_prov["holdout_used"],
         "annotation_protocol": "author_single_pass",
         "independent_annotator": False,
         "blind": False,
@@ -242,13 +380,26 @@ async def main_async(args: argparse.Namespace) -> None:
         "inter_annotator_agreement": None,
         "iaa_note": "No second independent annotator is available; use eval/run_iaa.py when labels exist.",
         "bootstrap_ci": bootstrap_ci,
+        "provenance": provenance,
         "contracts": rows,
     }
-    SUMMARY_PATH.write_text(
+    suffix = args.output_suffix or ("" if args.split == "all" else f"_{args.split}")
+    if any(token in suffix for token in ("/", "\\", "..")):
+        raise SystemExit("--output-suffix 不能包含路径分隔符")
+    summary_path = BACKEND / "eval" / f"results_real{suffix}_summary.json"
+    report_path = BACKEND / "eval" / f"report_real{suffix}.md"
+    summary_path.write_text(
         json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    write_report(rows, args.mode, bootstrap_ci)
-    print(f"写入 {SUMMARY_PATH} 和 {REPORT_PATH}")
+    write_report(
+        rows,
+        args.mode,
+        bootstrap_ci,
+        provenance=provenance,
+        split=args.split,
+        report_path=report_path,
+    )
+    print(f"写入 {summary_path} 和 {report_path}")
 
 
 def main() -> None:
@@ -259,6 +410,9 @@ def main() -> None:
     parser.add_argument("--raw-dir", default=None)
     parser.add_argument("--mode", choices=["rules", "full"], default="rules")
     parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument("--split", choices=["all", "dev", "holdout"], default="all")
+    parser.add_argument("--allow-holdout", action="store_true")
+    parser.add_argument("--output-suffix", default=None)
     args = parser.parse_args()
     asyncio.run(main_async(args))
 
