@@ -15,7 +15,7 @@ export LLM_MODE=mock
 uv run pytest -q
 ```
 
-结果：`213 passed`（含新增的请求体/解析上限、Host/Token、默认 Worker+HITL E2E、任务超时、embedding 预热超时、评测口径/IAA/质量评分/消融/鲁棒性测试）。后续精度修复、删除 API、双进程 claim 与 Phase 0 数据治理新增 29 个回归测试，当前为 `242 passed`，覆盖率 82%。
+结果：`213 passed`（含新增的请求体/解析上限、Host/Token、默认 Worker+HITL E2E、任务超时、embedding 预热超时、评测口径/IAA/质量评分/消融/鲁棒性测试）。后续精度修复、删除 API、双进程 claim、Phase 0A 数据治理与 Phase 0B 加密/审计新增 45 个回归测试，当前为 `258 passed`，覆盖率 82.8%。
 
 ```bash
 uv run python scripts/validate_kb.py
@@ -100,8 +100,9 @@ CONTRACTGUARD_SMOKE_EXE=release/win-unpacked/ContractGuard.exe node scripts/smok
 ## 已知未完成（P1）
 
 - 公网/多用户：无 RBAC/对象级授权、TLS、共享限流、租户隔离；当前只有单租户共享 Token。
-- 真实合同数据：默认明文存储；上传源文件、桌面历史、feedback/trace 未默认加密。已支持主动删除已结束任务（快照、源文件、feedback、run trace 与 checkpoint）；运行中/待复核任务仍需先取消或完成。
-- 数据治理 Phase 0A 已完成：`docs/DATA_ASSETS.md`、`docs/DATA_GOVERNANCE.md`；评测 provenance（git/prompt/KB/dataset/label 哈希与脱敏命令）；feedback v2（合同哈希/模式/路由/模型/prompt/KB 版本）；`scripts/export_feedback.py` 孤儿报告；feedback/trace 随任务过期清理；备份覆盖 feedback/traces/eval；`validate_eval_assets.py` 进 CI。0B（feedback/trace/上传/桌面历史加密、PII 脱敏、删除墓碑）未做。
+- 真实合同数据：默认明文存储；开启 `ENCRYPTION_ENABLED=1` 后 feedback/trace 与桌面历史加密，上传源文件仍需磁盘/卷加密。已支持主动删除已结束任务（快照、源文件、feedback、run trace 与 checkpoint）；运行中/待复核任务仍需先取消或完成。
+- 数据治理 Phase 0A 已完成：`docs/DATA_ASSETS.md`、`docs/DATA_GOVERNANCE.md`；评测 provenance（git/prompt/KB/dataset/label 哈希与脱敏命令）；feedback v2（合同哈希/模式/路由/模型/prompt/KB 版本）；`scripts/export_feedback.py` 孤儿报告；feedback/trace 随任务过期清理；备份覆盖 feedback/traces/eval；`validate_eval_assets.py` 进 CI。
+- 数据治理 Phase 0B 已完成：`ENCRYPTION_ENABLED=1` 时 feedback JSONL 逐行加密、run trace 整文件加密（`scripts/export_run_traces.py` 解密导出）；桌面历史用 Electron `safeStorage`，旧明文兼容；删除写最小墓碑 `data/audit/deletions.jsonl`；`scripts/scan_pii.py` 提供 PII 计数（不输出原值）。上传源文件仍为明文（建议磁盘/卷加密）；PII 自动脱敏、法律保留/审批流仍未做。
 - 桌面端：未签名、无自动更新；随机端口 + localStorage 导致 Token/偏好跨启动丢失；本地后端信任仅校验 `status:ok`。
 - CI：后端 eval 阈值、80% 覆盖率门槛、pip-audit（OSV）、npm audit（high）、评测资产校验（`validate_eval_assets.py`）、Docker 构建 + HTTP smoke、Windows 桌面打包 smoke 已加入 workflow；前端浏览器 E2E（审查 + 删除历史）已加入。
 - 评测：框架已补（口径/IAA/质量评分/消融/阈值），但仍只有 8 份合成合同、作者单标注、无真实双人 IAA 和人工质量评分；fresh 确认 full P 64.9%、已核实层 P 100%、模型建议层 P 7.1%，仍不足以支撑自动审查。

@@ -143,8 +143,12 @@ state -> node(state) -> 部分 state 更新
 | `backend/app/graph/nodes/human_review.py` | 图内人工复核 interrupt | `human_review_node` |
 | `backend/app/services/jobs.py` | SQLite 快照任务 + 执行图 + feedback v2/保留期 | `JobStore`、`run_review`、`resume_review`、`list_jobs`、`delete` |
 | `backend/app/provenance.py` | git/prompt/KB/合同哈希、命令路径脱敏 | `git_provenance`、`prompt_provenance`、`kb_provenance`、`redact_argv` |
+| `backend/app/services/feedback_store.py` | feedback 明文/加密 envelope 编解码 | `encode_record`、`decode_line`、`iter_records` |
+| `backend/app/audit.py` | 删除墓碑（无合同内容） | `append_deletion` |
+| `backend/app/pii.py` | PII 计数/脱敏工具 | `scan_text`、`redact_text` |
 | `backend/eval/provenance.py` | 评测 dataset/label/KB/真实合同哈希 | `synthetic_dataset_provenance`、`real_contracts_provenance` |
 | `backend/scripts/export_feedback.py` | 反馈 JSONL 导出与孤儿报告 | `export` |
+| `backend/scripts/export_run_traces.py` | 解密导出 run trace | `export` |
 | `backend/app/worker.py` | SQLite 租约 worker 与过期回收 | `WorkerPool`、`_heartbeat`、`_reaper` |
 | `backend/app/crypto.py` | 任务快照/checkpoint AES-GCM 加密 | `encrypt_state`、`AesGcmCipher` |
 | `backend/app/rag/rerank.py` | 可选 DashScope reranker | `DashScopeReranker.rerank` |
@@ -246,7 +250,7 @@ state -> node(state) -> 部分 state 更新
 - **领取**：`worker.py` 的 `WorkerPool` 在 lifespan 启动。`JobStore.claim` 用一条 `UPDATE ... RETURNING` 原子地把 `queued`（或 `resume_requested=1` 的 `awaiting_review`）改成 `running`/`resuming`，并写入 `lease_token` 与 `lease_expires_at`；多进程下只有一个 claim 能成功。
 - **续租与回收**：`WorkerPool._heartbeat` 每 `HEARTBEAT_SECONDS` 续租；`_reaper` 每 10 秒回收过期租约。`resuming` 最多重试 3 次；`running` 失败不重放 LLM。带租约的写入都带 `WHERE lease_token = ?`，失去租约的 worker 无法覆盖新 owner。
 - **状态一致性**：`claim`/`mark_ready`/`request_resume` 只改列、不重写大 JSON，所以 `_load` 会用 DB 列覆盖 `state_json` 中的状态字段；`decide` 用 `revision` CAS（`WHERE revision = ? AND status <> 'resuming'`）避免多进程丢决策。
-- **静态加密**：`crypto.py` 把主密钥经 HKDF 派生 job-state/checkpoint 两把 key；`jobs.state_json` 用 `enc:v1:` 前缀的 AES-GCM，checkpoint 通过 LangGraph `EncryptedSerializer` + `AesGcmCipher` 接入。旧明文记录仍可读；关闭加密不会解密旧数据。
+- **静态加密**：`crypto.py` 把主密钥经 HKDF 派生 job-state/checkpoint/feedback/run-trace key；`jobs.state_json` 用 `enc:v1:`，checkpoint 走 `EncryptedSerializer`，feedback 用逐行 JSON envelope（`enc:fb:v1:`），run trace 用整文件 envelope（`enc:rt:v1:`）。桌面历史用 Electron `safeStorage`。旧明文记录仍可读；关闭加密不会解密旧数据。上传源文件仍为明文，建议磁盘/卷加密。
 
 ### 合同修订稿（第三阶段增量）
 
@@ -279,6 +283,8 @@ uv run pytest -q
 uv run python scripts/validate_kb.py
 uv run python scripts/validate_eval_assets.py
 uv run python scripts/export_feedback.py --out-dir ../exports/feedback --formats jsonl,csv,sqlite
+uv run python scripts/export_run_traces.py --out-dir ../exports/traces
+uv run python scripts/scan_pii.py --path ../contractguard-private/docs
 uv run python scripts/check_samples.py
 uv run python scripts/smoke_api.py
 uv run python scripts/test_live_offline.py
@@ -289,7 +295,7 @@ uv run python eval/run_ablation.py
 uv run python eval/run_quality_eval.py --scores ../../contractguard-private/real_eval/quality_scores.jsonl
 ```
 
-- `pytest`：242 个离线测试（CI 覆盖率门槛 80%）；
+- `pytest`：258 个离线测试（CI 覆盖率门槛 80%）；
 - `validate_kb`：法条/规则引用是否一致；
 - `validate_eval_assets`：samples/labels/retrieval/真实公共 manifest 的 ID、文件、split、隐私字段；
 - `export_feedback`：feedback v2 → JSONL/CSV/SQLite，报告 legacy/孤儿；

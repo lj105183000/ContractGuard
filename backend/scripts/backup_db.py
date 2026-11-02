@@ -17,7 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.config import FEEDBACK_DIR, RUNS_DIR, UPLOAD_DIR, settings  # noqa: E402
+from app.config import AUDIT_DIR, FEEDBACK_DIR, RUNS_DIR, UPLOAD_DIR, settings  # noqa: E402
 from app.provenance import sha256_file  # noqa: E402
 
 BACKEND = Path(__file__).resolve().parents[1]
@@ -43,6 +43,7 @@ def main() -> None:
     parser.add_argument("--include-feedback", action="store_true")
     parser.add_argument("--include-traces", action="store_true")
     parser.add_argument("--include-eval", action="store_true")
+    parser.add_argument("--include-audit", action="store_true")
     args = parser.parse_args()
 
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -79,6 +80,9 @@ def main() -> None:
     if args.include_traces and RUNS_DIR.exists():
         shutil.copytree(RUNS_DIR, target / "runs", dirs_exist_ok=True)
         manifest["traces"] = True
+    if args.include_audit and AUDIT_DIR.exists():
+        shutil.copytree(AUDIT_DIR, target / "audit", dirs_exist_ok=True)
+        manifest["audit"] = True
     if args.include_eval:
         eval_dir = BACKEND / "eval"
         (target / "eval").mkdir(parents=True, exist_ok=True)

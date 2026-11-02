@@ -13,7 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.config import FEEDBACK_DIR, RUNS_DIR, UPLOAD_DIR, settings  # noqa: E402
+from app.config import AUDIT_DIR, FEEDBACK_DIR, RUNS_DIR, UPLOAD_DIR, settings  # noqa: E402
 
 
 def main() -> None:
@@ -23,6 +23,7 @@ def main() -> None:
     parser.add_argument("--include-feedback", action="store_true")
     parser.add_argument("--include-traces", action="store_true")
     parser.add_argument("--include-eval", action="store_true")
+    parser.add_argument("--include-audit", action="store_true")
     parser.add_argument("--yes", action="store_true")
     args = parser.parse_args()
     if not args.yes:
@@ -63,6 +64,11 @@ def main() -> None:
             eval_target = Path(__file__).resolve().parents[1] / "eval"
             shutil.copytree(eval_backup, eval_target, dirs_exist_ok=True)
             print(f"restored eval artifacts -> {eval_target}")
+    if args.include_audit:
+        audit_backup = source / "audit"
+        if audit_backup.exists():
+            shutil.copytree(audit_backup, AUDIT_DIR, dirs_exist_ok=True)
+            print(f"restored audit tombstones -> {AUDIT_DIR}")
 
 
 if __name__ == "__main__":

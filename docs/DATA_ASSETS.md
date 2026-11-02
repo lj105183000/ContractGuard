@@ -11,10 +11,11 @@
 | 任务快照 | `backend/data/jobs.sqlite3` | SQLite 单表 `jobs`；`state_json` 为 `JobState`（`backend/app/schemas.py`），含 `ReviewResult.full_text` | confidential（真实合同即 PII） | `JOB_RETENTION_DAYS`（默认 7 天） | `DELETE /api/reviews/{id}`（仅已结束任务）或 janitor | `scripts/backup_db.py` | 否 |
 | HITL checkpoint | `backend/data/checkpoints.sqlite3` | LangGraph `checkpoints`/`writes`，含 `ReviewState`/`report` | confidential | 完成/删除/过期时清理 | janitor + `delete_checkpoint` | `backup_db.py` | 否 |
 | 上传源文件 | `backend/data/uploads/<job_id>/<filename>` | PDF/DOCX/TXT/JPG/PNG | confidential/PII | 默认审查后删除 | 审查完成、`DELETE`、janitor | `--include-uploads` | 否（原件） |
-| 人工反馈 | `backend/data/feedback/feedback.jsonl` | JSONL；Phase 0A 起 `schema_version=2`，含合同 SHA/模式/路由/模型/prompt/KB 版本，不含全文/文件名 | internal，`note` 可能含 PII | 随任务过期删除 | `DELETE` / janitor | `--include-feedback` | 否 |
-| 运行 trace | `backend/data/runs/<job_id>.json` | 完整 `ReviewResult`（含 `full_text`），仅 `SAVE_TRACES=1` | confidential | 随任务过期删除 | `DELETE` / janitor | `--include-traces` | 否 |
+| 人工反馈 | `backend/data/feedback/feedback.jsonl` | JSONL；`schema_version=2`，含合同 SHA/模式/路由/模型/prompt/KB 版本，不含全文/文件名；`ENCRYPTION_ENABLED=1` 时逐行加密 | internal，`note` 可能含 PII | 随任务过期删除 | `DELETE` / janitor | `--include-feedback` | 否 |
+| 运行 trace | `backend/data/runs/<job_id>.json` | 完整 `ReviewResult`（含 `full_text`），仅 `SAVE_TRACES=1`；加密开启时整文件 AES-GCM | confidential | 随任务过期删除 | `DELETE` / janitor | `--include-traces` | 否 |
+| 删除墓碑 | `backend/data/audit/deletions.jsonl` | JSONL：job_id/时间/原因/状态/had_result，无合同内容 | internal | 项目保留 | 不删除 | 可选 | 否 |
 | 向量缓存 | `backend/data/index_cache/embeddings.npz` + `embeddings_meta.json` | NumPy 向量 + 指纹 | derived | 可随时重建 | 删除缓存 | 不必备份 | 是 |
-| 桌面本地历史 | `%APPDATA%\ContractGuard\history` | 每任务一个明文 JSON 快照 | confidential/PII | 30 条/20 MB 单条/200 MB 总量 | 桌面历史删除/清空 | 不自动备份 | 否 |
+| 桌面本地历史 | `%APPDATA%\ContractGuard\history` | 每任务一个快照；可用时 Electron `safeStorage` 加密，旧明文仍可读 | confidential/PII | 30 条/20 MB 单条/200 MB 总量 | 桌面历史删除/清空 | 不自动备份 | 否 |
 
 ## 2. 知识库与评测数据
 

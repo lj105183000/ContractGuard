@@ -22,16 +22,17 @@
 
 ## 3. 加密边界
 
-| 数据 | 当前 | Phase 0B/后续 |
+| 数据 | 当前 | 说明 |
 |---|---|---|
-| `jobs.state_json` | 可选 AES-GCM（`ENCRYPTION_ENABLED=1`） | — |
-| LangGraph checkpoint | 可选 AES-GCM | — |
-| 上传源文件 | 明文；审查后默认删除 | Phase 0B 评估加密/磁盘加密指引 |
-| feedback JSONL | 明文 | Phase 0B 评估逐行加密 |
-| run trace | 明文（仅 `SAVE_TRACES=1`） | Phase 0B 整文件加密 |
-| 桌面历史 | 明文 JSON | Phase 0B 评估 Electron `safeStorage` |
+| `jobs.state_json` | 可选 AES-GCM（`ENCRYPTION_ENABLED=1`） | `enc:v1:` |
+| LangGraph checkpoint | 可选 AES-GCM | `aesgcm-v1` |
+| feedback JSONL | `ENCRYPTION_ENABLED=1` 时逐行加密 envelope | 旧明文行仍可读；导出自动解密 |
+| run trace | `ENCRYPTION_ENABLED=1` 时整文件加密 envelope | 仅 `SAVE_TRACES=1`；`scripts/export_run_traces.py` 解密导出 |
+| 桌面历史 | Electron `safeStorage`（Windows DPAPI）加密 | 不可用时降级明文；旧明文快照仍可读 |
+| 上传源文件 | 明文；审查后默认删除 | 建议磁盘/卷加密；应用层加密留待 Phase 1 评估 |
 
 - 启动时若 `ENCRYPTION_ENABLED=0`，后端会记录警告：jobs/checkpoint 之外的合同数据为明文。
+- feedback/trace/桌面历史在 `ENCRYPTION_ENABLED=1` 时加密；上传源文件仍依赖磁盘/卷加密。
 - 主密钥不支持在线轮换；丢失后旧数据不可解密。备份必须单独保管密钥。
 - 真实合同建议：`ENCRYPTION_ENABLED=1` + `CONTRACTGUARD_MASTER_KEY`，并对磁盘/卷做全盘加密；不要只依赖应用层加密。
 
@@ -44,8 +45,9 @@
 | 桌面历史 | 30 条/20 MB 单条/200 MB 总量；用户可在本地历史中删除 |
 | 真实合同私有数据 | 由私有环境策略管理；不进入公共仓库/CI |
 | 备份 | 手工脚本；恢复前停服务；加密库恢复必须提供原主密钥 |
+| 删除墓碑 | `data/audit/deletions.jsonl` 记录 job_id/时间/原因/状态/had_result；不含合同内容 |
 
-- 删除是硬删除，无法律保留/墓碑/审计只读日志；这些属于 Phase 0B/P1。
+- 删除是硬删除，但会写最小墓碑用于审计；法律保留/只读审计日志/审批流仍未实现（Phase 1）。
 - 删除任务不会自动删除桌面本地历史（两套存储独立）。
 
 ## 5. 备份与恢复
@@ -53,9 +55,9 @@
 ```bash
 cd backend
 uv run python scripts/backup_db.py --output-dir backups --include-uploads \
-  --include-feedback --include-traces --include-eval
+  --include-feedback --include-traces --include-eval --include-audit
 uv run python scripts/restore_db.py --backup-dir backups/<timestamp> --yes \
-  --include-uploads --include-feedback --include-traces --include-eval
+  --include-uploads --include-feedback --include-traces --include-eval --include-audit
 ```
 
 - SQLite 使用在线 backup API；JSONL 是文件复制，建议低活跃期执行。
@@ -73,7 +75,8 @@ uv run python scripts/restore_db.py --backup-dir backups/<timestamp> --yes \
 ## 7. PII 与外部模型 egress
 
 - live 模式会把合同文本发送给外部 LLM/embedding/rerank Provider；真实合同必须先确认数据出境/保密要求。
-- 当前没有自动 PII 检测/脱敏；`feedback.note` 是自由文本，导出默认不包含 note 与 filename。
+- 当前提供 PII **检测**工具 `scripts/scan_pii.py`（邮箱/手机号/身份证/银行账号/公司名，只输出计数，不输出原值）；自动脱敏尚未接入 LLM 输入，因为会破坏证据逐字定位。
+- `feedback.note` 是自由文本，导出默认不包含 note 与 filename。
 - 真实评测的私有路径/文件名不得写入公共结果；`run_real_eval.py` 对命令行路径做脱敏，公共报告只含匿名 ID/计数。
 
 ## 8. 反馈闭环
