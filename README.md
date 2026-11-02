@@ -7,7 +7,11 @@
 
 [快速开始](#快速开始) · [架构](#架构) · [评测](#评测) · [设计取舍](#设计取舍) · [局限](#局限)
 
-![首页](docs/images/01-home.png)
+<!-- GitHub 内联视频：在下一行粘贴拖拽上传生成的 user-attachments 裸链接（前后留空行） -->
+
+[▶ 演示页](https://lj105183000.github.io/ContractGuard/interview/) · [下载 1080p MP4](docs/interview/ContractGuard-demo-60s-1080p.mp4) · [面试 PPT](docs/interview/ContractGuard-面试演示.pptx) · [讲解提纲](docs/interview/讲解提纲.md)
+
+> 视频为 mock 模式界面录屏；live 指标与评测口径见面试 PPT 第 10 页。若在非 github.com 镜像中无法播放，请打开演示页。
 
 ## 这是什么
 
@@ -65,21 +69,16 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 
 ## 截图
 
-### 60 秒 Demo（1080p，男声中文配音）
+<details>
+<summary>展开 7 张界面截图</summary>
 
-[![60 秒 Demo](docs/interview/ContractGuard-demo-poster-960.jpg)](docs/interview/ContractGuard-demo-60s-1080p.mp4)
-
-[▶ 观看 / 下载 60 秒 1080p 男声 Demo](docs/interview/ContractGuard-demo-60s-1080p.mp4) · [演示页](docs/interview/) · [面试 PPT](docs/interview/ContractGuard-面试演示.pptx) · [讲解提纲](docs/interview/讲解提纲.md)
-
-> 视频为 mock 模式界面录屏；live 指标与评测口径见面试 PPT 第 10 页。GitHub 内联播放说明见 [`docs/interview/README.md`](docs/interview/README.md)。
-
-| 风险清单 | 风险详情 |
+| 首页 | 风险清单 |
 |---|---|
-| ![风险清单](docs/images/02-risk-list.png) | ![风险详情](docs/images/03-finding-detail.png) |
+| ![首页](docs/images/01-home.png) | ![风险清单](docs/images/02-risk-list.png) |
 
-| 法条与修改建议 |
-|---|
-| ![法条与建议](docs/images/04-legal-basis.png) |
+| 风险详情 | 法条与修改建议 |
+|---|---|
+| ![风险详情](docs/images/03-finding-detail.png) | ![法条与建议](docs/images/04-legal-basis.png) |
 
 | 批量审查 | 图内人工复核 |
 |---|---|
@@ -88,6 +87,8 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 | 合同修订稿 |
 |---|
 | ![合同修订稿](docs/images/07-revised.png) |
+
+</details>
 
 ## 快速开始
 
@@ -551,7 +552,8 @@ contractguard/
 │  ├─ DATA_ASSETS.md                # 数据资产清单
 │  ├─ DATA_GOVERNANCE.md            # Phase 0 数据治理策略
 │  ├─ REAL_CONTRACT_EVAL.md         # 真实合同作者标注外部效度
-│  └─ images/                       # 截图
+│  ├─ images/                       # 截图
+│  └─ interview/                    # 60 秒演示视频、播放页、面试 PPT
 ├─ .github/workflows/ci.yml         # 后端测试/覆盖率/依赖审计 + 评测门禁 + 前端构建 + 浏览器 E2E + Docker/HTTP smoke + Windows 桌面打包 smoke
 ├─ scripts/                         # Windows 启动脚本
 ├─ Dockerfile                       # 多阶段：前端构建 + 后端运行时
