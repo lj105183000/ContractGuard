@@ -11,12 +11,18 @@ from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
 from app import crypto
 from app.config import settings
 from app.crypto import (
+    FEEDBACK_PREFIX,
     STATE_PREFIX,
+    TRACE_PREFIX,
     AesGcmCipher,
     CryptoError,
     assert_encryption_ready,
+    decrypt_feedback,
     decrypt_state,
+    decrypt_trace,
+    encrypt_feedback,
     encrypt_state,
+    encrypt_trace,
 )
 from app.schemas import (
     ContractMeta,
@@ -71,6 +77,27 @@ def test_wrong_key_cannot_decrypt(encryption):
     crypto._derive_key.cache_clear()
     with pytest.raises(CryptoError):
         decrypt_state("job-1", encrypted)
+
+
+def test_feedback_and_trace_encryption_roundtrip(encryption):
+    feedback = encrypt_feedback('{"note": "联系人张三 13800138000"}')
+    assert feedback.startswith(FEEDBACK_PREFIX)
+    assert "张三" not in feedback
+    assert decrypt_feedback(feedback) == '{"note": "联系人张三 13800138000"}'
+
+    trace = encrypt_trace("job-1", '{"full_text": "合同全文"}')
+    assert trace.startswith(TRACE_PREFIX)
+    assert "合同全文" not in trace
+    assert decrypt_trace("job-1", trace) == '{"full_text": "合同全文"}'
+    with pytest.raises(CryptoError):
+        decrypt_trace("job-2", trace)
+
+
+def test_feedback_and_trace_plaintext_passthrough_when_disabled():
+    assert encrypt_feedback("plain") == "plain"
+    assert decrypt_feedback("plain") == "plain"
+    assert encrypt_trace("job-1", "plain") == "plain"
+    assert decrypt_trace("job-1", "plain") == "plain"
 
 
 def test_encryption_requires_a_strong_key(encryption):

@@ -18,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.config import FEEDBACK_DIR, settings  # noqa: E402
+from app.services.feedback_store import iter_records  # noqa: E402
 
 BACKEND = Path(__file__).resolve().parents[1]
 
@@ -117,30 +118,26 @@ def export(
     out_dir.mkdir(parents=True, exist_ok=True)
     exported_at = datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")
     job_ids, db_error = _load_job_ids(db_path)
-    total_lines = malformed = legacy = orphan = 0
+    total_lines = malformed = decrypt_errors = legacy = orphan = encrypted = 0
     records: list[dict] = []
-    if feedback_path.exists():
-        for line in feedback_path.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            total_lines += 1
-            try:
-                raw = json.loads(line)
-            except json.JSONDecodeError:
+    for _line, raw, is_encrypted, error in iter_records(feedback_path):
+        total_lines += 1
+        encrypted += int(is_encrypted)
+        if raw is None:
+            if error and error.startswith("decrypt_failed"):
+                decrypt_errors += 1
+            else:
                 malformed += 1
-                continue
-            if not isinstance(raw, dict):
-                malformed += 1
-                continue
-            item = _normalize(
-                raw,
-                job_ids,
-                include_notes=include_notes,
-                exported_at=exported_at,
-            )
-            records.append(item)
-            legacy += int(item["legacy"])
-            orphan += int(item["is_orphan"])
+            continue
+        item = _normalize(
+            raw,
+            job_ids,
+            include_notes=include_notes,
+            exported_at=exported_at,
+        )
+        records.append(item)
+        legacy += int(item["legacy"])
+        orphan += int(item["is_orphan"])
 
     report = {
         "generated_at": exported_at,
@@ -149,6 +146,8 @@ def export(
         "total_lines": total_lines,
         "exported_records": len(records),
         "malformed_lines": malformed,
+        "encrypted_records": encrypted,
+        "decrypt_errors": decrypt_errors,
         "legacy_records": legacy,
         "notes_included": include_notes,
         "job_present": len(records) - orphan,

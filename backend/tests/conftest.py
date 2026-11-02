@@ -61,6 +61,11 @@ def clean_jobs():
     store.reset()
 
 
+@pytest.fixture(autouse=True)
+def isolate_audit(monkeypatch):
+    monkeypatch.setattr("app.audit.AUDIT_DIR", _TEST_DB_DIR / "audit")
+
+
 @pytest.fixture
 def client():
     with TestClient(app) as test_client:

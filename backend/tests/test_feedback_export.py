@@ -1,6 +1,9 @@
 import json
 import sqlite3
 
+from app import crypto
+from app.config import settings
+from app.services.feedback_store import encode_record
 from scripts.export_feedback import export
 
 
@@ -100,3 +103,43 @@ def test_export_feedback_can_include_notes(tmp_path):
     assert report["orphan_records"] == 0
     exported = (out / "feedback.jsonl").read_text(encoding="utf-8")
     assert "secret note" in exported
+
+
+def test_export_decrypts_encrypted_feedback(tmp_path):
+    old_enabled = settings.encryption_enabled
+    old_key = settings.master_key
+    object.__setattr__(settings, "encryption_enabled", True)
+    object.__setattr__(settings, "master_key", "contractguard-test-master-key-0123456789")
+    crypto._derive_key.cache_clear()
+    try:
+        feedback = tmp_path / "feedback.jsonl"
+        feedback.write_text(
+            encode_record(
+                {
+                    "schema_version": 2,
+                    "job_id": "job-1",
+                    "finding_id": "f-1",
+                    "decision": "accepted",
+                    "note": "secret note",
+                }
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        out = tmp_path / "out"
+        report = export(
+            feedback,
+            tmp_path / "missing.sqlite3",
+            out,
+            ["jsonl"],
+            include_notes=False,
+        )
+        assert report["encrypted_records"] == 1
+        assert report["decrypt_errors"] == 0
+        raw = (out / "feedback.jsonl").read_text(encoding="utf-8")
+        assert "job-1" in raw
+        assert "secret note" not in raw
+    finally:
+        object.__setattr__(settings, "encryption_enabled", old_enabled)
+        object.__setattr__(settings, "master_key", old_key)
+        crypto._derive_key.cache_clear()

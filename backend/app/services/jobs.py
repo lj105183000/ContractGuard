@@ -21,13 +21,16 @@ from pathlib import Path
 
 from langgraph.types import Command
 
+from app.audit import append_deletion
 from app.config import FEEDBACK_DIR, RUNS_DIR, settings
 from app.crypto import (
     CryptoError,
     assert_encryption_ready,
     decrypt_state,
     encrypt_state,
+    encrypt_trace,
 )
+from app.services.feedback_store import encode_record, iter_records
 from app.graph import runtime
 from app.graph.build import build_graph
 from app.graph.errors import PipelineError
@@ -447,6 +450,7 @@ class JobStore:
             if updated < cutoff:
                 job_id = row["job_id"]
                 expired_ids.add(job_id)
+                job = None
                 try:
                     job = JobState.model_validate_json(
                         decrypt_state(job_id, row["state_json"])
@@ -454,6 +458,12 @@ class JobStore:
                     self._delete_source(job)
                 except Exception:  # noqa: BLE001
                     pass
+                append_deletion(
+                    job_id,
+                    reason="retention",
+                    status=job.status.value if job is not None else "unknown",
+                    had_result=bool(job is not None and job.result is not None),
+                )
                 self._jobs.pop(job_id, None)
                 self._last_persist.pop(job_id, None)
                 self._resume_locks.pop(job_id, None)
@@ -528,13 +538,10 @@ class JobStore:
         if not path.exists():
             return
         try:
-            lines = path.read_text(encoding="utf-8").splitlines()
             kept: list[str] = []
             removed = False
-            for line in lines:
-                try:
-                    record = json.loads(line)
-                except json.JSONDecodeError:
+            for line, record, _encrypted, _error in iter_records(path):
+                if record is None:
                     kept.append(line)
                     continue
                 if record.get("job_id") in job_ids:
@@ -930,6 +937,12 @@ class JobStore:
                 raise JobNotFound(job_id)
             if job.status not in terminal:
                 raise JobNotDeletable(job_id)
+            append_deletion(
+                job_id,
+                reason="explicit",
+                status=job.status.value,
+                had_result=job.result is not None,
+            )
             self._delete_source(job)
             self._delete_run_trace(job_id)
             self._delete_feedback(job_id)
@@ -1448,7 +1461,7 @@ class JobStore:
                 "job_created_at": job.created_at,
             }
             with (FEEDBACK_DIR / "feedback.jsonl").open("a", encoding="utf-8") as handle:
-                handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+                handle.write(encode_record(record) + "\n")
         except Exception as exc:  # noqa: BLE001
             logger.warning("写入人工反馈失败：%s", exc)
 
@@ -1877,9 +1890,22 @@ def _save_trace(job_id: str, report: ReviewResult) -> None:  # type: ignore[no-u
     try:
         RUNS_DIR.mkdir(parents=True, exist_ok=True)
         path = RUNS_DIR / f"{job_id}.json"
-        path.write_text(
-            json.dumps(report.model_dump(mode="json"), ensure_ascii=False, indent=2),
-            encoding="utf-8",
+        plaintext = json.dumps(
+            report.model_dump(mode="json"), ensure_ascii=False, indent=2
         )
+        if settings.encryption_enabled:
+            payload = {
+                "format": "contractguard.run_trace",
+                "version": 1,
+                "encrypted": True,
+                "job_id": job_id,
+                "ciphertext": encrypt_trace(job_id, plaintext),
+            }
+            path.write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+        else:
+            path.write_text(plaintext, encoding="utf-8")
     except Exception as exc:  # noqa: BLE001
         logger.warning("保存 trace 失败：%s", exc)

@@ -20,6 +20,9 @@ from app.config import settings
 
 STATE_PREFIX = "enc:v1:"
 CHECKPOINT_CIPHER = "aesgcm-v1"
+FEEDBACK_PREFIX = "enc:fb:v1:"
+TRACE_PREFIX = "enc:rt:v1:"
+FEEDBACK_AAD = b"contractguard-feedback-v1"
 
 
 class CryptoError(Exception):
@@ -51,6 +54,8 @@ def assert_encryption_ready() -> None:
         return
     _derive_key("job-state-v1")
     _derive_key("checkpoint-v1")
+    _derive_key("feedback-v1")
+    _derive_key("run-trace-v1")
 
 
 def encrypt_state(job_id: str, plaintext: str) -> str:
@@ -79,6 +84,61 @@ def decrypt_state(job_id: str, value: str) -> str:
         return plaintext.decode("utf-8")
     except Exception as exc:  # noqa: BLE001
         raise CryptoError(f"任务快照解密失败：{exc}") from exc
+
+
+def _encrypt_text(
+    prefix: str, key_info: str, aad: bytes, plaintext: str
+) -> str:
+    if not settings.encryption_enabled:
+        return plaintext
+    key = _derive_key(key_info)
+    nonce = os.urandom(12)
+    ciphertext = AESGCM(key).encrypt(nonce, plaintext.encode("utf-8"), aad)
+    return prefix + base64.urlsafe_b64encode(nonce + ciphertext).decode("ascii")
+
+
+def _decrypt_text(
+    prefix: str, key_info: str, aad: bytes, value: str
+) -> str:
+    if not value.startswith(prefix):
+        return value
+    key = _derive_key(key_info)
+    try:
+        payload = base64.urlsafe_b64decode(value[len(prefix) :])
+        nonce, ciphertext = payload[:12], payload[12:]
+        return AESGCM(key).decrypt(nonce, ciphertext, aad).decode("utf-8")
+    except Exception as exc:  # noqa: BLE001
+        raise CryptoError(f"解密失败：{exc}") from exc
+
+
+def encrypt_feedback(plaintext: str) -> str:
+    return _encrypt_text(
+        FEEDBACK_PREFIX, "feedback-v1", FEEDBACK_AAD, plaintext
+    )
+
+
+def decrypt_feedback(value: str) -> str:
+    return _decrypt_text(
+        FEEDBACK_PREFIX, "feedback-v1", FEEDBACK_AAD, value
+    )
+
+
+def encrypt_trace(job_id: str, plaintext: str) -> str:
+    return _encrypt_text(
+        TRACE_PREFIX,
+        "run-trace-v1",
+        f"trace:{job_id}:v1".encode("utf-8"),
+        plaintext,
+    )
+
+
+def decrypt_trace(job_id: str, value: str) -> str:
+    return _decrypt_text(
+        TRACE_PREFIX,
+        "run-trace-v1",
+        f"trace:{job_id}:v1".encode("utf-8"),
+        value,
+    )
 
 
 class AesGcmCipher:

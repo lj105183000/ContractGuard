@@ -14,7 +14,26 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
+from app import crypto
+from app.config import settings
 from app.services.jobs import JobNotDeletable, JobNotFound, JobStore
+
+MASTER_KEY = "contractguard-test-master-key-0123456789"
+
+
+@pytest.fixture
+def encryption():
+    old_enabled = settings.encryption_enabled
+    old_key = settings.master_key
+    object.__setattr__(settings, "encryption_enabled", True)
+    object.__setattr__(settings, "master_key", MASTER_KEY)
+    crypto._derive_key.cache_clear()
+    try:
+        yield
+    finally:
+        object.__setattr__(settings, "encryption_enabled", old_enabled)
+        object.__setattr__(settings, "master_key", old_key)
+        crypto._derive_key.cache_clear()
 from app.services.summary import build_summary
 
 
@@ -135,6 +154,56 @@ def test_decide_writes_feedback_v2_provenance(tmp_path, monkeypatch):
         store.close()
 
 
+def test_feedback_is_encrypted_at_rest(tmp_path, monkeypatch, encryption):
+    feedback_dir = tmp_path / "feedback"
+    monkeypatch.setattr("app.services.jobs.FEEDBACK_DIR", feedback_dir)
+    store = JobStore(tmp_path / "jobs.sqlite3")
+    try:
+        job = store.create("contract.txt")
+        store.set_running(job.job_id)
+        finding = _finding()
+        report = _report(finding)
+        report.full_text = "合同正文：预付款50%。"
+        store.set_result(job.job_id, report, [])
+        store.decide(job.job_id, finding.id, Decision.ACCEPTED, "同意")
+
+        raw = (feedback_dir / "feedback.jsonl").read_text(encoding="utf-8")
+        assert "合同正文" not in raw
+        assert "同意" not in raw
+        envelope = json.loads(raw.splitlines()[0])
+        assert envelope["encrypted"] is True
+        assert envelope["job_id"] == job.job_id
+    finally:
+        store.close()
+
+
+def test_cleanup_writes_retention_tombstone(tmp_path, monkeypatch):
+    audit_dir = tmp_path / "audit"
+    monkeypatch.setattr("app.audit.AUDIT_DIR", audit_dir)
+    store = JobStore(tmp_path / "jobs.sqlite3")
+    try:
+        job = store.create("contract.txt")
+        store.set_running(job.job_id)
+        store.set_result(job.job_id, _report(), [])
+        old = (datetime.now(timezone.utc) - timedelta(days=30)).isoformat(
+            timespec="seconds"
+        )
+        store._connection().execute(
+            "UPDATE jobs SET updated_at = ? WHERE job_id = ?",
+            (old, job.job_id),
+        )
+        store.cleanup_expired()
+
+        record = json.loads(
+            (audit_dir / "deletions.jsonl").read_text(encoding="utf-8").splitlines()[0]
+        )
+        assert record["job_id"] == job.job_id
+        assert record["reason"] == "retention"
+        assert record["had_result"] is True
+    finally:
+        store.close()
+
+
 def test_cleanup_removes_feedback_and_run_trace(tmp_path, monkeypatch):
     feedback_dir = tmp_path / "feedback"
     runs_dir = tmp_path / "runs"
@@ -173,6 +242,25 @@ def test_cleanup_removes_feedback_and_run_trace(tmp_path, monkeypatch):
         assert "other-job" in remaining
         with pytest.raises(JobNotFound):
             store.get(job.job_id)
+    finally:
+        store.close()
+
+
+def test_delete_writes_opaque_tombstone(tmp_path, monkeypatch):
+    audit_dir = tmp_path / "audit"
+    monkeypatch.setattr("app.audit.AUDIT_DIR", audit_dir)
+    store = JobStore(tmp_path / "jobs.sqlite3")
+    try:
+        job = store.create("contract.txt")
+        store.set_failed(job.job_id, "boom")
+        store.delete(job.job_id)
+
+        raw = (audit_dir / "deletions.jsonl").read_text(encoding="utf-8")
+        record = json.loads(raw.splitlines()[0])
+        assert record["job_id"] == job.job_id
+        assert record["reason"] == "explicit"
+        assert record["had_result"] is False
+        assert "contract.txt" not in raw
     finally:
         store.close()
 

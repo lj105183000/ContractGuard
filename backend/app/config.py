@@ -33,6 +33,7 @@ UPLOAD_DIR = Path(
     os.getenv("CONTRACTGUARD_UPLOAD_DIR", str(DATA_DIR / "uploads"))
 ).expanduser()
 RUNS_DIR = DATA_DIR / "runs"
+AUDIT_DIR = DATA_DIR / "audit"
 # 开发模式下 APP_ROOT 是 backend/，与原来的 PROJECT_DIR/frontend/dist 一致；
 # 打包后 Electron 用 CONTRACTGUARD_FRONTEND_DIST 指向 resources/frontend/dist。
 FRONTEND_DIST = Path(
