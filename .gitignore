@@ -36,6 +36,8 @@ backend/eval/*_full_mock.*
 # Local-only real contracts and eval backups (not distributed)
 docs/*.pdf
 docs/**/*.pdf
+# The generated interview preview is intentionally published on GitHub
+!docs/interview/*.pdf
 .eval-backup/
 
 # Frontend
