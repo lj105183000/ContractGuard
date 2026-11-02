@@ -5,11 +5,17 @@
 
 > AI 辅助合同初审 MVP（3 天核心开发）。示例合同全部为合成数据，输出不构成法律意见。
 
-[快速开始](#快速开始) · [架构](#架构) · [评测](#评测) · [设计取舍](#设计取舍) · [局限](#局限)
+[演示](#演示) · [快速开始](#快速开始) · [架构](#架构) · [评测](#评测) · [设计取舍](#设计取舍) · [局限](#局限)
+
+## 演示
 
 https://github.com/user-attachments/assets/b6941557-3abe-4ff3-9e0f-8a1db5eda1ea
 
-## 截图
+[▶ 演示页](https://lj105183000.github.io/ContractGuard/interview/) · [下载 1080p MP4](docs/interview/ContractGuard-demo-60s-1080p.mp4)
+
+> 视频为 mock 模式界面录屏，不调用真实模型；若在非 github.com 镜像中无法播放，请打开演示页。
+
+### 界面截图
 
 <details>
 <summary>展开 7 张界面截图</summary>
@@ -31,10 +37,6 @@ https://github.com/user-attachments/assets/b6941557-3abe-4ff3-9e0f-8a1db5eda1ea
 | ![合同修订稿](docs/images/07-revised.png) |
 
 </details>
-
-[▶ 演示页](https://lj105183000.github.io/ContractGuard/interview/) · [下载 1080p MP4](docs/interview/ContractGuard-demo-60s-1080p.mp4)
-
-> 视频为 mock 模式界面录屏，不调用真实模型；若在非 github.com 镜像中无法播放，请打开演示页。
 
 ## 这是什么
 
@@ -636,6 +638,9 @@ contractguard/
 
 ## 发布前检查
 
+<details>
+<summary>展开内部发布检查清单</summary>
+
 - [ ] `backend/.env` 不在仓库；`git status` 里没有 Key、真实合同、`node_modules`、`dist`。
 - [ ] 截图/录屏里没有 Key、终端敏感信息、真实合同。
 - [ ] `LLM_MODE=mock uv run pytest -q --cov=app --cov-fail-under=80` 通过（当前 258 个离线测试，含默认 Worker+HITL E2E）；`eval/report_rules.md` 是真实运行结果。
@@ -658,7 +663,9 @@ contractguard/
 - [ ] 如果要写“live 模式评测”，先把真实跑出来的指标填进去；没跑就不写。
 - [ ] CI 的 rules/检索/扰动/成本阈值全部通过；live full 只在发布前手工跑并归档。
 - [ ] 如果对外声称真实合同质量：按 [`docs/ANNOTATION_GUIDE.md`](docs/ANNOTATION_GUIDE.md) 完成 20–30 份真实合同、双人盲标、裁决、fixed-universe IAA 和人工质量评分；否则只能写“合成集工程回归”。
-- [ ] 需要消融结论时运行 `eval/run_ablation.py`，并区分 rules-only、full、no-RAG；不要用 HITL 冒充识别质量提升。
+- [ ] 需要消融结论时运行 `eval/run_ablation.py`，并区分 rules-only、full、no-RAG；不要用 HITL 冒充质量提升。
+
+</details>
 
 本次验收的实际命令与结果见 [`docs/LAUNCH_ACCEPTANCE.md`](docs/LAUNCH_ACCEPTANCE.md)。
 
