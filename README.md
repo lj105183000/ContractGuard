@@ -65,6 +65,14 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 
 ## 截图
 
+### 60 秒 Demo（1080p，男声中文配音）
+
+[![60 秒 Demo](docs/interview/ContractGuard-demo-poster-960.jpg)](docs/interview/ContractGuard-demo-60s-1080p.mp4)
+
+[▶ 观看 / 下载 60 秒 1080p 男声 Demo](docs/interview/ContractGuard-demo-60s-1080p.mp4) · [演示页](docs/interview/) · [面试 PPT](docs/interview/ContractGuard-面试演示.pptx) · [讲解提纲](docs/interview/讲解提纲.md)
+
+> 视频为 mock 模式界面录屏；live 指标与评测口径见面试 PPT 第 10 页。GitHub 内联播放说明见 [`docs/interview/README.md`](docs/interview/README.md)。
+
 | 风险清单 | 风险详情 |
 |---|---|
 | ![风险清单](docs/images/02-risk-list.png) | ![风险详情](docs/images/03-finding-detail.png) |

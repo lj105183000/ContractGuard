@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContractGuard · 60 秒演示</title>
+  <style>
+    :root {
+      --ink: #0f1e2b;
+      --panel: #172f43;
+      --cream: #f8f1e2;
+      --muted: #bdb4a5;
+      --gold: #d4a24c;
+      --line: rgba(212, 162, 76, .38);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--cream);
+      font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 85% 5%, rgba(212, 162, 76, .12), transparent 30%),
+        linear-gradient(145deg, #0f1e2b 0%, #173247 58%, #0f1e2b 100%);
+    }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 34px 0 42px; }
+    .top { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand img { width: 48px; height: 48px; border-radius: 12px; }
+    .brand b { display: block; font-family: "Noto Serif SC", "SimSun", serif; font-size: 20px; letter-spacing: .02em; }
+    .brand span { display: block; color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: .22em; margin-top: 3px; }
+    .nav a { color: var(--muted); text-decoration: none; font-size: 12px; margin-left: 18px; }
+    .nav a:hover { color: var(--gold); }
+    .hero { margin: 48px 0 22px; }
+    .eyebrow { color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: .18em; }
+    h1 {
+      margin: 12px 0 12px;
+      max-width: 980px;
+      font-family: "Noto Serif SC", "SimSun", serif;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.18;
+      font-weight: 700;
+    }
+    h1 em { color: var(--gold); font-style: normal; }
+    .sub { max-width: 880px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .player {
+      margin-top: 24px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 20px 50px -30px rgba(0,0,0,.75);
+    }
+    video { display: block; width: 100%; height: auto; border-radius: 9px; background: #07111b; }
+    .meta {
+      display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
+      margin: 18px 0 0; color: var(--muted); font-size: 12px;
+    }
+    .pill { border: 1px solid var(--line); color: var(--gold); border-radius: 999px; padding: 6px 11px; }
+    .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+    .btn {
+      display: inline-block; padding: 10px 15px; border-radius: 9px;
+      text-decoration: none; font-size: 12px; font-weight: 700;
+      background: var(--gold); color: #17212b;
+    }
+    .btn.secondary { background: transparent; color: var(--cream); border: 1px solid var(--line); }
+    .note { margin-top: 26px; color: #8f9ba8; font-size: 11px; line-height: 1.7; }
+    .note strong { color: var(--muted); }
+    @media (max-width: 640px) {
+      .top { align-items: flex-start; }
+      .nav { display: flex; flex-direction: column; gap: 6px; text-align: right; }
+      .nav a { margin-left: 0; }
+      .wrap { padding-top: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div class="brand">
+        <div>
+          <b>合同哨兵</b>
+          <span>CONTRACTGUARD</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="./ContractGuard-面试演示.pptx">下载 PPT</a>
+        <a href="./讲解提纲.md">讲解提纲</a>
+        <a href="./ContractGuard-demo-60s-1080p.mp4">下载视频</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">60 SEC PRODUCT DEMO / 2026.11</div>
+      <h1>把一份采购合同，变成一张<em>可执行的风险清单</em>。</h1>
+      <div class="sub">
+        从选择示例、规则与 3 个审查 Agent 并行初审，到原文证据、逐条复核、合同修订稿和报告预览。
+        视频为 mock 模式界面录屏；live 指标见 PPT 第 10 页。
+      </div>
+    </section>
+
+    <section class="player">
+      <video controls preload="metadata" poster="./ContractGuard-demo-poster.png">
+        <source src="./ContractGuard-demo-60s-1080p.mp4" type="video/mp4">
+        你的浏览器不支持 HTML5 视频，请<a href="./ContractGuard-demo-60s-1080p.mp4">下载 MP4</a>。
+      </video>
+    </section>
+
+    <div class="meta">
+      <span class="pill">1920 × 1080</span>
+      <span class="pill">男声旁白</span>
+      <span class="pill">60.0s</span>
+      <span>H.264 + AAC · 约 11 MB</span>
+    </div>
+
+    <div class="links">
+      <a class="btn" href="./ContractGuard-面试演示.pptx">打开面试 PPT</a>
+      <a class="btn secondary" href="./ContractGuard-面试演示.pdf">PDF 预览</a>
+      <a class="btn secondary" href="./ContractGuard-demo-60s-1080p.mp4">单独打开视频</a>
+    </div>
+
+    <p class="note">
+      <strong>说明：</strong>视频为 mock 演示模式，不调用真实模型；live 评测结果与口径见 PPT 第 10 页。
+      PDF 不能播放视频，视频页显示封面帧。
+    </p>
+  </main>
+</body>
+</html>
