@@ -99,6 +99,28 @@ def test_rate_limit_and_active_job_cap(client):
         store.discard(job.job_id)
 
 
+def test_delete_completed_review(client, contract_text):
+    job_id = _upload(client, contract_text).json()["job_id"]
+
+    response = client.delete(f"/api/reviews/{job_id}")
+
+    assert response.status_code == 200
+    assert response.json() == {"job_id": job_id, "status": "deleted"}
+    assert client.get(f"/api/reviews/{job_id}").status_code == 404
+    assert client.delete(f"/api/reviews/{job_id}").status_code == 404
+
+
+def test_delete_active_review_is_rejected(client):
+    job = store.create("queued.txt")
+    store.mark_ready(job.job_id)
+    try:
+        response = client.delete(f"/api/reviews/{job.job_id}")
+        assert response.status_code == 409
+        assert client.get(f"/api/reviews/{job.job_id}").status_code == 200
+    finally:
+        store.discard(job.job_id)
+
+
 def test_update_suggestion_marks_human_edited(client, contract_text):
     job_id = _upload(client, contract_text).json()["job_id"]
     job = client.get(f"/api/reviews/{job_id}").json()

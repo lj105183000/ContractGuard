@@ -75,6 +75,7 @@ from app.crypto import CryptoError
 from app.services.jobs import (
     FindingNotFound,
     JobNotCancellable,
+    JobNotDeletable,
     JobNotFound,
     JobNotRetryable,
     JobResuming,
@@ -658,6 +659,23 @@ async def cancel_review(job_id: str) -> dict:
         "job_id": job_id,
         "status": "cancelling" if job.cancel_requested else "cancelled",
     }
+
+
+@router.delete("/reviews/{job_id}")
+async def delete_review(job_id: str) -> dict:
+    """删除已结束任务的任务快照、源文件与 HITL checkpoint。"""
+    try:
+        store.delete(job_id)
+    except JobNotFound as exc:
+        raise HTTPException(status_code=404, detail="任务不存在或已删除。") from exc
+    except JobNotDeletable as exc:
+        raise HTTPException(
+            status_code=409,
+            detail="只有已完成、失败或已取消的任务可以删除；"
+            "运行中/待复核任务请先取消或完成。",
+        ) from exc
+    await delete_checkpoint(job_id)
+    return {"job_id": job_id, "status": "deleted"}
 
 
 @router.post("/reviews/{job_id}/retry", status_code=202)

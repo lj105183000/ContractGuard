@@ -145,6 +145,12 @@ export async function getReview(jobId) {
   return request(`/reviews/${encodeURIComponent(jobId)}`, {}, 30000);
 }
 
+export async function deleteReview(jobId) {
+  return request(`/reviews/${encodeURIComponent(jobId)}`, {
+    method: "DELETE",
+  });
+}
+
 export async function listReviews({ status, limit = 50, offset = 0 } = {}) {
   const params = new URLSearchParams();
   if (status) params.set("status", status);

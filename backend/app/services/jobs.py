@@ -92,6 +92,10 @@ class SourceMissing(JobNotRetryable):
     """源文件已被清理，无法重试。"""
 
 
+class JobNotDeletable(RuntimeError):
+    """只有已结束的任务可以主动删除。"""
+
+
 def _apply_decision(finding: Finding, decision: Decision, note: str) -> None:
     now = datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")
     finding.status = (
@@ -500,6 +504,38 @@ class JobStore:
         except OSError:
             pass
 
+    def _delete_run_trace(self, job_id: str) -> None:
+        try:
+            (RUNS_DIR / f"{job_id}.json").unlink(missing_ok=True)
+        except OSError as exc:
+            logger.warning("删除运行 trace 失败 %s：%s", job_id, exc)
+
+    def _delete_feedback(self, job_id: str) -> None:
+        path = FEEDBACK_DIR / "feedback.jsonl"
+        if not path.exists():
+            return
+        try:
+            lines = path.read_text(encoding="utf-8").splitlines()
+            kept: list[str] = []
+            removed = False
+            for line in lines:
+                try:
+                    record = json.loads(line)
+                except json.JSONDecodeError:
+                    kept.append(line)
+                    continue
+                if record.get("job_id") == job_id:
+                    removed = True
+                else:
+                    kept.append(line)
+            if removed:
+                path.write_text(
+                    "\n".join(kept) + ("\n" if kept else ""),
+                    encoding="utf-8",
+                )
+        except OSError as exc:
+            logger.warning("删除人工反馈失败 %s：%s", job_id, exc)
+
     def cleanup_source(
         self, job_id: str, lease_token: str | None = None
     ) -> None:
@@ -857,6 +893,37 @@ class JobStore:
             self._connection().execute(
                 "DELETE FROM jobs WHERE job_id = ?", (job_id,)
             )
+
+    def delete(self, job_id: str) -> None:
+        """主动删除已结束任务：快照、源文件与 checkpoint。
+
+        只允许 completed/completed_with_warnings/failed/cancelled；运行中或
+        待复核任务仍需先取消或完成，避免与 worker 的租约/恢复流程竞争。
+        """
+        terminal = {
+            JobStatus.COMPLETED,
+            JobStatus.COMPLETED_WITH_WARNINGS,
+            JobStatus.FAILED,
+            JobStatus.CANCELLED,
+        }
+        with self._lock:
+            job = self._jobs.get(job_id)
+            if job is None:
+                job = self._load(job_id)
+            if job is None:
+                raise JobNotFound(job_id)
+            if job.status not in terminal:
+                raise JobNotDeletable(job_id)
+            self._delete_source(job)
+            self._delete_run_trace(job_id)
+            self._delete_feedback(job_id)
+            self._connection().execute(
+                "DELETE FROM jobs WHERE job_id = ?", (job_id,)
+            )
+            self._jobs.pop(job_id, None)
+            self._last_persist.pop(job_id, None)
+            self._resume_locks.pop(job_id, None)
+            self._queue_checkpoint_cleanup(job_id)
 
     def add_event(
         self, job_id: str, event: JobEvent, lease_token: str | None = None

@@ -1,8 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getReview, listReviews } from "../api.js";
+import { deleteReview, getReview, listReviews } from "../api.js";
 import { JOB_STATUS_LABELS, formatDateTime } from "../labels.js";
 import { useFocusTrap } from "../useFocusTrap.js";
-import { HistoryIcon, RefreshIcon, XIcon } from "./Icons.jsx";
+import { HistoryIcon, RefreshIcon, TrashIcon, XIcon } from "./Icons.jsx";
+
+const DELETABLE_STATUSES = new Set([
+  "completed",
+  "completed_with_warnings",
+  "failed",
+  "cancelled",
+]);
 
 export default function ServerHistoryPanel({ onClose, onOpen }) {
   const dialogRef = useRef(null);
@@ -11,6 +18,7 @@ export default function ServerHistoryPanel({ onClose, onOpen }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [busyId, setBusyId] = useState("");
+  const [deletingId, setDeletingId] = useState("");
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -47,6 +55,28 @@ export default function ServerHistoryPanel({ onClose, onOpen }) {
     } catch (err) {
       setError(err.message || "无法打开该任务。");
       setBusyId("");
+    }
+  };
+
+  const removeEntry = async (event, jobId) => {
+    event.stopPropagation();
+    if (deletingId) return;
+    if (
+      !window.confirm(
+        "删除该任务的快照、源文件和复核 checkpoint？此操作不可恢复。",
+      )
+    ) {
+      return;
+    }
+    setDeletingId(jobId);
+    setError("");
+    try {
+      await deleteReview(jobId);
+      await refresh();
+    } catch (err) {
+      setError(err.message || "删除失败。");
+    } finally {
+      setDeletingId("");
     }
   };
 
@@ -131,7 +161,7 @@ export default function ServerHistoryPanel({ onClose, onOpen }) {
                     <button
                       type="button"
                       className="history-open"
-                      disabled={Boolean(busyId)}
+                      disabled={Boolean(busyId) || Boolean(deletingId)}
                       onClick={() => openEntry(entry.job_id)}
                     >
                       <span className="history-item-head">
@@ -151,6 +181,17 @@ export default function ServerHistoryPanel({ onClose, onOpen }) {
                         {busy ? "正在打开…" : "查看任务 →"}
                       </span>
                     </button>
+                    {DELETABLE_STATUSES.has(entry.status) ? (
+                      <button
+                        type="button"
+                        className="icon-button history-delete"
+                        aria-label={`删除 ${entry.filename || entry.job_id}`}
+                        disabled={Boolean(deletingId)}
+                        onClick={(event) => removeEntry(event, entry.job_id)}
+                      >
+                        <TrashIcon size={16} />
+                      </button>
+                    ) : null}
                   </li>
                 );
               })}
