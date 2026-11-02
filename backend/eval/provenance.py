@@ -129,6 +129,7 @@ def real_contracts_provenance(
         "manifest_sha256": manifest_digest,
         "contracts_sha256": contracts_digest,
         "labels_sha256": labels_digest,
+        "label_version": labels_digest[:12],
         "contract_count": len(contracts),
         "labeled_count": sum(1 for item in contracts if item.get("has_labels")),
     }

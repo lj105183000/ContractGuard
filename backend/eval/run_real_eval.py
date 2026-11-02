@@ -203,7 +203,8 @@ def write_report(
             f"{metrics.get('f1', '—')}{suffix} |"
         )
 
-    r1 = next((row for row in rows if row["scope"] == "in_scope"), None)
+    in_scope_rows = [row for row in rows if row["scope"] == "in_scope"]
+    r1 = next((row for row in in_scope_rows if row.get("score")), None)
     if r1 and r1.get("score"):
         metrics = r1["score"]
         ci = bootstrap_ci.get(r1["id"]) or {}
@@ -217,7 +218,7 @@ def write_report(
         lines.extend(
             [
                 "",
-                "## R1 作者标注指标（in_scope）",
+                f"## {r1['title']} 作者标注指标（in_scope）",
                 "",
                 "| 指标 | 值 | 95% CI |",
                 "|---|---|---|",
@@ -230,8 +231,8 @@ def write_report(
                 f"| 法条 ID 可解析率（{metrics['citation_checked']} 个引用） | "
                 f"{metrics['citation_valid_rate']:.1%} | — |",
                 "",
-                "> R1 只有 1 份 in-scope 合同，按合同 bootstrap 的 CI 退化为点估计；"
-                "它只表示样本量不足，不代表精度确定。",
+                f"> 当前只有 {len(in_scope_rows)} 份 in-scope 合同，"
+                "按合同 bootstrap 的 CI 可能退化为点估计；样本量不足不代表精度确定。",
             ]
         )
 
@@ -240,18 +241,18 @@ def write_report(
             "",
             "## 运行与解析观察",
             "",
-            "- R1 有文字层；R2/R3 是扫描件，规则模式只做本地 OCR，不调用 LLM。",
+            "- 文字层/扫描件与 OCR 统计见上表；rules 模式只做本地 OCR，不调用 LLM。",
             "- 真实 PDF 的条款切分出现金额/编号被识别成 article 的噪声；因此真实标签使用 "
             "`clause_id`/`quote` 锚定，不能用 `clause_article` 精确匹配。",
-            "- R1 的规则 finding 中存在证据挂错条款的情况（例如 IP 规则引用了质保条款）；"
-            "这是真实合同解析/规则证据绑定的已知问题，报告如实计入 FP/FN，不做人工修饰。",
-            "- R2 施工合同属于域外，规则命中低不能解释为模型能力；R3 IT 采购属于相邻场景，"
-            "均不与 R1 混合计算微平均。",
+            "- 真实合同的规则 finding 中存在证据挂错条款的情况；"
+            "这是解析/规则证据绑定的已知问题，报告如实计入 FP/FN，不做人工修饰。",
+            "- 域外/相邻合同不与 in-scope 混合计算微平均；见上表 scope 列。",
             "",
             "## 不能据此声称",
             "",
             "- 真实泛化能力、法务准确率、盲测结果、inter-annotator agreement、统计显著性。",
-            "- 作者不是法律专业人士；标注受作者规则设计影响；样本只有 3 份（1 份 in-scope）。",
+            f"- 作者不是法律专业人士；标注受作者规则设计影响；样本只有 {len(rows)} 份"
+            f"（{len(in_scope_rows)} 份 in-scope）。",
             "- 真实合同/完整标签不随仓库分发；本报告只含匿名 ID 和计数。",
             "",
         ]
