@@ -50,6 +50,11 @@ desktop/.smoke/
 backend/build/
 backend/dist/
 
+# Coverage
+backend/.coverage
+backend/.coverage.*
+backend/htmlcov/
+
 # OS / editor
 .DS_Store
 Thumbs.db

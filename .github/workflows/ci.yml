@@ -22,8 +22,12 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: uv sync --frozen
-      - name: Run tests
-        run: uv run pytest -q
+      - name: Run tests with coverage gate
+        run: uv run pytest -q --cov=app --cov-report=term --cov-fail-under=80
+      - name: Audit Python dependencies
+        run: >-
+          uv run --with pip-audit pip-audit --progress-spinner off
+          --vulnerability-service osv --timeout 30
       - name: Live-mode offline fallback smoke
         run: uv run python scripts/test_live_offline.py
       - name: Validate knowledge base
@@ -71,12 +75,62 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - name: Install dependencies
         run: npm ci
+      - name: Audit npm dependencies
+        run: npm audit --audit-level=high
       - name: Build
         run: npm run build
       - name: Diff utility checks
         run: npm run test:diff
       - name: Error guidance checks
         run: node scripts/check_error_guidance.mjs
+
+  e2e:
+    name: Frontend browser E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+      - name: Install backend dependencies
+        working-directory: backend
+        run: uv sync --frozen
+      - name: Build frontend
+        working-directory: frontend
+        run: npm ci && npm run build
+      - name: Install Playwright
+        working-directory: desktop
+        run: npm ci && npx playwright install --with-deps chromium
+      - name: Browser E2E (review + delete)
+        working-directory: backend
+        run: |
+          mkdir -p /tmp/contractguard-e2e
+          export LLM_MODE=mock SYNC_JOBS=1 HITL_ENABLED=0 WORKER_ENABLED=0
+          export CONTRACTGUARD_DB_PATH=/tmp/contractguard-e2e/jobs.sqlite3
+          export CONTRACTGUARD_CHECKPOINT_DB_PATH=/tmp/contractguard-e2e/checkpoints.sqlite3
+          export CONTRACTGUARD_UPLOAD_DIR=/tmp/contractguard-e2e/uploads
+          uv run uvicorn app.main:app --host 127.0.0.1 --port 8000 \
+            > /tmp/contractguard-e2e/server.log 2>&1 &
+          server_pid=$!
+          trap 'kill $server_pid 2>/dev/null || true' EXIT
+          for i in $(seq 1 60); do
+            if curl -sf http://127.0.0.1:8000/api/health > /dev/null; then break; fi
+            sleep 1
+          done
+          cd ../desktop
+          node scripts/web-smoke.mjs
+      - name: Server logs on failure
+        if: failure()
+        run: tail -100 /tmp/contractguard-e2e/server.log
 
   docker:
     name: Docker build and HTTP smoke
@@ -128,6 +182,8 @@ jobs:
         run: uv sync --frozen
       - name: Install desktop dependencies
         run: npm ci
+      - name: Audit desktop dependencies
+        run: npm audit --audit-level=high
       - name: Download Electron binary
         run: node node_modules/electron/install.js
       - name: Build unpacked desktop app

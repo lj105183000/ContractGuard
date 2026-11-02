@@ -15,7 +15,7 @@ export LLM_MODE=mock
 uv run pytest -q
 ```
 
-结果：`213 passed`（含新增的请求体/解析上限、Host/Token、默认 Worker+HITL E2E、任务超时、embedding 预热超时、评测口径/IAA/质量评分/消融/鲁棒性测试）。后续精度修复新增 8 个回归测试，当前为 `221 passed`。
+结果：`213 passed`（含新增的请求体/解析上限、Host/Token、默认 Worker+HITL E2E、任务超时、embedding 预热超时、评测口径/IAA/质量评分/消融/鲁棒性测试）。后续精度修复、删除 API 与双进程 claim 测试新增 14 个回归测试，当前为 `227 passed`，覆盖率 82%。
 
 ```bash
 uv run python scripts/validate_kb.py
@@ -100,8 +100,8 @@ CONTRACTGUARD_SMOKE_EXE=release/win-unpacked/ContractGuard.exe node scripts/smok
 ## 已知未完成（P1）
 
 - 公网/多用户：无 RBAC/对象级授权、TLS、共享限流、租户隔离；当前只有单租户共享 Token。
-- 真实合同数据：默认明文存储；上传源文件、桌面历史、feedback/trace 未默认加密；无主动删除 API。
+- 真实合同数据：默认明文存储；上传源文件、桌面历史、feedback/trace 未默认加密。已支持主动删除已结束任务（快照、源文件与 checkpoint）；运行中/待复核任务仍需先取消或完成。
 - 桌面端：未签名、无自动更新；随机端口 + localStorage 导致 Token/偏好跨启动丢失；本地后端信任仅校验 `status:ok`。
-- CI：后端 eval 阈值、Docker 构建 + HTTP smoke、Windows 桌面打包 smoke 已加入 workflow（首次 GitHub 运行待确认）；仍无前端 E2E、覆盖率/依赖扫描阈值。
+- CI：后端 eval 阈值、80% 覆盖率门槛、pip-audit（OSV）、npm audit（high）、Docker 构建 + HTTP smoke、Windows 桌面打包 smoke 已加入 workflow，并已在 main 通过（run 41367181116）；前端浏览器 E2E（审查 + 删除历史）已加入，待下一次 main CI 确认。
 - 评测：框架已补（口径/IAA/质量评分/消融/阈值），但仍只有 8 份合成合同、作者单标注、无真实双人 IAA 和人工质量评分；fresh 确认 full P 64.9%、已核实层 P 100%、模型建议层 P 7.1%，仍不足以支撑自动审查。
 - 多进程并发/性能/soak/故障注入未做真实双进程 CI。

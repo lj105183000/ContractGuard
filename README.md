@@ -35,7 +35,7 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 - **合同全文与报告预览**：条款导航、原文证据高亮、从风险卡片跳转到合同原文；报告可在导出前在线预览。
 - **可复现评测**：8 份合成合同、51 个标注点，规则基线 P 100% / R 94.1% / F1 97.0%；full 模式结果按来源与置信分层披露误报归因。
 - **完整前后端 + 桌面端**：FastAPI + React 单页，支持 PDF/DOCX/TXT/JPG/PNG、任务轮询、Word/Markdown/JSON 报告导出。
-- **任务持久化与历史**：任务快照写入 SQLite；刷新页面或重启后端后，已完成任务仍可打开；`running` 崩溃会标记失败，`resuming` 由租约 reaper 最多重试 3 次。
+- **任务持久化与历史**：任务快照写入 SQLite；刷新页面或重启后端后，已完成任务仍可打开；`running` 崩溃会标记失败，`resuming` 由租约 reaper 最多重试 3 次。已结束任务可在历史面板主动删除（快照、源文件与 checkpoint 一并清理）。
 - **任务生命周期**：排队/运行/待复核任务可在界面取消；失败/取消且源文件仍在的任务可重试。取消通过数据库标记 + worker 心跳生效，跨进程安全。
 - **安全与配额**：可选单租户 Bearer Token；活跃任务上限、可选进程内限流、上传文件头校验、PDF 页数/DOCX 解压大小上限。
 - **人工编辑与对比**：详情抽屉可编辑修改建议，修订稿会优先使用人工编辑文本；修订稿支持替换 diff 和原文/修订并排对比。
@@ -61,7 +61,7 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 | 前端 | React 19 + Vite 7 + 手写 CSS |
 | 桌面端 | Electron 45 + electron-builder 26 + PyInstaller |
 | 部署 | Docker Compose（mock 单端口 demo） |
-| 测试 | pytest（221 个离线测试） |
+| 测试 | pytest（227 个离线测试） |
 
 ## 截图
 
@@ -475,7 +475,7 @@ uv run python eval/run_eval.py --mode rules
 
 ### 评测门禁与短板
 
-- **离线 CI 门禁**：rules P/R/F1 阈值、BM25 检索 Recall/nDCG 阈值、扰动最大 F1 下降、成本/延迟/失败调用阈值；指标下降会让 CI 失败。命令见 `docs/ANNOTATION_GUIDE.md` 第 7 节。
+- **离线 CI 门禁**：rules P/R/F1 阈值、BM25 检索 Recall/nDCG 阈值、扰动最大 F1 下降、成本/延迟/失败调用阈值；指标下降会让 CI 失败。命令见 `docs/ANNOTATION_GUIDE.md` 第 7 节。后端测试覆盖率门槛 80%，`pip-audit`（OSV）与 `npm audit --audit-level=high` 也在 CI 中阻断。
 - **口径修正**：规则标签只认规则引擎实际 `rule_id`，不再把模型自报的 `rule_hint` 当作规则命中。
 - **可报告 IAA**：`eval/run_iaa.py` 支持 `--universe` 固定候选集；不传时只给出 union-scope 乐观 kappa，不能写进正式报告。κ 不是召回率，共同漏标需单独裁决/报告。
 - **人工质量评分**：`eval/run_quality_eval.py` 汇总法条相关性、证据支持、建议可用性和人工幻觉率；这些数据必须由法务/采购评审产生。
@@ -527,7 +527,7 @@ contractguard/
 │  ├─ data/                         # 法条、Playbook、示例合同、llm_profiles.yaml
 │  ├─ eval/                         # 标签、评测脚本、结果
 │  ├─ scripts/                      # 生成数据、校验 KB、冒烟
-│  └─ tests/                        # 221 个离线测试
+│  └─ tests/                        # 227 个离线测试
 ├─ frontend/                        # React 单页
 │  └─ src/components/               # ContractViewer / ReportPreview / RevisedContractView / BatchPanel
 ├─ desktop/                         # Electron 桌面端（主进程、preload、打包配置）
@@ -535,7 +535,7 @@ contractguard/
 │  ├─ CODE_GUIDE.md                 # 初学者代码导读
 │  ├─ REAL_CONTRACT_EVAL.md         # 真实合同作者标注外部效度
 │  └─ images/                       # 截图
-├─ .github/workflows/ci.yml         # 后端测试 + 评测门禁 + 前端构建 + Docker/HTTP smoke + Windows 桌面打包 smoke
+├─ .github/workflows/ci.yml         # 后端测试/覆盖率/依赖审计 + 评测门禁 + 前端构建 + 浏览器 E2E + Docker/HTTP smoke + Windows 桌面打包 smoke
 ├─ scripts/                         # Windows 启动脚本
 ├─ Dockerfile                       # 多阶段：前端构建 + 后端运行时
 ├─ docker-compose.yml               # mock 单端口 demo（127.0.0.1:8000）
@@ -555,6 +555,7 @@ contractguard/
 | `POST` | `/api/reviews/{job_id}/findings/{finding_id}/decision` | 采纳/忽略；最后一条已核实高风险处理后自动 resume |
 | `POST` | `/api/reviews/{job_id}/resume` | 手动触发 resume（用于重启后恢复） |
 | `POST` | `/api/reviews/{job_id}/cancel` | 取消排队/运行/待复核任务 |
+| `DELETE` | `/api/reviews/{job_id}` | 删除已完成/失败/取消任务的快照、源文件与 checkpoint；运行中/待复核返回 409 |
 | `POST` | `/api/reviews/{job_id}/retry` | 重试 failed/cancelled 且源文件仍存在的任务 |
 | `PATCH` | `/api/reviews/{job_id}/findings/{finding_id}/suggestion` | 人工编辑修改建议；修订稿优先使用 |
 | `GET` | `/api/metrics` | 进程内请求/队列/worker 指标 |
@@ -618,7 +619,8 @@ contractguard/
 
 - [ ] `backend/.env` 不在仓库；`git status` 里没有 Key、真实合同、`node_modules`、`dist`。
 - [ ] 截图/录屏里没有 Key、终端敏感信息、真实合同。
-- [ ] `LLM_MODE=mock uv run pytest -q` 通过（当前 221 个离线测试，含默认 Worker+HITL E2E）；`eval/report_rules.md` 是真实运行结果。
+- [ ] `LLM_MODE=mock uv run pytest -q --cov=app --cov-fail-under=80` 通过（当前 227 个离线测试，含默认 Worker+HITL E2E）；`eval/report_rules.md` 是真实运行结果。
+- [ ] 已结束任务可通过历史面板或 `DELETE /api/reviews/{job_id}` 删除；快照、源文件与 checkpoint 清理，运行中任务返回 409。
 - [ ] `WORKER_ENABLED=1` 下示例审查可完成；`ENCRYPTION_ENABLED=1` 时重启后仍能读取任务、HITL checkpoint 可恢复。
 - [ ] 复核完成后「修订稿」Tab 能预览并下载 DOCX；MOCK 建议以 `【修订建议】` 标注而非直接改写原文。
 - [ ] 设置 `CONTRACTGUARD_API_TOKEN` 时 Token 登录页可用，`/api/health` 仍返回 200；取消/重试流程可用。
