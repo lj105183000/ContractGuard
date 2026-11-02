@@ -55,6 +55,24 @@ try {
   await page.waitForSelector(".results-view", { timeout: 120000 });
   await page.screenshot({ path: path.join(outDir, "02-results.png"), fullPage: true });
 
+  // 桌面端在审查完成后延迟 400ms 落盘；CI 的 userData 是全新的，
+  // 必须先等到 history 里出现记录，再打开面板，否则会读到空列表。
+  await page.waitForFunction(
+    async () => {
+      const bridge = window.contractguardDesktop;
+      if (!bridge?.history?.list) return false;
+      try {
+        const items = await bridge.history.list();
+        return Array.isArray(items) && items.length > 0;
+      } catch {
+        return false;
+      }
+    },
+    null,
+    { timeout: 30000 },
+  );
+  console.log("history save: ok");
+
   await page.getByRole("button", { name: "本地历史" }).click();
   await page.waitForSelector(".history-item", { timeout: 15000 });
   await page.waitForTimeout(400);
