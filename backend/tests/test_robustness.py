@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import asyncio
+import os
+import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -10,7 +13,7 @@ from app.graph.build import build_graph
 from app.llm.prompts import AGENT_SYSTEM, EXTRACTION_SYSTEM
 from app.llm.trace import TraceCollector
 from app.schemas import JobStatus
-from app.services.jobs import store
+from app.services.jobs import JobStore, store
 from app.worker import WorkerPool
 
 SAMPLE = (
@@ -88,3 +91,58 @@ async def test_worker_cluster_processes_two_jobs_concurrently():
         state.status in {JobStatus.COMPLETED, JobStatus.COMPLETED_WITH_WARNINGS}
         for state in states
     )
+
+
+def test_two_os_processes_claim_each_job_once(tmp_path):
+    """真实双进程竞争同一个 SQLite 任务，只允许一个 claim 成功。"""
+    db_path = tmp_path / "jobs.sqlite3"
+    setup = JobStore(db_path)
+    try:
+        job = setup.create("claim-race.txt")
+        assert setup.mark_ready(job.job_id)
+    finally:
+        setup.close()
+
+    barrier = tmp_path / "barrier"
+    script = """
+import os, sys, time
+from app.services.jobs import JobStore
+
+db, job_id, worker, barrier = sys.argv[1:5]
+while not os.path.exists(barrier):
+    time.sleep(0.01)
+store = JobStore(db)
+try:
+    claim = store.claim(worker, 60)
+    print("won" if claim else "lost")
+finally:
+    store.close()
+"""
+    backend = str(Path(__file__).resolve().parents[1])
+    env = {**os.environ, "PYTHONPATH": backend}
+    processes = [
+        subprocess.Popen(
+            [
+                sys.executable,
+                "-c",
+                script,
+                str(db_path),
+                job.job_id,
+                f"proc-{index}",
+                str(barrier),
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            env=env,
+        )
+        for index in range(2)
+    ]
+    time.sleep(0.3)
+    barrier.write_text("go", encoding="utf-8")
+    outputs = []
+    for process in processes:
+        stdout, stderr = process.communicate(timeout=30)
+        assert process.returncode == 0, stderr
+        outputs.append(stdout.strip())
+    assert sorted(outputs) == ["lost", "won"]
