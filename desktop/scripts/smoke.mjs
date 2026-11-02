@@ -1,5 +1,5 @@
 import path from "node:path";
-import { mkdir } from "node:fs/promises";
+import { mkdir, readFile, readdir, stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { _electron as electron } from "playwright";
 
@@ -32,6 +32,16 @@ try {
   page.on("pageerror", (error) => console.error(`[pageerror] ${error.message}`));
 
   await page.waitForSelector(".app-header", { timeout: 90000 });
+  const historyBefore = await page.evaluate(async () => {
+    const bridge = window.contractguardDesktop;
+    if (!bridge?.history?.list) return 0;
+    try {
+      return (await bridge.history.list()).length;
+    } catch {
+      return 0;
+    }
+  });
+  console.log(`history items before review: ${historyBefore}`);
   console.log(`title: ${await page.title()}`);
   console.log(
     `local history button: ${await page
@@ -58,20 +68,49 @@ try {
   // 桌面端在审查完成后延迟 400ms 落盘；CI 的 userData 是全新的，
   // 必须先等到 history 里出现记录，再打开面板，否则会读到空列表。
   await page.waitForFunction(
-    async () => {
+    async (before) => {
       const bridge = window.contractguardDesktop;
       if (!bridge?.history?.list) return false;
       try {
         const items = await bridge.history.list();
-        return Array.isArray(items) && items.length > 0;
+        return Array.isArray(items) && items.length > before;
       } catch {
         return false;
       }
     },
-    null,
+    historyBefore,
     { timeout: 30000 },
   );
   console.log("history save: ok");
+
+  const historyDir = path.join(
+    process.env.APPDATA || "",
+    "ContractGuard",
+    "history",
+  );
+  const historyFiles = (await readdir(historyDir)).filter((name) =>
+    name.endsWith(".json"),
+  );
+  const historyStats = await Promise.all(
+    historyFiles.map(async (name) => ({
+      name,
+      mtimeMs: (await stat(path.join(historyDir, name))).mtimeMs,
+    })),
+  );
+  historyStats.sort((left, right) => right.mtimeMs - left.mtimeMs);
+  const rawHistory = await readFile(
+    path.join(historyDir, historyStats[0].name),
+    "utf8",
+  );
+  const encryptedAtRest =
+    rawHistory.includes('"encrypted":true') && !rawHistory.includes("full_text");
+  console.log(`history at rest: ${encryptedAtRest ? "encrypted" : "plaintext"}`);
+  if (
+    process.env.CONTRACTGUARD_REQUIRE_HISTORY_ENCRYPTION === "1" &&
+    !encryptedAtRest
+  ) {
+    throw new Error("history snapshot is plaintext at rest");
+  }
 
   await page.getByRole("button", { name: "本地历史" }).click();
   await page.waitForSelector(".history-item", { timeout: 15000 });

@@ -192,6 +192,8 @@ jobs:
         run: npm run pack:dir
       - name: Smoke packaged app
         shell: pwsh
+        env:
+          CONTRACTGUARD_REQUIRE_HISTORY_ENCRYPTION: "1"
         run: |
           $env:CONTRACTGUARD_SMOKE_EXE = "release/win-unpacked/ContractGuard.exe"
           node scripts/smoke.mjs

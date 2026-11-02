@@ -2,11 +2,44 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
-const { shell } = require("electron");
+const { shell, safeStorage } = require("electron");
 
 const MAX_ENTRIES = 30;
 const MAX_BYTES = 20 * 1024 * 1024;
 const MAX_TOTAL_BYTES = 200 * 1024 * 1024;
+const HISTORY_FORMAT = "contractguard.history";
+const HISTORY_VERSION = 1;
+
+function encryptionAvailable() {
+  try {
+    return safeStorage.isEncryptionAvailable();
+  } catch {
+    return false;
+  }
+}
+
+function encodeSnapshot(payload) {
+  const plaintext = JSON.stringify(payload);
+  if (!encryptionAvailable()) return plaintext;
+  const ciphertext = safeStorage.encryptString(plaintext).toString("base64");
+  return JSON.stringify({
+    format: HISTORY_FORMAT,
+    version: HISTORY_VERSION,
+    encrypted: true,
+    payload: ciphertext,
+  });
+}
+
+function decodeSnapshot(text) {
+  const data = JSON.parse(text);
+  if (data && data.encrypted && data.payload) {
+    const plaintext = safeStorage.decryptString(
+      Buffer.from(data.payload, "base64"),
+    );
+    return JSON.parse(plaintext);
+  }
+  return data;
+}
 
 class HistoryStore {
   constructor(userDataDir) {
@@ -30,7 +63,9 @@ class HistoryStore {
     for (const name of fs.readdirSync(this.dir)) {
       if (!name.endsWith(".json")) continue;
       try {
-        const data = JSON.parse(fs.readFileSync(path.join(this.dir, name), "utf8"));
+        const data = decodeSnapshot(
+          fs.readFileSync(path.join(this.dir, name), "utf8"),
+        );
         if (!data || typeof data !== "object" || !data.jobId) continue;
         entries.push({
           jobId: data.jobId,
@@ -52,7 +87,7 @@ class HistoryStore {
   get(jobId) {
     const file = this._file(jobId);
     if (!fs.existsSync(file)) return null;
-    return JSON.parse(fs.readFileSync(file, "utf8"));
+    return decodeSnapshot(fs.readFileSync(file, "utf8"));
   }
 
   save(entry) {
@@ -81,7 +116,13 @@ class HistoryStore {
     this.ensure();
     const file = this._file(jobId);
     const tmp = `${file}.tmp`;
-    fs.writeFileSync(tmp, json, "utf8");
+    const serialized = encodeSnapshot(payload);
+    if (Buffer.byteLength(serialized, "utf8") > MAX_BYTES) {
+      throw new Error(
+        `历史记录加密后超过 ${Math.round(MAX_BYTES / (1024 * 1024))}MB，未保存`,
+      );
+    }
+    fs.writeFileSync(tmp, serialized, "utf8");
     try {
       fs.renameSync(tmp, file);
     } catch {
