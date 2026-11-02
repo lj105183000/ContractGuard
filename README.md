@@ -13,6 +13,29 @@ https://github.com/user-attachments/assets/b6941557-3abe-4ff3-9e0f-8a1db5eda1ea
 
 > 视频为 mock 模式界面录屏；live 指标与评测口径见面试 PPT 第 10 页。若在非 github.com 镜像中无法播放，请打开演示页。
 
+## 截图
+
+<details>
+<summary>展开 7 张界面截图</summary>
+
+| 首页 | 风险清单 |
+|---|---|
+| ![首页](docs/images/01-home.png) | ![风险清单](docs/images/02-risk-list.png) |
+
+| 风险详情 | 法条与修改建议 |
+|---|---|
+| ![风险详情](docs/images/03-finding-detail.png) | ![法条与建议](docs/images/04-legal-basis.png) |
+
+| 批量审查 | 图内人工复核 |
+|---|---|
+| ![批量审查](docs/images/05-batch.png) | ![图内人工复核](docs/images/06-hitl.png) |
+
+| 合同修订稿 |
+|---|
+| ![合同修订稿](docs/images/07-revised.png) |
+
+</details>
+
 ## 这是什么
 
 中小企业通常没有专职法务，采购合同又高度模板化、风险集中在少数条款（付款、验收、违约、解除、管辖等）。漏审一份合同的代价，远高于初审成本。
@@ -66,29 +89,6 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 | 桌面端 | Electron 45 + electron-builder 26 + PyInstaller |
 | 部署 | Docker Compose（mock 单端口 demo） |
 | 测试 | pytest（258 个离线测试） |
-
-## 截图
-
-<details>
-<summary>展开 7 张界面截图</summary>
-
-| 首页 | 风险清单 |
-|---|---|
-| ![首页](docs/images/01-home.png) | ![风险清单](docs/images/02-risk-list.png) |
-
-| 风险详情 | 法条与修改建议 |
-|---|---|
-| ![风险详情](docs/images/03-finding-detail.png) | ![法条与建议](docs/images/04-legal-basis.png) |
-
-| 批量审查 | 图内人工复核 |
-|---|---|
-| ![批量审查](docs/images/05-batch.png) | ![图内人工复核](docs/images/06-hitl.png) |
-
-| 合同修订稿 |
-|---|
-| ![合同修订稿](docs/images/07-revised.png) |
-
-</details>
 
 ## 快速开始
 
