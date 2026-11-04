@@ -1,30 +1,7 @@
 import path from "node:path";
-import { mkdir, readFile, readdir, stat } from "node:fs/promises";
+import { mkdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { _electron as electron } from "playwright";
-
-async function findNewestHistoryFile() {
-  const appData = process.env.APPDATA || "";
-  const entries = await readdir(appData, { withFileTypes: true });
-  const candidates = [];
-  for (const entry of entries) {
-    if (!entry.isDirectory()) continue;
-    if (!entry.name.toLowerCase().includes("contractguard")) continue;
-    const historyDir = path.join(appData, entry.name, "history");
-    let names;
-    try {
-      names = await readdir(historyDir);
-    } catch {
-      continue;
-    }
-    for (const name of names.filter((item) => item.endsWith(".json"))) {
-      const file = path.join(historyDir, name);
-      candidates.push({ file, mtimeMs: (await stat(file)).mtimeMs });
-    }
-  }
-  candidates.sort((left, right) => right.mtimeMs - left.mtimeMs);
-  return candidates[0]?.file;
-}
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const desktopDir = path.resolve(here, "..");
@@ -106,8 +83,25 @@ try {
   );
   console.log("history save: ok");
 
-  const historyFile = await findNewestHistoryFile();
-  if (!historyFile) throw new Error("history file not found");
+  // Read the path from Electron itself. Scanning %APPDATA% for a directory
+  // name that contains "contractguard" is not reliable on hosted runners.
+  const userDataDir = await app.evaluate(({ app }) => app.getPath("userData"));
+  const historyEntries = await page.evaluate(async () => {
+    const bridge = window.contractguardDesktop;
+    if (!bridge?.history?.list) return [];
+    try {
+      return await bridge.history.list();
+    } catch {
+      return [];
+    }
+  });
+  const newestHistory = historyEntries[0];
+  if (!newestHistory?.jobId) throw new Error("history entry not found");
+  const historyFile = path.join(
+    userDataDir,
+    "history",
+    `${newestHistory.jobId}.json`,
+  );
   const rawHistory = await readFile(historyFile, "utf8");
   const encryptedAtRest =
     rawHistory.includes('"encrypted":true') && !rawHistory.includes("full_text");
