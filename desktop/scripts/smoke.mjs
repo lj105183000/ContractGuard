@@ -1,5 +1,5 @@
 import path from "node:path";
-import { mkdir, readFile, readdir, stat } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { _electron as electron } from "playwright";
 
@@ -83,23 +83,29 @@ try {
   );
   console.log("history save: ok");
 
-  // Ask Electron for the exact userData path instead of guessing a directory
-  // under %APPDATA%. Then pick the newest JSON file; the wait above has
-  // already confirmed that a history entry was persisted.
-  const userDataDir = await app.evaluate(({ app }) => app.getPath("userData"));
-  const historyDir = path.join(userDataDir, "history");
-  const historyNames = (await readdir(historyDir)).filter((name) =>
-    name.endsWith(".json"),
-  );
-  if (!historyNames.length) throw new Error("history file not found");
-  const historyFiles = await Promise.all(
-    historyNames.map(async (name) => {
-      const file = path.join(historyDir, name);
-      return { file, mtimeMs: (await stat(file)).mtimeMs };
-    }),
-  );
-  historyFiles.sort((left, right) => right.mtimeMs - left.mtimeMs);
-  const rawHistory = await readFile(historyFiles[0].file, "utf8");
+  // Read the history snapshot inside the Electron main process. It owns the
+  // userData path and can read the file directly; doing this from the Node
+  // smoke process avoids cross-process path discrepancies on hosted runners.
+  const historySnapshot = await app.evaluate(({ app }) => {
+    const fs = process.getBuiltinModule("node:fs");
+    const path = process.getBuiltinModule("node:path");
+    const dir = path.join(app.getPath("userData"), "history");
+    const names = fs.readdirSync(dir);
+    const jsonNames = names.filter((name) => name.endsWith(".json"));
+    if (!jsonNames.length) return { dir, names, text: null };
+    const files = jsonNames.map((name) => {
+      const file = path.join(dir, name);
+      return { file, mtimeMs: fs.statSync(file).mtimeMs };
+    });
+    files.sort((left, right) => right.mtimeMs - left.mtimeMs);
+    return { dir, names, text: fs.readFileSync(files[0].file, "utf8") };
+  });
+  if (!historySnapshot.text) {
+    throw new Error(
+      `history file not found in ${historySnapshot.dir}: ${historySnapshot.names.join(", ")}`,
+    );
+  }
+  const rawHistory = historySnapshot.text;
   const encryptedAtRest =
     rawHistory.includes('"encrypted":true') && !rawHistory.includes("full_text");
   console.log(`history at rest: ${encryptedAtRest ? "encrypted" : "plaintext"}`);
