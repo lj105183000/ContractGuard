@@ -54,7 +54,7 @@ ContractGuard 是一个本地优先的合同初审 MVP。默认只监听本机�
 
 ## 已知依赖告警
 
-- `minimatch < 11.0.1`（[GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)，moderate）仅存在于桌面端 `electron-builder` / `app-builder-lib` 的**构建期**传递依赖中，不会进入安装包运行时代码；构建输入来自本仓库，不接受不可信 glob 模式。上游仍固定 `minimatch ^10`，强制 override 到 11 会破坏 `glob@7`、`@electron/asar` 等依赖的调用约定，因此暂不强制修复，待上游升级后由 Dependabot 跟进。
+- `minimatch < 11.0.1`（[GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)，moderate）仅存在于桌面端 `electron-builder` / `app-builder-lib` 的**构建期**传递依赖中，不会进入安装包运行时代码；构建 glob 模式来自本仓库，不接受不可信输入。上游（含 `electron-builder@27.0.0-alpha.14`）仍固定 `minimatch ^10`，强制 override 到 11 会破坏 `glob@7`、`@electron/asar` 等依赖的调用约定，`npm audit fix --force` 则会降级到 `electron-builder@20`。因此该告警已于 2026-11-04 按 `tolerable_risk` 关闭；若上游发布使用 `minimatch >= 11` 的版本，应重新开启并升级。
 
 ## 安全研究约定
 
