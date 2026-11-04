@@ -1,0 +1,82 @@
+name: Bug 报告
+description: 报告可复现的功能缺陷、解析错误或界面问题
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。请先确认使用的是最新 `main` 或最新 Release，并尽量提供最小复现。
+        **不要粘贴真实合同、API Key、个人信息或未脱敏日志。**
+        安全漏洞请走 [私密报告](https://github.com/lj105183000/ContractGuard/security/advisories/new)。
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 问题描述
+      description: 发生了什么？期望行为是什么？
+      placeholder: 例如：上传扫描件 PDF 后任务一直停在 parsing，期望进入规则审查。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 尽量给出最小、可重复的步骤与示例输入（只能是合成数据）。
+      placeholder: |
+        1. 启动 backend 与 frontend
+        2. 选择内置示例 / 上传合成合同
+        3. 点击 ...
+        4. 看到 ...
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: 运行方式
+      options:
+        - 源码（uv + npm）
+        - Docker Compose
+        - Windows 桌面版（Release）
+        - 其它
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: LLM 模式
+      options:
+        - mock（不需要 API Key）
+        - live（真实模型）
+        - 不确定
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: 版本或提交
+      description: Release 版本、桌面端版本或 `git rev-parse --short HEAD`。
+      placeholder: v0.1.0 / 5869c28
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: 环境
+      description: OS、Python、Node.js、浏览器；桌面端请附安装包版本。
+      placeholder: Windows 11 24H2 / Python 3.12 / Node 24 / Chrome 140
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志与截图
+      description: 请先脱敏。可附后端错误、浏览器 Console 或界面截图。
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已搜索现有 Issue，未找到重复项。
+          required: true
+        - label: 我未在内容中包含真实合同、密钥或个人信息。
+          required: true

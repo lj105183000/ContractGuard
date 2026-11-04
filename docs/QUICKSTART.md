@@ -6,7 +6,7 @@
 
 - Windows 10/11（其它系统也可，启动脚本是 `.bat`，命令可手动执行）
 - [uv](https://docs.astral.sh/uv/)（会用项目里的 `.python-version` 安装 Python 3.12）
-- Node.js 20.19+ 或 22.12+（Vite 7 要求；建议统一 Node 22；桌面端 Electron 45 需要 22.12+，本项目用 Node 24 验证）
+- Node.js 24（Vite 7 要求 20.19+ 或 22.12+；桌面端 Electron 45 要求 22.12+；本项目 CI 与验证环境统一用 Node 24）
 - 扫描件 OCR 由 RapidOCR + onnxruntime 提供，随 `uv sync` 安装；模型已打包，无需 Tesseract 或联网下载
 - Docker Desktop（可选，用于 `docker-compose up --build` 容器化演示）
 

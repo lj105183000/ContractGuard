@@ -1,19 +1,28 @@
 # 合同哨兵 ContractGuard
 
+[![CI](https://github.com/lj105183000/ContractGuard/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/lj105183000/ContractGuard/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/github/license/lj105183000/ContractGuard?color=d4a24c&style=flat-square)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/lj105183000/ContractGuard?color=d4a24c&style=flat-square)](https://github.com/lj105183000/ContractGuard/releases/latest)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-3776ab?style=flat-square&logo=python&logoColor=white)](backend/pyproject.toml)
+[![React 19](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=black)](frontend/package.json)
+[![Electron 45](https://img.shields.io/badge/Electron-45-47848f?style=flat-square&logo=electron&logoColor=white)](desktop/package.json)
+
 **面向中小企业采购合同的多 Agent + RAG 初审工具。**
 上传一份中文货物采购合同，几分钟内得到带原文定位、法条依据和修改建议的风险清单；风险分为已核实/模型建议/待核实，已核实高风险必须人工复核后才能导出报告。
 
 > AI 辅助合同初审 MVP（3 天核心开发）。示例合同全部为合成数据，输出不构成法律意见。
 
-[演示](#演示) · [快速开始](#快速开始) · [架构](#架构) · [评测](#评测) · [设计取舍](#设计取舍) · [局限](#局限)
+[演示页](https://lj105183000.github.io/ContractGuard/) · [下载 Windows 桌面版](https://github.com/lj105183000/ContractGuard/releases/latest) · [快速开始](#快速开始) · [架构](#架构) · [评测](#评测) · [设计取舍](#设计取舍) · [局限](#局限)
 
 ## 演示
 
 https://github.com/user-attachments/assets/b6941557-3abe-4ff3-9e0f-8a1db5eda1ea
 
-[▶ 演示页](https://lj105183000.github.io/ContractGuard/interview/) · [下载 1080p MP4](docs/interview/ContractGuard-demo-60s-1080p.mp4)
+[▶ 60 秒演示页](https://lj105183000.github.io/ContractGuard/interview/) · [下载 1080p MP4](docs/interview/ContractGuard-demo-60s-1080p.mp4) · [下载 Windows 桌面版](https://github.com/lj105183000/ContractGuard/releases/latest)
 
-> 视频为 mock 模式界面录屏，不调用真实模型；若在非 github.com 镜像中无法播放，请打开演示页。
+> 视频为 mock 模式界面录屏，不调用真实模型；若在非 github.com 镜像中无法播放，请打开[演示页](https://lj105183000.github.io/ContractGuard/)。
+>
+> Windows 桌面版为 NSIS 安装包，内置后端与示例数据，默认 mock 模式，可离线体验完整流程。
 
 ### 界面截图
 
@@ -99,10 +108,13 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 | 桌面端 | Electron 45 + electron-builder 26 + PyInstaller |
 | 部署 | Docker Compose（mock 单端口 demo） |
 | 测试 | pytest（258 个离线测试） |
+| CI | GitHub Actions（覆盖率/依赖审计/评测门禁/前端构建/浏览器 E2E/Docker/桌面打包 smoke） |
 
 ## 快速开始
 
-以下命令默认在仓库根目录执行，mock 模式不需要 API Key。
+不想配置环境？直接下载 [Windows 桌面版](https://github.com/lj105183000/ContractGuard/releases/latest)（内置后端与示例数据，默认 mock 模式，可离线体验）。
+
+源码运行需要 [uv](https://docs.astral.sh/uv/) 与 Node.js 24（Vite 7 要求 20.19+ 或 22.12+）。以下命令默认在仓库根目录执行，mock 模式不需要 API Key。
 
 ```bash
 cd backend && uv sync
@@ -259,6 +271,7 @@ contractguard/
 │  └─ src/components/               # ContractViewer / ReportPreview / RevisedContractView / BatchPanel
 ├─ desktop/                         # Electron 桌面端（主进程、preload、打包配置）
 ├─ docs/
+│  ├─ index.html                    # GitHub Pages 落地页（/docs 为 Pages 根目录）
 │  ├─ CODE_GUIDE.md                 # 初学者代码导读
 │  ├─ DATA_ASSETS.md                # 数据资产清单
 │  ├─ DATA_GOVERNANCE.md            # Phase 0 数据治理策略
@@ -268,8 +281,14 @@ contractguard/
 │  ├─ REAL_CONTRACT_EVAL.md         # 真实合同作者标注外部效度
 │  ├─ images/                       # 截图
 │  └─ interview/                    # 60 秒演示视频与播放页
-├─ .github/workflows/ci.yml         # 后端测试/覆盖率/依赖审计 + 评测门禁 + 前端构建 + 浏览器 E2E + Docker/HTTP smoke + Windows 桌面打包 smoke
-├─ scripts/                         # Windows 启动脚本
+├─ .github/
+│  ├─ workflows/ci.yml              # 覆盖率/依赖审计 + 评测门禁 + 前端构建 + 浏览器 E2E + Docker/HTTP smoke + Windows 桌面打包 smoke
+│  ├─ ISSUE_TEMPLATE/               # Bug / Feature Issue 表单
+│  ├─ PULL_REQUEST_TEMPLATE.md
+│  └─ dependabot.yml                # uv / npm / Actions / Docker 依赖更新
+├─ scripts/                         # Windows 启动脚本 + 文档链接检查
+├─ CONTRIBUTING.md                  # 贡献指南
+├─ SECURITY.md                      # 安全策略与漏洞报告
 ├─ Dockerfile                       # 多阶段：前端构建 + 后端运行时
 ├─ docker-compose.yml               # mock 单端口 demo（127.0.0.1:8000）
 ├─ LICENSE
@@ -354,7 +373,7 @@ contractguard/
 - [ ] `scripts/smoke_api.py` 使用临时库，不清空真实任务数据；`scripts/backup_db.py` / `restore_db.py` 可备份并恢复 jobs/checkpoints；恢复前已停服务。
 - [ ] `cd desktop && npm run dist` 可生成安装包；`desktop/release`、`backend/dist` 不入库，安装包内不含 `.env`。
 - [ ] `docker-compose up --build` 后 `/api/health` 正常，示例审查可完成。
-- [ ] Node 22 + uv 的干净环境按 README 可复现 mock 演示。
+- [ ] Node 24 + uv 的干净环境按 README 可复现 mock 演示。
 - [ ] 如果要写“live 模式评测”，先把真实跑出来的指标填进去；没跑就不写。
 - [ ] CI 的 rules/检索/扰动/成本阈值全部通过；live full 只在发布前手工跑并归档。
 - [ ] 如果对外声称真实合同质量：按 [`docs/ANNOTATION_GUIDE.md`](docs/ANNOTATION_GUIDE.md) 完成 20–30 份真实合同、双人盲标、裁决、fixed-universe IAA 和人工质量评分；否则只能写“合成集工程回归”。
@@ -363,6 +382,13 @@ contractguard/
 </details>
 
 本次验收的实际命令与结果见 [`docs/LAUNCH_ACCEPTANCE.md`](docs/LAUNCH_ACCEPTANCE.md)。
+
+## 参与贡献
+
+- **Bug / 功能建议**：使用 [Issue 模板](.github/ISSUE_TEMPLATE) 提交，附版本、运行方式和最小复现。
+- **安全漏洞**：请按 [`SECURITY.md`](SECURITY.md) 私下报告，不要开公开 Issue。
+- **代码贡献**：先读 [`CONTRIBUTING.md`](CONTRIBUTING.md)，提交前跑通对应测试并确保 CI 为绿。
+- **演示与文档**：GitHub Pages 落地页在 [`docs/index.html`](docs/index.html)，60 秒演示在 [`docs/interview/`](docs/interview/)。
 
 ## License
 

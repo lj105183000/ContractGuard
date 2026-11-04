@@ -1,0 +1,12 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: 60 秒演示与项目首页
+    url: https://lj105183000.github.io/ContractGuard/
+    about: 先用 mock 模式演示确认功能范围，再提交 Issue。
+  - name: 快速开始与常见环境问题
+    url: https://github.com/lj105183000/ContractGuard/blob/main/docs/QUICKSTART.md
+    about: 安装、Docker、桌面端、live 模式与测试说明。
+  - name: 私密报告安全漏洞
+    url: https://github.com/lj105183000/ContractGuard/security/advisories/new
+    about: 请勿在公开 Issue 中披露漏洞细节。

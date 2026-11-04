@@ -3,24 +3,429 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=./interview/">
-  <link rel="canonical" href="./interview/">
-  <title>ContractGuard · 60 秒演示</title>
+  <title>合同哨兵 ContractGuard · 中文采购合同 AI 初审</title>
+  <meta name="description" content="面向中小企业采购合同的多 Agent + RAG 初审工具：规则引擎 + 3 个审查 Agent 并行，法条检索、原文证据、确定性置信分层、人工复核与合同修订稿。">
+  <meta name="theme-color" content="#0f1e2b">
+  <link rel="canonical" href="https://lj105183000.github.io/ContractGuard/">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="合同哨兵 ContractGuard">
+  <meta property="og:title" content="合同哨兵 ContractGuard · 中文采购合同 AI 初审">
+  <meta property="og:description" content="多 Agent + RAG 采购合同初审：规则 + LLM 双轨、法条与原文证据、确定性置信分层、图内人工复核、DOCX 修订稿。">
+  <meta property="og:url" content="https://lj105183000.github.io/ContractGuard/">
+  <meta property="og:image" content="https://lj105183000.github.io/ContractGuard/images/02-risk-list.png">
+  <meta name="twitter:card" content="summary_large_image">
   <style>
-    html, body { height: 100%; margin: 0; }
-    body {
-      display: grid; place-items: center;
-      background: #0f1e2b; color: #f8f1e2;
-      font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    :root {
+      --ink: #0f1e2b;
+      --ink-deep: #0a1520;
+      --panel: #172f43;
+      --panel-soft: rgba(255, 255, 255, .045);
+      --cream: #f8f1e2;
+      --muted: #b7c1c9;
+      --gold: #d4a24c;
+      --gold-soft: rgba(212, 162, 76, .14);
+      --line: rgba(212, 162, 76, .3);
+      --green: #6fbf8b;
+      --radius: 16px;
+      --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", SimSun, serif;
+      --sans: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", system-ui, -apple-system, sans-serif;
     }
-    a { color: #d4a24c; font-weight: 700; text-underline-offset: 4px; }
-    p { color: #bdb4a5; font-size: 14px; text-align: center; line-height: 1.7; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--cream);
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at 88% 2%, rgba(212, 162, 76, .13), transparent 28%),
+        radial-gradient(circle at 6% 38%, rgba(65, 118, 154, .18), transparent 30%),
+        linear-gradient(155deg, var(--ink-deep) 0%, var(--ink) 46%, #12283a 100%);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+    .skip {
+      position: absolute; left: -999px; top: 8px; z-index: 20;
+      padding: 8px 14px; border-radius: 8px; background: var(--gold); color: var(--ink);
+    }
+    .skip:focus { left: 16px; }
+    .wrap { width: min(1160px, calc(100% - 44px)); margin: 0 auto; }
+    .site-header {
+      position: sticky; top: 0; z-index: 10;
+      border-bottom: 1px solid rgba(212, 162, 76, .16);
+      background: rgba(10, 21, 32, .78);
+      backdrop-filter: blur(14px);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 22px; min-height: 68px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand img { width: 38px; height: 38px; border-radius: 10px; }
+    .brand b { display: block; font-family: var(--serif); font-size: 18px; letter-spacing: .02em; }
+    .brand span { display: block; margin-top: 2px; color: var(--gold); font-size: 9px; font-weight: 700; letter-spacing: .24em; }
+    .nav-links { display: flex; align-items: center; gap: 22px; font-size: 12.5px; }
+    .nav-links a { color: var(--muted); text-decoration: none; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--gold); }
+    .nav-links .nav-cta {
+      padding: 8px 13px; border: 1px solid var(--line); border-radius: 8px; color: var(--cream);
+    }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr); gap: 46px; align-items: center; padding: 72px 0 46px; }
+    .eyebrow { color: var(--gold); font-size: 10.5px; font-weight: 700; letter-spacing: .2em; }
+    h1 {
+      margin: 14px 0 18px;
+      font-family: var(--serif);
+      font-size: clamp(32px, 4.2vw, 54px);
+      line-height: 1.18;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+    h1 em { color: var(--gold); font-style: normal; }
+    .lede { max-width: 620px; color: var(--muted); font-size: 15px; line-height: 1.85; }
+    .cta { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 28px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 17px; border-radius: 9px;
+      font-size: 12.5px; font-weight: 700; text-decoration: none;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--gold); color: #17212b; }
+    .btn-primary:hover { background: #e0b25f; }
+    .btn-ghost { border: 1px solid var(--line); color: var(--cream); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .pill {
+      padding: 6px 10px; border: 1px solid rgba(212, 162, 76, .24); border-radius: 999px;
+      color: var(--muted); font-size: 10.5px; letter-spacing: .02em;
+    }
+    .pill strong { color: var(--gold); font-weight: 700; }
+    .hero-shot { position: relative; }
+    .shot-frame {
+      padding: 9px; border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--panel-soft); box-shadow: 0 34px 80px -38px rgba(0, 0, 0, .9);
+    }
+    .shot-frame img { border-radius: 10px; border: 1px solid rgba(255, 255, 255, .06); }
+    .shot-bar { display: flex; align-items: center; gap: 6px; padding: 2px 4px 9px; }
+    .shot-bar i { width: 8px; height: 8px; border-radius: 50%; background: rgba(248, 241, 226, .22); }
+    .shot-bar span { margin-left: 7px; color: #8e9da9; font-size: 10px; }
+    .float-card {
+      position: absolute; right: -14px; bottom: -18px;
+      max-width: 230px; padding: 12px 14px;
+      border: 1px solid var(--line); border-radius: 12px;
+      background: #12283a; box-shadow: 0 18px 44px -20px rgba(0, 0, 0, .85);
+      font-size: 11px; line-height: 1.6; color: var(--muted);
+    }
+    .float-card b { display: block; margin-bottom: 3px; color: var(--gold); font-size: 11.5px; }
+    .stats {
+      display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px;
+      margin: 10px 0 0; border: 1px solid rgba(212, 162, 76, .2); border-radius: 14px;
+      overflow: hidden; background: rgba(212, 162, 76, .16);
+    }
+    .stat { padding: 18px 14px; background: #0f2130; }
+    .stat b { display: block; font-family: var(--serif); font-size: 23px; color: var(--cream); line-height: 1.1; }
+    .stat b em { color: var(--gold); font-style: normal; }
+    .stat span { display: block; margin-top: 6px; color: #8fa0ad; font-size: 10.5px; line-height: 1.45; }
+    section { padding: 64px 0; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+    .section-head h2 { margin: 8px 0 0; font-family: var(--serif); font-size: clamp(24px, 3vw, 34px); line-height: 1.25; }
+    .section-head p { max-width: 480px; margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.75; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .card {
+      padding: 22px 20px; border: 1px solid rgba(248, 241, 226, .09); border-radius: 13px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .042), rgba(255, 255, 255, .015));
+    }
+    .card:hover { border-color: rgba(212, 162, 76, .34); }
+    .card .num { color: var(--gold); font-family: var(--serif); font-size: 11px; letter-spacing: .12em; }
+    .card h3 { margin: 10px 0 7px; font-size: 14.5px; }
+    .card p { margin: 0; color: #9eacb6; font-size: 11.5px; line-height: 1.7; }
+    .flow {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 9px;
+      margin: 0; padding: 0; list-style: none; counter-reset: step;
+    }
+    .flow li {
+      flex: 1 1 120px; min-width: 118px; padding: 14px 12px;
+      border: 1px solid rgba(212, 162, 76, .22); border-radius: 10px;
+      background: rgba(255, 255, 255, .03); font-size: 11.5px; line-height: 1.45; text-align: center;
+    }
+    .flow li::before {
+      counter-increment: step; content: "0" counter(step);
+      display: block; margin-bottom: 5px; color: var(--gold); font-family: var(--serif); font-size: 10px;
+    }
+    .flow li.hot { border-color: var(--gold); background: var(--gold-soft); }
+    .flow .arrow { flex: 0 0 auto; color: var(--gold); font-size: 13px; }
+    .shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .shot { margin: 0; }
+    .shot a { display: block; padding: 7px; border: 1px solid rgba(248, 241, 226, .1); border-radius: 12px; background: rgba(255, 255, 255, .03); }
+    .shot a:hover { border-color: var(--gold); }
+    .shot img { width: 100%; height: 250px; object-fit: cover; object-position: top; border-radius: 7px; }
+    .shot figcaption { margin-top: 9px; color: var(--muted); font-size: 11px; }
+    .shot figcaption b { color: var(--cream); }
+    .start { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+    .code {
+      overflow-x: auto; margin: 0; padding: 18px 20px;
+      border: 1px solid rgba(212, 162, 76, .24); border-radius: 12px;
+      background: #0a1723; color: #e8dfcc;
+      font: 12px/1.8 "Cascadia Code", Consolas, "SFMono-Regular", monospace;
+    }
+    .code .c { color: #7e94a3; }
+    .code .g { color: var(--gold); }
+    .docs { margin: 0; padding: 0; list-style: none; }
+    .docs li { border-top: 1px solid rgba(248, 241, 226, .09); }
+    .docs li:first-child { border-top: 0; }
+    .docs a { display: flex; justify-content: space-between; gap: 16px; padding: 11px 2px; color: var(--muted); font-size: 12px; text-decoration: none; }
+    .docs a:hover { color: var(--gold); }
+    .docs span { color: #7f909c; font-size: 10.5px; white-space: nowrap; }
+    .footer {
+      margin-top: 10px; padding: 34px 0 44px;
+      border-top: 1px solid rgba(212, 162, 76, .18);
+      color: #82929e; font-size: 11px; line-height: 1.8;
+    }
+    .footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; }
+    .footer a { color: var(--muted); text-decoration: none; }
+    .footer a:hover { color: var(--gold); }
+    .footer .links { display: flex; flex-wrap: wrap; gap: 16px; }
+    a:focus-visible, .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; gap: 34px; padding-top: 48px; }
+      .float-card { right: 8px; }
+      .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-head { display: block; }
+      .section-head p { margin-top: 12px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 30px, 1160px); }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .nav { min-height: 60px; }
+      .hero { padding: 36px 0 30px; }
+      .lede { font-size: 13.5px; }
+      .cta .btn { width: 100%; justify-content: center; }
+      .float-card { position: static; max-width: none; margin-top: 10px; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid, .shots, .start { grid-template-columns: 1fr; }
+      .shot img { height: 220px; }
+      .flow { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow .arrow { display: none; }
+      .flow li { min-width: 0; }
+      section { padding: 44px 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .btn { transition: none; }
+    }
   </style>
 </head>
 <body>
-  <div>
-    <p>正在进入 ContractGuard 演示页…</p>
-    <p><a href="./interview/">如果没有自动跳转，点这里打开 60 秒演示</a></p>
-  </div>
+  <a class="skip" href="#main">跳到正文</a>
+
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="./">
+        <img src="./favicon.svg" alt="" width="38" height="38">
+        <div>
+          <b>合同哨兵</b>
+          <span>CONTRACTGUARD</span>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="#features">能力</a>
+        <a href="#metrics">指标</a>
+        <a href="#flow">流程</a>
+        <a href="#screens">截图</a>
+        <a href="#start">运行</a>
+        <a href="https://github.com/lj105183000/ContractGuard">GitHub</a>
+        <a class="nav-cta" href="./interview/">60 秒演示</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="wrap">
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <div class="eyebrow">MULTI-AGENT + RAG · CONTRACT REVIEW</div>
+          <h1 id="hero-title">把采购合同初审<br>变成<em>可解释的流水线</em>。</h1>
+          <p class="lede">
+            规则引擎与 3 个审查 Agent 并行工作，检索法条与企业 Playbook；
+            每条风险都带原文证据、可校验的法条引用和确定性的置信分层，
+            已核实高风险必须人工复核后才能导出报告。
+          </p>
+          <div class="cta">
+            <a class="btn btn-primary" href="./interview/">观看 60 秒演示</a>
+            <a class="btn btn-ghost" href="https://github.com/lj105183000/ContractGuard/releases/latest">下载 Windows 桌面版</a>
+            <a class="btn btn-ghost" href="https://github.com/lj105183000/ContractGuard">查看源码</a>
+          </div>
+          <div class="pills" aria-label="项目标签">
+            <span class="pill"><strong>mock</strong> 模式可离线</span>
+            <span class="pill"><strong>258</strong> 个离线测试</span>
+            <span class="pill"><strong>MIT</strong> License</span>
+            <span class="pill"><strong>3 天</strong> 核心开发 MVP</span>
+          </div>
+        </div>
+        <div class="hero-shot">
+          <div class="shot-frame">
+            <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>合同哨兵 · 风险清单</span></div>
+            <img src="./images/02-risk-list.png" alt="ContractGuard 风险清单界面，按已核实、模型建议、待核实分层展示风险">
+          </div>
+          <div class="float-card">
+            <b>已核实高风险 · 导出前必须复核</b>
+            逐条采纳或忽略；处理完成后从 SQLite checkpoint 恢复 LangGraph，任务继续执行。
+          </div>
+        </div>
+      </section>
+
+      <section id="metrics" aria-label="项目指标">
+        <div class="stats">
+          <div class="stat"><b>25</b><span>条确定性规则</span></div>
+          <div class="stat"><b>32 <em>+</em> 25</b><span>法条 + Playbook 条目</span></div>
+          <div class="stat"><b>51</b><span>个合成合同标注点</span></div>
+          <div class="stat"><b><em>100%</em></b><span>规则基线 Precision</span></div>
+          <div class="stat"><b>94.1<em>%</em></b><span>规则基线 Recall</span></div>
+          <div class="stat"><b>258</b><span>个离线测试</span></div>
+        </div>
+      </section>
+
+      <section id="features" aria-labelledby="features-title">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">WHAT IT DOES</div>
+            <h2 id="features-title">审查能力，围绕一种合同类型打磨</h2>
+          </div>
+          <p>不做万能合同助手，只做中文货物采购合同：规则、法条、评测与界面都围绕这一场景。</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <div class="num">01 / AGENTS</div>
+            <h3>多 Agent 并行</h3>
+            <p>商务条款、违约解除、争议合规三个审查员同时工作；规则引擎作为确定性的第四条分支。</p>
+          </article>
+          <article class="card">
+            <div class="num">02 / RULES + LLM</div>
+            <h3>规则 + LLM 双轨</h3>
+            <p>25 条规则保召回，LLM 补语义与上下文；字段缺失时规则跳过而不是误报。</p>
+          </article>
+          <article class="card">
+            <div class="num">03 / RAG</div>
+            <h3>混合检索</h3>
+            <p>BM25（jieba）+ 百炼 text-embedding-v3 + RRF 融合；法条按「条」切块，可选 DashScope rerank。</p>
+          </article>
+          <article class="card">
+            <div class="num">04 / GATES</div>
+            <h3>引用与证据门禁</h3>
+            <p>模型只能引用法条 ID，正文由后端渲染；合同证据必须逐字定位，否则降级为「需人工确认」。</p>
+          </article>
+          <article class="card">
+            <div class="num">05 / HITL</div>
+            <h3>图内人工复核</h3>
+            <p>LangGraph <code>interrupt</code> + <code>AsyncSqliteSaver</code>；暂停任务跨后端重启仍可继续决策。</p>
+          </article>
+          <article class="card">
+            <div class="num">06 / EXPORT</div>
+            <h3>修订稿与报告</h3>
+            <p>已采纳建议自动落地为新合同文本，导出 DOCX + 变更清单；报告支持 MD / JSON / DOCX。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="flow" aria-labelledby="flow-title">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">PIPELINE</div>
+            <h2 id="flow-title">从上传到可导出的报告</h2>
+          </div>
+          <p>每个节点写入进度事件并持久化到 SQLite；前端轮询渲染 Agent 时间线。</p>
+        </div>
+        <ol class="flow">
+          <li>上传合同</li>
+          <li>解析 / 切条款</li>
+          <li class="hot">规则 + 3 Agent 并行</li>
+          <li>合并去重</li>
+          <li>修改建议</li>
+          <li>证据 / 引用门禁</li>
+          <li class="hot">人工复核</li>
+          <li>报告 / 修订稿</li>
+        </ol>
+      </section>
+
+      <section id="screens" aria-labelledby="screens-title">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">INTERFACE</div>
+            <h2 id="screens-title">界面截图</h2>
+          </div>
+          <p>React 单页 + Electron 桌面端；完整截图与可复现说明见 README。</p>
+        </div>
+        <div class="shots">
+          <figure class="shot">
+            <a href="./images/01-home.png" aria-label="查看首页大图">
+              <img src="./images/01-home.png" alt="ContractGuard 首页，上传合同或选择内置示例" loading="lazy">
+            </a>
+            <figcaption><b>首页</b> · 上传或选择内置示例</figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="./images/03-finding-detail.png" aria-label="查看风险详情大图">
+              <img src="./images/03-finding-detail.png" alt="风险详情抽屉，展示原文证据、法条与修改建议" loading="lazy">
+            </a>
+            <figcaption><b>风险详情</b> · 原文证据与修改建议</figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="./images/07-revised.png" aria-label="查看合同修订稿大图">
+              <img src="./images/07-revised.png" alt="合同修订稿界面，展示替换 diff 与变更清单" loading="lazy">
+            </a>
+            <figcaption><b>合同修订稿</b> · 替换 diff 与变更清单</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="start" aria-labelledby="start-title">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">GET STARTED</div>
+            <h2 id="start-title">几分钟跑起来</h2>
+          </div>
+          <p>mock 模式不需要 API Key；桌面版内置后端与示例数据，可离线体验。</p>
+        </div>
+        <div class="start">
+          <div>
+            <pre class="code"><code><span class="c"># 后端（mock 模式）</span>
+<span class="g">cd</span> backend &amp;&amp; uv sync
+uv run uvicorn app.main:app --reload --port 8000
+
+<span class="c"># 前端</span>
+<span class="g">cd</span> frontend &amp;&amp; npm install
+npm run dev</code></pre>
+            <p class="lede" style="font-size:11.5px;margin-top:12px">
+              打开 <a href="http://localhost:5173" style="color:var(--gold)">localhost:5173</a>；
+              或构建前端后单端口启动。完整环境、Docker、桌面端、live 模式与测试见
+              <a href="https://github.com/lj105183000/ContractGuard/blob/main/docs/QUICKSTART.md" style="color:var(--gold)">QUICKSTART</a>。
+            </p>
+          </div>
+          <ul class="docs">
+            <li><a href="https://github.com/lj105183000/ContractGuard/blob/main/README.md">README <span>项目总览与设计取舍</span></a></li>
+            <li><a href="https://github.com/lj105183000/ContractGuard/blob/main/docs/CODE_GUIDE.md">CODE_GUIDE <span>初学者代码导读</span></a></li>
+            <li><a href="https://github.com/lj105183000/ContractGuard/blob/main/docs/EVALUATION.md">EVALUATION <span>评测、检索与成本</span></a></li>
+            <li><a href="https://github.com/lj105183000/ContractGuard/blob/main/docs/LIMITATIONS.md">LIMITATIONS <span>完整局限清单</span></a></li>
+            <li><a href="https://github.com/lj105183000/ContractGuard/releases/latest">RELEASES <span>Windows 安装包与更新</span></a></li>
+            <li><a href="https://github.com/lj105183000/ContractGuard/issues">ISSUES <span>Bug 与功能建议</span></a></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap row">
+      <div>
+        <strong style="color:var(--cream)">合同哨兵 ContractGuard</strong><br>
+        AI 辅助合同初审 MVP，示例合同均为合成数据，输出不构成法律意见。
+      </div>
+      <div class="links">
+        <a href="./interview/">60 秒演示</a>
+        <a href="https://github.com/lj105183000/ContractGuard">GitHub</a>
+        <a href="https://github.com/lj105183000/ContractGuard/blob/main/LICENSE">MIT License</a>
+        <a href="https://github.com/lj105183000/ContractGuard/blob/main/SECURITY.md">Security</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

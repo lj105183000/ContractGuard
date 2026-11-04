@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ContractGuard">
+  <rect width="64" height="64" rx="14" fill="#0f1e2b"/>
+  <path d="M32 11l15 6.4v12.2c0 9.6-6.2 17.4-15 21.4-8.8-4-15-11.8-15-21.4V17.4L32 11z" fill="none" stroke="#d4a24c" stroke-width="3"/>
+  <path d="M24.5 32.2l5.2 5.2 10.2-11.2" fill="none" stroke="#f8f1e2" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
