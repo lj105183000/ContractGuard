@@ -1,5 +1,5 @@
 import path from "node:path";
-import { mkdir, readFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { _electron as electron } from "playwright";
 
@@ -83,26 +83,23 @@ try {
   );
   console.log("history save: ok");
 
-  // Read the path from Electron itself. Scanning %APPDATA% for a directory
-  // name that contains "contractguard" is not reliable on hosted runners.
+  // Ask Electron for the exact userData path instead of guessing a directory
+  // under %APPDATA%. Then pick the newest JSON file; the wait above has
+  // already confirmed that a history entry was persisted.
   const userDataDir = await app.evaluate(({ app }) => app.getPath("userData"));
-  const historyEntries = await page.evaluate(async () => {
-    const bridge = window.contractguardDesktop;
-    if (!bridge?.history?.list) return [];
-    try {
-      return await bridge.history.list();
-    } catch {
-      return [];
-    }
-  });
-  const newestHistory = historyEntries[0];
-  if (!newestHistory?.jobId) throw new Error("history entry not found");
-  const historyFile = path.join(
-    userDataDir,
-    "history",
-    `${newestHistory.jobId}.json`,
+  const historyDir = path.join(userDataDir, "history");
+  const historyNames = (await readdir(historyDir)).filter((name) =>
+    name.endsWith(".json"),
   );
-  const rawHistory = await readFile(historyFile, "utf8");
+  if (!historyNames.length) throw new Error("history file not found");
+  const historyFiles = await Promise.all(
+    historyNames.map(async (name) => {
+      const file = path.join(historyDir, name);
+      return { file, mtimeMs: (await stat(file)).mtimeMs };
+    }),
+  );
+  historyFiles.sort((left, right) => right.mtimeMs - left.mtimeMs);
+  const rawHistory = await readFile(historyFiles[0].file, "utf8");
   const encryptedAtRest =
     rawHistory.includes('"encrypted":true') && !rawHistory.includes("full_text");
   console.log(`history at rest: ${encryptedAtRest ? "encrypted" : "plaintext"}`);
