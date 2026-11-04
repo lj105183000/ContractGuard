@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # ---------- frontend build ----------
-FROM node:22-slim AS frontend-build
+FROM node:26-slim AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm ci --no-audit --no-fund
