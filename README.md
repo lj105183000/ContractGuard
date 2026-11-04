@@ -104,7 +104,7 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 | 解析 | pypdf / pdfplumber / python-docx / pypdfium2 |
 | 扫描件 OCR | RapidOCR 3 + onnxruntime（PP-OCRv6 模型，本地离线；许可见 RapidOCR 文档） |
 | 报告 | Markdown / JSON / python-docx |
-| 前端 | React 19 + Vite 7 + 手写 CSS |
+| 前端 | React 19 + Vite 8 + 手写 CSS |
 | 桌面端 | Electron 45 + electron-builder 26 + PyInstaller |
 | 部署 | Docker Compose（mock 单端口 demo） |
 | 测试 | pytest（258 个离线测试） |
@@ -114,7 +114,7 @@ ContractGuard 把采购合同初审拆成一条可解释的流水线：
 
 不想配置环境？直接下载 [Windows 桌面版](https://github.com/lj105183000/ContractGuard/releases/latest)（内置后端与示例数据，默认 mock 模式，可离线体验）。
 
-源码运行需要 [uv](https://docs.astral.sh/uv/) 与 Node.js 24（Vite 7 要求 20.19+ 或 22.12+）。以下命令默认在仓库根目录执行，mock 模式不需要 API Key。
+源码运行需要 [uv](https://docs.astral.sh/uv/) 与 Node.js 24（Vite 8 要求 20.19+ 或 22.12+）。以下命令默认在仓库根目录执行，mock 模式不需要 API Key。
 
 ```bash
 cd backend && uv sync

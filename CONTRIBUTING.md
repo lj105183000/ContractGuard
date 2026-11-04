@@ -10,7 +10,7 @@
 ## 环境
 
 - Python 3.12（由 `backend/.python-version` 固定，`uv` 会自动安装）
-- Node.js 24（Vite 7 最低要求 20.19+ / 22.12+；桌面端 Electron 45 要求 22.12+）
+- Node.js 24（Vite 8 最低要求 20.19+ / 22.12+；桌面端 Electron 45 要求 22.12+）
 - Docker Desktop（可选，用于容器化 smoke）
 - Windows 10/11（桌面端打包；后端与前端可在其它系统运行）
 
