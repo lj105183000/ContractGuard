@@ -83,13 +83,16 @@ try {
   );
   console.log("history save: ok");
 
-  // Read the history snapshot inside the Electron main process. It owns the
-  // userData path and can read the file directly; doing this from the Node
-  // smoke process avoids cross-process path discrepancies on hosted runners.
-  const historySnapshot = await app.evaluate(({ app }) => {
+  // Ask the app where HistoryStore actually writes, then read that directory
+  // inside the Electron main process. app.getPath("userData") can differ from
+  // the store directory on hosted runners, so do not infer the path.
+  const historyDir = await page.evaluate(() =>
+    window.contractguardDesktop.history.dir(),
+  );
+  console.log(`history store dir: ${historyDir}`);
+  const historySnapshot = await app.evaluate((_electron, dir) => {
     const fs = process.getBuiltinModule("node:fs");
     const path = process.getBuiltinModule("node:path");
-    const dir = path.join(app.getPath("userData"), "history");
     const names = fs.readdirSync(dir);
     const jsonNames = names.filter((name) => name.endsWith(".json"));
     if (!jsonNames.length) return { dir, names, text: null };
@@ -99,7 +102,7 @@ try {
     });
     files.sort((left, right) => right.mtimeMs - left.mtimeMs);
     return { dir, names, text: fs.readFileSync(files[0].file, "utf8") };
-  });
+  }, historyDir);
   if (!historySnapshot.text) {
     throw new Error(
       `history file not found in ${historySnapshot.dir}: ${historySnapshot.names.join(", ")}`,

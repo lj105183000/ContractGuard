@@ -12,6 +12,7 @@ contextBridge.exposeInMainWorld("contractguardDesktop", {
     remove: (jobId) => ipcRenderer.invoke("history:remove", jobId),
     clear: () => ipcRenderer.invoke("history:clear"),
     openFolder: () => ipcRenderer.invoke("history:open-folder"),
+    dir: () => ipcRenderer.invoke("history:dir"),
   },
   notifyReviewCompleted: (payload) => ipcRenderer.send("notify:review-completed", payload),
   appInfo: () => ipcRenderer.invoke("app:info"),

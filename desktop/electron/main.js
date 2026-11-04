@@ -175,6 +175,10 @@ function registerIpc() {
     assertTrusted(event);
     return history.openFolder();
   });
+  ipcMain.handle("history:dir", (event) => {
+    assertTrusted(event);
+    return history.dir;
+  });
   ipcMain.handle("app:info", (event) => {
     assertTrusted(event);
     return {
