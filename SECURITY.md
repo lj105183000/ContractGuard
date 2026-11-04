@@ -52,6 +52,10 @@ ContractGuard 是一个本地优先的合同初审 MVP。默认只监听本机�
 - `ENCRYPTION_ENABLED=1` 使用 AES-GCM 保护任务快照与 checkpoint，密钥需人工管理，不支持在线轮换。
 - 审计墓碑只记录最小删除元数据，不保留合同正文。
 
+## 已知依赖告警
+
+- `minimatch < 11.0.1`（[GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)，moderate）仅存在于桌面端 `electron-builder` / `app-builder-lib` 的**构建期**传递依赖中，不会进入安装包运行时代码；构建输入来自本仓库，不接受不可信 glob 模式。上游仍固定 `minimatch ^10`，强制 override 到 11 会破坏 `glob@7`、`@electron/asar` 等依赖的调用约定，因此暂不强制修复，待上游升级后由 Dependabot 跟进。
+
 ## 安全研究约定
 
 - 仅在你自己拥有或获授权的环境与数据上测试。
